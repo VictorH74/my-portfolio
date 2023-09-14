@@ -24,6 +24,13 @@ const translations = {
   },
 };
 
+const fieldDatas = [
+  { name: "nameField", type: "text", preClassName: "max-md:" },
+  { name: "emailField", type: "email", preClassName: "max-md:" },
+  { name: "subjectField", type: "text" },
+  { name: "messageField" },
+];
+
 export default function ContactMe() {
   const lang = useLanguage();
   const translate = translations[lang];
@@ -33,10 +40,10 @@ export default function ContactMe() {
     if (process.env.NODE_ENV === "production") return;
     const data = new FormData(e.currentTarget);
     const [name, email, subject, message] = [
-      data.get("name"),
-      data.get("email"),
-      data.get("subject"),
-      data.get("message"),
+      data.get("nameField"),
+      data.get("emailField"),
+      data.get("subjectField"),
+      data.get("messageField"),
     ];
     console.log({ name, email, subject, message });
   };
@@ -44,7 +51,7 @@ export default function ContactMe() {
   return (
     <section id="contact-me" className="max-w-[1000px] pt-24">
       <form
-        className=" grid gap-3"
+        className="grid gap-3 grid-cols-2"
         onSubmit={handleSubmit}
         onClick={
           process.env.NODE_ENV === "production"
@@ -52,29 +59,28 @@ export default function ContactMe() {
             : undefined
         }
       >
-        <h1 className="section-title">{translate.title}</h1>
-        <div className="flex gap-3 w-full flex-wrap">
-          <Input
-            type="text"
-            placeholder={translate.nameField}
-            name="name"
-            className="grow"
-          />
-          <Input
-            type="email"
-            placeholder={translate.emailField}
-            name="email"
-            className="grow"
-          />
-        </div>
-        <Input
-          type="text"
-          placeholder={translate.subjectField}
-          name="subject"
-        />
-        <Textarea placeholder={translate.messageField} name="message" />
+        <h1 className="section-title col-span-2">{translate.title}</h1>
+        {fieldDatas.map((f) => {
+          if (f.name === "messageField")
+            return (
+              <Textarea
+                key={f.name}
+                className="col-span-2"
+                placeholder={translate.messageField}
+                name="messageField"
+              />
+            );
+          return (
+            <Input
+              key={f.name}
+              className={`${f.preClassName || ""}col-span-2`}
+              placeholder={translate[f.name as keyof typeof translate]}
+              name={f.name}
+            />
+          );
+        })}
         <button
-          className={`${notoSans.className} bg-main-color p-3 rounded-md uppercase tracking-wider hover:brightness-125 duration-150`}
+          className={`${notoSans.className} bg-main-color p-3 rounded-md uppercase tracking-wider hover:brightness-125 duration-150 col-span-2`}
         >
           {translate.submitText}
         </button>
