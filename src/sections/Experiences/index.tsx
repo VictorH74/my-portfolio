@@ -22,7 +22,7 @@ export default function Experiences() {
   return (
     <section id="experiences" className="pt-24 grid gap-3">
       <h1 className="section-title text-center">{sectionData.title}</h1>
-      <div className="flex gap-10 flex-row w-full overflow-x-auto justify-between">
+      <div className="flex gap-10 flex-wrap flex-row w-full overflow-x-auto justify-between">
         {experienceData.map((d) => (
           <ExperienceCard key={d.title} {...d} />
         ))}
