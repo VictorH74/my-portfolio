@@ -1,8 +1,6 @@
-"use client";
+import useTranslate from "@/hooks/UseTranslate";
 import { useState, useEffect, useRef } from "react";
 import { contactIcons } from "./data";
-import Image from "next/image";
-import useLanguage from "@/hooks/UseLanguage";
 
 const translations = {
   "pt-BR": {
@@ -20,11 +18,10 @@ const translations = {
 };
 
 const Contacts = () => {
-  const [time, setTime] = useState(0);
+  const translate = useTranslate(translations);
   const [reachedBottom, setReachedBottom] = useState(false);
+  const [time, setTime] = useState(0);
   const endOfPageRef = useRef(null);
-  const lang = useLanguage();
-  const translate = translations[lang];
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -47,7 +44,7 @@ const Contacts = () => {
 
   function formatTime(time: number) {
     if (time < 60) {
-      return time + " " + translate.seconds;
+      return time + " " + translate("seconds");
     } else {
       let minutes = Math.floor(time / 60);
       let seconds = time % 60;
@@ -56,22 +53,22 @@ const Contacts = () => {
         ":" +
         (seconds < 10 ? "0" + seconds : seconds) +
         " " +
-        translate.minutes
+        translate("minutes")
       );
     }
   }
 
   return (
-    <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl">
+    <div className="bg-[#00000035] text-center pb-10 m-0">
       <section className="min-h-[auto]" id="contacts">
         <div
           className={`mt-12 mb-24 duration-300 ${
             reachedBottom ? "opacity-100 scale-100" : "opacity-0 scale-50"
           }`}
         >
-          <h1 className="text-main-color text-3xl">THANKS FOR SCROLLING!</h1>
+          <h1 className="text-main-color">THANKS FOR SCROLLING!</h1>
           <p className="mt-7">
-            {translate.time}: {formatTime(time)}
+            {translate("time")}: {formatTime(time)}
           </p>
         </div>
         <div className="min-w-[240px] mx-auto mb-2 flex flex-wrap gap-4 justify-center">
@@ -96,15 +93,14 @@ const Contacts = () => {
             },
           ].map((i) => (
             <a
-              key={i.label}
               data-aos={i.flip}
               data-aos-once="true"
               data-aos-delay={i.delay}
-              className={`border-[1px] ${i.borderClass} w-60 py-2 no-underline text-xs flex items-center justify-center gap-1 rounded-md`}
+              className={`border-[1px] ${i.borderClass} w-60 py-2 no-underline text-xs flex items-center justify-center gap-1 rounded-md hover:text-white`}
               href={i.href}
             >
               <span>
-                <Image width={25} height={25} src={i.imgSrc} alt={i.imgAlt} />
+                <img className="h-6 w-6" src={i.imgSrc} alt={i.imgAlt} />
               </span>
               &nbsp;{i.label}
             </a>
@@ -114,21 +110,15 @@ const Contacts = () => {
         <div className="flex justify-center gap-4 mt-4">
           {contactIcons.map((ic, i) => (
             <a key={i} href={ic.link}>
-              <Image
-                height={25}
-                width={25}
-                key={i}
-                src={ic.icon}
-                alt={ic.alt}
-              />
+              <img className="w-[25px] h-[25px]" src={ic.icon} alt={ic.alt} />
             </a>
           ))}
         </div>
       </section>
       <div className="h-[2px] bg-[#4e54fd] mb-3" />
-      <footer className="mt-4">
+      <footer>
         {" "}
-        <p>&copy; {translate.footerParagraph}</p>{" "}
+        <p>&copy; {translate("footerParagraph")}</p>{" "}
       </footer>
       <div ref={endOfPageRef} />
     </div>

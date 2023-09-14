@@ -1,170 +1,104 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import useWindowSize from "@/hooks/UseWindowsSize";
 import { downloadCv } from "@/utils/cv";
 import Hamburger from "./components/Hamburger";
-import { navTranslations } from "./data";
-import { Noto_Sans, Raleway } from "next/font/google";
-import useLanguage from "@/hooks/UseLanguage";
+import { HeaderContent, Wrapper, StyledHeader } from "./styles";
+import useTranslate from "@/hooks/UseTranslate";
+import { navData } from "./data";
 
-const raleway = Raleway({
-  subsets: ["latin"],
-  display: "swap",
-  style: "italic",
-  weight: "300",
-});
-const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
+
+const translations = {
+    "pt-BR": {
+        navData: navData.navDataPtBR,
+        downloadCvBtnInnerText: "baixar currículo"
+    },
+    en: {
+        navData: navData.navDataEN,
+        downloadCvBtnInnerText: "download cv"
+    }
+}
 
 const Header: React.FC = () => {
-  const [scrollUp, setScrollUp] = React.useState(true);
-  const [wapperDisplay, setWapperDisplay] = React.useState("hidden");
-  const [wrapperDimensions, setWrapperDimensions] = React.useState({
-    width: 0,
-    height: 0,
-    left: 0,
-  });
-  const downloadCvBtnRef = React.useRef(null);
-  const size = useWindowSize();
-  const lang = useLanguage();
-  const translate = navTranslations[lang];
-  const navDataArray = translate.data as { label: string; to: string }[];
+    const [scrollUp, setScrollUp] = useState(true);
+    const downloadCvBtnRef = useRef(null);
+    const size = useWindowSize();
+    const [wrapperDimensions, setWrapperDimensions] = useState({ width: 0, height: 0, left: 0 });
+    const [wapperDisplay, setWapperDisplay] = useState("none");
 
-  React.useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
+    const translate = useTranslate(translations)
 
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    useEffect(() => {
+        document.addEventListener("scroll", handleScroll);
 
-  React.useEffect(() => {
-    if (downloadCvBtnRef?.current) {
-      setTimeout(() => {
+        return () => {
+            document.removeEventListener("scroll", handleScroll);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (downloadCvBtnRef?.current) {
+            setTimeout(() => {
+                moveWrapperToDownloadBtn()
+                setWapperDisplay("block")
+            }, 800)
+        }
+    }, [downloadCvBtnRef])
+
+    useEffect(() => {
         moveWrapperToDownloadBtn();
-        setWapperDisplay("block");
-      }, 800);
-    }
-  }, [downloadCvBtnRef]);
+    }, [size]);
 
-  React.useEffect(() => {
-    moveWrapperToDownloadBtn();
-  }, [size]);
+    // background da navbar
+    const handleScroll = useCallback(() => {
+        let pageY = window.pageYOffset
 
-  // background da navbar
-  const handleScroll = React.useCallback(() => {
-    let pageY = window.pageYOffset;
+        setScrollUp(pageY <= 40)
+    }, []);
 
-    setScrollUp(pageY <= 40);
-  }, []);
+    const handleMouseOver = useCallback((e: React.MouseEvent<HTMLLIElement>) => {
+        const li = e?.currentTarget;
 
-  const getLiBoundingClientRect = (li: HTMLElement) => {
-    const { width, height } = li.closest("li")?.getBoundingClientRect() || {
-      width: 0,
-      height: 0,
-    };
-    return { width, height };
-  };
+        if (li) {
+            const { width, height } = li.closest("li")?.getBoundingClientRect() || { width: 0, height: 0 };
+            setWrapperDimensions({ width, height, left: li.offsetLeft });
+        }
+    }, []);
 
-  const handleMouseOver = React.useCallback(
-    (e: React.MouseEvent<HTMLLIElement>) => {
-      const li = e?.currentTarget;
+    const moveWrapperToDownloadBtn = useCallback(() => {
+        if (!downloadCvBtnRef?.current) return;
+        let li = downloadCvBtnRef.current as HTMLElement;
 
-      if (li) {
-        setWrapperDimensions({
-          ...getLiBoundingClientRect(li),
-          left: li.offsetLeft,
-        });
-      }
-    },
-    []
-  );
+        const { width, height } = li.closest("li")?.getBoundingClientRect() || { width: 0, height: 0 };
+        setWrapperDimensions({ width, height, left: li.offsetLeft });
+    }, []);
 
-  const moveWrapperToDownloadBtn = React.useCallback(() => {
-    if (!downloadCvBtnRef?.current) return;
-    let li = downloadCvBtnRef.current as HTMLElement;
+    const data: { label: string, to: string }[] = translate("navData") as { label: string, to: string }[]
 
-    setWrapperDimensions({
-      ...getLiBoundingClientRect(li),
-      left: li.offsetLeft,
-    });
-  }, []);
+    return (
+        <StyledHeader>
+            <HeaderContent scrollUp={scrollUp}>
+                <h1>VH</h1>
+                <Wrapper display={wapperDisplay} style={wrapperDimensions} />
+                <nav onMouseOut={moveWrapperToDownloadBtn}>
+                    <ul>
+                        {data.map((data, i) => (
+                            <li
+                                key={i}
+                                onClick={() => window.location.replace(`#${data.to || ""}`)}
+                                onMouseOver={handleMouseOver}
+                            >{data.label}</li>
+                        ))}
+                        <li onMouseOver={handleMouseOver} className="btn-li" >
+                            <button className="download-cv-btn" ref={downloadCvBtnRef}
+                                onClick={downloadCv}
+                            >{translate("downloadCvBtnInnerText")}</button>
+                        </li>
+                    </ul>
+                </nav>
+                <Hamburger />
+            </HeaderContent>
+        </StyledHeader>
+    )
+}
 
-  return (
-    <header className="fixed top-0 inset-x-0 z-10">
-      <div
-        className={`
-          m-auto
-          py-3
-          px-5
-          rounded-2xl
-          backdrop-blur-[8px]
-          flex
-          items-center
-          h-fit
-          duration-300
-          ${scrollUp ? "bg-transparent" : "bg-[#00000055]"}
-        `}
-      >
-        <h1
-          className={`grow text-4xl shrink-0 basis-auto text-main-color line-through z-[9910] select-none ${raleway.className}`}
-        >
-          VH
-        </h1>
-        <div
-          className={`${wapperDisplay} absolute bg-main-color rounded-[20px] duration-200 pointer-events-none z-[3]`}
-          style={wrapperDimensions}
-        />
-        <nav
-          className="max-lg:hidden z-[4]"
-          onMouseOut={moveWrapperToDownloadBtn}
-        >
-          <ul className="flex flex-wrap items-center py-1">
-            {navDataArray.map((data, i) => {
-              const last = i === navDataArray.length - 1;
-              return (
-                <li
-                  className={`
-                    cursor-pointer 
-                    list-none 
-                    ${last ? "p-0" : "p-[10px]"}
-                    italic
-                    text-sm
-                    uppercase 
-                    select-none
-                    ${notoSans.className}
-                  `}
-                  key={i}
-                  onClick={
-                    last
-                      ? downloadCv
-                      : () => window.location.replace(`#${data.to || ""}`)
-                  }
-                  onMouseOver={handleMouseOver}
-                >
-                  {last ? (
-                    <button
-                      className="uppercase p-[10px] rounded-[20px]"
-                      ref={downloadCvBtnRef}
-                      onClick={downloadCv}
-                    >
-                      {translate.downloadCvBtnInnerText}
-                    </button>
-                  ) : (
-                    data.label
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-        <Hamburger
-          navData={navDataArray}
-          downloadCvBtnInnerText={translate.downloadCvBtnInnerText}
-        />
-      </div>
-    </header>
-  );
-};
-
-export default React.memo(Header);
+export default React.memo(Header)

@@ -1,12 +1,10 @@
-"use client"
 import React, { memo, useId, useState } from "react";
 import LinkIcon from "@mui/icons-material/Link";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import useTranslate from "@/hooks/UseTranslate";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import useTechnologies from "@/hooks/UseTechnologies";
 import Loading from "@/components/Loading";
-import Image from "next/image";
-import useLanguage from "@/hooks/UseLanguage";
 
 export interface Project {
   title: string;
@@ -45,11 +43,9 @@ const translations = (projectDescription: { PT: string; EN: string }) => ({
 const ProjectCard: React.FC<Props> = ({ index, project }) => {
   const { technologieData } = useTechnologies();
   const [video, setShowVideo] = useState(false);
-
+  const translate = useTranslate(translations(project.description));
   const [loadingImg, setLoadingImg] = useState(true);
   const id = useId();
-  const lang = useLanguage();
-  const translate = translations(project.description)[lang];
 
   const icons = project.technologies.map((name) =>
     technologieData.find((icon) => icon.id === name)
@@ -137,18 +133,14 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
               allow="autoplay"
             ></iframe>
           ) : (
-            <Image
+            <img
               className="h-auto w-full"
               src={randomImgUrl + index}
               alt="Project image"
               loading="lazy"
             />
           )}
-          <div
-            className={`absolute inset-0 bg-transparent grid place-items-center ${
-              loadingImg ? "opacity-100" : "opacity-0"
-            }`}
-          >
+          <div className={`absolute inset-0 bg-transparent grid place-items-center ${loadingImg ? "opacity-100" : "opacity-0"}`}>
             <Loading />
           </div>
         </div>
@@ -166,12 +158,12 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             {project.title}
           </h1>
           <h2 className="mb-4 text-sm min-[700px]:text-base">
-            {translate.projectDescription}
+            {translate("projectDescription")}
           </h2>
 
           {project.link && (
             <Link href={project.link}>
-              {translate.productionLinkText}&nbsp;&nbsp;
+              {translate("productionLinkText")}&nbsp;&nbsp;
               <LinkIcon />
             </Link>
           )}
@@ -180,22 +172,19 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
           {project.repository && (
             <Link href={project.repository}>
-              {translate.repoLinkText}&nbsp;&nbsp;
+              {translate("repoLinkText")}&nbsp;&nbsp;
               <GitHubIcon />
             </Link>
           )}
 
           <div>
-            <h3 className="text-xl mt-2">{translate.technologiesTitle}</h3>
-            <div
-              className={`flex w-max gap-2 ${oddScreen900 && "float-right"}`}
-            >
+            <h3 className="text-xl">{translate("technologiesTitle")}</h3>
+            <div className={`flex w-max gap-2 ${oddScreen900 && "float-right"}`}>
               {icons.map(
                 (icon) =>
                   icon && (
-                    <Image
-                      height={25}
-                      width={25}
+                    <img
+                      style={{ width: 25, height: 25 }}
                       key={icon.id}
                       src={icon.src}
                       alt={`${icon.id} icon`}

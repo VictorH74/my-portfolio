@@ -1,5 +1,49 @@
 import styled from "styled-components";
 
+export const AboutMeContainer = styled.section`
+`;
+
+export const Content = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    & .paragraphs {
+        max-width: 800px;
+    }
+
+    & div:nth-child(1) {
+        flex: 1 1 400px;
+        & p {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 1.1rem;
+            line-height: 30px;
+        }
+    }
+
+    .img-container {
+        flex: 0 0 auto;
+        margin: auto;
+        & img {
+            height: 300px;
+            width: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 3px 3px 1px var(--mainColor);
+        }
+        @media (max-width: 750px) {
+            margin: 20px auto;
+            width: fit-content;
+            & img {
+                height: auto;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+    }
+`;
+
 export const BtnContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -108,6 +152,10 @@ export const DownloadCvBtn = styled.div`
         justify-content: center;
     }
 
+    &:hover {
+        background: #6c18ff;
+    }
+
     &:hover .text {
         top: -100%;
     }
@@ -127,6 +175,20 @@ export const DownloadCvBtn = styled.div`
 
     &:hover:before {
         bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+    }
+`;
+
+export const EducationList = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+`;
+
+export const EducationContainer = styled.div`
+    margin-top: 20px;
+    & h2 {
+        margin-bottom: 20px;
     }
 `;
 

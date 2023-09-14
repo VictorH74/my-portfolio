@@ -1,5 +1,4 @@
-"use client"
-import React from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 interface TechIcons {
   id: string;
@@ -12,7 +11,7 @@ interface CtxValue {
   technologieData: Array<TechIcons>;
 }
 
-export const TechnologiesCtx = React.createContext<CtxValue>({
+export const TechnologiesCtx = createContext<CtxValue>({
   technologieData: [],
 });
 
@@ -21,9 +20,9 @@ const gistId = "ee56f0e7ddea13681b411f97b7f20fe5";
 const TechnologiesProvider: React.FC<{ children: JSX.Element }> = ({
   children,
 }) => {
-  const [technologieData, setData] = React.useState<TechIcons[]>([]);
+  const [technologieData, setData] = useState<TechIcons[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`https://api.github.com/gists/${gistId}`)
       .then((results) => {
         return results.json();

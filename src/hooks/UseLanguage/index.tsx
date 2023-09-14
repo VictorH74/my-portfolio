@@ -1,20 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-import { Language } from "@/types/language";
-import React from "react";
+import { LanguageCtx } from "@/contexts/LanguageContext";
+import { useContext } from "react";
 
-const useLanguage = (): Language => {
-  const [lang, setLang] = React.useState<Language>("en");
-  const langs = ["en", "pt-BR"];
+const useLanguage = () => useContext(LanguageCtx)
 
-  React.useEffect(() => {
-    const userLang = window.navigator.language;
-    if (langs.includes(userLang)) {
-      setLang(userLang as Language);
-    }
-  }, []);
-
-  return (langs.includes(lang) ? lang : "en") as Language;
-};
-
-export default useLanguage;
+export default useLanguage
