@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import useLanguage from "@/hooks/UseLanguage";
 import { Noto_Sans } from "next/font/google";
 import React from "react";
@@ -48,7 +48,7 @@ export default function ContactMe() {
         onSubmit={handleSubmit}
         onClick={
           process.env.NODE_ENV === "production"
-            ? () => alert("Esse formulário está funcional no momento")
+            ? () => alert("Esse formulário não está funcional no momento")
             : undefined
         }
       >
@@ -58,14 +58,12 @@ export default function ContactMe() {
             type="text"
             placeholder={translate.nameField}
             name="name"
-            onChange={(e) => {}}
             className="grow"
           />
           <Input
             type="email"
             placeholder={translate.emailField}
             name="email"
-            onChange={() => {}}
             className="grow"
           />
         </div>
@@ -73,13 +71,8 @@ export default function ContactMe() {
           type="text"
           placeholder={translate.subjectField}
           name="subject"
-          onChange={() => {}}
         />
-        <Textarea
-          placeholder={translate.messageField}
-          name="message"
-          onChange={() => {}}
-        />
+        <Textarea placeholder={translate.messageField} name="message" />
         <button
           className={`${notoSans.className} bg-main-color p-3 rounded-md uppercase tracking-wider hover:brightness-125 duration-150`}
         >
@@ -95,12 +88,10 @@ interface InputProps {
   type?: string;
   placeholder?: string;
   name: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
 }
 
-const inputClassName = "bg-second-color p-4 rounded-md outline-none focus:brightness-150 focus::shadow-lg duration-200";
+const inputClassName =
+  "bg-second-color p-4 rounded-md outline-none focus:brightness-150 focus::shadow-lg duration-200";
 
 const Input = ({ className, ...props }: InputProps) => (
   <input
