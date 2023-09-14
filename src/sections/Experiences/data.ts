@@ -11,7 +11,7 @@ export const experienceDataTranslation = {
     },
     {
       title: "Estágio TI | Cabrália",
-      duration: "Ago/2021 - Jan/2023",
+      duration: "Ago/2021 - Jan/2022",
       paragraphs: [
         "Pequena empresa na minha cidade onde atuei como estagiario",
         "Fui responsável por fazer a manutenção e administração de entrada e saída dos equipamentos da empresa e implementações básicas de funcionalidade do backend em java da apicação da empresa",
@@ -31,7 +31,7 @@ export const experienceDataTranslation = {
     },
     {
       title: "IT Internship | Cabrália",
-      duration: "feb/2022 - mar/2023",
+      duration: "aug/2021 - jan/2022",
       paragraphs: [
         "Small company in my city where I worked as an intern",
         "I was responsible for maintaining and administering the input and output of the company's equipment and basic implementations of backend functionality in Java for the company's application",
