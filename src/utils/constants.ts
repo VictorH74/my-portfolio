@@ -1,0 +1,1 @@
+export const TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN || (() => {throw new Error("NEXT_PUBLIC_GITHUB_TOKEN not defined")})()
