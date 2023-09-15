@@ -8,7 +8,6 @@ export const BtnContainer = styled.div`
 
     & .btn-container-line{
         flex: 1 1 auto;
-        background-color: var(--mainColor);
     }
 `;
 
@@ -20,7 +19,6 @@ export const DownloadCvBtn = styled.div`
     --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 3px);
     --tooltip-color: #fff;
     text-transform: uppercase;
-    background-color: var(--mainColor);
     border-radius: 8px;
     border: none;
     margin: 40px auto;

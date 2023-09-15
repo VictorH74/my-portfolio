@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Noto_Sans } from "next/font/google";
 import { BtnContainer, DownloadCvBtn, Line } from "./styles";
 import useLanguage from "@/hooks/UseLanguage";
+import { useTheme } from "@/hooks/UseTheme";
 
 const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const notoSans300 = Noto_Sans({ weight: "300", subsets: ["latin"] });
@@ -28,6 +29,7 @@ const translations = {
 const AboutMe = () => {
   const lang = useLanguage();
   const translate = translations[lang];
+  const { themeColor } = useTheme();
 
   const data: { name: string; about: string[] } = translate.aboutMeData as {
     name: string;
@@ -38,7 +40,6 @@ const AboutMe = () => {
     <section id="about-me" className="pt-24">
       <h1
         className={`section-title mb-12 ${notoSans400.className} max-md:text-center`}
-        // className={`section-title mb-12 ${notoSans300.className} max-md:text-center`}
       >
         {translate.title}
       </h1>
@@ -51,8 +52,7 @@ const AboutMe = () => {
         >
           <div className="paragraphs max-w-[800px] grid gap-4">
             {data.about.map((p, i) => (
-              <p className={`md:text-lg ${notoSans300.className}`} key={i}>
-              {/* <p className={`md:text-lg ${notoSans300.className}`} key={i}> */}
+              <p className={`md:text-lg ${notoSans300.className} primary-font-color`} key={i}>
                 {p}
               </p>
             ))}
@@ -69,12 +69,13 @@ const AboutMe = () => {
             className="
               rounded-full 
               object-cover 
-              shadow-md 
-              shadow-main-color 
               max-md:h-auto 
               max-md:w-full 
               max-md:max-w-[300px]
             "
+            style={{
+              boxShadow: "3px 3px 2px " + themeColor
+            }}
             width={300}
             height={300}
             src={MeJPG}
@@ -84,10 +85,11 @@ const AboutMe = () => {
       </div>
 
       <BtnContainer>
-        <Line className="btn-container-line" />
+        <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
         <DownloadCvBtn
           onClick={downloadCv}
           data-tooltip={`${translate.cvSizeText}: 63kb`}
+          style={{backgroundColor: themeColor}}
         >
           <div className="button-wrapper">
             <div className="text">{translate.downloadCvText}</div>
@@ -112,8 +114,8 @@ const AboutMe = () => {
               </svg>
             </span>
           </div>
-        </DownloadCvBtn>
-        <Line className="btn-container-line" />
+        </DownloadCvBtn >
+        <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
       </BtnContainer>
     </section>
   );

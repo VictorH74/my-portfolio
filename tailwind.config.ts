@@ -5,6 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        
         "main-color": "#4e54fd",
         "second-color": "#5a5a5a36",
         "main-trasnparent-color": "#4d4dcd50",

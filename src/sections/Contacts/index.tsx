@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { contactIcons } from "./data";
 import Image from "next/image";
 import useLanguage from "@/hooks/UseLanguage";
+import { useTheme } from "@/hooks/UseTheme";
 
 const translations = {
   "pt-BR": {
@@ -22,6 +23,7 @@ const translations = {
 const Contacts = () => {
   const [time, setTime] = useState(0);
   const [reachedBottom, setReachedBottom] = useState(false);
+  const { themeColor } = useTheme();
   const endOfPageRef = useRef(null);
   const lang = useLanguage();
   const translate = translations[lang];
@@ -65,12 +67,12 @@ const Contacts = () => {
     <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl">
       <section className="min-h-[auto]" id="contacts">
         <div
-          className={`mt-12 mb-24 duration-300 ${
+          className={`mt-12 mb-10 duration-300 ${
             reachedBottom ? "opacity-100 scale-100" : "opacity-0 scale-50"
           }`}
         >
-          <h1 className="text-main-color text-3xl">THANKS FOR SCROLLING!</h1>
-          <p className="mt-7">
+          <h1 style={{color: themeColor}} className="text-3xl">THANKS FOR SCROLLING!</h1>
+          <p className="mt-7 secondary-font-color">
             {translate.time}: {formatTime(time)}
           </p>
         </div>
@@ -100,7 +102,7 @@ const Contacts = () => {
               data-aos={i.flip}
               data-aos-once="true"
               data-aos-delay={i.delay}
-              className={`border-[1px] ${i.borderClass} w-60 py-2 no-underline text-xs flex items-center justify-center gap-1 rounded-md`}
+              className={`border-[1px] ${i.borderClass} w-60 py-2 no-underline text-xs flex items-center justify-center gap-1 rounded-md secondary-font-color`}
               href={i.href}
             >
               <span>
@@ -113,7 +115,7 @@ const Contacts = () => {
 
         <div className="flex justify-center gap-4 mt-4">
           {contactIcons.map((ic, i) => (
-            <a key={i} href={ic.link}>
+            <a key={i} href={ic.link} className="secondary-font-color">
               <Image
                 height={25}
                 width={25}
@@ -125,10 +127,10 @@ const Contacts = () => {
           ))}
         </div>
       </section>
-      <div className="h-[2px] bg-[#4e54fd] mb-3" />
+      <div style={{backgroundColor: themeColor}} className="h-[2px] mb-3" />
       <footer className="mt-4">
         {" "}
-        <p>&copy; {translate.footerParagraph}</p>{" "}
+        <p className="secondary-font-color">&copy; {translate.footerParagraph}</p>{" "}
       </footer>
       <div ref={endOfPageRef} />
     </div>

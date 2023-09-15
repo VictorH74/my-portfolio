@@ -1,5 +1,6 @@
 "use client";
 import useLanguage from "@/hooks/UseLanguage";
+import { useTheme } from "@/hooks/UseTheme";
 import { Noto_Sans } from "next/font/google";
 import React from "react";
 
@@ -34,6 +35,7 @@ const fieldDatas = [
 export default function ContactMe() {
   const lang = useLanguage();
   const translate = translations[lang];
+  const { themeColor } = useTheme();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,7 +82,8 @@ export default function ContactMe() {
           );
         })}
         <button
-          className={`${notoSans.className} bg-main-color p-3 rounded-md uppercase tracking-wider hover:brightness-125 duration-150 col-span-2`}
+          className={`${notoSans.className} p-3 rounded-md uppercase tracking-wider hover:brightness-125 duration-150 col-span-2`}
+          style={{ backgroundColor: themeColor }}
         >
           {translate.submitText}
         </button>
@@ -97,7 +100,7 @@ interface InputProps {
 }
 
 const inputClassName =
-  "bg-second-color p-4 rounded-md outline-none focus:brightness-150 focus::shadow-lg duration-200";
+  "secondary-bg-color p-4 rounded-md outline-none focus:brightness-150 focus::shadow-lg secondary-font-color duration-200";
 
 const Input = ({ className, ...props }: InputProps) => (
   <input

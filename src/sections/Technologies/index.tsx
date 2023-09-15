@@ -46,7 +46,7 @@ const Technologies = () => {
                     alt="icon"
                   />
                   <div className="tech-name ">
-                    <p translate="no">{icon.name}</p>
+                    <p className="primary-font-color" translate="no">{icon.name}</p>
                   </div>
                 </div>
               )

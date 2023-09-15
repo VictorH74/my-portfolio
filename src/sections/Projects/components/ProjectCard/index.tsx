@@ -7,6 +7,7 @@ import useTechnologies from "@/hooks/UseTechnologies";
 import Loading from "@/components/Loading";
 import Image from "next/image";
 import useLanguage from "@/hooks/UseLanguage";
+import { useTheme } from "@/hooks/UseTheme";
 
 export interface Project {
   title: string;
@@ -49,6 +50,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   const [loadingImg, setLoadingImg] = useState(true);
   const id = useId();
   const lang = useLanguage();
+  const { themeColor } = useTheme();
   const translate = translations(project.description)[lang];
 
   const icons = project.technologies.map((name) =>
@@ -161,16 +163,16 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           <h1
             className={` text-xl ${
               oddScreen900 ? "before:right-0" : "before:left-0"
-            } `}
+            } primary-font-color`}
           >
             {project.title}
           </h1>
-          <h2 className="mb-4 text-sm min-[700px]:text-base">
+          <h2 className="mb-4 text-sm min-[700px]:text-base primary-font-color">
             {translate.projectDescription}
           </h2>
 
           {project.link && (
-            <Link href={project.link}>
+            <Link color={themeColor} href={project.link} >
               {translate.productionLinkText}&nbsp;&nbsp;
               <LinkIcon />
             </Link>
@@ -179,14 +181,14 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           {project.link && project.repository && <br />}
 
           {project.repository && (
-            <Link href={project.repository}>
+            <Link color={themeColor} href={project.repository}>
               {translate.repoLinkText}&nbsp;&nbsp;
               <GitHubIcon />
             </Link>
           )}
 
           <div>
-            <h3 className="text-xl mt-2">{translate.technologiesTitle}</h3>
+            <h3 className="text-xl mt-2 primary-font-color">{translate.technologiesTitle}</h3>
             <div
               className={`flex w-max gap-2 ${oddScreen900 && "float-right"}`}
             >
@@ -210,12 +212,13 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   );
 };
 
-const Link: React.FC<{ children: React.ReactNode[]; href: string }> = (
+const Link: React.FC<{ children: React.ReactNode[]; href: string, color: string }> = (
   props
 ) => (
   <a
     href={props.href}
-    className="text-main-color relative hover:text-white duration-150"
+    style={{color: props.color}}
+    className=" relative duration-150"
     target="_blank"
     rel="noreferrer"
   >

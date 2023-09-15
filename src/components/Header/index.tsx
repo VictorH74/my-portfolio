@@ -7,6 +7,7 @@ import Hamburger from "./components/Hamburger";
 import { navTranslations } from "./data";
 import { Noto_Sans, Raleway } from "next/font/google";
 import useLanguage from "@/hooks/UseLanguage";
+import { useTheme } from "@/hooks/UseTheme";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -19,6 +20,7 @@ const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const Header: React.FC = () => {
   const [scrollUp, setScrollUp] = React.useState(true);
   const [wapperDisplay, setWapperDisplay] = React.useState("hidden");
+  const [wapperIn, setWapperIn] = React.useState("");
   const [wrapperDimensions, setWrapperDimensions] = React.useState({
     width: 0,
     height: 0,
@@ -26,6 +28,7 @@ const Header: React.FC = () => {
   });
   const downloadCvBtnRef = React.useRef(null);
   const size = useWindowSize();
+  const { themeColor } = useTheme();
   const lang = useLanguage();
   const translate = navTranslations[lang];
   const navDataArray = translate.data as { label: string; to: string }[];
@@ -71,6 +74,8 @@ const Header: React.FC = () => {
       const li = e?.currentTarget;
 
       if (li) {
+        console.log(li.id);
+        setWapperIn(li.id);
         setWrapperDimensions({
           ...getLiBoundingClientRect(li),
           left: li.offsetLeft,
@@ -88,6 +93,7 @@ const Header: React.FC = () => {
       ...getLiBoundingClientRect(li),
       left: li.offsetLeft,
     });
+    setWapperIn("li-download-btn");
   }, []);
 
   return (
@@ -107,13 +113,14 @@ const Header: React.FC = () => {
         `}
       >
         <h1
-          className={`grow text-4xl shrink-0 basis-auto text-main-color line-through z-[9910] select-none ${raleway.className}`}
+          style={{ color: themeColor }}
+          className={`grow text-4xl shrink-0 basis-auto line-through z-[9910] select-none ${raleway.className}`}
         >
           VH
         </h1>
         <div
-          className={`${wapperDisplay} absolute bg-main-color rounded-[20px] duration-200 pointer-events-none z-[3]`}
-          style={wrapperDimensions}
+          className={`${wapperDisplay} absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
+          style={{ ...wrapperDimensions, backgroundColor: themeColor }}
         />
         <nav
           className="max-lg:hidden z-[4]"
@@ -132,8 +139,17 @@ const Header: React.FC = () => {
                     text-sm
                     uppercase 
                     select-none
+                    duration-150
                     ${notoSans.className}
+                    ${
+                      scrollUp
+                        ? wapperIn === "li-" + data.to
+                          ? "text-[#ececec]"
+                          : "primary-font-color"
+                        : "text-[#ececec]"
+                    }
                   `}
+                  id={`li-${data.to}`}
                   key={i}
                   onClick={
                     last

@@ -1,23 +1,30 @@
 import React from "react";
 
 interface AppContextInterface {
-    darkTheme: boolean;
-    setTheme: React.Dispatch<React.SetStateAction<boolean>>;
+  themeColor: string;
+  setThemeColor: (e: string) => void;
 }
 
 interface Props {
-    children: JSX.Element;
+  children: JSX.Element;
 }
 
-export const ThemeContext = React.createContext<AppContextInterface | null>(null);
+export const ThemeContext = React.createContext<AppContextInterface>({
+  themeColor: "",
+  setThemeColor: () => {},
+});
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
-    const [darkTheme, setTheme] = React.useState(true);
+  const [themeColor, setThemeColorState] = React.useState("#4e54fd");
 
-    const values: AppContextInterface = {
-        darkTheme,
-        setTheme
-    }
+  const setThemeColor = (color: string) => setThemeColorState(color);
 
-    return <ThemeContext.Provider value={values} >{children}</ThemeContext.Provider>
-}
+  const values: AppContextInterface = {
+    themeColor,
+    setThemeColor,
+  };
+
+  return (
+    <ThemeContext.Provider value={values}>{children}</ThemeContext.Provider>
+  );
+};

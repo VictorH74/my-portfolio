@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import Loading from "@/components/Loading";
-import { useState, useRef, memo } from "react";
+import React from "react";
 import ProjectCard, { Project } from "./components/ProjectCard";
 import { useQuery } from "react-query";
 import useLanguage from "@/hooks/UseLanguage";
+import { useTheme } from "@/hooks/UseTheme";
 
 const translations = {
   "pt-BR": {
@@ -21,8 +22,9 @@ const translations = {
 const gistId = "d85dcf05a1f6d5e760bbcbe9d5dc614d";
 
 const Projects = () => {
-  const [showMore, setShowMore] = useState(false);
-  const containerRef = useRef(null);
+  const [showMore, setShowMore] = React.useState(false);
+  const containerRef = React.useRef(null);
+  const { themeColor } = useTheme();
   const { isLoading, data } = useQuery({
     queryKey: ["projectsData"],
     queryFn: () =>
@@ -35,9 +37,9 @@ const Projects = () => {
           return JSON.parse(content) as Project[];
         }),
   });
-  const lang = useLanguage()
+  const lang = useLanguage();
 
-  const translate = translations[lang]
+  const translate = translations[lang];
 
   return (
     <section
@@ -56,7 +58,18 @@ const Projects = () => {
               ))}
           </div>
           <button
-            className="uppercase px-4 py-3 inline-block m-5 mt-12 relative overflow-hidden border-2 border-[#4e54fd] text-md font-medium rounded-md text-[#4e54fd] duration-150 font-[inherit] hover:text-white hover:bg-[#4e54fd]"
+            onMouseOver={(e) => {
+              const { style } = e.currentTarget;
+              style.color = "white";
+              style.backgroundColor = themeColor;
+            }}
+            onMouseLeave={(e) => {
+              const { style } = e.currentTarget;
+              style.color = themeColor;
+              style.backgroundColor = "transparent";
+            }}
+            style={{ border: "2px solid " + themeColor, color: themeColor }}
+            className="uppercase px-4 py-3 inline-block m-5 mt-12 relative overflow-hidden border-2 text-md font-medium rounded-md duration-150 font-[inherit]"
             onClick={() => setShowMore(!showMore)}
           >
             {showMore ? translate.showMoreOn : translate.showMoreOff}
@@ -69,4 +82,4 @@ const Projects = () => {
   );
 };
 
-export default memo(Projects);
+export default React.memo(Projects);
