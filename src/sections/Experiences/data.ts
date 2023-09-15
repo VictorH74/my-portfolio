@@ -14,7 +14,7 @@ export const experienceDataTranslation = {
       duration: "Ago/2021 - Jan/2022",
       paragraphs: [
         "Pequena empresa na minha cidade onde atuei como estagiario",
-        "Fui responsável por fazer a manutenção e administração de entrada e saída dos equipamentos da empresa e implementações básicas de funcionalidade do backend em java da apicação da empresa",
+        "Fui responsável por fazer a manutenção e administração de entrada e saída dos equipamentos da empresa e implementações básicas de funcionalidade do backend em java da aplicação da empresa",
         "Primeiro contato com a linguagem Java usando o framework Spring Boot",
       ],
     },
