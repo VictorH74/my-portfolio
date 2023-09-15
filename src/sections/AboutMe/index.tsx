@@ -88,7 +88,7 @@ const AboutMe = () => {
         <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
         <DownloadCvBtn
           onClick={downloadCv}
-          data-tooltip={`${translate.cvSizeText}: 63kb`}
+          data-tooltip={`${translate.cvSizeText}: 66 KB`}
           style={{backgroundColor: themeColor}}
         >
           <div className="button-wrapper">
