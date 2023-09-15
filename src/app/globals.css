@@ -119,26 +119,6 @@ a {
   border-radius: 5px;
 }
 
-/* .scrollbar::-webkit-scrollbar {
-  background-color: transparent;
-  width: 10px;
-} */
-
-/* .scrollbar-4e54fd::-webkit-scrollbar-thumb {
-  background-color: #4e54fd;
-  border-radius: 5px;
-}
-
-.scrollbar-35a777::-webkit-scrollbar-thumb {
-  background-color: #35a777;
-  border-radius: 5px;
-}
-
-.scrollbar-fd4e4e::-webkit-scrollbar-thumb {
-  background-color: #fd4e4e;
-  border-radius: 5px;
-} */
-
 button {
   user-select: none;
 }

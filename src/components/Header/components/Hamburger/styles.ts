@@ -25,7 +25,6 @@ export const HamburgerContainer = styled.div`
 `;
 
 export const LiItem = styled.li`
-  background-color: var(--mainColor);
   border-radius: 10px 0 0 10px;
   pointer-events: all;
   z-index: 1;
@@ -97,7 +96,6 @@ export const ToggleBtn = styled.div`
     height: 4px;
     width: 100%;
     border-radius: 10px;
-    background: var(--mainColor);
     &:nth-child(1) {
       transform-origin: 0% 0%;
       transition: transform 0.4s ease-in-out;

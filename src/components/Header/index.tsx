@@ -56,7 +56,7 @@ const Header: React.FC = () => {
 
   // background da navbar
   const handleScroll = React.useCallback(() => {
-    let pageY = window.pageYOffset;
+    let pageY = window.scrollY;
 
     setScrollUp(pageY <= 40);
   }, []);

@@ -2,6 +2,7 @@
 import { downloadCv } from "@/utils/cv";
 import { ToggleBtn, HamburgerContainer, LiItem, NavListMobile } from "./styles";
 import React from "react";
+import { useTheme } from "@/hooks/UseTheme";
 
 interface Props {
   navData: {
@@ -14,6 +15,7 @@ interface Props {
 const Hamburger = (props: Props) => {
   const [show, setShow] = React.useState(false);
   const liItemRef = React.useRef(null);
+  const { themeColor } = useTheme();
 
   const toggle = React.useCallback(() => {
     setShow((prev) => !prev);
@@ -51,6 +53,7 @@ const Hamburger = (props: Props) => {
           .map((_, i) => (
             <span
               key={i}
+              style={{ backgroundColor: themeColor }}
               id={`hamburger-btn-line-${i + 1}`}
               className={`line`}
             ></span>
@@ -66,6 +69,7 @@ const Hamburger = (props: Props) => {
                 style={{
                   display: document.body.offsetWidth > 1023 ? "none" : "block",
                   transitionDelay: `${i || 0}00ms`,
+                  backgroundColor: themeColor,
                 }}
                 key={i}
                 ref={liItemRef}
