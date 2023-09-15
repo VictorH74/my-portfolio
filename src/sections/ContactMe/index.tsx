@@ -100,7 +100,7 @@ interface InputProps {
 }
 
 const inputClassName =
-  "secondary-bg-color p-4 rounded-md outline-none focus:brightness-150 focus::shadow-lg secondary-font-color duration-200";
+  "bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light";
 
 const Input = ({ className, ...props }: InputProps) => (
   <input

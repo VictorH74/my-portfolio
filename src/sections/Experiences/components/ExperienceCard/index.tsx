@@ -13,7 +13,7 @@ const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 export default function ExperienceCard(props: Props) {
   const { themeColor } = useTheme();
   return (
-    <div className="secondary-bg-color py-6 px-5 grid  gap-[2px] rounded-md flex-1 basis-[400px]">
+    <div className="bg-custom-gray-dark py-6 px-5 grid  gap-[2px] rounded-md flex-1 basis-[400px]">
       <h1
         style={{ color: themeColor }}
         className={`${notoSans500.className} text-xl`}
@@ -25,9 +25,9 @@ export default function ExperienceCard(props: Props) {
       </p>
       <ul className="px-2">
         {props.paragraphs.map((p, i) => (
-          <li key={i} className="list-disc ml-4 ">
+          <li key={i} className="list-disc ml-4">
             <p
-              className={`${notoSans400.className} text-sm primary-font-color`}
+              className={`${notoSans400.className} text-sm text-stone-800 dark:text-custom-white`}
             >
               {p}
             </p>

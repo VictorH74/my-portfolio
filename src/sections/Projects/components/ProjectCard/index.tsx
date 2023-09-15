@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { memo, useId, useState } from "react";
 import LinkIcon from "@mui/icons-material/Link";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -172,7 +172,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           </h2>
 
           {project.link && (
-            <Link color={themeColor} href={project.link} >
+            <Link color={themeColor} href={project.link}>
               {translate.productionLinkText}&nbsp;&nbsp;
               <LinkIcon />
             </Link>
@@ -188,23 +188,24 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           )}
 
           <div>
-            <h3 className="text-xl mt-2 primary-font-color">{translate.technologiesTitle}</h3>
-            <div
-              className={`flex w-max gap-2 ${oddScreen900 && "float-right"}`}
-            >
+            <h3 className="text-xl mt-2 primary-font-color">
+              {translate.technologiesTitle}
+            </h3>
+            <ul className={`flex w-max gap-2 ${oddScreen900 && "float-right"} pt-1`}>
               {icons.map(
                 (icon) =>
                   icon && (
-                    <Image
-                      height={25}
-                      width={25}
-                      key={icon.id}
-                      src={icon.src}
-                      alt={`${icon.id} icon`}
-                    />
+                    <li key={icon.id}>
+                      <Image
+                        height={25}
+                        width={25}
+                        src={icon.src}
+                        alt={`${icon.id} icon`}
+                      />
+                    </li>
                   )
               )}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
@@ -212,12 +213,14 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   );
 };
 
-const Link: React.FC<{ children: React.ReactNode[]; href: string, color: string }> = (
-  props
-) => (
+const Link: React.FC<{
+  children: React.ReactNode[];
+  href: string;
+  color: string;
+}> = (props) => (
   <a
     href={props.href}
-    style={{color: props.color}}
+    style={{ color: props.color }}
     className=" relative duration-150"
     target="_blank"
     rel="noreferrer"
