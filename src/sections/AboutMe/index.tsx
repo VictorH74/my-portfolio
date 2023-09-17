@@ -36,6 +36,12 @@ const AboutMe = () => {
     about: string[];
   };
 
+  const lightTheme = window.matchMedia(
+    "(prefers-color-scheme: light)"
+  ).matches;
+
+  const paragraphFont = lightTheme ? notoSans400 : notoSans300
+
   return (
     <section id="about-me" className="pt-24">
       <h1
@@ -52,7 +58,7 @@ const AboutMe = () => {
         >
           <div className="paragraphs max-w-[800px] grid gap-4">
             {data.about.map((p, i) => (
-              <p className={`md:text-lg ${notoSans300.className} primary-font-color`} key={i}>
+              <p className={`md:text-lg ${paragraphFont.className} primary-font-color`} key={i}>
                 {p}
               </p>
             ))}
