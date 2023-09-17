@@ -26,8 +26,8 @@ const translations = {
 };
 
 const fieldDatas = [
-  { name: "nameField", type: "text", preClassName: "max-md:" },
-  { name: "emailField", type: "email", preClassName: "max-md:" },
+  { name: "nameField", type: "text", row: true },
+  { name: "emailField", type: "email", row: true },
   { name: "subjectField", type: "text" },
   { name: "messageField" },
 ];
@@ -75,7 +75,7 @@ export default function ContactMe() {
           return (
             <Input
               key={f.name}
-              className={`${f.preClassName || ""}col-span-2`}
+              className={`${f.row ? "max-md:col-span-2" : "col-span-2"}`}
               placeholder={translate[f.name as keyof typeof translate]}
               name={f.name}
             />

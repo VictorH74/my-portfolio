@@ -1,7 +1,11 @@
 import { useTheme } from "@/hooks/UseTheme";
 import React from "react";
+import Slider from "@mui/material/Slider";
+import Box from "@mui/material/Box";
+import { Language } from "@/types/language";
+import useLanguage from "@/hooks/UseLanguage";
 
-const colorBtns = [
+const colors = [
   {
     offSetClass: "top-[-53%] right-[1%]",
     color: "#4e54fd",
@@ -16,44 +20,74 @@ const colorBtns = [
   },
 ];
 
+const marks = (lang: Language) => {
+  return {
+    "pt-BR": [
+      {
+        value: 1,
+        label: "Azul",
+      },
+      {
+        value: 2,
+        label: "Verde",
+      },
+      {
+        value: 3,
+        label: "Vermelho",
+      },
+    ],
+    en: [
+      {
+        value: 1,
+        label: "Blue",
+      },
+      {
+        value: 2,
+        label: "Green",
+      },
+      {
+        value: 3,
+        label: "Red",
+      },
+    ],
+  }[lang];
+};
+
 export default function SwitchColorTheme() {
-  const [showColors, setShowColors] = React.useState(false);
+  const [showSliderMask, setShowSliderMask] = React.useState(false);
+  const lang = useLanguage();
   const { themeColor, setThemeColor } = useTheme();
 
-  const toggle = () => setShowColors((prev) => !prev);
-
-  const handleClick = (color: string) => {
-    toggle();
-    setThemeColor(color);
+  const handleChange = (_: Event, value: number | number[]) => {
+    setThemeColor(colors[(value as number) - 1].color);
   };
 
   return (
-    <div className="fixed w-9 h-9 aspect-square bottom-7 left-4">
-      <div className="relative w-full h-full">
-        <button
-          onClick={toggle}
-          className="absolute inset-0 aspect-square rounded-full rotatge-45 z-50"
-          style={{
-            background:
-              "linear-gradient(155deg, rgba(78,84,253,1) 28%, rgba(53,167,119,1) 56%, rgba(253,78,78,1) 82%)",
-            border: "1px solid " + themeColor,
-            transition: "200ms"
+    <div
+      className="fixed bottom-7 left-4"
+      onPointerDown={() => setShowSliderMask(true)}
+      onPointerLeave={() => setShowSliderMask(false)}
+    >
+      <Box height={100}>
+        <Slider
+          sx={{
+            color: "#41414145",
+            "& .MuiSlider-thumb": {
+              backgroundColor: themeColor,
+            },
+            "& .MuiSlider-valueLabel": {
+              color: themeColor,
+            },
           }}
+          marks={showSliderMask ? marks(lang) : undefined}
+          min={1}
+          max={3}
+          track={false}
+          orientation="vertical"
+          defaultValue={1}
+          onChange={handleChange}
         />
-
-        {colorBtns.map((b, i) => (
-          <button
-            key={b.color}
-            style={{ transitionDelay: i + "00ms", backgroundColor: b.color }}
-            onClick={() => handleClick(b.color)}
-            className={`absolute w-4 duration-150 aspect-square rounded-full hover:scale-150 ${
-              showColors
-                ? `opacity-1 ${b.offSetClass}`
-                : "opacity-0 pointer-events-none top-1/3 right-1/3"
-            }`}
-          />
-        ))}
-      </div>
+      </Box>
     </div>
   );
 }

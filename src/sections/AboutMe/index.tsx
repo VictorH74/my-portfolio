@@ -58,7 +58,7 @@ const AboutMe = () => {
         >
           <div className="paragraphs max-w-[800px] grid gap-4">
             {data.about.map((p, i) => (
-              <p className={`md:text-base ${paragraphFont.className} primary-font-color`} key={i}>
+              <p className={`text-base ${paragraphFont.className} primary-font-color`} key={i}>
                 {p}
               </p>
             ))}
@@ -98,7 +98,7 @@ const AboutMe = () => {
           style={{backgroundColor: themeColor}}
         >
           <div className="button-wrapper">
-            <div className="text">{translate.downloadResumeBtnText}</div>
+            <div className="text text-base">{translate.downloadResumeBtnText}</div>
             <span className="icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
