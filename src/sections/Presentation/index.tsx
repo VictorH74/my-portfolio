@@ -5,7 +5,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { Noto_Sans } from "next/font/google";
 import React from "react";
 
-const notoSans = Noto_Sans({ weight: "300", subsets: ["latin"] });
+const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
 const translations = {
   "pt-BR": {
@@ -39,7 +39,7 @@ const Presentation = () => {
           <h1
             key={i}
             style={{ color: themeColor }}
-            className={`emphasy text-6xl ${textLeading} max-sm:text-5xl max-[430px]:text-[2.2rem] ${notoSans.className} `}
+            className={`emphasy uppercase text-5xl ${textLeading} max-sm:text-5xl max-[430px]:text-[2.2rem] ${notoSans.className} `}
           >
             {v}
           </h1>
@@ -48,7 +48,7 @@ const Presentation = () => {
       return (
         <h2
           key={i}
-          className={`mr-2 text-5xl max-sm:text-[2.5rem] ${textLeading} max-[430px]:text-[1.7rem] primary-font-color ${notoSans.className} `}
+          className={`mr-2 text-4xl max-sm:text-[2.5rem] uppercase ${textLeading} max-[430px]:text-[1.7rem] primary-font-color ${notoSans.className} `}
         >
           {v}
         </h2>

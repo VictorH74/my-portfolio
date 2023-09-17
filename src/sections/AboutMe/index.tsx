@@ -58,7 +58,7 @@ const AboutMe = () => {
         >
           <div className="paragraphs max-w-[800px] grid gap-4">
             {data.about.map((p, i) => (
-              <p className={`md:text-lg ${paragraphFont.className} primary-font-color`} key={i}>
+              <p className={`md:text-base ${paragraphFont.className} primary-font-color`} key={i}>
                 {p}
               </p>
             ))}

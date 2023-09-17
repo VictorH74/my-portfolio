@@ -3,17 +3,17 @@ import React, { memo, useId, useState } from "react";
 import LinkIcon from "@mui/icons-material/Link";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import useTechnologies from "@/hooks/UseTechnologies";
 import Loading from "@/components/Loading";
 import Image from "next/image";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
+import useSkills from "@/hooks/UseSkills";
 
 export interface Project {
   title: string;
   image?: string;
   description: { PT: string; EN: string };
-  technologies: string[];
+  skills: string[];
   link?: string;
   repository?: string;
   videoLink?: string;
@@ -30,21 +30,21 @@ const randomVideoUrl =
 
 const translations = (projectDescription: { PT: string; EN: string }) => ({
   "pt-BR": {
-    technologiesTitle: "Tecnologias usadas",
-    productionLinkText: "Projeto em produção",
-    repoLinkText: "Repositório",
+    skillsTitle: "Habilidades usada",
+    productionLinkText: "Demostração",
+    repoLinkText: "Repositório do github",
     projectDescription: projectDescription.PT,
   },
   en: {
-    technologiesTitle: "Technologies used",
-    productionLinkText: "Project in production",
-    repoLinkText: "Repository",
+    skillsTitle: "Skills used",
+    productionLinkText: "Demo",
+    repoLinkText: "Github repository",
     projectDescription: projectDescription.EN,
   },
 });
 
 const ProjectCard: React.FC<Props> = ({ index, project }) => {
-  const { technologieData } = useTechnologies();
+  const { skillData } = useSkills();
   const [video, setShowVideo] = useState(false);
 
   const [loadingImg, setLoadingImg] = useState(true);
@@ -53,8 +53,8 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   const { themeColor } = useTheme();
   const translate = translations(project.description)[lang];
 
-  const icons = project.technologies.map((name) =>
-    technologieData.find((icon) => icon.id === name)
+  const icons = project.skills.map((name) =>
+    skillData.find((icon) => icon.id === name)
   );
 
   const showVideo = () => setShowVideo(true);
@@ -93,7 +93,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
         data-aos-once="true"
       >
         <div
-          className={`relative overflow-hidden lg:w-1/2 rounded-xl w-full ${
+          className={`relative overflow-hidden lg:w-1/2 rounded-xl w-full shadow-xl ${
             !!project.image
               ? ""
               : `after:absolute ${
@@ -189,7 +189,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
           <div>
             <h3 className="text-xl mt-2 primary-font-color">
-              {translate.technologiesTitle}
+              {translate.skillsTitle}
             </h3>
             <ul className={`flex w-max gap-2 ${oddScreen900 && "float-right"} pt-1`}>
               {icons.map(

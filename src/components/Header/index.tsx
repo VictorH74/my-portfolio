@@ -109,14 +109,17 @@ const Header: React.FC = () => {
           items-center
           h-fit
           duration-300
+          uppercase
           ${scrollUp ? "bg-transparent" : "bg-[#00000055]"}
         `}
       >
         <h1
-          style={{ color: themeColor }}
-          className={`grow text-4xl shrink-0 basis-auto line-through z-[9910] select-none ${raleway.className}`}
+          
+          className={`grow text-4xl shrink-0 basis-auto  z-[9910] select-none`}
         >
-          VH
+          <span className="primary-font-color">&lt;</span>{" "}
+          <span className={`line-through  ${raleway.className}`} style={{ color: themeColor }}>vh</span>{" "}
+          <span className="primary-font-color">/&gt;</span>
         </h1>
         <div
           className={`${wapperDisplay} absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}

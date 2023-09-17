@@ -16,52 +16,44 @@ const colorBtns = [
   },
 ];
 
-// const colorClasses = colorBtns.map((c) => "scrollbar-" + c.color.slice(1));
-
 export default function SwitchColorTheme() {
   const [showColors, setShowColors] = React.useState(false);
-  const { setThemeColor } = useTheme();
+  const { themeColor, setThemeColor } = useTheme();
 
   const toggle = () => setShowColors((prev) => !prev);
 
   const handleClick = (color: string) => {
     toggle();
     setThemeColor(color);
-
-    // change body scrollbar color
-    // NOT WORKING 🤔
-    // const bodyRef = document.body;
-    // colorClasses.forEach((c) => {
-    //   if (bodyRef.classList.contains(c)) {
-    //     bodyRef.classList.remove(c);
-    //   }
-    // });
-    // bodyRef.classList.add(`scrollbar-${color.slice(1)}`);
   };
 
   return (
-    <div className="fixed w-8 aspect-square bottom-7 left-4">
-      <button
-        onClick={toggle}
-        className="relative w-full h-full aspect-square rounded-full rotatge-45 z-50"
-        style={{
-          background:
-            "linear-gradient(155deg, rgba(78,84,253,1) 28%, rgba(53,167,119,1) 56%, rgba(253,78,78,1) 82%)",
-        }}
-      >
+    <div className="fixed w-9 h-9 aspect-square bottom-7 left-4">
+      <div className="relative w-full h-full">
+        <button
+          onClick={toggle}
+          className="absolute inset-0 aspect-square rounded-full rotatge-45 z-50"
+          style={{
+            background:
+              "linear-gradient(155deg, rgba(78,84,253,1) 28%, rgba(53,167,119,1) 56%, rgba(253,78,78,1) 82%)",
+            border: "1px solid " + themeColor,
+            transition: "200ms"
+          }}
+        />
+
         {colorBtns.map((b, i) => (
           <button
             key={b.color}
             style={{ transitionDelay: i + "00ms", backgroundColor: b.color }}
             onClick={() => handleClick(b.color)}
-            className={`absolute w-4 duration-150 aspect-square rounded-full hover:scale-125 ${
+            className={`absolute w-4 duration-150 aspect-square rounded-full hover:scale-150 ${
               showColors
                 ? `opacity-1 ${b.offSetClass}`
                 : "opacity-0 pointer-events-none top-1/3 right-1/3"
             }`}
           />
         ))}
-      </button>
+      </div>
     </div>
   );
 }

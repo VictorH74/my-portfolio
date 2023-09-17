@@ -1,11 +1,11 @@
 "use client";
 import Header from "@/components/Header";
-import TechnologiesProvider from "@/contexts/TechnologiesContext";
+import SkillsProvider from "@/contexts/SkillsContext";
 import AboutMe from "@/sections/AboutMe";
 import Contacts from "@/sections/Contacts";
 import Presentation from "@/sections/Presentation";
 import Projects from "@/sections/Projects";
-import Technologies from "@/sections/Technologies";
+import Skills from "@/sections/Skills";
 import Aos from "aos";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -35,14 +35,14 @@ export default function Home() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TechnologiesProvider>
+      <SkillsProvider>
         <ThemeProvider>
           <>
             <Header />
             <main className="scroll-smooth blue-scrollbar">
               <Presentation />
               <AboutMe />
-              <Technologies />
+              <Skills />
               <Experiences />
               <Projects />
               <ContactMe />
@@ -51,7 +51,7 @@ export default function Home() {
             <SwitchColorTheme />
           </>
         </ThemeProvider>
-      </TechnologiesProvider>
+      </SkillsProvider>
     </QueryClientProvider>
   );
 }

@@ -6,7 +6,7 @@ export const navTranslations: TranslationLang = {
     data: [
       { label: "Boas-vindas", to: "" },
       { label: "Sobre mim", to: "about-me" },
-      { label: "Tecnologias", to: "technologies" },
+      { label: "Habilidades", to: "skills" },
       { label: "Experiências", to: "experiences" },
       { label: "Projetos", to: "projects" },
       { label: "Fale Comigo", to: "contact-me" },
@@ -19,7 +19,7 @@ export const navTranslations: TranslationLang = {
     data: [
       { label: "Welcome", to: "" },
       { label: "About Me", to: "about-me" },
-      { label: "Technologies", to: "technologies" },
+      { label: "Skills", to: "skills" },
       { label: "Experiences", to: "experiences" },
       { label: "Projects", to: "projects" },
       { label: "Contact Me", to: "contact-me" },
