@@ -1,4 +1,4 @@
-export const downloadCv = () => {
+export const downloadResume = () => {
     fetch('VICTOR ALMEIDA.pdf').then(response => {
         response.blob().then(blob => {
             // Creating new object of PDF file

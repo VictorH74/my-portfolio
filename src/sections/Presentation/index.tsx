@@ -19,7 +19,7 @@ const translations = {
     hello: "Hello!",
     iAm: "I'm Victor Almeida",
     a: ["A", "Full-Stack", "Developer", "Junior"],
-    text_3: "A Software Engineer Junior",
+    text_3: "A Junior Software Developer",
     text_4: "@ FullStack",
   },
 };

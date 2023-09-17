@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 import useWindowSize from "@/hooks/UseWindowsSize";
-import { downloadCv } from "@/utils/cv";
+import { downloadResume } from "@/utils/resume";
 import Hamburger from "./components/Hamburger";
 import { navTranslations } from "./data";
 import { Noto_Sans, Raleway } from "next/font/google";
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     height: 0,
     left: 0,
   });
-  const downloadCvBtnRef = React.useRef(null);
+  const downloadResumeBtnRef = React.useRef(null);
   const size = useWindowSize();
   const { themeColor } = useTheme();
   const lang = useLanguage();
@@ -42,13 +42,13 @@ const Header: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (downloadCvBtnRef?.current) {
+    if (downloadResumeBtnRef?.current) {
       setTimeout(() => {
         moveWrapperToDownloadBtn();
         setWapperDisplay("block");
       }, 800);
     }
-  }, [downloadCvBtnRef]);
+  }, [downloadResumeBtnRef]);
 
   React.useEffect(() => {
     moveWrapperToDownloadBtn();
@@ -86,8 +86,8 @@ const Header: React.FC = () => {
   );
 
   const moveWrapperToDownloadBtn = React.useCallback(() => {
-    if (!downloadCvBtnRef?.current) return;
-    let li = downloadCvBtnRef.current as HTMLElement;
+    if (!downloadResumeBtnRef?.current) return;
+    let li = downloadResumeBtnRef.current as HTMLElement;
 
     setWrapperDimensions({
       ...getLiBoundingClientRect(li),
@@ -153,7 +153,7 @@ const Header: React.FC = () => {
                   key={i}
                   onClick={
                     last
-                      ? downloadCv
+                      ? downloadResume
                       : () => window.location.replace(`#${data.to || ""}`)
                   }
                   onMouseOver={handleMouseOver}
@@ -161,10 +161,10 @@ const Header: React.FC = () => {
                   {last ? (
                     <button
                       className="uppercase p-[10px] rounded-[20px]"
-                      ref={downloadCvBtnRef}
-                      onClick={downloadCv}
+                      ref={downloadResumeBtnRef}
+                      onClick={downloadResume}
                     >
-                      {translate.downloadCvBtnInnerText}
+                      {translate.downloadResumeBtnInnerText}
                     </button>
                   ) : (
                     data.label
@@ -176,7 +176,7 @@ const Header: React.FC = () => {
         </nav>
         <Hamburger
           navData={navDataArray}
-          downloadCvBtnInnerText={translate.downloadCvBtnInnerText}
+          downloadResumeBtnInnerText={translate.downloadResumeBtnInnerText}
         />
       </div>
     </header>

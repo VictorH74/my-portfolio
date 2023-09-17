@@ -1,12 +1,12 @@
 "use client";
 import MeJPG from "@/assets/me.jpg";
 import { aboutMeData } from "./data";
-import { downloadCv } from "@/utils/cv";
 import Image from "next/image";
 import { Noto_Sans } from "next/font/google";
-import { BtnContainer, DownloadCvBtn, Line } from "./styles";
+import { BtnContainer, DownloadResumeBtn, Line } from "./styles";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
+import { downloadResume } from "@/utils/resume";
 
 const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const notoSans300 = Noto_Sans({ weight: "300", subsets: ["latin"] });
@@ -15,14 +15,14 @@ const translations = {
   "pt-BR": {
     title: "Me conheça",
     aboutMeData: aboutMeData.PT,
-    downloadCvText: "Baixar Currículo",
-    cvSizeText: "Tamanho",
+    downloadResumeBtnText: "Baixar Currículo",
+    resumeSizeText: "Tamanho",
   },
   en: {
     title: "About Me",
     aboutMeData: aboutMeData.EN,
-    downloadCvText: "Download CV",
-    cvSizeText: "Size",
+    downloadResumeBtnText: "Download Resume",
+    resumeSizeText: "Size",
   },
 };
 
@@ -92,13 +92,13 @@ const AboutMe = () => {
 
       <BtnContainer>
         <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
-        <DownloadCvBtn
-          onClick={downloadCv}
-          data-tooltip={`${translate.cvSizeText}: 66 KB`}
+        <DownloadResumeBtn
+          onClick={downloadResume}
+          data-tooltip={`${translate.resumeSizeText}: 66 KB`}
           style={{backgroundColor: themeColor}}
         >
           <div className="button-wrapper">
-            <div className="text">{translate.downloadCvText}</div>
+            <div className="text">{translate.downloadResumeBtnText}</div>
             <span className="icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +120,7 @@ const AboutMe = () => {
               </svg>
             </span>
           </div>
-        </DownloadCvBtn >
+        </DownloadResumeBtn >
         <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
       </BtnContainer>
     </section>

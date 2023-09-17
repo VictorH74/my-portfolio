@@ -11,7 +11,7 @@ export const BtnContainer = styled.div`
     }
 `;
 
-export const DownloadCvBtn = styled.div`
+export const DownloadResumeBtn = styled.div`
     --width: 180px;
     --height: 55px;
     --tooltip-height: 35px;

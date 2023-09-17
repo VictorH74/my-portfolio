@@ -1,5 +1,5 @@
 "use client";
-import { downloadCv } from "@/utils/cv";
+import { downloadResume } from "@/utils/resume";
 import { ToggleBtn, HamburgerContainer, LiItem, NavListMobile } from "./styles";
 import React from "react";
 import { useTheme } from "@/hooks/UseTheme";
@@ -9,7 +9,7 @@ interface Props {
     label: string;
     to: string;
   }[];
-  downloadCvBtnInnerText: string;
+  downloadResumeBtnInnerText: string;
 }
 
 const Hamburger = (props: Props) => {
@@ -75,11 +75,11 @@ const Hamburger = (props: Props) => {
                 ref={liItemRef}
                 onClick={
                   last
-                    ? downloadCv
+                    ? downloadResume
                     : () => window.location.replace(`#${data.to || ""}`)
                 }
               >
-                {last ? props.downloadCvBtnInnerText : data.label}
+                {last ? props.downloadResumeBtnInnerText : data.label}
               </LiItem>
             );
           })}
