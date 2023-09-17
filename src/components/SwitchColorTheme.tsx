@@ -2,89 +2,39 @@ import { useTheme } from "@/hooks/UseTheme";
 import React from "react";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
-import { Language } from "@/types/language";
-import useLanguage from "@/hooks/UseLanguage";
 
-const colors = [
-  {
-    offSetClass: "top-[-53%] right-[1%]",
-    color: "#4e54fd",
-  },
-  {
-    offSetClass: "top-[-9%] right-[-50%]",
-    color: "#35a777",
-  },
-  {
-    offSetClass: "top-[55%] right-[-52%]",
-    color: "#fd4e4e",
-  },
-];
-
-const marks = (lang: Language) => {
-  return {
-    "pt-BR": [
-      {
-        value: 1,
-        label: "Azul",
-      },
-      {
-        value: 2,
-        label: "Verde",
-      },
-      {
-        value: 3,
-        label: "Vermelho",
-      },
-    ],
-    en: [
-      {
-        value: 1,
-        label: "Blue",
-      },
-      {
-        value: 2,
-        label: "Green",
-      },
-      {
-        value: 3,
-        label: "Red",
-      },
-    ],
-  }[lang];
-};
+const colors = ["#4e54fd", "#35a777", "#fd4e4e"];
 
 export default function SwitchColorTheme() {
-  const [showSliderMask, setShowSliderMask] = React.useState(false);
-  const lang = useLanguage();
   const { themeColor, setThemeColor } = useTheme();
+  const [sliderValue, setSliderValue] = React.useState(2);
 
   const handleChange = (_: Event, value: number | number[]) => {
-    setThemeColor(colors[(value as number) - 1].color);
+    setThemeColor(colors[(value as number) - 1]);
   };
 
+  React.useEffect(() => {
+    setSliderValue(colors.indexOf(themeColor) + 1);
+  }, [themeColor]);
+
+  const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
+
   return (
-    <div
-      className="fixed bottom-7 left-4"
-      onPointerDown={() => setShowSliderMask(true)}
-      onPointerLeave={() => setShowSliderMask(false)}
-    >
+    <div className="fixed bottom-7 left-4">
       <Box height={100}>
         <Slider
           sx={{
-            color: "#41414145",
+            color: lightTheme ? "#414141b0" : "#d8d8d845",
             "& .MuiSlider-thumb": {
               backgroundColor: themeColor,
             },
-            "& .MuiSlider-valueLabel": {
-              color: themeColor,
-            },
           }}
-          marks={showSliderMask ? marks(lang) : undefined}
+          marks={true}
           min={1}
           max={3}
           track={false}
           orientation="vertical"
-          defaultValue={1}
+          value={sliderValue}
           onChange={handleChange}
         />
       </Box>

@@ -39,7 +39,7 @@ const Presentation = () => {
           <h1
             key={i}
             style={{ color: themeColor }}
-            className={`emphasy uppercase text-5xl ${textLeading} max-sm:text-5xl max-[430px]:text-[2.2rem] ${notoSans.className} `}
+            className={`emphasy max-sm:my-2 uppercase text-5xl ${textLeading} max-sm:text-5xl max-[430px]:text-[2.2rem] ${notoSans.className} `}
           >
             {v}
           </h1>
@@ -48,7 +48,7 @@ const Presentation = () => {
       return (
         <h2
           key={i}
-          className={`mr-2 text-4xl max-sm:text-[2.5rem] uppercase ${textLeading} max-[430px]:text-[1.7rem] primary-font-color ${notoSans.className} `}
+          className={`mr-2 text-4xl max-sm:my-2 max-sm:text-[2.5rem] uppercase ${textLeading} max-[430px]:text-[1.7rem] primary-font-color ${notoSans.className} `}
         >
           {v}
         </h2>
