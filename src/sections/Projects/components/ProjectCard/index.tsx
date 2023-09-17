@@ -100,7 +100,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                   window.navigator.language === "pt-BR"
                     ? "after:content-['Imagem-Aleatória']"
                     : "after:content-['Random-Image']"
-                } after:inset-x-0 after:bottom-14 after:h-16 after:text-white after:bg-main-trasnparent-color after:z-[3] after:grid after:place-items-center`
+                } after:inset-x-0 after:bottom-14 after:h-16 after:text-white after:z-[3] after:grid after:place-items-center`
           }`}
         >
           {!!project.videoLink && (

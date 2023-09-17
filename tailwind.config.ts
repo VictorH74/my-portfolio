@@ -5,14 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        
-        "main-color": "#4e54fd",
         "custom-white": "#ececec",
         "custom-gray-dark": "#7777773d",
         "custom-gray-dark-2": "#303030",
         "custom-gray-light": "#5a5a5a",
         "custom-zinc-light": "#9CA3AF",
-        "main-trasnparent-color": "#4d4dcd50",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
