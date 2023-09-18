@@ -36,7 +36,7 @@ const translations = {
   },
   en: {
     title: "Contact Me",
-    nameField: "Submit",
+    nameField: "Full name",
     emailField: "E-mail Address",
     subjectField: "Subject Field",
     messageField: "Message Field",
@@ -101,11 +101,6 @@ export default function ContactMe() {
       <form
         className="grid gap-3 grid-cols-2"
         onSubmit={handleSubmit(onSubmit)}
-        onClick={
-          process.env.NODE_ENV === "production"
-            ? () => alert("Esse formulário não está funcional no momento")
-            : undefined
-        }
       >
         <h1 className="section-title col-span-2">{translate.title}</h1>
         {fieldDatas.map((f) => {
