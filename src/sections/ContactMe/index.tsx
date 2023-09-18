@@ -13,6 +13,8 @@ import {
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertColor, AlertProps } from "@mui/material/Alert";
 import Loading from "@/components/Loading";
+import { contactMeSection } from "@/utils/translations";
+import { fields } from "./data";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -23,28 +25,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 const notoSans = Noto_Sans({ subsets: ["latin"], weight: "400" });
 const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light`;
-const translations = {
-  "pt-BR": {
-    title: "Entre em Contato",
-    nameField: "Nome completo",
-    emailField: "Endereço de Email",
-    subjectField: "Assunto",
-    messageField: "Campo de Messagem",
-    submitText: "Enviar",
-    successSnackbarText: "Email enviado!",
-    errorSnackbarText: "Houve algum erro ao enviar email",
-  },
-  en: {
-    title: "Contact Me",
-    nameField: "Full name",
-    emailField: "E-mail Address",
-    subjectField: "Subject Field",
-    messageField: "Message Field",
-    submitText: "Submit",
-    successSnackbarText: "Email sent!",
-    errorSnackbarText: "There was an error sending email",
-  },
-};
 
 type FormValues = {
   nameField: string;
@@ -53,16 +33,9 @@ type FormValues = {
   messageField: string;
 };
 
-const fieldDatas = [
-  { name: "nameField", type: "text", row: true },
-  { name: "emailField", type: "email", row: true },
-  { name: "subjectField", type: "text" },
-  { name: "messageField" },
-];
-
 export default function ContactMe() {
   const lang = useLanguage();
-  const translate = translations[lang];
+  const translate = contactMeSection[lang];
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = React.useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
@@ -103,7 +76,7 @@ export default function ContactMe() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="section-title col-span-2">{translate.title}</h1>
-        {fieldDatas.map((f) => {
+        {fields.map((f) => {
           if (f.name === "messageField")
             return (
               <textarea
@@ -135,6 +108,7 @@ export default function ContactMe() {
           className={`${notoSans.className} p-3 rounded-md text-base uppercase tracking-wider hover:brightness-125 duration-150 col-span-2 grid place-items-center`}
           type="submit"
           style={{ backgroundColor: themeColor }}
+          disabled={submitting}
         >
           {submitting ? (
             <Loading color="#fff" width={10} height={24} />

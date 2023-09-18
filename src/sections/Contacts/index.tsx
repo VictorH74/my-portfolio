@@ -1,34 +1,20 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import React from "react";
 import { contactIcons } from "./data";
 import Image from "next/image";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
-
-const translations = {
-  "pt-BR": {
-    time: "Tempo decorrido",
-    footerParagraph: "criado por Victor Almeida em 2022",
-    seconds: "segundos",
-    minutes: "minutos",
-  },
-  en: {
-    time: "Elapsed time",
-    footerParagraph: "create by Victor Almeida in 2022",
-    seconds: "seconds",
-    minutes: "minutes",
-  },
-};
+import { contactsSection } from "@/utils/translations";
 
 const Contacts = () => {
-  const [time, setTime] = useState(0);
-  const [reachedBottom, setReachedBottom] = useState(false);
+  const [time, setTime] = React.useState(0);
+  const [reachedBottom, setReachedBottom] = React.useState(false);
   const { themeColor } = useTheme();
-  const endOfPageRef = useRef(null);
+  const endOfPageRef = React.useRef(null);
   const lang = useLanguage();
-  const translate = translations[lang];
+  const translate = contactsSection[lang];
 
-  useEffect(() => {
+  React.useEffect(() => {
     const intervalId = setInterval(() => {
       if (!reachedBottom) {
         setTime(time + 1);
@@ -38,7 +24,7 @@ const Contacts = () => {
     return () => clearInterval(intervalId);
   }, [time, reachedBottom]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (endOfPageRef?.current) {
       const { offsetTop } = endOfPageRef.current;
       if (window.innerHeight + window.scrollY >= offsetTop) {
@@ -71,7 +57,9 @@ const Contacts = () => {
             reachedBottom ? "opacity-100 scale-100" : "opacity-0 scale-50"
           }`}
         >
-          <h1 style={{color: themeColor}} className="text-3xl">THANKS FOR SCROLLING!</h1>
+          <h1 style={{ color: themeColor }} className="text-3xl">
+            THANKS FOR SCROLLING!
+          </h1>
           <p className="mt-7 secondary-font-color">
             {translate.time}: {formatTime(time)}
           </p>
@@ -127,10 +115,12 @@ const Contacts = () => {
           ))}
         </div>
       </section>
-      <div style={{backgroundColor: themeColor}} className="h-[2px] mb-3" />
+      <div style={{ backgroundColor: themeColor }} className="h-[2px] mb-3" />
       <footer className="mt-4">
         {" "}
-        <p className="secondary-font-color">&copy; {translate.footerParagraph}</p>{" "}
+        <p className="secondary-font-color">
+          &copy; {translate.footerParagraph}
+        </p>{" "}
       </footer>
       <div ref={endOfPageRef} />
     </div>

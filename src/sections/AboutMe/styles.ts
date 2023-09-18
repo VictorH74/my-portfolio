@@ -1,16 +1,5 @@
 import styled from "styled-components";
 
-export const BtnContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-
-    & .btn-container-line{
-        flex: 1 1 auto;
-    }
-`;
-
 export const DownloadResumeBtn = styled.div`
     --width: 180px;
     --height: 55px;
@@ -126,10 +115,4 @@ export const DownloadResumeBtn = styled.div`
     &:hover:before {
         bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
     }
-`;
-
-export const Line = styled.div`
-    height: 2px;
-    background: var(--mainColor);
-    margin: 20px 0;
 `;

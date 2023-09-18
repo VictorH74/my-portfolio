@@ -1,6 +1,5 @@
 "use client";
 import { downloadResume } from "@/utils/resume";
-import { ToggleBtn, HamburgerContainer, LiItem, NavListMobile } from "./styles";
 import React from "react";
 import { useTheme } from "@/hooks/UseTheme";
 
@@ -21,55 +20,43 @@ const Hamburger = (props: Props) => {
     setShow((prev) => !prev);
   }, []);
 
-  React.useEffect(() => {
-    const liElements = document.getElementsByClassName("li-item");
-    const hamburgerBtnLine1 = document.getElementById("hamburger-btn-line-1");
-    const hamburgerBtnLine2 = document.getElementById("hamburger-btn-line-2");
-    const hamburgerBtnLine3 = document.getElementById("hamburger-btn-line-3");
-
-    if (show) {
-      for (let i = 0; i < liElements.length; i++) {
-        liElements[i].classList.add("opened-li");
-      }
-
-      hamburgerBtnLine1?.classList.add("line-40deg");
-      hamburgerBtnLine2?.classList.add("line-0-scale-y");
-      hamburgerBtnLine3?.classList.add("line--40deg");
-    } else {
-      for (let i = 0; i < liElements.length; i++) {
-        liElements[i].classList.remove("opened-li");
-      }
-      hamburgerBtnLine1?.classList.remove("line-40deg");
-      hamburgerBtnLine2?.classList.remove("line-0-scale-y");
-      hamburgerBtnLine3?.classList.remove("line--40deg");
-    }
-  }, [show]);
-
   return (
-    <HamburgerContainer>
-      <ToggleBtn id="hamburger-btn" onClick={toggle}>
+    <div>
+      <div className="cursor-pointer h-7 w-8 grid gap-[7px]" onClick={toggle}>
         {Array(3)
           .fill(undefined)
           .map((_, i) => (
             <span
               key={i}
               style={{ backgroundColor: themeColor }}
-              id={`hamburger-btn-line-${i + 1}`}
-              className={`line`}
+              className={`h-1 w-full rounded-xl ${
+                [0, 2].includes(i) ? "origin-left duration-300" : "duration-150"
+              } ${
+                show
+                  ? i === 0
+                    ? "rotate-45"
+                    : i === 1
+                    ? "scale-0"
+                    : "-rotate-45"
+                  : ""
+              }`}
             ></span>
           ))}
-      </ToggleBtn>
-      <NavListMobile className="nav-list">
+      </div>
+      <div className="fixed top-24 -right-5 pointer-events-none">
         <ul className="nav-ul">
           {props.navData.map((data, i) => {
             const last = i === props.navData.length - 1;
             return (
-              <LiItem
-                className="li-item"
+              <li
+                className={`li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 ${
+                  show ? "translate-x-0" : "translate-x-[101%]"
+                }`}
                 style={{
-                  display: document.body.offsetWidth > 1023 ? "none" : "block",
                   transitionDelay: `${i || 0}00ms`,
-                  backgroundColor: themeColor,
+                  background: last
+                    ? "linear-gradient(30deg, rgba(181, 22, 212, 1) 20%, rgba(77, 77, 205, 1) 100%)"
+                    : themeColor,
                 }}
                 key={i}
                 ref={liItemRef}
@@ -80,12 +67,12 @@ const Hamburger = (props: Props) => {
                 }
               >
                 {last ? props.downloadResumeBtnInnerText : data.label}
-              </LiItem>
+              </li>
             );
           })}
         </ul>
-      </NavListMobile>
-    </HamburgerContainer>
+      </div>
+    </div>
   );
 };
 

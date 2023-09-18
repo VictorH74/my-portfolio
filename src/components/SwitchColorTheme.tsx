@@ -20,7 +20,7 @@ export default function SwitchColorTheme() {
   const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
 
   return (
-    <div className="fixed bottom-7 left-4">
+    <div className="fixed bottom-10 left-4">
       <Box height={100}>
         <Slider
           sx={{

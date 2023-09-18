@@ -19,8 +19,8 @@ const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
 const Header: React.FC = () => {
   const [scrollUp, setScrollUp] = React.useState(true);
-  const [wapperDisplay, setWapperDisplay] = React.useState("hidden");
-  const [wapperIn, setWapperIn] = React.useState("");
+  const [wrapperDisplay, setWrapperDisplay] = React.useState("hidden");
+  const [wrappedLI, setWrappedLI] = React.useState("");
   const [wrapperDimensions, setWrapperDimensions] = React.useState({
     width: 0,
     height: 0,
@@ -45,12 +45,13 @@ const Header: React.FC = () => {
     if (downloadResumeBtnRef?.current) {
       setTimeout(() => {
         moveWrapperToDownloadBtn();
-        setWapperDisplay("block");
+        setWrapperDisplay("block");
       }, 800);
     }
   }, [downloadResumeBtnRef]);
 
   React.useEffect(() => {
+    if (size[0] <= 1100) return;
     moveWrapperToDownloadBtn();
   }, [size]);
 
@@ -61,39 +62,30 @@ const Header: React.FC = () => {
     setScrollUp(pageY <= 40);
   }, []);
 
-  const getLiBoundingClientRect = (li: HTMLElement) => {
+  const changeWrapperPosition = (li: HTMLElement, wrappedLI: string) => {
     const { width, height } = li.closest("li")?.getBoundingClientRect() || {
       width: 0,
       height: 0,
     };
-    return { width, height };
+    setWrappedLI(wrappedLI);
+    setWrapperDimensions({
+      width,
+      height,
+      left: li.offsetLeft,
+    });
   };
 
   const handleMouseOver = React.useCallback(
     (e: React.MouseEvent<HTMLLIElement>) => {
       const li = e?.currentTarget;
-
-      if (li) {
-        console.log(li.id);
-        setWapperIn(li.id);
-        setWrapperDimensions({
-          ...getLiBoundingClientRect(li),
-          left: li.offsetLeft,
-        });
-      }
+      changeWrapperPosition(li, li.id);
     },
     []
   );
 
   const moveWrapperToDownloadBtn = React.useCallback(() => {
     if (!downloadResumeBtnRef?.current) return;
-    let li = downloadResumeBtnRef.current as HTMLElement;
-
-    setWrapperDimensions({
-      ...getLiBoundingClientRect(li),
-      left: li.offsetLeft,
-    });
-    setWapperIn("li-download-btn");
+    changeWrapperPosition(downloadResumeBtnRef.current, "li-download-btn");
   }, []);
 
   return (
@@ -114,27 +106,41 @@ const Header: React.FC = () => {
         `}
       >
         <h1
-          
           className={`grow text-4xl shrink-0 basis-auto  z-[9910] select-none`}
         >
-          <span className={scrollUp ? "primary-font-color" : "text-custom-white"}>&lt;</span>{" "}
-          <span className={`line-through  ${raleway.className}`} style={{ color: themeColor }}>vh</span>{" "}
-          <span className={scrollUp ? "primary-font-color" : "text-custom-white"}>/&gt;</span>
+          <span
+            className={scrollUp ? "primary-font-color" : "text-custom-white"}
+          >
+            &lt;
+          </span>{" "}
+          <span
+            className={`line-through  ${raleway.className}`}
+            style={{ color: themeColor }}
+          >
+            vh
+          </span>{" "}
+          <span
+            className={scrollUp ? "primary-font-color" : "text-custom-white"}
+          >
+            /&gt;
+          </span>
         </h1>
-        <div
-          className={`${wapperDisplay} absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
-          style={{ ...wrapperDimensions, backgroundColor: themeColor }}
-        />
-        <nav
-          className="max-lg:hidden z-[4]"
-          onMouseOut={moveWrapperToDownloadBtn}
-        >
-          <ul className="flex flex-wrap items-center py-1">
-            {navDataArray.map((data, i) => {
-              const last = i === navDataArray.length - 1;
-              return (
-                <li
-                  className={`
+        {size[0] > 1100 ? (
+          <>
+            <div
+              className={`${wrapperDisplay} absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
+              style={{ ...wrapperDimensions, backgroundColor: themeColor }}
+            />
+            <nav
+              className="max-lg:hidden z-[4]"
+              onMouseOut={moveWrapperToDownloadBtn}
+            >
+              <ul className="flex flex-wrap items-center py-1">
+                {navDataArray.map((data, i) => {
+                  const last = i === navDataArray.length - 1;
+                  return (
+                    <li
+                      className={`
                     cursor-pointer 
                     list-none 
                     ${last ? "p-0" : "p-[10px]"}
@@ -146,41 +152,44 @@ const Header: React.FC = () => {
                     ${notoSans.className}
                     ${
                       scrollUp
-                        ? wapperIn === "li-" + data.to
+                        ? wrappedLI === "li-" + data.to
                           ? "text-[#ececec]"
                           : "primary-font-color"
                         : "text-[#ececec]"
                     }
                   `}
-                  id={`li-${data.to}`}
-                  key={i}
-                  onClick={
-                    last
-                      ? downloadResume
-                      : () => window.location.replace(`#${data.to || ""}`)
-                  }
-                  onMouseOver={handleMouseOver}
-                >
-                  {last ? (
-                    <button
-                      className="uppercase p-[10px] rounded-[20px]"
-                      ref={downloadResumeBtnRef}
-                      onClick={downloadResume}
+                      id={`li-${data.to}`}
+                      key={i}
+                      onClick={
+                        last
+                          ? downloadResume
+                          : () => window.location.replace(`#${data.to || ""}`)
+                      }
+                      onMouseOver={handleMouseOver}
                     >
-                      {translate.downloadResumeBtnInnerText}
-                    </button>
-                  ) : (
-                    data.label
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-        <Hamburger
-          navData={navDataArray}
-          downloadResumeBtnInnerText={translate.downloadResumeBtnInnerText}
-        />
+                      {last ? (
+                        <button
+                          className="uppercase p-[10px] rounded-[20px]"
+                          ref={downloadResumeBtnRef}
+                          onClick={downloadResume}
+                        >
+                          {translate.downloadResumeBtnInnerText}
+                        </button>
+                      ) : (
+                        data.label
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          </>
+        ) : (
+          <Hamburger
+            navData={navDataArray}
+            downloadResumeBtnInnerText={translate.downloadResumeBtnInnerText}
+          />
+        )}
       </div>
     </header>
   );

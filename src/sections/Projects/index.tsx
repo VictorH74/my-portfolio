@@ -5,19 +5,7 @@ import ProjectCard, { Project } from "./components/ProjectCard";
 import { useQuery } from "react-query";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
-
-const translations = {
-  "pt-BR": {
-    title: "Veja meus projetos!",
-    showMoreOn: "mostrar menos",
-    showMoreOff: "mostrar tudo",
-  },
-  en: {
-    title: "See my projects!",
-    showMoreOn: "show less",
-    showMoreOff: "show all",
-  },
-};
+import { projectsSection } from "@/utils/translations";
 
 const gistId = "d85dcf05a1f6d5e760bbcbe9d5dc614d";
 
@@ -38,8 +26,7 @@ const Projects = () => {
         }),
   });
   const lang = useLanguage();
-
-  const translate = translations[lang];
+  const translate = projectsSection[lang];
 
   return (
     <section

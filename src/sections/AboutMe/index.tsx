@@ -1,46 +1,24 @@
 "use client";
 import MeJPG from "@/assets/me.jpg";
-import { aboutMeData } from "./data";
 import Image from "next/image";
 import { Noto_Sans } from "next/font/google";
-import { BtnContainer, DownloadResumeBtn, Line } from "./styles";
+import { DownloadResumeBtn } from "./styles";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
 import { downloadResume } from "@/utils/resume";
+import { aboutMeSection } from "@/utils/translations";
 
 const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const notoSans300 = Noto_Sans({ weight: "300", subsets: ["latin"] });
 
-const translations = {
-  "pt-BR": {
-    title: "Me conheça",
-    aboutMeData: aboutMeData.PT,
-    downloadResumeBtnText: "Baixar Currículo",
-    resumeSizeText: "Tamanho",
-  },
-  en: {
-    title: "About Me",
-    aboutMeData: aboutMeData.EN,
-    downloadResumeBtnText: "Download Resume",
-    resumeSizeText: "Size",
-  },
-};
-
 const AboutMe = () => {
   const lang = useLanguage();
-  const translate = translations[lang];
+  const translate = aboutMeSection[lang];
   const { themeColor } = useTheme();
 
-  const data: { name: string; about: string[] } = translate.aboutMeData as {
-    name: string;
-    about: string[];
-  };
+  const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
 
-  const lightTheme = window.matchMedia(
-    "(prefers-color-scheme: light)"
-  ).matches;
-
-  const paragraphFont = lightTheme ? notoSans400 : notoSans300
+  const paragraphFont = lightTheme ? notoSans400 : notoSans300;
 
   return (
     <section id="about-me" className="pt-24">
@@ -57,8 +35,11 @@ const AboutMe = () => {
           data-aos-duration="1000"
         >
           <div className="paragraphs max-w-[800px] grid gap-4">
-            {data.about.map((p, i) => (
-              <p className={`text-base ${paragraphFont.className} primary-font-color`} key={i}>
+            {translate.paragraphs.map((p, i) => (
+              <p
+                className={`text-base ${paragraphFont.className} primary-font-color`}
+                key={i}
+              >
                 {p}
               </p>
             ))}
@@ -80,7 +61,7 @@ const AboutMe = () => {
               max-md:max-w-[300px]
             "
             style={{
-              boxShadow: "3px 3px 2px " + themeColor
+              boxShadow: "3px 3px 2px " + themeColor,
             }}
             width={300}
             height={300}
@@ -90,15 +71,20 @@ const AboutMe = () => {
         </div>
       </div>
 
-      <BtnContainer>
-        <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
+      <div className="flex flex-row items-center gap-5">
+        <div
+          className="grow shrink basis-auto h-[2px]"
+          style={{ backgroundColor: themeColor }}
+        />
         <DownloadResumeBtn
           onClick={downloadResume}
           data-tooltip={`${translate.resumeSizeText}: 66 KB`}
-          style={{backgroundColor: themeColor}}
+          style={{ backgroundColor: themeColor }}
         >
           <div className="button-wrapper">
-            <div className="text text-base">{translate.downloadResumeBtnText}</div>
+            <div className="text text-base">
+              {translate.downloadResumeBtnText}
+            </div>
             <span className="icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -120,9 +106,12 @@ const AboutMe = () => {
               </svg>
             </span>
           </div>
-        </DownloadResumeBtn >
-        <Line className="btn-container-line" style={{backgroundColor: themeColor}} />
-      </BtnContainer>
+        </DownloadResumeBtn>
+        <div
+          className="grow shrink basis-auto h-[2px]"
+          style={{ backgroundColor: themeColor }}
+        />
+      </div>
     </section>
   );
 };
