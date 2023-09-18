@@ -77,7 +77,7 @@ export default function ContactMe() {
       .send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        { from_name, from_email, subject, message },
+        { from_name, from_email, subject: subject.toUpperCase(), message },
         EMAILJS_PUBLIC_KEY
       )
       .then(
