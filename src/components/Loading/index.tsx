@@ -1,10 +1,16 @@
 import { useTheme } from "@/hooks/UseTheme";
 
-const Loading = () => {
+interface Props {
+  color?: string;
+  width?: number;
+  height?: number;
+}
+
+const Loading = (props: Props) => {
   const { themeColor } = useTheme();
 
   return (
-    <div className="flex items-center gap-2 w-fit h-11">
+    <div className="flex items-center gap-2 w-fit" style={{height: props.height}}>
       {Array(3)
         .fill(undefined)
         .map((_, i) => {
@@ -12,10 +18,11 @@ const Loading = () => {
           return (
             <div
               key={i}
-              className="w-[15px] aspect-square rounded-full animate-load-bounce"
+              className="aspect-square rounded-full animate-load-bounce"
               style={{
                 animationDelay: `${delay}ms`,
-                backgroundColor: themeColor,
+                backgroundColor: props.color || themeColor,
+                width: props.width || 15,
               }}
             />
           );
