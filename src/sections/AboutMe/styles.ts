@@ -10,7 +10,6 @@ export const DownloadResumeBtn = styled.div`
     text-transform: uppercase;
     border-radius: 8px;
     border: none;
-    margin: 40px auto;
     transition: 200ms;
     cursor: pointer;
     width: var(--width);

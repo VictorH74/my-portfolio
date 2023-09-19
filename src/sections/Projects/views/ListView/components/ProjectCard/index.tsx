@@ -8,16 +8,8 @@ import Image from "next/image";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
 import useSkills from "@/hooks/UseSkills";
-
-export interface Project {
-  title: string;
-  image?: string;
-  description: { PT: string; EN: string };
-  skills: string[];
-  link?: string;
-  repository?: string;
-  videoLink?: string;
-}
+import { Project } from "@/sections/Projects";
+import { projectItem } from "@/utils/translations";
 
 interface Props {
   index: number;
@@ -28,21 +20,6 @@ const randomImgUrl = "https://picsum.photos/600/380?random=";
 const randomVideoUrl =
   "https://player.vimeo.com/video/723658039?h=57b6d0ac88&color=ffffff&byline=0&portrait=0";
 
-const translations = (projectDescription: { PT: string; EN: string }) => ({
-  "pt-BR": {
-    skillsTitle: "Habilidades usada",
-    productionLinkText: "Demostração",
-    repoLinkText: "Repositório do github",
-    projectDescription: projectDescription.PT,
-  },
-  en: {
-    skillsTitle: "Skills used",
-    productionLinkText: "Demo",
-    repoLinkText: "Github repository",
-    projectDescription: projectDescription.EN,
-  },
-});
-
 const ProjectCard: React.FC<Props> = ({ index, project }) => {
   const { skillData } = useSkills();
   const [video, setShowVideo] = useState(false);
@@ -51,7 +28,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   const id = useId();
   const lang = useLanguage();
   const { themeColor } = useTheme();
-  const translate = translations(project.description)[lang];
+  const translate = projectItem(project.description)[lang];
 
   const icons = project.skills.map((name) =>
     skillData.find((icon) => icon.id === name)
@@ -144,6 +121,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
               src={randomImgUrl + index}
               alt="Project image"
               loading="lazy"
+              placeholder="empty"
             />
           )}
           <div
@@ -191,12 +169,18 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             <h3 className="text-xl mt-2 primary-font-color">
               {translate.skillsTitle}
             </h3>
-            <ul className={`flex w-max gap-2 ${oddScreen900 && "float-right"} pt-1`}>
+            <ul
+              className={`flex w-max gap-2 ${
+                oddScreen900 && "float-right"
+              } pt-1`}
+            >
               {icons.map(
                 (icon) =>
                   icon && (
                     <li key={icon.id}>
                       <Image
+                        loading="lazy"
+                        placeholder="empty"
                         height={25}
                         width={25}
                         src={icon.src}

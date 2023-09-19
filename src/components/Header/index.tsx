@@ -19,7 +19,7 @@ const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
 const Header: React.FC = () => {
   const [scrollUp, setScrollUp] = React.useState(true);
-  const [wrapperDisplay, setWrapperDisplay] = React.useState("hidden");
+  const [wrapperDisplay, setWrapperDisplay] = React.useState("none");
   const [wrappedLI, setWrappedLI] = React.useState("");
   const [wrapperDimensions, setWrapperDimensions] = React.useState({
     width: 0,
@@ -42,12 +42,11 @@ const Header: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (downloadResumeBtnRef?.current) {
       setTimeout(() => {
         moveWrapperToDownloadBtn();
-        setWrapperDisplay("block");
-      }, 800);
-    }
+        setWrapperDisplay(() => "block");
+      }, 100);
+ 
   }, [downloadResumeBtnRef]);
 
   React.useEffect(() => {
@@ -85,6 +84,7 @@ const Header: React.FC = () => {
 
   const moveWrapperToDownloadBtn = React.useCallback(() => {
     if (!downloadResumeBtnRef?.current) return;
+
     changeWrapperPosition(downloadResumeBtnRef.current, "li-download-btn");
   }, []);
 
@@ -128,8 +128,8 @@ const Header: React.FC = () => {
         {size[0] > 1100 ? (
           <>
             <div
-              className={`${wrapperDisplay} absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
-              style={{ ...wrapperDimensions, backgroundColor: themeColor }}
+              className={`absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
+              style={{ ...wrapperDimensions, backgroundColor: themeColor, display: wrapperDisplay || "none"}}
             />
             <nav
               className="max-lg:hidden z-[4]"

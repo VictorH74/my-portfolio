@@ -25,11 +25,16 @@ const config: Config = {
           from: { bottom: "60px" },
           to: { bottom: "40px" },
         },
+        "contacts-bounce": {
+          "0%,14%,100%": { transform: "translateY(0)" },
+          "7%": { transform: "translateY(-20%)" },
+        }
       },
       animation: {
         "load-bounce": "load-bounce 700ms ease-in-out infinite alternate",
         "double-arrow-bounce":
           "double-arrow-bounce 1s ease-in-out infinite alternate",
+        "contacts-bounce": "contacts-bounce 4s infinite",
       },
     },
   },

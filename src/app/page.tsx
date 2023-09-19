@@ -9,12 +9,13 @@ import Skills from "@/sections/Skills";
 import Aos from "aos";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import "aos/dist/aos.css";
 import ContactMe from "@/sections/ContactMe";
 import Experiences from "@/sections/Experiences";
 import Loading from "@/components/Loading";
 import SwitchColorTheme from "@/components/SwitchColorTheme";
 import { ThemeProvider } from "@/contexts/ThemeColor";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import "aos/dist/aos.css";
 
 export default function Home() {
   const queryClient = new QueryClient();

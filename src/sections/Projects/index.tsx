@@ -1,18 +1,32 @@
 "use client";
 import Loading from "@/components/Loading";
 import React from "react";
-import ProjectCard, { Project } from "./components/ProjectCard";
 import { useQuery } from "react-query";
 import useLanguage from "@/hooks/UseLanguage";
-import { useTheme } from "@/hooks/UseTheme";
 import { projectsSection } from "@/utils/translations";
+import ListView from "./views/ListView";
+import CarouselView from "./views/Carousel";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
+
+export interface Project {
+  title: string;
+  image?: string;
+  description: { PT: string; EN: string };
+  skills: string[];
+  link?: string;
+  repository?: string;
+  videoLink?: string;
+}
 
 const gistId = "d85dcf05a1f6d5e760bbcbe9d5dc614d";
+const viewBtnClass = "text-custom-gray-light dark:text-[#a1a1aa]";
+const viewBtnActiveClass = "text-[#303030] dark:text-[#ececec]";
 
 const Projects = () => {
-  const [showMore, setShowMore] = React.useState(false);
+  const [view, setView] = React.useState(2);
   const containerRef = React.useRef(null);
-  const { themeColor } = useTheme();
+
   const { isLoading, data } = useQuery({
     queryKey: ["projectsData"],
     queryFn: () =>
@@ -36,31 +50,34 @@ const Projects = () => {
     >
       {!isLoading && data ? (
         <>
-          <h1 className="section-title mb-12">{translate.title}</h1>
-          <div className="flex flex-col md:gap-20 gap-7">
-            {data
-              .filter((_, i) => i < 3 || showMore)
-              .map((project, i) => (
-                <ProjectCard key={i} project={project} index={i} />
-              ))}
+          <div className="mb-12 relative">
+            <h1 className="section-title">{translate.title}</h1>
+            {process.env.NODE_ENV === "development" && (
+              <div className="absolute right-5 inset-y-0 px-2 flex gap-2">
+                <button onClick={() => setView(1)}>
+                  <ViewCarouselIcon
+                    className={view === 1 ? viewBtnActiveClass : viewBtnClass}
+                    sx={{ fontSize: 40 }}
+                  />
+                </button>
+                <button onClick={() => setView(2)}>
+                  <ViewListIcon
+                    className={view === 2 ? viewBtnActiveClass : viewBtnClass}
+                    sx={{ fontSize: 40 }}
+                  />
+                </button>
+              </div>
+            )}
           </div>
-          <button
-            onMouseOver={(e) => {
-              const { style } = e.currentTarget;
-              style.color = "white";
-              style.backgroundColor = themeColor;
-            }}
-            onMouseLeave={(e) => {
-              const { style } = e.currentTarget;
-              style.color = themeColor;
-              style.backgroundColor = "transparent";
-            }}
-            style={{ border: "2px solid " + themeColor, color: themeColor }}
-            className="uppercase px-4 py-3 inline-block m-5 mt-12 relative overflow-hidden border-2 text-md font-medium rounded-md duration-150 font-[inherit]"
-            onClick={() => setShowMore(!showMore)}
-          >
-            {showMore ? translate.showMoreOn : translate.showMoreOff}
-          </button>
+
+          {view === 1 && <CarouselView projectArray={data} />}
+          {view === 2 && (
+            <ListView
+              projectArray={data}
+              showMoreOnText={translate.showMoreOn}
+              showMoreOffText={translate.showMoreOff}
+            />
+          )}
         </>
       ) : (
         <Loading />

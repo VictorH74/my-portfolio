@@ -17,9 +17,9 @@ const translations = {
 
 const Skills = () => {
   const { skillData } = useSkills();
-  const lang = useLanguage()
+  const lang = useLanguage();
 
-  const translate = translations[lang]
+  const translate = translations[lang];
 
   return (
     <div id="skills" className="pt-24 text-center">
@@ -39,6 +39,8 @@ const Skills = () => {
                   data-aos-once="true"
                 >
                   <Image
+                    loading="lazy"
+                    placeholder="empty"
                     height={50}
                     width={50}
                     className="h-2/5 w-auto "
@@ -46,7 +48,9 @@ const Skills = () => {
                     alt="icon"
                   />
                   <div className="tech-name ">
-                    <p className="primary-font-color" translate="no">{icon.name}</p>
+                    <p className="primary-font-color" translate="no">
+                      {icon.name}
+                    </p>
                   </div>
                 </div>
               )

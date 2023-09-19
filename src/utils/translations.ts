@@ -104,6 +104,21 @@ export const projectsSection = {
     },
 };
 
+export const projectItem = (projectDescription: { PT: string; EN: string }) => ({
+    "pt-BR": {
+        skillsTitle: "Habilidades usada",
+        productionLinkText: "Demostração",
+        repoLinkText: "Repositório do github",
+        projectDescription: projectDescription.PT,
+    },
+    en: {
+        skillsTitle: "Skills used",
+        productionLinkText: "Demo",
+        repoLinkText: "Github repository",
+        projectDescription: projectDescription.EN,
+    },
+});
+
 export const contactMeSection = {
     "pt-BR": {
         title: "Entre em Contato",

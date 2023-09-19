@@ -53,25 +53,26 @@ const AboutMe = () => {
           data-aos-duration="400"
         >
           <Image
+            loading="lazy"
+            placeholder="empty"
             className="
               rounded-full 
               object-cover 
-              max-md:h-auto 
-              max-md:w-full 
               max-md:max-w-[300px]
+              h-auto
+              w-full
             "
             style={{
               boxShadow: "3px 3px 2px " + themeColor,
             }}
             width={300}
-            height={300}
             src={MeJPG}
             alt="me"
           />
         </div>
       </div>
 
-      <div className="flex flex-row items-center gap-5">
+      <div className="flex flex-row items-center gap-5 mt-8">
         <div
           className="grow shrink basis-auto h-[2px]"
           style={{ backgroundColor: themeColor }}

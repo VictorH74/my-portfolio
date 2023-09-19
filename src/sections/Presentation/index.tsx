@@ -5,11 +5,7 @@ import { presentationSection } from "@/utils/translations";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import { Noto_Sans } from "next/font/google";
 import React, { useRef } from "react";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import EmailIcon from "@mui/icons-material/Email";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { SxProps } from "@mui/material";
+import ContactLinks from "@/components/LinkList";
 
 const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
@@ -21,21 +17,6 @@ const Presentation = () => {
   const translate = presentationSection[lang];
   const ref = useRef<HTMLElement>(null);
   const { themeColor } = useTheme();
-
-  const sx: SxProps = {
-    fontSize: 35,
-    color: themeColor,
-  };
-
-  const contacts = [
-    { href: "mailto:victorh.almeida7@gmail.com", icon: <EmailIcon sx={sx} /> },
-    { href: "https://wa.me/5586995483472", icon: <WhatsAppIcon sx={sx} /> },
-    { href: "https://github.com/VictorH74", icon: <GitHubIcon sx={sx} /> },
-    {
-      href: "https://www.linkedin.com/in/victor-almeida-b720201b5/",
-      icon: <LinkedInIcon sx={sx} />,
-    },
-  ];
 
   const presentationData = (values: any[]) => {
     return values.map((v, i) => {
@@ -70,15 +51,7 @@ const Presentation = () => {
           translate.text_3,
           translate.text_4,
         ])}
-        {contacts.map((c) => (
-          <a
-            className="p-2 hover:brightness-125 duration-200"
-            key={c.href}
-            href={c.href}
-          >
-            {c.icon}
-          </a>
-        ))}
+        <ContactLinks />
       </div>
       <button
         onClick={() => {
