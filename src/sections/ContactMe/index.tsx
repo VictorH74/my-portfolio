@@ -15,6 +15,7 @@ import MuiAlert, { AlertColor, AlertProps } from "@mui/material/Alert";
 import Loading from "@/components/Loading";
 import { contactMeSection } from "@/utils/translations";
 import { fields } from "./data";
+import { TranslationLang } from "@/types/language";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -24,13 +25,32 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const notoSans = Noto_Sans({ subsets: ["latin"], weight: "400" });
-const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light`;
+const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full`;
 
+type Fields = "name" | "email" | "subject" | "message";
 type FormValues = {
-  nameField: string;
-  emailField: string;
-  subjectField: string;
-  messageField: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
+const afterRequiredPtBR = " é obrigatório";
+const afterRequiredEn = " field is required";
+
+const errorMessages: TranslationLang = {
+  "pt-BR": {
+    name: "Nome" + afterRequiredPtBR,
+    email: "Email" + afterRequiredPtBR,
+    subject: "Assunto" + afterRequiredPtBR,
+    message: "Mensagem" + afterRequiredPtBR,
+  },
+  en: {
+    name: "Name" + afterRequiredEn,
+    email: "Email" + afterRequiredEn,
+    subject: "Subject" + afterRequiredEn,
+    message: "Message" + afterRequiredEn,
+  },
 };
 
 export default function ContactMe() {
@@ -40,7 +60,12 @@ export default function ContactMe() {
   const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
   const { themeColor } = useTheme();
-  const { register, handleSubmit, reset } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const [from_name, from_email, subject, message] = Object.values(data);
@@ -77,31 +102,34 @@ export default function ContactMe() {
       >
         <h1 className="section-title col-span-2">{translate.title}</h1>
         {fields.map((f) => {
-          if (f.name === "messageField")
+          if (f.name === "message")
             return (
-              <textarea
-                key={f.name}
-                className={`${inputClassName} col-span-2`}
-                placeholder={translate.messageField}
-                rows={6}
-                {...register(f.name)}
-              />
+              <div className="col-span-2">
+                <textarea
+                  className={inputClassName}
+                  placeholder={translate.message}
+                  rows={6}
+                  {...register(f.name, { required: true })}
+                />
+                {errors[f.name]?.type === "required" && (
+                  <p className="text-red-500" role="alert">{errorMessages[lang][f.name]}</p>
+                )}
+              </div>
             );
           return (
-            <input
+            <div
               key={f.name}
-              className={`${inputClassName} ${
-                f.row ? "max-md:col-span-2" : "col-span-2"
-              }`}
-              placeholder={translate[f.name as keyof typeof translate]}
-              {...register(
-                f.name as
-                  | "nameField"
-                  | "emailField"
-                  | "subjectField"
-                  | "messageField"
+              className={`${f.row ? "max-md:col-span-2" : "col-span-2"}`}
+            >
+              <input
+                className={inputClassName}
+                placeholder={translate[f.name as keyof typeof translate]}
+                {...register(f.name as Fields, { required: true })}
+              />
+              {errors[f.name as Fields]?.type === "required" && (
+                <p className="text-red-500" role="alert">{errorMessages[lang][f.name]}</p>
               )}
-            />
+            </div>
           );
         })}
         <button
