@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 
 const colors = ["#4e54fd", "#35a777", "#fd4e4e"];
 
-export default function SwitchColorTheme() {
+export default function SwitchThemeColorBtn() {
   const { themeColor, setThemeColor } = useTheme();
   const [sliderValue, setSliderValue] = React.useState(2);
 

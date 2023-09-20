@@ -104,7 +104,7 @@ export default function ContactMe() {
         {fields.map((f) => {
           if (f.name === "message")
             return (
-              <div className="col-span-2">
+              <div key={f.name} className="col-span-2">
                 <textarea
                   className={inputClassName}
                   placeholder={translate.message}

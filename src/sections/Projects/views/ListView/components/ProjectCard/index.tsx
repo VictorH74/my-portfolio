@@ -24,7 +24,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   const { skillData } = useSkills();
   const [video, setShowVideo] = useState(false);
 
-  const [loadingImg, setLoadingImg] = useState(true);
+  const [loadingImg, setLoadingImg] = useState(!!project.image);
   const id = useId();
   const lang = useLanguage();
   const { themeColor } = useTheme();
@@ -107,7 +107,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           )}
           {project.image ? (
             <iframe
-              className={`w-[103%] ml-[-2%] h-[102%] aspect-[600/360] duration-300 ${
+              className={`w-[104%] ml-[-2%] lg:w-[103%] lg:ml-[-2%] lg:h-[102%] aspect-[600/360] duration-300 ${
                 loadingImg ? "opacity-0 pointer-events-none" : ""
               }`}
               title="project image"
@@ -119,6 +119,8 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             <Image
               className="h-auto w-full"
               src={randomImgUrl + index}
+              width={1000}
+              height={780}
               alt="Project image"
               loading="lazy"
               placeholder="empty"

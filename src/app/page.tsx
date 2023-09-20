@@ -12,7 +12,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ContactMe from "@/sections/ContactMe";
 import Experiences from "@/sections/Experiences";
 import Loading from "@/components/Loading";
-import SwitchColorTheme from "@/components/SwitchColorTheme";
+import SwitchThemeColorBtn from "@/components/SwitchThemeColorBtn";
 import { ThemeProvider } from "@/contexts/ThemeColor";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
@@ -49,7 +49,7 @@ export default function Home() {
               <ContactMe />
               <Contacts />
             </main>
-            <SwitchColorTheme />
+            <SwitchThemeColorBtn />
           </>
         </ThemeProvider>
       </SkillsProvider>
