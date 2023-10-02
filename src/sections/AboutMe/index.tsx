@@ -1,5 +1,5 @@
 "use client";
-import MeJPG from "@/assets/me.jpg";
+import Me from "@/assets/me.webp";
 import Image from "next/image";
 import { Noto_Sans } from "next/font/google";
 import { DownloadResumeBtn } from "./styles";
@@ -66,7 +66,7 @@ const AboutMe = () => {
               boxShadow: "3px 3px 2px " + themeColor,
             }}
             width={300}
-            src={MeJPG}
+            src={Me}
             alt="me"
           />
         </div>
