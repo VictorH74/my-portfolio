@@ -44,11 +44,11 @@ export const aboutMeSection = {
 
 export const experienceSection = {
     "pt-BR": {
-        title: "Experiências",
-        experiences: [
+        title: "Experiência",
+        experience: [
             {
                 title: "Desenvolvedor Web Jr | 99freelas",
-                duration: "Jul/2022 - Out/2022",
+                duration: "Jul/2022 - Fev/2023",
                 paragraphs: [
                     "Todos os projetos, concluí usando a biblioteca React.js",
                     "Fui responsável por desenvolver tanto o front-end quanto o Backend em Django e Docker para um cliente, onde foram utilizados diversas ferramentas externas como o sistema de pagamento digital do pagar.me para assinaturas premiums na aplicação",
@@ -67,11 +67,11 @@ export const experienceSection = {
         ],
     },
     en: {
-        title: "Experiences",
-        experiences: [
+        title: "Experience",
+        experience: [
             {
                 title: "Web Developer Jr | 99freelas",
-                duration: "Jul/2022 - Oct/2022",
+                duration: "Jul/2022 - Feb/2023",
                 paragraphs: [
                     "All projects, I completed using the React.js library",
                     "I was responsible for developing both the front-end and backend in Django and Docker for a client, where several external tools were used such as the pay.me digital payment system for premium subscriptions in the application",

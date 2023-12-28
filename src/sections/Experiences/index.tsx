@@ -8,10 +8,10 @@ export default function Experiences() {
   const translate = experienceSection[lang]
 
   return (
-    <section id="experiences" className="pt-24 grid gap-3">
+    <section id="experience" className="pt-24 grid gap-3">
       <h1 className="section-title text-center">{translate.title}</h1>
       <div className="flex gap-10 flex-wrap flex-row w-full overflow-x-auto justify-between">
-        {translate.experiences.map((d) => (
+        {translate.experience.map((d) => (
           <ExperienceCard key={d.title} {...d} />
         ))}
       </div>
