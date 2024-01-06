@@ -80,7 +80,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                 } after:inset-x-0 after:bottom-14 after:h-16 after:text-white after:z-[3] after:grid after:place-items-center`
           }`}
         >
-          {!!project.videoLink && (
+          {!!project.videoLink && !loadingImg && (
             <div
               onMouseOver={() => {
                 const playIcon = document.getElementById(`play-icon-${id}`);

@@ -16,7 +16,7 @@ export const ThemeContext = React.createContext<AppContextInterface>({
 });
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
-  const [themeColor, setThemeColorState] = React.useState("#4e54fd");
+  const [themeColor, setThemeColorState] = React.useState("#35a777");
 
   const setThemeColor = (color: string) => {
     localStorage.setItem(THEME_COLOR_KEY, color)
