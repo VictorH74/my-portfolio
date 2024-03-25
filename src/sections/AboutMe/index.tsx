@@ -5,8 +5,9 @@ import { Noto_Sans } from "next/font/google";
 import { DownloadResumeBtn } from "./styles";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
-import { downloadResume } from "@/utils/resume";
+import { downloadResume, fileName } from "@/utils/resume";
 import { aboutMeSection } from "@/utils/translations";
+import React from "react";
 
 const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const notoSans300 = Noto_Sans({ weight: "300", subsets: ["latin"] });
@@ -15,6 +16,15 @@ const AboutMe = () => {
   const lang = useLanguage();
   const translate = aboutMeSection[lang];
   const { themeColor } = useTheme();
+  const [pdfSize, setPdfSize] = React.useState(0);
+
+  React.useEffect(() => {
+    (async () => {
+      const res = await fetch(fileName);
+      const blob = await res.blob();
+      setPdfSize(Math.round(blob.size / 1024)); // KB
+    })();
+  }, []);
 
   const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
 
@@ -79,7 +89,7 @@ const AboutMe = () => {
         />
         <DownloadResumeBtn
           onClick={downloadResume}
-          data-tooltip={`${translate.resumeSizeText}: 66 KB`}
+          data-tooltip={`${translate.resumeSizeText}: ${pdfSize} KB`}
           style={{ backgroundColor: themeColor }}
         >
           <div className="button-wrapper">
