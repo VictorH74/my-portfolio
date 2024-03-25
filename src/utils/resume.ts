@@ -1,4 +1,4 @@
-const fileName = 'VICTOR ALMEIDA.pdf'
+export const fileName = 'VICTOR ALMEIDA.pdf'
 
 export const downloadResume = async () => {
     const res = await fetch(fileName)
