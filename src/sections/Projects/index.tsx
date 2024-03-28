@@ -80,7 +80,7 @@ const Projects = () => {
           )}
         </>
       ) : (
-        <Loading />
+        <div className="mt-[25%] grid place-items-center"><Loading /></div>
       )}
     </section>
   );

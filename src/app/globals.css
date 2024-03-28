@@ -104,3 +104,7 @@ header {
 .scrollbar::-webkit-scrollbar-thumb {
   @apply bg-custom-gray-dark dark:bg-[#5a5a5a36] rounded-md;
 }
+
+#loom-companion-mv3 {
+  display: none;
+}

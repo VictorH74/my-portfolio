@@ -9,14 +9,16 @@ const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const translations = {
   "pt-BR": {
     title: "Habilidades",
+    emptySkillsMsg: "Ocorreu um erro ao carregar o conteúdo.",
   },
   en: {
     title: "Skills",
+    emptySkillsMsg: "An error occurred while loading the content.",
   },
 };
 
 const Skills = () => {
-  const { skillData } = useSkills();
+  const { skillData, notSkills } = useSkills();
   const lang = useLanguage();
 
   const translate = translations[lang];
@@ -27,8 +29,7 @@ const Skills = () => {
         {translate.title}
       </h1>
       <div className="flex flex-wrap justify-center gap-3 px-4">
-        {skillData &&
-          skillData.map(
+        {notSkills ? (<p className="text-red-400">{translate.emptySkillsMsg}</p>) : skillData.map(
             (icon) =>
               !icon.hidden && (
                 <div
