@@ -8,16 +8,8 @@ import ListView from "./views/ListView";
 import CarouselView from "./views/Carousel";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
+import { ProjectType } from "@/types";
 
-export interface Project {
-  title: string;
-  image?: string;
-  description: { PT: string; EN: string };
-  skills: string[];
-  link?: string;
-  repository?: string;
-  videoLink?: string;
-}
 
 const gistId = "d85dcf05a1f6d5e760bbcbe9d5dc614d";
 const viewBtnClass = "text-custom-gray-light dark:text-[#a1a1aa]";
@@ -36,7 +28,7 @@ const Projects = () => {
         })
         .then((data) => {
           const content = data.files["projects.json"].content;
-          return JSON.parse(content) as Project[];
+          return JSON.parse(content) as ProjectType[];
         }),
   });
   const lang = useLanguage();

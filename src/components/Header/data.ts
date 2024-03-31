@@ -1,4 +1,4 @@
-import { TranslationLang } from "@/types/language";
+import { TranslationLang } from "@/types";
 
 export const navTranslations: TranslationLang = {
   "pt-BR": {

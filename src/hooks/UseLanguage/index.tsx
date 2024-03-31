@@ -1,5 +1,5 @@
 "use client";
-import { Language } from "@/types/language";
+import { Language } from "@/types";
 import React from "react";
 
 const useLanguage = (): Language => {

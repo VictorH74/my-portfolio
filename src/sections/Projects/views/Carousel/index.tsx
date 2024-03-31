@@ -1,10 +1,10 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import { Project } from "../..";
 import ProjectCard from "./components/ProjectCard";
+import { ProjectType } from "@/types";
 
 interface Props {
-  projectArray: Project[];
+  projectArray: ProjectType[];
 }
 
 export default function CarouselView(props: Props) {

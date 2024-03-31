@@ -1,19 +1,16 @@
 "use client";
-import React, { memo, useId, useState } from "react";
+import React from "react";
 import LinkIcon from "@mui/icons-material/Link";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Loading from "@/components/Loading";
 import Image from "next/image";
-import useLanguage from "@/hooks/UseLanguage";
-import { useTheme } from "@/hooks/UseTheme";
-import useSkills from "@/hooks/UseSkills";
-import { Project } from "@/sections/Projects";
-import { projectItem } from "@/utils/translations";
+import useProjectCard from "./useProjectCard";
+import { ProjectType } from "@/types";
 
 interface Props {
   index: number;
-  project: Project;
+  project: ProjectType;
 }
 
 const randomImgUrl = "https://picsum.photos/600/380?random=";
@@ -21,22 +18,17 @@ const randomVideoUrl =
   "https://player.vimeo.com/video/723658039?h=57b6d0ac88&color=ffffff&byline=0&portrait=0";
 
 const ProjectCard: React.FC<Props> = ({ index, project }) => {
-  const { skillData } = useSkills();
-  const [video, setShowVideo] = useState(false);
-
-  const [loadingImg, setLoadingImg] = useState(!!project.image);
-  const id = useId();
-  const lang = useLanguage();
-  const { themeColor } = useTheme();
-  const translate = projectItem(project.description)[lang];
-
-  const icons = project.skills.map((name) =>
-    skillData.find((icon) => icon.id === name)
-  );
-
-  const showVideo = () => setShowVideo(true);
-
-  const hiddenVideo = () => setShowVideo(false);
+  const {
+    loadingImg,
+    themeColor,
+    translate,
+    video,
+    icons,
+    id,
+    showVideo,
+    hiddenVideo,
+    setLoadingImg,
+  } = useProjectCard(project);
 
   const odd = index % 2 !== 0;
   const oddScreen900 = odd && window.innerWidth > 900;
@@ -215,4 +207,4 @@ const Link: React.FC<{
   </a>
 );
 
-export default memo(ProjectCard);
+export default React.memo(ProjectCard);

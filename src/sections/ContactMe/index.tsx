@@ -15,7 +15,7 @@ import MuiAlert, { AlertColor, AlertProps } from "@mui/material/Alert";
 import Loading from "@/components/Loading";
 import { contactMeSection } from "@/utils/translations";
 import { fields } from "./data";
-import { TranslationLang } from "@/types/language";
+import { TranslationLang } from "@/types";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -112,7 +112,9 @@ export default function ContactMe() {
                   {...register(f.name, { required: true })}
                 />
                 {errors[f.name]?.type === "required" && (
-                  <p className="text-red-500" role="alert">{errorMessages[lang][f.name]}</p>
+                  <p className="text-red-500" role="alert">
+                    {errorMessages[lang][f.name]}
+                  </p>
                 )}
               </div>
             );
@@ -127,7 +129,9 @@ export default function ContactMe() {
                 {...register(f.name as Fields, { required: true })}
               />
               {errors[f.name as Fields]?.type === "required" && (
-                <p className="text-red-500" role="alert">{errorMessages[lang][f.name]}</p>
+                <p className="text-red-500" role="alert">
+                  {errorMessages[lang][f.name]}
+                </p>
               )}
             </div>
           );

@@ -17,7 +17,7 @@ import { ThemeProvider } from "@/contexts/ThemeColor";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
 
-export default function Home() {
+export default function HomePage() {
   const queryClient = new QueryClient();
   const [loading, setLoading] = React.useState(true);
 
@@ -40,7 +40,7 @@ export default function Home() {
         <ThemeProvider>
           <>
             <Header />
-            <main className="scroll-smooth blue-scrollbar">
+            <main className="scroll-smooth blue-scrollbar relative">
               <Presentation />
               <AboutMe />
               <Skills />

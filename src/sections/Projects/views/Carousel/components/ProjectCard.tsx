@@ -2,17 +2,17 @@ import React from "react";
 import useLanguage from "@/hooks/UseLanguage";
 import useSkills from "@/hooks/UseSkills";
 import { useTheme } from "@/hooks/UseTheme";
-import { Project } from "@/sections/Projects";
 import { projectItem } from "@/utils/translations";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Loading from "@/components/Loading";
 import Image from "next/image";
 import { Carousel } from "react-bootstrap";
+import { ProjectType } from "@/types";
 
 const randomImgUrl = "https://picsum.photos/800/497?random=";
 
 export default function ProjectCard(props: {
-  project: Project;
+  project: ProjectType;
   index: number;
 }) {
   const { skillData } = useSkills();

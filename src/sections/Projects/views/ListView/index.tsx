@@ -1,10 +1,10 @@
 import React from "react";
 import ProjectCard from "./components/ProjectCard";
 import { useTheme } from "@/hooks/UseTheme";
-import { Project } from "../..";
+import { ProjectType } from "@/types";
 
 interface Props {
-  projectArray: Project[];
+  projectArray: ProjectType[];
   showMoreOnText: string
   showMoreOffText: string
 }
