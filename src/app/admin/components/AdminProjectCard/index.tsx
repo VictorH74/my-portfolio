@@ -1,15 +1,15 @@
 "use client"
 import { ProjectAdminType } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import React from "react";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { createPortal } from "react-dom";
-import CloseIcon from '@mui/icons-material/Close';
+import ProjectCardHover from "./components/ProjectCardHover"
+import { EditProjectModal } from "../modals";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/configs/firebaseConfig";
 
 export default function AdminProjectCard(props: ProjectAdminType) {
     const sliderRef = React.useRef<HTMLDivElement>(null)
@@ -17,6 +17,7 @@ export default function AdminProjectCard(props: ProjectAdminType) {
     const [editable, setEditable] = React.useState(false)
 
     React.useEffect(() => {
+        console.log(props.screenshots)
         if (sliderRef.current) {
             const slider = sliderRef.current
 
@@ -36,6 +37,18 @@ export default function AdminProjectCard(props: ProjectAdminType) {
         }
     }, [])
 
+    const openEditModal = () => setEditable(true)
+
+    const removeProject = async () => {
+        const ref = doc(db, "projects", props.id)
+        try {
+            await deleteDoc(ref)
+        } catch (e) {
+            console.log(e)
+            alert("Error")
+        }
+    }
+
     return (
         <>
             <div className="relative w-[300px] h-96 shadow-lg bg-gray-200 dark:bg-[#3f3f3f] shrink-0 grow-0 rounded-md flex flex-col overflow-hidden"
@@ -46,20 +59,13 @@ export default function AdminProjectCard(props: ProjectAdminType) {
                     setCardHover(false)
                 }}
             >
-                <div className="absolute inset-0 bg-black/70 grid place-items-center duration-200"
-                    style={{ opacity: cardHover ? 1 : 0 }}
-                >
-                    <div className="flex gap-3">
-                        <button onClick={() => setEditable(true)} ><VisibilityIcon sx={{ fontSize: 35 }} /></button>
-                        <button><DeleteIcon sx={{ fontSize: 32 }} /></button>
-                    </div>
-                </div>
+                <ProjectCardHover show={cardHover} editFunc={openEditModal} removeFunc={removeProject} />
 
                 <div ref={sliderRef} className="w-[300px] h-[310px] overflow-hidden flex flex-nowrap text-center" id="slider">
                     {
                         props.screenshots.map((img, i) => (
                             <div key={i} className="space-y-4 flex-none w-full flex flex-col items-center justify-center">
-                                <Image width={300} height={113} src={img} className="rounded-b-md" alt="project screenshot" />
+                                <Image width={300} height={113} src={img} className="rounded-b-md h-auto w-auto" alt="project screenshot" />
                             </div>
                         ))
                     }
@@ -93,23 +99,8 @@ export default function AdminProjectCard(props: ProjectAdminType) {
             </div>
 
             {editable && createPortal(
-                <div className="absolute inset-0 bg-black/70 grid place-items-center">
-                    <div className="bg-gray-200 dark:bg-[#3f3f3f] w-full max-w-[1000px] rounded-md p-3">
-                        <div className="text-right">
-                            <button onClick={() => setEditable(false)} ><CloseIcon /></button>
-                        </div>
-
-                        <div>
-                            
-                        </div>
-
-                    </div>
-                </div>, document.body
+                <EditProjectModal {...props} onClose={() => setEditable(false)} />, document.body
             )}
         </>
     )
 }
-
-/*
-<Image width={300} height={113} src="https://picsum.photos/800/450" className="rounded-b-md" alt="project screenshot" />
-*/

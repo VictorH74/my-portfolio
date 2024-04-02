@@ -17,8 +17,9 @@ import { ThemeProvider } from "@/contexts/ThemeColor";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
 
+const queryClient = new QueryClient();
+
 export default function HomePage() {
-  const queryClient = new QueryClient();
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {

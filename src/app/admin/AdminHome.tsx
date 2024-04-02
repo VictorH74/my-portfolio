@@ -1,46 +1,46 @@
 "use client"
 
-import { FirebaseApi } from "@/apis/firebase.api"
-import { ProjectRepository } from "@/repositories/project.repository"
-import { ProjectService } from "@/services/project.service"
 import React from "react"
-import { auth } from "@/configs/firebaseConfig"
-import { ProjectAdminType } from "@/types"
+import { auth, db } from "@/configs/firebaseConfig"
+import { ProjectAdminType, TechIcons } from "@/types"
 import AdminProjectCard from "./components/AdminProjectCard"
-import Image from "next/image"
+import { collection, onSnapshot } from "firebase/firestore"
+import Skeleton from '@mui/material/Skeleton';
 
+interface AdminHomeProps {
+    techs: TechIcons[] | undefined
+}
 
-export default function AdminHome() {
+export default function AdminHome(props: AdminHomeProps) {
     const [projects, setProjects] = React.useState<ProjectAdminType[]>([])
-    // const sliderRef = React.useRef<HTMLDivElement>(null)
 
     React.useEffect(() => {
-        (async () => {
-            // console.log("currentUser", auth.currentUser)
-            const projectRepo = new ProjectRepository(new FirebaseApi())
-            const projectService = new ProjectService(projectRepo)
-            const retrievedProjects = await projectService.getProducts()
-            // console.log(retrievedProjects)
-            setProjects(retrievedProjects)
-        })()
+        if (props.techs)
+            localStorage.setItem("techs", JSON.stringify(props.techs))
 
-        // if (sliderRef.current) {
-        //     const slider = sliderRef.current
+        const unsubscribe = onSnapshot(collection(db, "projects"), (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                const projectData = { ...change.doc.data(), id: change.doc.id } as ProjectAdminType
 
-        //     setTimeout(function moveSlide() {
-        //         const max = slider.scrollWidth - slider.clientWidth;
-        //         const left = slider.clientWidth;
+                if (change.type === "added") {
+                    setProjects(prev => [
+                        ...prev, projectData
+                    ])
+                }
+                if (change.type === "modified") {
+                    setProjects(prev =>
+                        prev.map(p => p.id === projectData.id ? projectData : p)
+                    )
+                }
+                if (change.type === "removed") {
+                    setProjects(prev =>
+                        prev.filter(p => p.id !== projectData.id)
+                    )
+                }
+            });
+        });
 
-        //         if (max === slider.scrollLeft) {
-        //             slider.scrollTo({ left: 0, behavior: 'smooth' })
-        //         } else {
-        //             slider.scrollBy({ left, behavior: 'smooth' })
-        //         }
-
-        //         setTimeout(moveSlide, 2000)
-        //     }, 2000)
-
-        // }
+        return () => { unsubscribe() }
     }, [])
 
     // TODO: Display icons: View and Remove when hover project
@@ -59,27 +59,33 @@ export default function AdminHome() {
                         <span><button>Criar</button></span>
                     </div>
                     <div className="py-3 w-full flex flex-row overflow-x-auto gap-4 border-2 border-purple-300">
-                        {projects.map(p => (
+                        {projects.length > 0 ? projects.map(p => (
                             <AdminProjectCard key={p.id} {...p} />
-                        ))}
+                        )) : <CardSkeleton amount={5} />}
                     </div>
-
-                    {/* <div ref={sliderRef} className="w-[300px] overflow-hidden flex flex-nowrap text-center" id="slider">
-                    <div className="space-y-4 flex-none w-full flex flex-col items-center justify-center">
-                        <Image width={300} height={113} src="https://picsum.photos/800/450" className="rounded-b-md" alt="project screenshot" />
-                    </div>
-                    <div className="space-y-4 flex-none w-full flex flex-col items-center justify-center">
-                        <Image width={300} height={113} src="https://picsum.photos/800/450" className="rounded-b-md" alt="project screenshot" />
-                    </div>
-                    <div className="space-y-4 flex-none w-full flex flex-col items-center justify-center">
-                        <Image width={300} height={113} src="https://picsum.photos/800/450" className="rounded-b-md" alt="project screenshot" />
-                    </div>
-                </div> */}
-
                 </div>
-                {/* <div className="absolute inset-0 bg-black/60" id="dialog-portal"></div> */}
             </main>
 
         </div>
     )
 }
+
+const CardSkeleton: React.FC<{ amount: number }> = (props) => (
+    <>
+        {Array(props.amount).fill(undefined).map((_, i) => (
+            <div key={i} className="relative w-[300px] h-96 shadow-lg bg-gray-200 dark:bg-[#3f3f3f] shrink-0 grow-0 rounded-md flex flex-col overflow-hidden">
+
+                <Skeleton variant="rectangular" width={300} height={280} />
+                <div className="flex flex-col h-full p-2 gap-2">
+                    <Skeleton width="60%" />
+                    <Skeleton />
+                    <Skeleton width="50%" />
+                    <div className="grow" />
+                    <Skeleton width="70%" />
+                    <Skeleton width="70%" />
+                </div>
+
+            </div>
+        ))}
+    </>
+)

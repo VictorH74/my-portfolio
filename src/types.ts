@@ -25,4 +25,11 @@ type ProjectAdminType = {
     videoUrl?: string;
 }
 
-export type { Language, TranslationLang, ProjectType, ProjectAdminType }
+type TechIcons = {
+    id: string;
+    name: string;
+    src: string;
+    hidden?: boolean;
+}
+
+export type { Language, TranslationLang, ProjectType, ProjectAdminType, TechIcons }

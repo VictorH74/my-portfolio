@@ -1,12 +1,8 @@
 "use client";
+import { TechIcons } from "@/types";
+import { fetchTechnologies } from "@/utils/functions";
 import React from "react";
-
-interface TechIcons {
-  id: string;
-  name: string;
-  src: string;
-  hidden?: boolean;
-}
+import { useQuery } from "react-query";
 
 interface CtxValue {
   skillData: Array<TechIcons>;
@@ -18,36 +14,20 @@ export const SkillsCtx = React.createContext<CtxValue>({
   notSkills: false
 });
 
-const gistId = "ee56f0e7ddea13681b411f97b7f20fe5";
-
 const SkillsProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
-  const [skillData, setData] = React.useState<TechIcons[]>([]);
+  // const [skillData, setData] = React.useState<TechIcons[]>([]);
+  const { data: skillData } = useQuery({
+    queryKey: ["techs"],
+    queryFn: () => fetchTechnologies(data => localStorage.setItem("techs", JSON.stringify(data)))
+  })
   const [notSkills, setNotSkills] = React.useState(false)
 
   React.useEffect(() => {
-    try {
-      fetch(`https://api.github.com/gists/${gistId}`)
-        .then((results) => {
-          return results.json();
-        })
-        .then((data) => {
-          if (!data.files) {
-            setNotSkills(true)
-            return;
-          }
-          const content = data.files["skills.json"].content;
-          const skills = JSON.parse(content);
-          setData(skills);
-        });
-    } catch (e) {
-      console.log("Error-------------")
-      console.log(e)
-    }
-
-  }, []);
+    setNotSkills(!skillData)
+  }, [skillData]);
 
   return (
-    <SkillsCtx.Provider value={{ skillData, notSkills }}>{children}</SkillsCtx.Provider>
+    <SkillsCtx.Provider value={{ skillData: skillData || [], notSkills }}>{children}</SkillsCtx.Provider>
   );
 };
 

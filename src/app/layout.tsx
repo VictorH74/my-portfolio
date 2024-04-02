@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import "@/configs/firebaseConfig"
 
 export const metadata: Metadata = {
   title: "Victor Almeida",

@@ -1,37 +1,37 @@
-import { RedirectType, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
 
 
 import React from "react";
 import { adminSDK } from "@/configs/firebaseAdmingConfig";
 import AdminHome from "./AdminHome";
+import { fetchTechnologies } from "@/utils/functions";
 
 export default async function AdminPage() {
     const loginPage = () => redirect("/admin/login")
 
     const recoveredToken = cookies().get("token")?.value
 
-    if (!recoveredToken) {
-        loginPage()
-    }
+    if (!recoveredToken) loginPage()
 
     let user;
+    let techs;
 
     try {
         const token = await adminSDK.auth().verifyIdToken(recoveredToken!);
-        console.log("from server", recoveredToken)
-        if (!token) {
-            loginPage()
-        }
+        if (!token) loginPage()
 
         const { uid } = token;
         user = await adminSDK.auth().getUser(uid);
 
+        // techologolies fetching
+        techs = await fetchTechnologies()
+
     } catch (e) {
-        console.log(e)
+        console.error(e)
         loginPage()
     }
 
 
-    return <AdminHome />
+    return <AdminHome techs={techs} />
 }
