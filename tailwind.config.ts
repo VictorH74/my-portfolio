@@ -28,6 +28,10 @@ const config: Config = {
         "contacts-bounce": {
           "0%,14%,100%": { transform: "translateY(0)" },
           "7%": { transform: "translateY(-20%)" },
+        },
+        "scale": {
+          from: { transform: "scale(0%)", opacity: "0" },
+          to: { transform: "scale(100%)", opacity: "1" },
         }
       },
       animation: {
@@ -35,6 +39,7 @@ const config: Config = {
         "double-arrow-bounce":
           "double-arrow-bounce 1s ease-in-out infinite alternate",
         "contacts-bounce": "contacts-bounce 4s infinite",
+        "scale": "scale 150ms ease-out",
       },
     },
   },

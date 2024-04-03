@@ -1,40 +1,41 @@
-import { ProjectAdminType, TechIcons } from "@/types"
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ProjectAdminType, ProjectScreenshotType, TechIcons } from "@/types"
 import CloseIcon from '@mui/icons-material/Close';
 import Image from "next/image";
 import React, { FormEvent, useRef } from "react";
-import AddIcon from '@mui/icons-material/Add';
 import TextArea from "@/components/TextArea";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "@/configs/firebaseConfig";
 import { Trie } from "@/utils/trie";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import LandscapeIcon from '@mui/icons-material/Landscape';
-
-const imagespath = "https://firebasestorage.googleapis.com/v0/b/vh-portfolio.appspot.com/o/project-images%2Fimage?alt=media"
+import { twMerge } from "tailwind-merge";
 
 const ModalContainer: React.FC<{ children: React.ReactElement }> = ({ children }) => (<div className="absolute inset-0 bg-black/70 grid place-items-center">
     {children}
 </div>)
 
-interface EditProjectModalProps extends ProjectAdminType {
+interface CreateUpdateProjectModalProps {
+    project?: ProjectAdminType;
     onClose(): void
 }
 
-
-export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
-    const [project, setProject] = React.useState<Partial<ProjectAdminType>>()
+export const CreateUpdateProjectModal: React.FC<CreateUpdateProjectModalProps> = (props) => {
+    const [project, setProject] = React.useState<Omit<ProjectAdminType, "id"> & { id?: string }>({ description: { EN: "", PT: "" }, screenshots: [], technologies: [], title: "" });
     const [technologieValue, setTechnologieValue] = React.useState("")
-    const [projectcreenshots, setProjectcreenshots] = React.useState<Array<string | File>>([])
+    const [onRemoveScreenshotNames, setOnRemoveScreenshotNames] = React.useState<string[]>([])
+    const [isSubmitting, setIsSubmitting] = React.useState(false)
+    const [projectScreenshots, setProjectScreenshots] = React.useState<Array<ProjectScreenshotType | File>>([])
     const [trieSufix, setTrieSufix] = React.useState<string>()
     const trieRef = React.useRef(new Trie())
     const techInputRef = useRef<HTMLInputElement>(null)
     const wordSufixSpanRef = useRef<HTMLSpanElement>(null)
 
     React.useEffect(() => {
-        const { onClose, screenshots, ...rest } = props
-        setProjectcreenshots([...screenshots])
-        setProject({ ...rest })
+        if (props.project) {
+            setProjectScreenshots([...props.project.screenshots])
+            setProject({ ...props.project })
+        }
 
         const techstr = localStorage.getItem("techs")
         if (!techstr) return;
@@ -50,7 +51,7 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
 
         const currenValue = technologieValue.toLowerCase()
         const trieResult = trieRef.current?.findFirstByPrefix(currenValue)
-        setTrieSufix(!(project?.technologies || []).includes(technologieValue + trieResult) ? trieResult : undefined)
+        setTrieSufix(!(project.technologies || []).includes(technologieValue + trieResult) ? trieResult : undefined)
 
         updateWordSufixSpanPosition()
     }, [technologieValue])
@@ -70,133 +71,148 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
     }
 
     const updateProjectProps = (prop: keyof ProjectAdminType, value: string) => setProject(prev => ({ ...prev, [prop]: value }))
+
     const updateDescription = (lang: "PT" | "EN", value: string) => {
         const prevDesc = project?.description!
         setProject(prev => ({ ...prev, description: { ...prevDesc, [lang]: value } }))
     }
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const fileInput = e.target;
-        const files = fileInput.files
-        if (files) {
-            setProjectcreenshots(prev => [...prev, ...Array.from(files)])
-        }
+    const uploadScreenshots = async () => {
+        let tempScreenshots = [...projectScreenshots]
 
-        // const storage = getStorage();
-        // const storageRef = ref(storage, `project-images/${selectedFile.name}`);
-
-        // // 'file' comes from the Blob or File API
-        // uploadBytes(storageRef, selectedFile).then((snapshot) => {
-        //     console.log("snapshot.metadata", snapshot.metadata)
-        //     console.log("snapshot.metadata.fullPath", snapshot.metadata.fullPath)
-        //     console.log("snapshot.ref.fullPath", snapshot.ref.fullPath)
-        //     console.log("snapshot.ref.name", snapshot.ref.name)
-        //     console.log("snapshot.ref.toString", snapshot.ref.toString())
-
-    };
-
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault()
-        const { id, screenshots, ...rest } = project!
-        let updatedScreenshots: string[] = []
-        const updatedData: Record<string, object | string> = {}
-        Object.entries(rest).forEach(([k, v]) => {
-            if (typeof v === "string") {
-                const value = rest[k as keyof typeof project]
-                if (value !== props[k as keyof ProjectAdminType]) {
-                    updatedData[k] = v
-                }
-            } else {
-                ({
-                    description: () => {
-                        if (Object.values(rest.description!).join("") !== Object.values(props.description).join("")) {
-                            updatedData[k] = v
-                        }
-                    },
-                    technologies: () => {
-                        if (rest.technologies?.join("") !== props.technologies.join("")) {
-                            updatedData[k] = v
-                        }
-                    },
-                    screenshots: () => {
-
-                    }
-                } as Record<string, () => void>)[k]()
-            }
-        })
-
-        if (projectcreenshots!.join("") !== props.screenshots.join("")) {
-            let tempScreenshots = [...projectcreenshots]
-            projectcreenshots.forEach((img, i) => {
-
-                if (img instanceof File) {
+        const promises: Promise<void>[] = []
+        projectScreenshots.forEach(async (img, i) => {
+            if (img instanceof File) {
+                promises.push(new Promise(async (res, rej) => {
                     const storage = getStorage();
                     const storageRef = ref(storage, `project-images/${img.name}`);
 
-                    uploadBytes(storageRef, img).then((snapshot) => {
-                        console.log("snapshot.metadata", snapshot.metadata)
-                        console.log("snapshot.metadata.fullPath", snapshot.metadata.fullPath)
-                        console.log("snapshot.ref.fullPath", snapshot.ref.fullPath)
-                        console.log("snapshot.ref.name", snapshot.ref.name)
-                        console.log("snapshot.ref.toString", snapshot.ref.toString())
-                    });
+                    try {
+                        const snap = await uploadBytes(storageRef, img)
+                        const url = await getDownloadURL(snap.ref)
+                        tempScreenshots[i] = { url, name: snap.metadata.name }
+                    } catch (e) {
+                        rej(e)
+                    }
+                    res()
+                }))
+            }
+        })
 
-                    tempScreenshots[i] = `https://firebasestorage.googleapis.com/v0/b/vh-portfolio.appspot.com/o/project-images%2F${img.name}?alt=media`
-                }
-            })
-            updatedData.screenshots = tempScreenshots
-        }
+        await Promise.all(promises)
+        return tempScreenshots
+    }
 
-        if (!id || Object.values(updatedData).length === 0) return;
+    const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const fileInput = e.target;
+        const files = fileInput.files
+        if (files) setProjectScreenshots(prev => [...prev, ...Array.from(files)])
+    };
 
-        const docRef = doc(db, "projects", id!)
+    // TODO: validade url props
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault()
+        setIsSubmitting(true)
+        const { screenshots, ...rest } = project
+        const { project: propProject } = props;
 
         try {
-            await updateDoc(docRef, updatedData)
+            // Update project data if it has passed as prop. Else, create project
+            if (propProject) {
+                const updatedData: Record<string, object | string> = {}
+                Object.entries(rest).forEach(([k, v]) => {
+                    if (typeof v === "string") {
+                        const value = rest[k as keyof typeof rest]
+                        if (value !== propProject[k as keyof ProjectAdminType]) updatedData[k] = v
+                    } else ({
+                        description: () => {
+                            if (Object.values(rest.description).join("") !== Object.values(propProject.description).join(""))
+                                updatedData[k] = v
+                        },
+                        technologies: () => {
+                            if (rest.technologies.join("") !== propProject.technologies.join(""))
+                                updatedData[k] = v
+                        }
+                    } as Record<string, () => void>)[k]()
+                })
+
+                // if project screenshots has changed
+                if (projectScreenshots.join("") !== propProject.screenshots.join(""))
+                    updatedData.screenshots = await uploadScreenshots();
+
+                // remove deleted screenshots from storage
+                onRemoveScreenshotNames.forEach((imgName) => {
+                    const storage = getStorage();
+                    const desertRef = ref(storage, `project-images/${imgName}`);
+                    deleteObject(desertRef)
+                })
+
+                if (Object.values(updatedData).length === 0) return;
+                const docRef = doc(db, "projects", propProject.id)
+
+                await updateDoc(docRef, { ...updatedData, updatedAt: new Date().toISOString() })
+            } else {
+                const { title, description, technologies } = project;
+
+                // Check empty values
+                const { EN, PT } = description
+                if (!title || !EN || !PT || technologies.length === 0 || projectScreenshots.length === 0) {
+                    alert("Required data: Title, Description, Technologies and Must contain at least one screenshot");
+                    return;
+                };
+                const screenshots = await uploadScreenshots()
+
+                await addDoc(collection(db, "projects"), { ...project, screenshots, createdAt: new Date().toISOString() });
+            }
+            props.onClose();
         } catch (e) {
             console.error(e)
             alert("Error")
         } finally {
-            props.onClose();
+            setIsSubmitting(false)
         }
-
     }
 
     return (
         <ModalContainer>
-            <div className="bg-gray-200 dark:bg-[#3f3f3f] w-full max-w-[1000px] rounded-md p-3">
-                <div className="text-right">
+            <div className="bg-gray-200 dark:bg-[#3f3f3f] w-full max-w-[1000px] rounded-md p-3 animate-scale">
+                <div className="text-right py-2">
                     <button onClick={props.onClose} ><CloseIcon /></button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="">
-                    <div className="flex flex-row bg-black/20 py-2">
+                    <div className={twMerge("flex flex-row bg-black/20 py-2 min-h-[200px]", projectScreenshots.length > 0 ? "" : "justify-center")}>
                         <div className="flex flex-col justify-evenly px-2">
-                            {/* <button type="button" onClick={() => { }} ><AddIcon sx={{ fontSize: 35 }} /></button> */}
                             <div className="relative">
                                 <label htmlFor="upload-img" className="px-6 cursor-pointer"><AddPhotoAlternateIcon sx={{ fontSize: 35 }} /></label>
                                 <input onChange={handleSelectChange} className="absolute pointer-events-none opacity-0" type="file" accept=".webp" name="" id="upload-img" />
                             </div>
-
                         </div>
 
-                        <div className="flex gap-2 overflow-auto">
-                            {
-                                projectcreenshots.map((img, i) => (
+                        {projectScreenshots.length > 0 && (
+                            <div className="flex gap-2 overflow-auto">
+                                {
+                                    projectScreenshots.map((img, i) => (
+                                        <Image key={i} width={300} height={113} onClick={() => {
+                                            setProjectScreenshots(prev => {
+                                                if (props.project && !(prev[i] instanceof File) && typeof prev[i] === "object" && Object.hasOwn(prev[i], "url")) {
+                                                    setOnRemoveScreenshotNames(rPrev => [...rPrev, prev[i].name])
+                                                }
+                                                return prev.filter((_, index) => i !== index)
+                                            }
+                                            )
+                                        }} src={img instanceof File ? URL.createObjectURL(img) : img.url} className="rounded-md w-auto h-[183px]" alt="project screenshot" />
 
-                                    <Image key={i} width={300} height={113} src={img instanceof File ? URL.createObjectURL(img) : img} className="rounded-md w-auto h-[183px]" alt="project screenshot" />
-
-                                ))
-                            }
-                        </div>
-
+                                    ))
+                                }
+                            </div>
+                        )}
                     </div>
 
+                    {/* Diviser */}
                     <div className="h-[2px] w-full bg-slate-300 my-6" />
 
                     <div className="flex flex-col gap-3">
-
-
                         <div>
                             <label htmlFor="title">Title:</label>
                             <TextArea id="title" className="w-full" value={project?.title || ""} placeholder="New title" onChange={v => updateProjectProps("title", v)} />
@@ -214,11 +230,10 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
                             </div>
                         </div>
 
-
                         {[
-                            { id: "deployUrl", label: "Deploy URL", value: props.deployUrl },
-                            { id: "repositoryUrl", label: "Repository URL", value: props.repositoryUrl },
-                            { id: "videoUrl", label: "Video Demo URL", value: props.videoUrl },
+                            { id: "deployUrl", label: "Deploy URL" },
+                            { id: "repositoryUrl", label: "Repository URL" },
+                            { id: "videoUrl", label: "Video Demo URL" },
                         ].map(obj => (
                             <div key={obj.id}>
                                 <label htmlFor={obj.id}>{obj.label}:</label>
@@ -230,15 +245,18 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
                             <label htmlFor="technologies">Technologies:</label>
 
                             {/* Technologie list */}
-                            <div className="flex flex-wrap gap-2 my-2">
-                                {project?.technologies?.map(tech => (
-                                    <p onClick={() => {
-                                        const technologies = (project?.technologies || []).filter((t, i) => t !== tech)
-                                        setProject(prev => ({ ...prev, technologies }))
-
-                                    }} className="bg-gray-800 p-2 rounded-xl hover:bg-red-400 select-none" key={tech}>{tech}</p>
-                                ))}
-                            </div>
+                            {
+                                project.technologies.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mb-1">
+                                        {project.technologies.map(tech => (
+                                            <p onClick={() => {
+                                                const technologies = (project.technologies || []).filter((t, i) => t !== tech)
+                                                setProject(prev => ({ ...prev, technologies }))
+                                            }} className="bg-gray-800 p-2 rounded-xl hover:bg-red-400 select-none" key={tech}>{tech}</p>
+                                        ))}
+                                    </div>
+                                )
+                            }
 
                             <div className="relative w-full">
                                 <span ref={wordSufixSpanRef} style={{ opacity: trieSufix !== undefined ? 1 : 0 }} className="absolute inset-y-0 pointer-events-none py-2 text-gray-400" >
@@ -248,17 +266,17 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
                                     ref={techInputRef}
                                     autoComplete="off"
                                     id="technologies"
-                                    className="shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 autofill:none resize-none overflow-hidden w-full"
+                                    className="shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 resize-none overflow-hidden w-full"
                                     value={technologieValue}
                                     placeholder="New technologie"
                                     onKeyDown={e => {
                                         if (e.code === "Tab") {
-                                            const technologies = project?.technologies || []
+                                            const technologies = project.technologies || []
 
                                             if (trieSufix !== undefined) {
                                                 const newValue = technologieValue + trieSufix
                                                 if (technologies.includes(newValue)) return
-                                                setProject(prev => ({ ...prev, technologies: [...technologies, newValue] }))
+                                                setProject(prev => ({ ...prev, technologies: [...technologies, newValue.toLowerCase()] }))
                                                 setTechnologieValue("")
                                                 setTrieSufix(undefined)
                                                 e.preventDefault()
@@ -271,21 +289,14 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = (props) => {
                                     }}
                                 />
                             </div>
-
                         </div>
 
-                        <button type="submit" className="hover:brightness-105 duration-250 bg-green-300 text-gray-600 font-semibold p-2 rounded-md mt-4">Update</button>
-
+                        <button disabled={isSubmitting} type="submit" className="hover:brightness-105 duration-250 bg-green-300 text-gray-600 font-semibold p-2 rounded-md mt-4">
+                            {props.project ? isSubmitting ? "Updating..." : "Update" : isSubmitting ? "Creating..." : "Create"}
+                        </button>
                     </div>
-
-
                 </form>
-
             </div>
         </ModalContainer>
     )
 }
-
-const CreateProjectModal: React.FC<{ children: React.ReactElement }> = ({ children }) => (<div>
-    {children}
-</div>)

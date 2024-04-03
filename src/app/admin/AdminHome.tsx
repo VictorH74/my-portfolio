@@ -6,6 +6,8 @@ import { ProjectAdminType, TechIcons } from "@/types"
 import AdminProjectCard from "./components/AdminProjectCard"
 import { collection, onSnapshot } from "firebase/firestore"
 import Skeleton from '@mui/material/Skeleton';
+import { CreateUpdateProjectModal } from "./components/modals"
+import { createPortal } from "react-dom"
 
 interface AdminHomeProps {
     techs: TechIcons[] | undefined
@@ -13,6 +15,7 @@ interface AdminHomeProps {
 
 export default function AdminHome(props: AdminHomeProps) {
     const [projects, setProjects] = React.useState<ProjectAdminType[]>([])
+    const [onCreateProject, setOnCreateProject] = React.useState(false)
 
     React.useEffect(() => {
         if (props.techs)
@@ -43,22 +46,19 @@ export default function AdminHome(props: AdminHomeProps) {
         return () => { unsubscribe() }
     }, [])
 
-    // TODO: Display icons: View and Remove when hover project
-    // TODO: 
-
     return (
         <div className="w-screen h-screen">
             <main className="w-full mx-auto max-w-[1400px]" >
                 <div className="rounded-md p-3 text-center my-3 bg-gray-200 dark:bg-[#3f3f3f]">
-                    Admin: <span>{auth.currentUser?.email}</span>
+                    <span className="font-semibold">Admin:</span> <span>{auth.currentUser?.email}</span>
                 </div>
 
-                <div className="w-full p-4 border-2x border-red-300">
-                    <div className="border-2">
+                <div className="w-full p-4">
+                    <div className="">
                         Projects
-                        <span><button>Criar</button></span>
+                        <span><button className="p-2" onClick={() => setOnCreateProject(true)}>Criar</button></span>
                     </div>
-                    <div className="py-3 w-full flex flex-row overflow-x-auto gap-4 border-2 border-purple-300">
+                    <div className="py-3 w-full flex flex-row overflow-x-auto gap-4 justify-center">
                         {projects.length > 0 ? projects.map(p => (
                             <AdminProjectCard key={p.id} {...p} />
                         )) : <CardSkeleton amount={5} />}
@@ -66,6 +66,9 @@ export default function AdminHome(props: AdminHomeProps) {
                 </div>
             </main>
 
+            {onCreateProject && createPortal(
+                <CreateUpdateProjectModal onClose={() => setOnCreateProject(false)} />, document.body
+            )}
         </div>
     )
 }

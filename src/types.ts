@@ -10,6 +10,11 @@ type ProjectType = {
     videoLink?: string;
 }
 
+export type ProjectScreenshotType = {
+    name: string;
+    url: string;
+}
+
 // temp
 // TODO: override ProjectType to this
 // TODO: remove
@@ -17,12 +22,14 @@ type ProjectType = {
 type ProjectAdminType = {
     id: string;
     title: string;
-    screenshots: string[];
+    screenshots: ProjectScreenshotType[];
     description: { PT: string; EN: string };
     technologies: string[];
     deployUrl?: string;
     repositoryUrl?: string;
     videoUrl?: string;
+    createdAt?: string; // ISO String Date
+    updatedAt?: string; // ISO String Date
 }
 
 type TechIcons = {

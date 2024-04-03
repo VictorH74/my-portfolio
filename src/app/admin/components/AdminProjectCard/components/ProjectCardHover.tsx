@@ -1,5 +1,5 @@
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface ProjectCardHoverProps {
     show: boolean;
@@ -13,7 +13,7 @@ export default function ProjectCardHover(props: ProjectCardHoverProps) {
             style={{ opacity: props.show ? 1 : 0 }}
         >
             <div className="flex gap-3">
-                <button onClick={props.editFunc} ><VisibilityIcon sx={{ fontSize: 35 }} /></button>
+                <button className='border-[3px] rounded-md' onClick={props.editFunc} ><EditIcon sx={{ fontSize: 27 }} /></button>
                 <button onClick={props.removeFunc} ><DeleteIcon sx={{ fontSize: 32 }} /></button>
             </div>
         </div>
