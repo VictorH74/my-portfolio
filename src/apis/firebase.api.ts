@@ -37,7 +37,7 @@ export class FirebaseApi implements Api {
 
                 await updateDoc(docRef, data);
 
-                return new Promise<ProjectAdminType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: ""}))
+                return new Promise<ProjectAdminType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: "", index: 0}))
             default:
                 return new Promise<any>((resolve) => resolve({}))
         }
@@ -47,7 +47,7 @@ export class FirebaseApi implements Api {
             case "projects":
                 // ...
                 // temp
-                return new Promise<ProjectAdminType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: ""}))
+                return new Promise<ProjectAdminType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: "", index: 0}))
             default:
                 return new Promise<any>((resolve) => resolve({}))
         }
