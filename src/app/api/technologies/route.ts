@@ -1,12 +1,12 @@
 import { TechIcons } from "@/types";
 
-export const GIST_ID = process.env.GIST_ID || 
+const GIST_ID = process.env.GIST_ID || 
  (() => { throw new Error("No Gist Id provided") })()
 
- export const GIST_URL = process.env.GIST_URL || 
+const GIST_URL = process.env.GIST_URL || 
  (() => { throw new Error("No Gist URL provided") })()
 
-export const GITHUB_GIST_TOKEN = process.env.GITHUB_GIST_TOKEN ||
+const GITHUB_GIST_TOKEN = process.env.GITHUB_GIST_TOKEN ||
  (() => { throw new Error("No Gist Token provided") })()
 
 const gistUrl = `${GIST_URL}/${GIST_ID}`
