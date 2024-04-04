@@ -20,6 +20,7 @@ export type ProjectScreenshotType = {
 // TODO: remove
 // TODO: remove imported from: ProjectRepository, Api interface
 type ProjectAdminType = {
+    index: number;
     id: string;
     title: string;
     screenshots: ProjectScreenshotType[];

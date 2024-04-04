@@ -14,19 +14,7 @@ const raleway = Raleway({
 const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
 const Header: React.FC = () => {
-  const {
-    downloadResumeBtnRef,
-    wrapperDimensions,
-    wrapperDisplay,
-    navDataArray,
-    themeColor,
-    translate,
-    wrappedLI,
-    scrollUp,
-    size,
-    handleMouseOver,
-    moveWrapperToDownloadBtn,
-  } = useHeader();
+  const hook = useHeader();
 
   return (
     <header className="fixed top-0 inset-x-0 z-10">
@@ -42,46 +30,46 @@ const Header: React.FC = () => {
           h-fit
           duration-300
           uppercase
-          ${scrollUp ? "bg-transparent" : "bg-[#00000055]"}
+          ${hook.scrollUp ? "bg-transparent" : "bg-[#00000055]"}
         `}
       >
         <h1
           className={`grow text-4xl shrink-0 basis-auto  z-[9910] select-none`}
         >
           <span
-            className={scrollUp ? "primary-font-color" : "text-custom-white"}
+            className={hook.scrollUp ? "primary-font-color" : "text-custom-white"}
           >
             &lt;
           </span>{" "}
           <span
             className={`line-through  ${raleway.className}`}
-            style={{ color: themeColor }}
+            style={{ color: hook.themeColor }}
           >
             vh
           </span>{" "}
           <span
-            className={scrollUp ? "primary-font-color" : "text-custom-white"}
+            className={hook.scrollUp ? "primary-font-color" : "text-custom-white"}
           >
             /&gt;
           </span>
         </h1>
-        {size[0] > 1100 ? (
+        {hook.size[0] > 1100 ? (
           <>
             <div
               className={`absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
               style={{
-                ...wrapperDimensions,
-                backgroundColor: themeColor,
-                display: wrapperDisplay || "none",
+                ...hook.wrapperDimensions,
+                backgroundColor: hook.themeColor,
+                display: hook.wrapperDisplay || "none",
               }}
             />
             <nav
               className="max-lg:hidden z-[4]"
-              onMouseOut={moveWrapperToDownloadBtn}
+              onMouseOut={hook.moveWrapperToDownloadBtn}
             >
               <ul className="flex flex-wrap items-center py-1">
-                {navDataArray.map((data, i) => {
-                  const last = i === navDataArray.length - 1;
+                {hook.navDataArray.map((data, i) => {
+                  const last = i === hook.navDataArray.length - 1;
                   return (
                     <li
                       className={`
@@ -95,8 +83,8 @@ const Header: React.FC = () => {
                     duration-150
                     ${notoSans.className}
                     ${
-                      scrollUp
-                        ? wrappedLI === "li-" + data.to
+                      hook.scrollUp
+                        ? hook.wrappedLI === "li-" + data.to
                           ? "text-[#ececec]"
                           : "primary-font-color"
                         : "text-[#ececec]"
@@ -109,15 +97,15 @@ const Header: React.FC = () => {
                           ? downloadResume
                           : () => window.location.replace(`#${data.to || ""}`)
                       }
-                      onMouseOver={handleMouseOver}
+                      onMouseOver={hook.handleMouseOver}
                     >
                       {last ? (
                         <button
                           className="uppercase p-[10px] rounded-[20px]"
-                          ref={downloadResumeBtnRef}
+                          ref={hook.downloadResumeBtnRef}
                           onClick={downloadResume}
                         >
-                          {translate.downloadResumeBtnInnerText}
+                          {hook.translate.downloadResumeBtnInnerText}
                         </button>
                       ) : (
                         data.label
@@ -130,8 +118,8 @@ const Header: React.FC = () => {
           </>
         ) : (
           <Hamburger
-            navData={navDataArray}
-            downloadResumeBtnInnerText={translate.downloadResumeBtnInnerText}
+            navData={hook.navDataArray}
+            downloadResumeBtnInnerText={hook.translate.downloadResumeBtnInnerText}
           />
         )}
       </div>
