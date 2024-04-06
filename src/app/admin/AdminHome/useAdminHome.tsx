@@ -1,55 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from "@/configs/firebaseConfig";
-import { ProjectAdminType, TechIcons } from "@/types";
+import { ProjectType, TechIcons } from "@/types";
 import { collection, doc, onSnapshot, orderBy, query, writeBatch } from "firebase/firestore";
 import React from "react";
-import { ReordableItemType } from "../components/ReordableModal";
+import { ReordableItemType } from "./components/ReordableModal";
+import useAdminProjects from "@/hooks/useAdminProjects";
 
 export interface AdminHomeProps {
     techs: TechIcons[] | undefined
 }
 
 export default function useAdminHome(props: AdminHomeProps) {
-    const [projects, setProjects] = React.useState<ProjectAdminType[]>([])
     const [onCreateProject, setOnCreateProject] = React.useState(false)
     const [onReorderProject, setOnReorderProject] = React.useState(false)
+    const { projects } = useAdminProjects()
 
     React.useEffect(() => {
         if (props.techs)
             localStorage.setItem("techs", JSON.stringify(props.techs))
-
-        const docsRef = collection(db, "projects")
-        const q = query(docsRef, orderBy("index", "asc"));
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            
-            const retrivedProjects: ProjectAdminType[] = [];
-            snapshot.forEach((doc) => {
-                retrivedProjects.push({...doc.data(), id: doc.id} as ProjectAdminType);
-            });
-            setProjects(retrivedProjects)
-           
-            // snapshot.docChanges().forEach((change) => {
-            //     const projectData = { ...change.doc.data(), id: change.doc.id } as ProjectAdminType
-            //     ({
-            //         "added": () => {
-            //             setProjects(prev => [
-            //                 ...prev, projectData
-            //             ]);
-            //         },
-            //         "modified": () => {
-            //             setProjects(prev => prev.map(p => p.id === projectData.id ? projectData : p)
-            //             );
-            //         },
-            //         "removed": () => {
-            //             setProjects(prev => prev.filter(p => p.id !== projectData.id)
-            //             );
-            //         },
-            //     })[change.type]();
-            // });
-        });
-
-        return () => { unsubscribe() }
     }, [])
 
     const reorderedProjects = async (items: ReordableItemType[]) => {
@@ -59,8 +27,6 @@ export default function useAdminHome(props: AdminHomeProps) {
             const { id, value } = items[currentIndex]
             itemsObj[id] = { value, currentIndex }
         }
-
-        // console.log(itemsObj)
 
         const batch = writeBatch(db);
 
@@ -76,7 +42,6 @@ export default function useAdminHome(props: AdminHomeProps) {
 
     return ({
         projects,
-        setProjects,
         onCreateProject,
         setOnCreateProject,
         onReorderProject,

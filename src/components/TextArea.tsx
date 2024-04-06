@@ -7,6 +7,7 @@ interface TextAreaProps {
   id?: string;
   className?: string;
   onChange(value: string): void;
+  required?: boolean
 }
 
 export default function TextArea(props: TextAreaProps) {
@@ -22,6 +23,7 @@ export default function TextArea(props: TextAreaProps) {
 
   return (
     <textarea
+      required={props.required}
       id={props.id}
       ref={ref}
       className={twMerge("shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 autofill:none resize-none overflow-hidden", props.className)}

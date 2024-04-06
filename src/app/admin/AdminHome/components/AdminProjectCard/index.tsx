@@ -1,5 +1,5 @@
 "use client"
-import { ProjectAdminType } from "@/types";
+import { ProjectType } from "@/types";
 import Image from "next/image";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
@@ -10,12 +10,12 @@ import ProjectCardHover from "./components/ProjectCardHover"
 import useAdminProjectCard from "./useAdminProjectCard";
 import CreateUpdateProjectModal from "../CreateUpdateProjectModal";
 
-export default function AdminProjectCard(props: ProjectAdminType) {
+export default function AdminProjectCard(props: ProjectType) {
     const hook = useAdminProjectCard(props)
 
     return (
         <>
-            <div className="relative w-[300px] h-96 shadow-lg bg-gray-200 dark:bg-[#3f3f3f] shrink-0 grow-0 rounded-md flex flex-col overflow-hidden"
+            <div className="relative w-[300px] h-96 shadow-lg bg-gray-200 dark:bg-[#3f3f3f] shrink-0 grow-0 rounded-md flex flex-col overflow-hidden select-none"
                 onMouseOver={() => hook.setCardHover(true)}
                 onMouseLeave={() => hook.setCardHover(false)}
             >
@@ -25,7 +25,7 @@ export default function AdminProjectCard(props: ProjectAdminType) {
                     {
                         props.screenshots.map((img, i) => (
                             <div key={i} className="space-y-4 flex-none w-full flex flex-col items-center justify-center">
-                                <Image width={300} height={113} src={img.url} className="rounded-b-md h-full w-auto" alt="project screenshot" />
+                                <Image width={300} height={113} src={img.url} className="rounded-b-md h-full w-full object-cover" alt="project screenshot" />
                             </div>
                         ))
                     }

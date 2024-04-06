@@ -1,5 +1,5 @@
 "use client"
-import { authenticate, setServerCookie } from "@/app/lib/actions";
+import { setServerCookie } from "@/app/lib/actions";
 import { ThemeProvider } from "@/contexts/ThemeColor";
 import { useTheme } from "@/hooks/UseTheme";
 import { useRouter } from "next/navigation";
@@ -68,7 +68,7 @@ const LoginFormChildren = () => {
                         style={{ backgroundColor: themeColor }}
                         type="submit"
                         disabled={isSubmitting}
-                    >Submit</button>
+                    >{isSubmitting ? "Submitting..." : "Submit"}</button>
                 </form>
             </main>
         </div>

@@ -7,9 +7,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import React from "react";
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { twMerge } from "tailwind-merge";
+import { useTheme } from "@/hooks/UseTheme";
 
 export default function CreateUpdateProjectModal(props: CreateUpdateProjectModalProps) {
     const hook = useCreateUpdateModal(props);
+    const { themeColor } = useTheme();
 
     return (
         <ModalContainer>
@@ -40,7 +42,6 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                                             }
                                             )
                                         }} src={img instanceof File ? URL.createObjectURL(img) : img.url} className="rounded-md w-auto h-[183px]" alt="project screenshot" />
-
                                     ))
                                 }
                             </div>
@@ -53,18 +54,18 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                     <div className="flex flex-col gap-3">
                         <div>
                             <label htmlFor="title">Title:</label>
-                            <TextArea id="title" className="w-full" value={hook.project.title || ""} placeholder="New title" onChange={v => hook.updateProjectProps("title", v)} />
+                            <TextArea required id="title" className="w-full" value={hook.project.title || ""} placeholder="New title" onChange={v => hook.updateProjectProps("title", v)} />
                         </div>
 
                         <div>
                             <p>Description:</p>
                             <div className="flex items-center gap-2 mb-2">
                                 <label className="font-semibold text-sm uppercase" htmlFor="descriptionPT">pt</label>
-                                <TextArea id="descriptionPT" className="w-full" value={hook.project.description?.PT || ""} placeholder="New description (PT)" onChange={value => hook.updateDescription("PT", value)} />
+                                <TextArea required id="descriptionPT" className="w-full" value={hook.project.description?.PT || ""} placeholder="New description (PT)" onChange={value => hook.updateDescription("PT", value)} />
                             </div>
                             <div className="flex items-center gap-2">
                                 <label className="font-semibold text-sm uppercase" htmlFor="descriptionEN">en</label>
-                                <TextArea id="descriptionEN" className="w-full" value={hook.project.description?.EN || ""} placeholder="New description (EN)" onChange={value => hook.updateDescription("EN", value)} />
+                                <TextArea required id="descriptionEN" className="w-full" value={hook.project.description?.EN || ""} placeholder="New description (EN)" onChange={value => hook.updateDescription("EN", value)} />
                             </div>
                         </div>
 
@@ -129,7 +130,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                             </div>
                         </div>
 
-                        <button disabled={hook.isSubmitting} type="submit" className="hover:brightness-105 duration-250 bg-green-300 text-gray-600 font-semibold p-2 rounded-md mt-4">
+                        <button style={{backgroundColor: themeColor}} disabled={hook.isSubmitting} type="submit" className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4">
                             {props.project ? hook.isSubmitting ? "Updating..." : "Update" : hook.isSubmitting ? "Creating..." : "Create"}
                         </button>
                     </div>

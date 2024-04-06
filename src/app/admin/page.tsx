@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
 import React from "react";
-import { adminSDK } from "@/configs/firebaseAdmingConfig";
+import { adminSDK } from "@/configs/firebaseAdminConfig";
 import AdminHome from "./AdminHome";
 import { fetchTechnologies } from "@/utils/functions";
 

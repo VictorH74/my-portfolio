@@ -24,7 +24,7 @@ export default function ProjectCard(props: {
   const { themeColor } = useTheme();
   const translate = projectItem(props.project.description)[lang];
 
-  const icons = props.project.skills.map((name) =>
+  const icons = props.project.technologies.map((name) =>
     skillData.find((icon) => icon.id === name)
   );
 
@@ -42,13 +42,13 @@ export default function ProjectCard(props: {
           <iframe
             className="w-[1000px] aspect-video bg-transparent max-lg:w-full"
             title="project video"
-            src={props.project.videoLink}
+            src={props.project.videoUrl}
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
           />
         </div>
       )}
-      {!!props.project.videoLink && (
+      {!!props.project.videoUrl && (
         <div
           onMouseOver={() => {
             const playIcon = document.getElementById(`play-icon-${id}`);
@@ -73,27 +73,15 @@ export default function ProjectCard(props: {
           />
         </div>
       )}
-      {props.project.image ? (
-        <iframe
-          className={`w-[100%]  aspect-[600/360] duration-300 ${
-            loadingImg ? "opacity-0 pointer-events-none" : ""
-          }`}
-          title="project image"
-          src={props.project.image}
-          onLoad={() => setLoadingImg(false)}
-          allow="autoplay"
-        ></iframe>
-      ) : (
-        <Image
+      <Image
           loading="lazy"
           placeholder="empty"
           height={700}
           width={1000}
           className="h-auto w-full"
-          src={randomImgUrl + props.index}
+          src={props.project.screenshots[0].url}
           alt="Project image"
         />
-      )}
       <div
         className={`absolute inset-0 bg-transparent grid place-items-center ${
           loadingImg ? "opacity-100" : "opacity-0"

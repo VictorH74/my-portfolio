@@ -1,14 +1,30 @@
 "use client"
 import React from "react"
 import { auth } from "@/configs/firebaseConfig"
-import AdminProjectCard from "../components/AdminProjectCard"
+import AdminProjectCard from "./components/AdminProjectCard"
 import Skeleton from '@mui/material/Skeleton';
 import { createPortal } from "react-dom"
 import useAdminHome, { AdminHomeProps } from "./useAdminHome"
-import CreateUpdateProjectModal from "../components/CreateUpdateProjectModal";
-import ReordableModal from "../components/ReordableModal";
+import CreateUpdateProjectModal from "./components/CreateUpdateProjectModal";
+import ReordableModal from "./components/ReordableModal";
+import { ThemeProvider } from "@/contexts/ThemeColor";
+import Button from "./components/Button";
+import AddIcon from '@mui/icons-material/Add';
+import ReorderIcon from '@mui/icons-material/Reorder';
+import AdminProjectsProvider from "@/contexts/AdminProjectsContext";
 
 export default function AdminHome(props: AdminHomeProps) {
+    return (
+        <ThemeProvider>
+            <AdminProjectsProvider>
+                <AdminHomeChildren {...props} />
+            </AdminProjectsProvider>
+        </ThemeProvider>
+
+    )
+}
+
+const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
     const hook = useAdminHome(props)
 
     return (
@@ -19,9 +35,13 @@ export default function AdminHome(props: AdminHomeProps) {
                 </div>
 
                 <div className="w-full p-4">
-                    <div className="">
-                        <span><button className="p-2 bg-green-300 rounded-md text-gray-600 font-semibold mx-2" onClick={() => hook.setOnCreateProject(true)}>Criar</button></span>
-                        <span><button className="p-2 bg-green-300 rounded-md text-gray-600 font-semibold " onClick={() => hook.setOnReorderProject(true)}>Reorder</button></span>
+                    <div className="flex gap-2">
+                        <Button onClick={() => hook.setOnCreateProject(true)}>
+                            <AddIcon />
+                        </Button>
+                        <Button onClick={() => hook.setOnReorderProject(true)}>
+                            <ReorderIcon />
+                        </Button>
                     </div>
                     <div className="py-3 w-auto flex flex-row overflow-x-auto gap-4 justify-centers">
                         {hook.projects.length > 0 ? hook.projects.map(p => (

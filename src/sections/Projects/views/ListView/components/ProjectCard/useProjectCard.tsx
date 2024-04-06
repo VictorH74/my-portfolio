@@ -10,13 +10,13 @@ export default function useProjectCard(project: ProjectType) {
   const { skillData } = useSkills();
   const [video, setShowVideo] = React.useState(false);
 
-  const [loadingImg, setLoadingImg] = React.useState(!!project.image);
+  const [loadingImg, setLoadingImg] = React.useState(!!project.screenshots.length);
   const id = React.useId();
   const lang = useLanguage();
   const { themeColor } = useTheme();
   const translate = projectItem(project.description)[lang];
 
-  const icons = project.skills.map((name) =>
+  const icons = project.technologies.map((name) =>
     skillData.find((icon) => icon.id === name)
   );
 

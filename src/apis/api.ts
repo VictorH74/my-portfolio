@@ -1,12 +1,12 @@
-import { ProjectAdminType } from "@/types";
+import { ProjectType } from "@/types";
 
 export type DataType = "projects" | "technologies"
 
-export type ReturnArrayDataType<T> = T extends "projects" ? ProjectAdminType[] : any[];
-// type ReturnArrayDataType<T extends DataType> = T extends "projects" ? ProjectAdminType[] : any[];
+export type ReturnArrayDataType<T> = T extends "projects" ? ProjectType[] : any[];
+// type ReturnArrayDataType<T extends DataType> = T extends "projects" ? ProjectType[] : any[];
 
-export type ReturnDataType<T> = T extends "projects" ? ProjectAdminType : any;
-export type DataParamType<T> = T extends "projects" ? ProjectAdminType | Partial<ProjectAdminType> : any;
+export type ReturnDataType<T> = T extends "projects" ? ProjectType : any;
+export type DataParamType<T> = T extends "projects" ? ProjectType | Partial<ProjectType> : any;
 
 export interface Api {
     get<T extends DataType>(dataType: T): Promise<ReturnArrayDataType<T>>;

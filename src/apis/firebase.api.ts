@@ -1,4 +1,4 @@
-import { ProjectAdminType } from "@/types";
+import { ProjectType } from "@/types";
 import { Api, DataParamType, DataType, ReturnArrayDataType, ReturnDataType } from "./api"
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/configs/firebaseConfig";
@@ -10,9 +10,9 @@ export class FirebaseApi implements Api {
                 const projectsCol = collection(db, 'projects');
                 const projectSnapshot = await getDocs(projectsCol);
                 const projectList = projectSnapshot.docs.map(doc => doc.data());
-                return projectList as ProjectAdminType[];
+                return projectList as ProjectType[];
                 // temp
-                // return new Promise<ProjectAdminType[]>((resolve) => resolve([]))
+                // return new Promise<ProjectType[]>((resolve) => resolve([]))
             default:
                 return new Promise<any[]>((resolve) => resolve([]))
         }
@@ -37,7 +37,7 @@ export class FirebaseApi implements Api {
 
                 await updateDoc(docRef, data);
 
-                return new Promise<ProjectAdminType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: "", index: 0}))
+                return new Promise<ProjectType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: "", index: 0}))
             default:
                 return new Promise<any>((resolve) => resolve({}))
         }
@@ -47,7 +47,7 @@ export class FirebaseApi implements Api {
             case "projects":
                 // ...
                 // temp
-                return new Promise<ProjectAdminType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: "", index: 0}))
+                return new Promise<ProjectType>((resolve) => resolve({ description: { EN: "hello", PT: "Ola" }, technologies: [], title: "", screenshots: [], id: "", index: 0}))
             default:
                 return new Promise<any>((resolve) => resolve({}))
         }

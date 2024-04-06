@@ -7,6 +7,7 @@ interface Props {
   projectArray: ProjectType[];
   showMoreOnText: string
   showMoreOffText: string
+  fetchMoreProjectsFunc(): Promise<void>
 }
 
 export default function ListView(props: Props) {
@@ -34,7 +35,13 @@ export default function ListView(props: Props) {
         }}
         style={{ border: "2px solid " + themeColor, color: themeColor }}
         className="uppercase px-4 py-3 inline-block mt-12 relative overflow-hidden border-2 text-md font-medium rounded-md duration-150 font-[inherit]"
-        onClick={() => setShowMore(!showMore)}
+        onClick={async () => {
+          if (!showMore && !(props.projectArray.length > 3)) {
+            await props.fetchMoreProjectsFunc()
+          }
+          setShowMore(!showMore)
+        }
+        }
       >
         {showMore ? props.showMoreOnText : props.showMoreOffText}
       </button>

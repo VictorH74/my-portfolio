@@ -1,25 +1,7 @@
 type Language = "en" | "pt-BR"
 type TranslationLang = Record<Language, Record<string, any>>
+
 type ProjectType = {
-    title: string;
-    image?: string;
-    description: { PT: string; EN: string };
-    skills: string[];
-    link?: string;
-    repository?: string;
-    videoLink?: string;
-}
-
-export type ProjectScreenshotType = {
-    name: string;
-    url: string;
-}
-
-// temp
-// TODO: override ProjectType to this
-// TODO: remove
-// TODO: remove imported from: ProjectRepository, Api interface
-type ProjectAdminType = {
     index: number;
     id: string;
     title: string;
@@ -33,6 +15,11 @@ type ProjectAdminType = {
     updatedAt?: string; // ISO String Date
 }
 
+export type ProjectScreenshotType = {
+    name: string;
+    url: string;
+}
+
 type TechIcons = {
     id: string;
     name: string;
@@ -40,4 +27,4 @@ type TechIcons = {
     hidden?: boolean;
 }
 
-export type { Language, TranslationLang, ProjectType, ProjectAdminType, TechIcons }
+export type { Language, TranslationLang, ProjectType, TechIcons }

@@ -1,7 +1,6 @@
 "use client";
 import Loading from "@/components/Loading";
 import React from "react";
-import { useQuery } from "react-query";
 import useLanguage from "@/hooks/UseLanguage";
 import { projectsSection } from "@/utils/translations";
 import ListView from "./views/ListView";
@@ -9,28 +8,42 @@ import CarouselView from "./views/Carousel";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import { ProjectType } from "@/types";
+import { QueryConstraint, collection, getDocs, limit, orderBy, query, startAfter } from "firebase/firestore";
+import { db } from "@/configs/firebaseConfig";
 
 
-const gistId = "d85dcf05a1f6d5e760bbcbe9d5dc614d";
 const viewBtnClass = "text-custom-gray-light dark:text-[#a1a1aa]";
 const viewBtnActiveClass = "text-[#303030] dark:text-[#ececec]";
 
 const Projects = () => {
   const [view, setView] = React.useState(2);
   const containerRef = React.useRef(null);
+  const [projects, setProjects] = React.useState<ProjectType[]>([])
+  const [isLoading, setIsLoading] = React.useState(false)
 
-  const { isLoading, data } = useQuery({
-    queryKey: ["projectsData"],
-    queryFn: () =>
-      fetch(`https://api.github.com/gists/${gistId}`)
-        .then((results) => {
-          return results.json();
-        })
-        .then((data) => {
-          const content = data.files["projects.json"].content;
-          return JSON.parse(content) as ProjectType[];
-        }),
-  });
+  React.useEffect(() => {
+    (async () => {
+      setIsLoading(true)
+      const retrievedProjects = await getProjectSnapshotsByQuery(limit(3))
+      setProjects(retrievedProjects)
+      setIsLoading(false)
+    })()
+  }, [])
+
+  const fetchMoreProjects = async () => {
+    const retrievedProjects = await getProjectSnapshotsByQuery(startAfter(2))
+    setProjects(prev => [...prev, ...retrievedProjects])
+  }
+
+  const getProjectSnapshotsByQuery = async (...queryConstraints: QueryConstraint[]) => {
+    const collectionRef = collection(db, "projects");
+    const q = query(collectionRef, orderBy("index"), ...queryConstraints)
+    const snapshot = await getDocs(q)
+    const tempProjects: ProjectType[] = []
+    snapshot.docs.forEach(doc => tempProjects.push({ ...doc.data(), id: doc.id } as ProjectType))
+    return tempProjects
+  }
+
   const lang = useLanguage();
   const translate = projectsSection[lang];
 
@@ -40,7 +53,7 @@ const Projects = () => {
       id="projects"
       className="pt-24 px-0 text-center"
     >
-      {!isLoading && data ? (
+      {!isLoading && projects ? (
         <>
           <div className="mb-12 relative">
             <h1 className="section-title">{translate.title}</h1>
@@ -62,12 +75,13 @@ const Projects = () => {
             )}
           </div>
 
-          {view === 1 && <CarouselView projectArray={data} />}
+          {view === 1 && <CarouselView projectArray={projects} />}
           {view === 2 && (
             <ListView
-              projectArray={data}
+              projectArray={projects}
               showMoreOnText={translate.showMoreOn}
               showMoreOffText={translate.showMoreOff}
+              fetchMoreProjectsFunc={fetchMoreProjects}
             />
           )}
         </>

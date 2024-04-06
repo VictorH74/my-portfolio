@@ -1,20 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from "@/configs/firebaseConfig";
-import { ProjectAdminType, ProjectScreenshotType, TechIcons } from "@/types";
+import { ProjectType, ProjectScreenshotType, TechIcons } from "@/types";
 import { Trie } from "@/utils/trie";
-import { addDoc, collection, doc, getDoc, getDocs, increment, runTransaction, updateDoc, writeBatch } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
+import { addDoc, collection, doc, runTransaction, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import React, { useRef } from "react";
 
+const UrlKeys = ["deployUrl", "repositoryUrl", "videoUrl"] as const
+
 export interface CreateUpdateProjectModalProps {
-    project?: ProjectAdminType;
+    project?: ProjectType;
     projectIndex?: number;
     onClose(): void;
 
 }
 
 export default function useCreateUpdateProjectModal(props: CreateUpdateProjectModalProps) {
-    const [project, setProject] = React.useState<Omit<ProjectAdminType, "id" | "index"> & { id?: string }>({ description: { EN: "", PT: "" }, screenshots: [], technologies: [], title: "" });
+    const [project, setProject] = React.useState<Omit<ProjectType, "id" | "index"> & { id?: string }>({ description: { EN: "", PT: "" }, screenshots: [], technologies: [], title: "" });
     const [technologieValue, setTechnologieValue] = React.useState("")
     const [onRemoveScreenshotNames, setOnRemoveScreenshotNames] = React.useState<string[]>([])
     const [isSubmitting, setIsSubmitting] = React.useState(false)
@@ -63,37 +66,73 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         document.body.removeChild(tempSpan);
     }
 
-    const updateProjectProps = (prop: keyof ProjectAdminType, value: string) => setProject(prev => ({ ...prev, [prop]: value }))
+    const updateProjectProps = (prop: keyof ProjectType, value: string) => setProject(prev => ({ ...prev, [prop]: value }))
 
     const updateDescription = (lang: "PT" | "EN", value: string) => {
         const prevDesc = project?.description!
         setProject(prev => ({ ...prev, description: { ...prevDesc, [lang]: value } }))
     }
 
-    const uploadScreenshots = async () => {
-        let tempScreenshots = [...projectScreenshots]
+    const updatedCheckedProjectData = (projectRest: Omit<typeof project, 'screenshots'>) => {
+        const propProject = props.project!;
 
+        const updatedData: Record<string, object | string> = {}
+        Object.entries(projectRest).forEach(([currentKey, currentValue]) => {
+            if (typeof currentValue === "string") {
+                const prevValue = propProject[currentKey as keyof ProjectType]
+                if (currentValue !== prevValue) {
+                    updatedData[currentKey] = (UrlKeys as readonly string[]).includes(currentKey) ?
+                        new URL(currentValue) : updatedData[currentKey] = currentValue
+                }
+            } else if (typeof currentValue !== "number") ({
+                description: () => {
+                    if (Object.values(projectRest.description).join("") !== Object.values(propProject.description).join(""))
+                        updatedData[currentKey] = currentValue
+                },
+                technologies: () => {
+                    if (projectRest.technologies.join("") !== propProject.technologies.join(""))
+                        updatedData[currentKey] = currentValue
+                }
+            } as Record<string, () => void>)[currentKey]()
+        })
+
+        return updatedData
+    }
+
+    const uploadScreenshots = async () => {
+        let updatedScreenshots = [...projectScreenshots]
         const promises: Promise<void>[] = []
+
         projectScreenshots.forEach(async (img, i) => {
             if (img instanceof File) {
-                promises.push(new Promise(async (res, rej) => {
+                promises.push(new Promise(async (resolve, reject) => {
                     const storage = getStorage();
                     const storageRef = ref(storage, `project-images/${img.name}`);
-
                     try {
                         const snap = await uploadBytes(storageRef, img)
                         const url = await getDownloadURL(snap.ref)
-                        tempScreenshots[i] = { url, name: snap.metadata.name }
+                        updatedScreenshots[i] = { url, name: snap.metadata.name }
+                        resolve()
                     } catch (e) {
-                        rej(e)
+                        reject(e)
                     }
-                    res()
                 }))
             }
         })
-
         await Promise.all(promises)
-        return tempScreenshots
+
+        // remove deleted screenshots from storage
+        if (onRemoveScreenshotNames.length > 0) {
+            const updatedScreenshotNames = updatedScreenshots.map(s => s.name)
+            const storage = getStorage();
+            onRemoveScreenshotNames.forEach((imgName) => {
+                if (!updatedScreenshotNames.includes(imgName)) {
+                    const desertRef = ref(storage, `project-images/${imgName}`);
+                    deleteObject(desertRef)
+                }
+            })
+        }
+        return updatedScreenshots
     }
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,43 +141,20 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         if (files) setProjectScreenshots(prev => [...prev, ...Array.from(files)])
     };
 
-    // TODO: validade url props
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
         const { screenshots, ...rest } = project
-        const { project: propProject } = props;
+        const propProject = props.project;
 
         try {
             // Update project data if it has passed as prop. Else, create project
             if (propProject) {
-                const updatedData: Record<string, object | string> = {}
-                Object.entries(rest).forEach(([k, v]) => {
-                    if (typeof v === "string") {
-                        const value = rest[k as keyof typeof rest]
-                        if (value !== propProject[k as keyof ProjectAdminType]) updatedData[k] = v
-                    } else if (typeof v !== "number") ({
-                        description: () => {
-                            if (Object.values(rest.description).join("") !== Object.values(propProject.description).join(""))
-                                updatedData[k] = v
-                        },
-                        technologies: () => {
-                            if (rest.technologies.join("") !== propProject.technologies.join(""))
-                                updatedData[k] = v
-                        }
-                    } as Record<string, () => void>)[k]()
-                })
+                const updatedData = updatedCheckedProjectData(rest)
 
                 // if project screenshots has changed
                 if (projectScreenshots.join("") !== propProject.screenshots.join(""))
                     updatedData.screenshots = await uploadScreenshots();
-
-                // remove deleted screenshots from storage
-                onRemoveScreenshotNames.forEach((imgName) => {
-                    const storage = getStorage();
-                    const desertRef = ref(storage, `project-images/${imgName}`);
-                    deleteObject(desertRef)
-                })
 
                 if (Object.values(updatedData).length === 0) return;
                 const docRef = doc(db, "projects", propProject.id)
@@ -147,16 +163,21 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
             } else {
                 const { title, description, technologies } = project;
 
+                UrlKeys.forEach((key) => {
+                    const urlValue = project[key]
+                    if (urlValue) new URL(urlValue)
+                })
+
                 // Check empty values
                 const { EN, PT } = description
                 if (!title || !EN || !PT || technologies.length === 0 || projectScreenshots.length === 0) {
-                    alert("Required data: Title, Description, Technologies and Must contain at least one screenshot");
+                    alert("Required: A new project must contain at least one screenshot and technologie");
                     return;
                 };
+
                 const screenshots = await uploadScreenshots()
 
                 const collectionSizeRef = doc(db, "counts", "projects")
-
                 await runTransaction(db, async (transaction) => {
                     const collectionCount = await transaction.get(collectionSizeRef)
                     if (!collectionCount.exists()) {
@@ -164,15 +185,17 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                     }
 
                     const collectionSize = collectionCount.data().total as number
-
                     await addDoc(collection(db, "projects"), { ...project, index: collectionSize, screenshots, createdAt: new Date().toISOString() });
-                    transaction.update(collectionSizeRef, {total: collectionSize + 1})
+                    transaction.update(collectionSizeRef, { total: collectionSize + 1 })
                 })
             }
             props.onClose();
         } catch (e) {
+            if (e instanceof FirebaseError) {
+                alert(e.message);
+            }
             console.error(e)
-            alert("Error")
+            alert(e)
         } finally {
             setIsSubmitting(false)
         }

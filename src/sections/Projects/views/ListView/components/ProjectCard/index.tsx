@@ -13,7 +13,6 @@ interface Props {
   project: ProjectType;
 }
 
-const randomImgUrl = "https://picsum.photos/600/380?random=";
 const randomVideoUrl =
   "https://player.vimeo.com/video/723658039?h=57b6d0ac88&color=ffffff&byline=0&portrait=0";
 
@@ -45,7 +44,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           <iframe
             className="w-[1000px] aspect-video bg-transparent max-lg:w-full"
             title="project video"
-            src={project.videoLink || randomVideoUrl}
+            src={project.videoUrl || randomVideoUrl}
             allow="autoplay; fullscreen; picture-in-picture"
             allowFullScreen
           />
@@ -62,17 +61,9 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
         data-aos-once="true"
       >
         <div
-          className={`relative overflow-hidden lg:w-1/2 rounded-xl w-full shadow-xl ${
-            !!project.image
-              ? ""
-              : `after:absolute ${
-                  window.navigator.language === "pt-BR"
-                    ? "after:content-['Imagem-Aleatória']"
-                    : "after:content-['Random-Image']"
-                } after:inset-x-0 after:bottom-14 after:h-16 after:text-white after:z-[3] after:grid after:place-items-center`
-          }`}
+          className="relative overflow-hidden lg:w-1/2 rounded-xl w-full shadow-xl"
         >
-          {!!project.videoLink && !loadingImg && (
+          {!!project.videoUrl && !loadingImg && (
             <div
               onMouseOver={() => {
                 const playIcon = document.getElementById(`play-icon-${id}`);
@@ -97,27 +88,16 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
               />
             </div>
           )}
-          {project.image ? (
-            <iframe
-              className={`w-[104%] ml-[-2%] lg:w-[103%] lg:ml-[-2%] lg:h-[102%] aspect-[600/360] duration-300 ${
-                loadingImg ? "opacity-0 pointer-events-none" : ""
-              }`}
-              title="project image"
-              src={project.image}
-              onLoad={() => setLoadingImg(false)}
-              allow="autoplay"
-            ></iframe>
-          ) : (
-            <Image
+          <Image
               className="h-auto w-full"
-              src={randomImgUrl + index}
+              src={project.screenshots[0].url}
               width={1000}
               height={780}
               alt="Project image"
+              onLoad={() => setLoadingImg(false)}
               loading="lazy"
               placeholder="empty"
             />
-          )}
           <div
             className={`absolute inset-0 bg-transparent grid place-items-center ${
               loadingImg ? "opacity-100" : "opacity-0"
@@ -143,17 +123,17 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             {translate.projectDescription}
           </h2>
 
-          {project.link && (
-            <Link color={themeColor} href={project.link}>
+          {project.deployUrl && (
+            <Link color={themeColor} href={project.deployUrl}>
               {translate.productionLinkText}&nbsp;&nbsp;
               <LinkIcon />
             </Link>
           )}
 
-          {project.link && project.repository && <br />}
+          {project.deployUrl && project.repositoryUrl && <br />}
 
-          {project.repository && (
-            <Link color={themeColor} href={project.repository}>
+          {project.repositoryUrl && (
+            <Link color={themeColor} href={project.repositoryUrl}>
               {translate.repoLinkText}&nbsp;&nbsp;
               <GitHubIcon />
             </Link>
