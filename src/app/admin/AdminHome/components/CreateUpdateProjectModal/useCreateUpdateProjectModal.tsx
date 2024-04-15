@@ -26,6 +26,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
     const trieRef = React.useRef(new Trie())
     const techInputRef = useRef<HTMLInputElement>(null)
     const wordSufixSpanRef = useRef<HTMLSpanElement>(null)
+    const projectScreenshotUrls = React.useMemo<string[]>(() => projectScreenshots.map(img => img instanceof File ? URL.createObjectURL(img) : img.url), [projectScreenshots])
 
     React.useEffect(() => {
         if (props.project) {
@@ -218,5 +219,6 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         technologieValue,
         setTrieSufix,
         isSubmitting,
+        projectScreenshotUrls,
     })
 }

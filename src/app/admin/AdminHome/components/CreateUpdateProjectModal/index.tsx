@@ -29,10 +29,10 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                             </div>
                         </div>
 
-                        {hook.projectScreenshots.length > 0 && (
+                        {hook.projectScreenshotUrls.length > 0 && (
                             <div className="flex gap-2 overflow-auto">
                                 {
-                                    hook.projectScreenshots.map((img, i) => (
+                                    hook.projectScreenshotUrls.map((url, i) => (
                                         <Image key={i} width={300} height={113} onClick={() => {
                                             hook.setProjectScreenshots(prev => {
                                                 if (props.project && !(prev[i] instanceof File) && typeof prev[i] === "object" && Object.hasOwn(prev[i], "url")) {
@@ -41,7 +41,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                                                 return prev.filter((_, index) => i !== index)
                                             }
                                             )
-                                        }} src={img instanceof File ? URL.createObjectURL(img) : img.url} className="rounded-md w-auto h-[183px]" alt="project screenshot" />
+                                        }} src={url} className="rounded-md w-auto h-[183px]" alt="project screenshot" />
                                     ))
                                 }
                             </div>
