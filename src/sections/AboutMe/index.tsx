@@ -71,9 +71,10 @@ const AboutMe = () => {
               max-md:max-w-[300px]
               h-auto
               w-full
+              duration-200
             "
             style={{
-              boxShadow: "3px 3px 2px " + themeColor,
+              backgroundColor: themeColor,
             }}
             width={300}
             src={Me}

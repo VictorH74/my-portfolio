@@ -24,11 +24,11 @@ const Skills = () => {
   const translate = translations[lang];
 
   return (
-    <div id="skills" className="pt-24 text-center">
+    <section id="skills" className="pt-24 text-center section px-0">
       <h1 className={`section-title mb-12 ${notoSans.className}`}>
         {translate.title}
       </h1>
-      <div className="flex flex-wrap justify-center gap-3 px-4">
+      <div className="flex flex-wrap justify-center gap-3">
         {notSkills ? (<p className="text-red-400">{translate.emptySkillsMsg}</p>) : skillData.map(
             (icon) =>
               !icon.hidden && (
@@ -44,7 +44,7 @@ const Skills = () => {
                     placeholder="empty"
                     height={50}
                     width={50}
-                    className="h-2/5 w-auto "
+                    className="h-2/5 w-auto"
                     src={icon.src}
                     alt="icon"
                   />
@@ -57,7 +57,7 @@ const Skills = () => {
               )
           )}
       </div>
-    </div>
+    </section>
   );
 };
 
