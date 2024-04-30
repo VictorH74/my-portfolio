@@ -81,7 +81,8 @@ export default function useContactMe() {
     const selectContent = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const selection = window.getSelection();
         const range = document.createRange();
-        range.selectNodeContents(e.target);
+        range.selectNodeContents(e.target as Node);
+        if (!selection) return
         selection.removeAllRanges();
         selection.addRange(range);
 
