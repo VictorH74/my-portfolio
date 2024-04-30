@@ -78,6 +78,15 @@ export default function useContactMe() {
     const closeSuccessSnackbar = () => setOpenSuccessSnackbar(false);
     const closeErrorSnackbar = () => setOpenErrorSnackbar(false);
 
+    const selectContent = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(e.target);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+    }
+
     return ({
         translate,
         openSuccessSnackbar,
@@ -91,5 +100,6 @@ export default function useContactMe() {
         closeErrorSnackbar,
         submitting,
         themeColor,
+        selectContent,
     })
 }

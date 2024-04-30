@@ -74,6 +74,16 @@ export default function ContactMe() {
             hook.translate.submitText
           )}
         </button>
+
+        <div 
+        className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 duration-150 text-center"
+        onClick={hook.selectContent}
+        >+55 (86) 99470-2018</div>
+        <div className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150" 
+        onClick={hook.selectContent}
+        >victorh.almeida7@gmail.com</div>
+
+
       </form>
       {[
         {

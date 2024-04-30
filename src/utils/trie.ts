@@ -61,7 +61,7 @@ export class Trie {
 
         const findSingleWord = (node: TrieNode, segment: string): string | undefined => {
             const childrens = Object.entries(node.children)
-            for (let i=0; i < childrens.length; i++) {
+            for (let i = 0; i < childrens.length; i++) {
                 const [char, tNode] = childrens[i]
                 if (tNode.isEnd) return segment + char
                 return findSingleWord(tNode, segment + char)

@@ -9,8 +9,8 @@ export const presentationSection = {
     en: {
         hello: "Hello!",
         iAm: "I'm Victor Almeida",
-        a: ["A", "Full-Stack", "Developer", "Junior"],
-        text_3: "A Junior Software Developer",
+        a: ["A", "Full-Stack", "Developer", "Mid"],
+        text_3: "A Mid Software Developer",
         text_4: "@ FullStack",
     },
 };

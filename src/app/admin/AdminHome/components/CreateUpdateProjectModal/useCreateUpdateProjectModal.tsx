@@ -154,10 +154,12 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 const updatedData = updatedCheckedProjectData(rest)
 
                 // if project screenshots has changed
-                if (projectScreenshots.join("") !== propProject.screenshots.join(""))
-                    updatedData.screenshots = await uploadScreenshots();
+                const projectScreenshotsHasChanged = projectScreenshots.join("") !== propProject.screenshots.join("");
+                const notProjectDataChanged = Object.values(updatedData).length === 0;
 
-                if (Object.values(updatedData).length === 0) return;
+                if (projectScreenshotsHasChanged)
+                    updatedData.screenshots = await uploadScreenshots();
+                if (notProjectDataChanged) return;
                 const docRef = doc(db, "projects", propProject.id)
 
                 await updateDoc(docRef, { ...updatedData, updatedAt: new Date().toISOString() })
