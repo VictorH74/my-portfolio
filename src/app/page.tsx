@@ -16,6 +16,8 @@ import SwitchThemeColorBtn from "@/components/SwitchThemeColorBtn";
 import { ThemeProvider } from "@/contexts/ThemeColor";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
+import ParticlesComponent from "@/components/Particles";
+
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,7 @@ export default function HomePage() {
       <SkillsProvider>
         <ThemeProvider>
           <>
+            <ParticlesComponent />
             <Header />
             <main className="scroll-smooth blue-scrollbar relative">
               <Presentation />

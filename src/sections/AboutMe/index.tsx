@@ -66,7 +66,8 @@ const AboutMe = () => {
             loading="lazy"
             placeholder="empty"
             className="
-              rounded-full 
+              rounded-e-full
+              rounded-ss-full
               object-cover 
               max-md:max-w-[300px]
               h-auto

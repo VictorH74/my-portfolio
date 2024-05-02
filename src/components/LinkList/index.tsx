@@ -3,34 +3,26 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { SxProps } from "@mui/material";
-import { useTheme } from "@/hooks/UseTheme";
 
 interface Props {
   center?: boolean
 }
 
 export default function ContactLinks(props: Props) {
-  const { themeColor } = useTheme();
-
-  const sx: SxProps = {
-    fontSize: 35,
-    color: themeColor,
-  };
 
   const contacts = [
-    { href: "mailto:victorh.almeida7@gmail.com", icon: <EmailIcon sx={sx} /> },
+    { href: "mailto:victorh.almeida7@gmail.com", Icon: EmailIcon },
     {
       href: "https://wa.me/5586995483472",
-      icon: <WhatsAppIcon sx={sx} />,
+      Icon: WhatsAppIcon,
     },
     {
       href: "https://github.com/VictorH74",
-      icon: <GitHubIcon sx={sx} />,
+      Icon: GitHubIcon,
     },
     {
       href: "https://www.linkedin.com/in/victor-almeida-b720201b5/",
-      icon: <LinkedInIcon sx={sx} />,
+      Icon: LinkedInIcon,
     },
   ];
 
@@ -40,11 +32,13 @@ export default function ContactLinks(props: Props) {
         <Link
           target="_blank"
           className="hover:brightness-125 duration-200 animate-contacts-bounce"
-          style={{animationDelay: i + "00ms"}}
+          style={{ animationDelay: i + "00ms" }}
           key={c.href}
           href={c.href}
         >
-          {c.icon}
+          <c.Icon className="text-custom-white" sx={{
+            fontSize: 35,
+          }} />
         </Link>
       ))}
     </div>

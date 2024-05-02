@@ -30,7 +30,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
   } = useProjectCard(project);
 
   const odd = index % 2 !== 0;
-  const oddScreen900 = odd && window.innerWidth > 900;
+  const oddScreen1024 = odd && window.innerWidth > 1024;
   // !odd || window.innerWidth < 900 = ROW REVERSE
   // odd && window.innerWidth > 900 = ROW
 
@@ -52,7 +52,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
       )}
       <div
         className={`relative flex flex-col flex-wrap justify-between my-0 mx-[7%] ${
-          odd && window.innerWidth > 1024
+          oddScreen1024
             ? "lg:flex-row-reverse"
             : "lg:flex-row"
         }`}
@@ -109,12 +109,12 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
         <div
           className={`w-full py-4 ${
-            oddScreen900 ? "text-end" : "text-start"
+            oddScreen1024 ? "text-end" : "text-start"
           } lg:w-[47%] py-5 px-7`}
         >
           <h1
             className={` text-xl ${
-              oddScreen900 ? "before:right-0" : "before:left-0"
+              oddScreen1024 ? "before:right-0" : "before:left-0"
             } primary-font-color`}
           >
             {project.title}
@@ -145,7 +145,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             </h3>
             <ul
               className={`flex w-max gap-2 ${
-                oddScreen900 && "float-right"
+                oddScreen1024 && "float-right"
               } pt-1`}
             >
               {icons.map(

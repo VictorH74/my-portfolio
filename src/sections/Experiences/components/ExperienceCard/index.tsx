@@ -13,7 +13,7 @@ const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 export default function ExperienceCard(props: Props) {
   const { themeColor } = useTheme();
   return (
-    <div className="bg-custom-gray-dark py-6 px-5 grid  gap-[2px] rounded-md flex-1 basis-[400px]">
+    <div className="bg-custom-gray-dark py-6 px-5 grid  gap-[2px] rounded-md flex-1 basis-[400px] backdrop-blur-md">
       <h1
         style={{ color: themeColor }}
         className={`${notoSans500.className} text-xl`}

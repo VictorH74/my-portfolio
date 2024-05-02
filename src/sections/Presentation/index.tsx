@@ -6,6 +6,8 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { Noto_Sans } from "next/font/google";
 import React, { useRef } from "react";
 import ContactLinks from "@/components/LinkList";
+import useWindowSize from "@/hooks/UseWindowsSize";
+
 
 const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
@@ -17,41 +19,99 @@ const Presentation = () => {
   const translate = presentationSection[lang];
   const ref = useRef<HTMLElement>(null);
   const { themeColor } = useTheme();
+  const timeOutRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
+  const [svgTextWidth, setSvgTextWidth] = React.useState(700)
+  const [svgTextYPos, setSvgTextYPos] = React.useState(20)
+  const [svgTextXPos, setSvgTextXPos] = React.useState(35)
+  const [width] = useWindowSize();
 
-  const presentationData = (values: any[]) => {
-    return values.map((v, i) => {
-      if (i === 1) {
-        return (
-          <h1
-            key={i}
-            style={{ color: themeColor }}
-            className={`emphasy max-sm:my-2 uppercase text-5xl ${textLeading} max-sm:text-5xl max-[430px]:text-[2.2rem] ${notoSans.className} `}
-          >
-            {v}
-          </h1>
-        );
+  React.useEffect(() => {
+    if (width > 1024) {
+      setSvgTextWidth(830)
+      setSvgTextYPos(20)
+      setSvgTextXPos(30)
+    }
+    else if (width > 640) {
+      setSvgTextWidth(625)
+      setSvgTextYPos(15)
+      setSvgTextXPos(25)
+    }
+    else {
+      setSvgTextWidth(450)
+      setSvgTextYPos(10)
+      setSvgTextXPos(30)
+    }
+  }, [width])
+
+  const rotateElementText = (el: HTMLElement) => {
+    const rotateTotal = 3;
+    if (timeOutRef.current)
+      clearTimeout(timeOutRef.current);
+    const rotate = (
+      increaseMS: number,
+      increasedDeg: number,
+      rotateNumber: number,
+      delay: number
+    ) => {
+      if (rotateNumber <= rotateTotal) {
+        el.style.transitionDuration = `${increaseMS}ms` // 300 - 900
+        el.style.transform = `rotateX(${increasedDeg}deg)`
+        timeOutRef.current = setTimeout(
+          rotate,
+          delay,
+          increaseMS + 300,
+          increasedDeg + 180,
+          rotateNumber + 1,
+          delay + 150
+        )
+        return;
       }
-      return (
-        <h2
-          key={i}
-          className={`mr-2 text-4xl max-sm:my-2 max-sm:text-[2.5rem] uppercase ${textLeading} max-[430px]:text-[1.7rem] primary-font-color ${notoSans.className} `}
-        >
-          {v}
-        </h2>
-      );
-    });
-  };
+      timeOutRef.current = setTimeout(() => {
+        el.style.transitionDuration = "0ms"
+        el.style.transform = "rotateX(0deg)"
+      }, 200)
+    }
+    rotate(300, 180, 0, 200)
+  }
 
   return (
-    <section className={`h-[85vh] mt-[15vh] relative`} ref={ref}>
-      <div className="mt-[7%]">
-        {presentationData([
-          translate.hello,
-          translate.iAm,
-          translate.text_3,
-          translate.text_4,
-        ])}
-        <ContactLinks />
+    <section className={`h-[85vh] mt-[15vh] relative select-none`} ref={ref}>
+      <div className="h-full grid place-items-center -translate-y-5">
+        <div className="text-center">
+
+          <h2 className="text-2xl text-custom-white font-semibold tracking-widest">{translate.iAm}</h2>
+
+          {((name: string) => (
+            <>
+              <h1 onClick={(e) => rotateElementText(e.currentTarget)} className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-widest" style={{ color: themeColor }}>{name}</h1>
+
+              <div className="grid place-items-center">
+                <svg width={`${svgTextWidth}px`} height="50px">
+                  <text
+                    x={svgTextXPos} y={svgTextYPos}
+                    fill="none"
+                    className="text-5xl sm:text-7xl lg:text-8xl tracking-widest"
+                    stroke={themeColor}
+                    stroke-width="2"
+                    font-weight="bold"
+                  >
+                    {name}
+                  </text>
+                </svg>
+              </div>
+            </>
+          ))("Victor Almeida")}
+
+          <h2 className="text-2xl text-custom-white mb-4 font-semibold tracking-widest">
+            {translate.text_3}
+            <span className="ml-2" style={{ color: themeColor }} >@FullStack</span>
+          </h2>
+
+          <ContactLinks center />
+
+        </div>
       </div>
       <button
         onClick={() => {
@@ -66,7 +126,7 @@ const Presentation = () => {
         />
       </button>
     </section>
-  );
-};
+  )
+}
 
 export default Presentation;

@@ -6,7 +6,7 @@ const Contacts = () => {
   const hook = useContacts()
 
   return (
-    <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl">
+    <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl backdrop-blur-md">
       <section className="min-h-[auto]" id="contacts">
         <div
           className={`mt-12 mb-10 duration-300 select-none ${

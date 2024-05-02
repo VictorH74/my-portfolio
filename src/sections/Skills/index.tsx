@@ -34,7 +34,7 @@ const Skills = () => {
               !icon.hidden && (
                 <div
                   key={icon.id}
-                  className="shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200"
+                  className="shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md"
                   data-aos="flip-left"
                   data-aos-duration="1000"
                   data-aos-once="true"

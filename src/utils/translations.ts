@@ -1,15 +1,11 @@
 export const presentationSection = {
     "pt-BR": {
-        hello: "Olá!",
-        iAm: "Eu sou Victor Almeida",
-        a: ["Um", "Desenvolvedor", "Full-Stack", "Junior"],
-        text_3: "Um Desenvolvedor de Software Júnior",
+        iAm: "Olá! Eu sou",
+        text_3: "Um Desenvolvedor de Software Jr",
         text_4: "@ FullStack",
     },
     en: {
-        hello: "Hello!",
-        iAm: "I'm Victor Almeida",
-        a: ["A", "Full-Stack", "Developer", "Mid"],
+        iAm: "Hello! I'm",
         text_3: "A Mid Software Developer",
         text_4: "@ FullStack",
     },
