@@ -92,8 +92,8 @@ const Presentation = () => {
                     fill="none"
                     className="text-4xl sm:text-7xl lg:text-8xl tracking-widest"
                     stroke={themeColor}
-                    stroke-width="2"
-                    font-weight="bold"
+                    strokeWidth="2"
+                    fontWeight="bold"
                   >
                     {name}
                   </text>

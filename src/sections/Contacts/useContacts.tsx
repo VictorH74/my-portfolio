@@ -22,13 +22,21 @@ export default function useContacts() {
     }, [time, reachedBottom]);
 
     React.useEffect(() => {
-        if (endOfPageRef?.current) {
-            const { offsetTop } = endOfPageRef.current;
-            if (window.innerHeight + window.scrollY >= offsetTop) {
+        const handleScroll = () => {
+            const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+            const scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+            const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+            if (scrolledToBottom) {
                 setReachedBottom(true);
+                window.removeEventListener('scroll', handleScroll);
             }
-        }
-    }, [time, endOfPageRef]);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     function formatTime() {
         if (time < 60) {
