@@ -68,6 +68,7 @@ const AboutMe = () => {
             className="
               rounded-e-full
               rounded-ss-full
+              max-lg:rounded-es-full
               object-cover 
               max-md:max-w-[300px]
               h-auto

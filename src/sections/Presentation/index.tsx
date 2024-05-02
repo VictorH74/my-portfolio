@@ -3,16 +3,10 @@ import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
 import { presentationSection } from "@/utils/translations";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import { Noto_Sans } from "next/font/google";
 import React, { useRef } from "react";
 import ContactLinks from "@/components/LinkList";
 import useWindowSize from "@/hooks/UseWindowsSize";
 
-
-const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
-
-const textLeading =
-  "sm:leading-[4rem] leading-[3rem] max-[430px]:leading-[2.1rem]";
 
 const Presentation = () => {
   const lang = useLanguage();
@@ -22,25 +16,29 @@ const Presentation = () => {
   const timeOutRef = React.useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
-  const [svgTextWidth, setSvgTextWidth] = React.useState(700)
+  const [svgTextWidth, setSvgTextWidth] = React.useState("700px")
+  const [svgTextHeight, setSvgTextHeight] = React.useState("40px")
   const [svgTextYPos, setSvgTextYPos] = React.useState(20)
   const [svgTextXPos, setSvgTextXPos] = React.useState(35)
   const [width] = useWindowSize();
 
   React.useEffect(() => {
     if (width > 1024) {
-      setSvgTextWidth(830)
+      setSvgTextWidth("830px")
+      setSvgTextHeight("40px")
       setSvgTextYPos(20)
       setSvgTextXPos(30)
     }
     else if (width > 640) {
-      setSvgTextWidth(625)
+      setSvgTextWidth("625px")
+      setSvgTextHeight("30px")
       setSvgTextYPos(15)
       setSvgTextXPos(25)
     }
     else {
-      setSvgTextWidth(450)
-      setSvgTextYPos(10)
+      setSvgTextWidth("350px")
+      setSvgTextHeight("25px")
+      setSvgTextYPos(8)
       setSvgTextXPos(30)
     }
   }, [width])
@@ -81,18 +79,18 @@ const Presentation = () => {
       <div className="h-full grid place-items-center -translate-y-5">
         <div className="text-center">
 
-          <h2 className="text-2xl text-custom-white font-semibold tracking-widest">{translate.iAm}</h2>
+          <h2 className="sm:text-2xl text-custom-white font-semibold tracking-widest">{translate.iAm}</h2>
 
           {((name: string) => (
             <>
-              <h1 onClick={(e) => rotateElementText(e.currentTarget)} className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-widest" style={{ color: themeColor }}>{name}</h1>
+              <h1 onClick={(e) => rotateElementText(e.currentTarget)} className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest" style={{ color: themeColor }}>{name}</h1>
 
               <div className="grid place-items-center">
-                <svg width={`${svgTextWidth}px`} height="50px">
+                <svg width={svgTextWidth} height={svgTextHeight}>
                   <text
                     x={svgTextXPos} y={svgTextYPos}
                     fill="none"
-                    className="text-5xl sm:text-7xl lg:text-8xl tracking-widest"
+                    className="text-4xl sm:text-7xl lg:text-8xl tracking-widest"
                     stroke={themeColor}
                     stroke-width="2"
                     font-weight="bold"
@@ -104,7 +102,7 @@ const Presentation = () => {
             </>
           ))("Victor Almeida")}
 
-          <h2 className="text-2xl text-custom-white mb-4 font-semibold tracking-widest">
+          <h2 className="sm:text-2xl text-custom-white mb-4 font-semibold tracking-widest">
             {translate.text_3}
             <span className="ml-2" style={{ color: themeColor }} >@FullStack</span>
           </h2>
