@@ -42,7 +42,7 @@ export default function HomePage() {
       <SkillsProvider>
         <ThemeProvider>
           <>
-            {/* <ParticlesComponent /> */}
+            <ParticlesComponent />
             <Header />
             <main className="scroll-smooth blue-scrollbar relative">
               <Presentation />
