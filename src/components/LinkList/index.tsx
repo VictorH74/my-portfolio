@@ -13,7 +13,7 @@ export default function ContactLinks(props: Props) {
   const contacts = [
     { href: "mailto:victorh.almeida7@gmail.com", Icon: EmailIcon },
     {
-      href: "https://wa.me/5586995483472",
+      href: "https://wa.me/5586994702018",
       Icon: WhatsAppIcon,
     },
     {
@@ -36,7 +36,7 @@ export default function ContactLinks(props: Props) {
           key={c.href}
           href={c.href}
         >
-          <c.Icon className="text-custom-white" sx={{
+          <c.Icon className="primary-font-color" sx={{
             fontSize: 35,
           }} />
         </Link>

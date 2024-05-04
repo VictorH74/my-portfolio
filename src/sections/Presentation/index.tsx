@@ -79,7 +79,7 @@ const Presentation = () => {
       <div className="h-full grid place-items-center -translate-y-5">
         <div className="text-center">
 
-          <h2 className="sm:text-2xl text-custom-white font-semibold tracking-widest">{translate.iAm}</h2>
+          <h2 className="sm:text-2xl primary-font-color font-semibold tracking-widest">{translate.iAm}</h2>
 
           {((name: string) => (
             <>
@@ -102,7 +102,7 @@ const Presentation = () => {
             </>
           ))("Victor Almeida")}
 
-          <h2 className="sm:text-2xl text-custom-white mb-4 font-semibold tracking-widest">
+          <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
             {translate.text_3}
             <span className="ml-2" style={{ color: themeColor }} >@FullStack</span>
           </h2>
