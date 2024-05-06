@@ -179,7 +179,7 @@ const Link: React.FC<{
   <a
     href={props.href}
     style={{ color: props.color }}
-    className=" relative dark:brightness-0"
+    className="relative"
     target="_blank"
     rel="noreferrer"
   >
