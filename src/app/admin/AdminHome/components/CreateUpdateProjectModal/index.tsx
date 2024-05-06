@@ -25,7 +25,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                         <div className="flex flex-col justify-evenly px-2">
                             <div className="relative">
                                 <label htmlFor="upload-img" className="px-6 cursor-pointer"><AddPhotoAlternateIcon sx={{ fontSize: 35 }} /></label>
-                                <input onChange={hook.handleSelectChange} className="absolute pointer-events-none opacity-0" type="file" accept=".webp" name="" id="upload-img" />
+                                <input onChange={hook.handleSelectChange} className="absolute pointer-events-none opacity-0" type="file" accept=".webp,.png,.jpg,.jpeg" name="" id="upload-img" />
                             </div>
                         </div>
 

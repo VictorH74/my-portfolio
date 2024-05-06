@@ -12,6 +12,11 @@ import Button from "./components/Button";
 import AddIcon from '@mui/icons-material/Add';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import AdminProjectsProvider from "@/contexts/AdminProjectsContext";
+import { twMerge } from "tailwind-merge";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkIcon from '@mui/icons-material/Link';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import { useTheme } from "@/hooks/UseTheme";
 
 export default function AdminHome(props: AdminHomeProps) {
     return (
@@ -26,6 +31,7 @@ export default function AdminHome(props: AdminHomeProps) {
 
 const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
     const hook = useAdminHome(props)
+    const { themeColor } = useTheme();
 
     return (
         <div className="w-screen h-screen">
@@ -35,6 +41,31 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
                 </div>
 
                 <div className="w-full p-4">
+                    <div className="mb-2 flex gap-2">
+                        {
+                            (() => {
+                                const counts: [number, number, number] = [0, 0, 0]
+                                const projectCount = hook.projects.length
+
+                                hook.projects.forEach(p => {
+                                    if (p.deployUrl) counts[0]++
+                                    if (p.videoUrl) counts[1]++
+                                    if (p.repositoryUrl) counts[2]++
+                                })
+
+                                return ([[counts[0], "Deploy", LinkIcon], [counts[1], "Video", PlayCircleFilledIcon], [counts[2], "Repository", GitHubIcon],] as const).map(([count, name, Icon], i) => (
+                                    <div key={i} className={twMerge("p-4 grow rounded-md text-gray-600x font-semibold text-center relative", count === 0 ? "bg-green-500" : count === projectCount ? "bg-red-500" : "bg-yellow-500")}>
+
+                                        <h3 className="text-3xl">{projectCount - count} / {projectCount}</h3>
+                                        <p><Icon className="-translate-y-[2px] mr-2" />Without {name} Url</p>
+                                    </div>
+                                ))
+                            })()
+                        }
+                    </div>
+
+                    <div style={{ backgroundColor: themeColor.color }} className="h-[2px] my-6"></div>
+
                     <div className="flex gap-2">
                         <Button onClick={() => hook.setOnCreateProject(true)}>
                             <AddIcon />
@@ -48,6 +79,13 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
                             <AdminProjectCard key={p.id} {...p} />
                         )) : <CardSkeleton amount={5} />}
                     </div>
+
+                    <div style={{ backgroundColor: themeColor.color }} className="h-[2px] my-6"></div>
+
+                        <form action="">
+                            <input placeholder="" type="text" />
+                        </form>
+
                 </div>
             </main>
 

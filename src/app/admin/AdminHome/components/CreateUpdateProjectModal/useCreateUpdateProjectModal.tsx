@@ -108,9 +108,11 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
             if (img instanceof File) {
                 promises.push(new Promise(async (resolve, reject) => {
                     const storage = getStorage();
-                    const storageRef = ref(storage, `project-images/${img.name}`);
+                    const finalFileName = img.name.split(".").slice(0, -1).join(".")
+                    const storageRef = ref(storage, `project-images/${finalFileName}`);
                     try {
-                        const snap = await uploadBytes(storageRef, img)
+                        const finalImg = await ((await fetch("api/images", { body: img, method: "POST" })).arrayBuffer()) 
+                        const snap = await uploadBytes(storageRef, finalImg, {contentType: "image/webp"})
                         const url = await getDownloadURL(snap.ref)
                         updatedScreenshots[i] = { url, name: snap.metadata.name }
                         resolve()
@@ -158,14 +160,14 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 if (projectScreenshots.length === 0) return;
                 const prevScreenshots = propProject.screenshots
                 let projectScreenshotsHasChanged = false
-                for (let i = 0; i<projectScreenshots.length; i++) {
+                for (let i = 0; i < projectScreenshots.length; i++) {
                     const s = projectScreenshots[i]
-                    if (s instanceof File || i >=prevScreenshots.length || s.url !==prevScreenshots[i].url) {
+                    if (s instanceof File || i >= prevScreenshots.length || s.url !== prevScreenshots[i].url) {
                         projectScreenshotsHasChanged = true
                         break;
                     }
                 }
-                
+
                 if (projectScreenshotsHasChanged)
                     updatedData.screenshots = await uploadScreenshots();
 
