@@ -9,5 +9,5 @@ interface ButtonProps {
 export default function Button(props: ButtonProps) {
     const { themeColor } = useTheme();
 
-    return (<button style={{ backgroundColor: themeColor }} className="p-2 rounded-md hover:scale-105 duration-200" onClick={props.onClick}>{props.children}</button>)
+    return (<button style={{ backgroundColor: themeColor.color }} className="p-2 rounded-md hover:scale-105 duration-200" onClick={props.onClick}>{props.children}</button>)
 }

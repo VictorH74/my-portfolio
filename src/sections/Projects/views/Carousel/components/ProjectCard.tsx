@@ -9,8 +9,6 @@ import Image from "next/image";
 import { Carousel } from "react-bootstrap";
 import { ProjectType } from "@/types";
 
-const randomImgUrl = "https://picsum.photos/800/497?random=";
-
 export default function ProjectCard(props: {
   project: ProjectType;
   index: number;

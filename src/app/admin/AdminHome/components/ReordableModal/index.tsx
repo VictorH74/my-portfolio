@@ -142,7 +142,7 @@ export default function ReordableModal(props: ReordableModalProps) {
                         )}
                     </Droppable>
                 </DragDropContext>
-                <button className="w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200" style={{ backgroundColor: itemsHasChanged ? themeColor : "#737373" }} disabled={isLoading || !itemsHasChanged} onClick={handleSubmit}>{isLoading ? "Updating..." : "Update"}</button>
+                <button className="w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200" style={{ backgroundColor: itemsHasChanged ? themeColor.color : "#737373" }} disabled={isLoading || !itemsHasChanged} onClick={handleSubmit}>{isLoading ? "Updating..." : "Update"}</button>
             </div>
         </ModalContainer>
     )

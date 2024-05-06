@@ -21,7 +21,7 @@ const Loading = (props: Props) => {
               className="aspect-square rounded-full animate-load-bounce"
               style={{
                 animationDelay: `${delay}ms`,
-                backgroundColor: props.color || themeColor,
+                backgroundColor: props.color || themeColor.color,
                 width: props.width || 15,
               }}
             />

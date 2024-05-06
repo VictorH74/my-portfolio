@@ -2,8 +2,9 @@ import { useTheme } from "@/hooks/UseTheme";
 import React from "react";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
+import { THEME_COLORS } from "@/utils/constants";
 
-const colors = ["#4e54fd", "#35a777", "#fd4e4e"];
+const colors = THEME_COLORS
 
 export default function SwitchThemeColorBtn() {
   const { themeColor, setThemeColor } = useTheme();
@@ -14,7 +15,10 @@ export default function SwitchThemeColorBtn() {
   };
 
   React.useEffect(() => {
-    setSliderValue(colors.indexOf(themeColor) + 1);
+    colors.forEach((c, i) => {
+      if (themeColor.color === c.color)
+        setSliderValue(i + 1);
+    })
   }, [themeColor]);
 
   const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -26,7 +30,7 @@ export default function SwitchThemeColorBtn() {
           sx={{
             color: lightTheme ? "#414141b0" : "#d8d8d845",
             "& .MuiSlider-thumb": {
-              backgroundColor: themeColor,
+              backgroundColor: themeColor.color,
             },
           }}
           marks={true}

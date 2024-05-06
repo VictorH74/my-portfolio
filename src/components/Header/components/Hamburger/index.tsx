@@ -28,7 +28,7 @@ const Hamburger = (props: Props) => {
           .map((_, i) => (
             <span
               key={i}
-              style={{ backgroundColor: themeColor }}
+              style={{ backgroundColor: themeColor.color }}
               className={`h-1 w-full rounded-xl ${
                 [0, 2].includes(i) ? "origin-left duration-300" : "duration-150"
               } ${
@@ -56,7 +56,7 @@ const Hamburger = (props: Props) => {
                   transitionDelay: `${i || 0}00ms`,
                   background: last
                     ? "linear-gradient(30deg, rgba(181, 22, 212, 1) 20%, rgba(77, 77, 205, 1) 100%)"
-                    : themeColor,
+                    : themeColor.color,
                 }}
                 key={i}
                 ref={liItemRef}

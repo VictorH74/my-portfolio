@@ -83,7 +83,7 @@ const Presentation = () => {
 
           {((name: string) => (
             <>
-              <h1 onClick={(e) => rotateElementText(e.currentTarget)} className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest" style={{ color: themeColor }}>{name}</h1>
+              <h1 onClick={(e) => rotateElementText(e.currentTarget)} className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest" style={{ color: themeColor.color }}>{name}</h1>
 
               <div className="grid place-items-center">
                 <svg width={svgTextWidth} height={svgTextHeight}>
@@ -91,7 +91,7 @@ const Presentation = () => {
                     x={svgTextXPos} y={svgTextYPos}
                     fill="none"
                     className="text-4xl sm:text-7xl lg:text-8xl tracking-widest"
-                    stroke={themeColor}
+                    stroke={themeColor.color}
                     strokeWidth="2"
                     fontWeight="bold"
                   >
@@ -104,7 +104,7 @@ const Presentation = () => {
 
           <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
             {translate.text_3}
-            <span className="ml-2" style={{ color: themeColor }} >@FullStack</span>
+            <span className="ml-2" style={{ color: themeColor.color }} >@FullStack</span>
           </h2>
 
           <ContactLinks center />
@@ -120,7 +120,7 @@ const Presentation = () => {
       >
         <KeyboardDoubleArrowDownIcon
           className="absolute left-1/2 bottom-12 -translate-x-1/2 animate-double-arrow-bounce"
-          sx={{ fontSize: 50, color: themeColor }}
+          sx={{ fontSize: 50, color: themeColor.color }}
         />
       </button>
     </section>

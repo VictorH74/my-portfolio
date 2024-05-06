@@ -130,7 +130,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                             </div>
                         </div>
 
-                        <button style={{backgroundColor: themeColor}} disabled={hook.isSubmitting} type="submit" className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4">
+                        <button style={{backgroundColor: themeColor.color}} disabled={hook.isSubmitting} type="submit" className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4">
                             {props.project ? hook.isSubmitting ? "Updating..." : "Update" : hook.isSubmitting ? "Creating..." : "Create"}
                         </button>
                     </div>

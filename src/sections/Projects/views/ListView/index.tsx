@@ -26,15 +26,15 @@ export default function ListView(props: Props) {
         onMouseOver={(e) => {
           const { style } = e.currentTarget;
           style.color = "white";
-          style.backgroundColor = themeColor;
+          style.backgroundColor = themeColor.color;
         }}
         onMouseLeave={(e) => {
           const { style } = e.currentTarget;
-          style.color = themeColor;
+          style.color = themeColor.color;
           style.backgroundColor = "transparent";
         }}
-        style={{ border: "2px solid " + themeColor, color: themeColor }}
-        className="uppercase px-4 py-3 inline-block mt-12 relative overflow-hidden border-2 text-md font-medium rounded-md duration-150 font-[inherit]"
+        style={{ border: "2px solid " + themeColor.color, color: themeColor.color }}
+        className="uppercase px-4 py-3 inline-block mt-12 relative overflow-hidden border-2 text-md dark:font-medium rounded-md duration-150 font-[inherit] font-semibold"
         onClick={async () => {
           if (!showMore && !(props.projectArray.length > 3)) {
             await props.fetchMoreProjectsFunc()

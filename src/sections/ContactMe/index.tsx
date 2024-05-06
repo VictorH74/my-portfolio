@@ -8,7 +8,7 @@ import { fields } from "./data";
 import useContactMe, { Fields, errorMessages } from "./useContactMe";
 
 const notoSans = Noto_Sans({ subsets: ["latin"], weight: "400" });
-const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full`;
+const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full backdrop-blur-md`;
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -65,7 +65,7 @@ export default function ContactMe() {
         <button
           className={`${notoSans.className} p-3 rounded-md text-base uppercase tracking-wider hover:brightness-125 duration-150 col-span-2 grid place-items-center`}
           type="submit"
-          style={{ backgroundColor: hook.themeColor }}
+          style={{ backgroundColor: hook.themeColor.color }}
           disabled={hook.submitting}
         >
           {hook.submitting ? (
@@ -76,10 +76,10 @@ export default function ContactMe() {
         </button>
 
         <div 
-        className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 duration-150 text-center max-sm:col-span-2"
+        className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 duration-150 text-center max-sm:col-span-2 backdrop-blur-md"
         onClick={hook.selectContent}
         >+55 (86) 99470-2018</div>
-        <div className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150 max-sm:col-span-2" 
+        <div className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150 max-sm:col-span-2 backdrop-blur-md" 
         onClick={hook.selectContent}
         >victorh.almeida7@gmail.com</div>
 

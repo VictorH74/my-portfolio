@@ -13,7 +13,7 @@ const Contacts = () => {
             hook.reachedBottom ? "opacity-100 scale-100" : "opacity-0 scale-50"
           }`}
         >
-          <h1 style={{ color: hook.themeColor }} className="text-3xl">
+          <h1 style={{ color: hook.themeColor.color }} className="text-3xl">
             THANKS FOR SCROLLING!
           </h1>
           <p className="mt-7 secondary-font-color">
@@ -25,7 +25,7 @@ const Contacts = () => {
         <ContactLinks center />
         </div>
       </section>
-      <div style={{ backgroundColor: hook.themeColor }} className="h-[2px] mb-3" />
+      <div style={{ backgroundColor: hook.themeColor.color }} className="h-[2px] mb-3" />
       <footer className="mt-4">
         {" "}
         <p className="secondary-font-color">

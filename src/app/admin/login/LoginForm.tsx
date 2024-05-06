@@ -65,7 +65,7 @@ const LoginFormChildren = () => {
 
                     <button
                         className='p-2 rounded-md font-semibold hover:scale-[101%] hover:shadow-md duration-200'
-                        style={{ backgroundColor: themeColor }}
+                        style={{ backgroundColor: themeColor.color }}
                         type="submit"
                         disabled={isSubmitting}
                     >{isSubmitting ? "Submitting..." : "Submit"}</button>

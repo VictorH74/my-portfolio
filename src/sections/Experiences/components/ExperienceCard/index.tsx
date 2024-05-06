@@ -15,7 +15,7 @@ export default function ExperienceCard(props: Props) {
   return (
     <div className="bg-custom-gray-dark py-6 px-5 grid  gap-[2px] rounded-md flex-1 basis-[400px] backdrop-blur-md">
       <h1
-        style={{ color: themeColor }}
+        style={{ color: themeColor.color }}
         className={`${notoSans500.className} text-xl`}
       >
         {props.title}

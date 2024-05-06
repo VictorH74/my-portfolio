@@ -15,7 +15,7 @@ type ProjectType = {
     updatedAt?: string; // ISO String Date
 }
 
-export type ProjectScreenshotType = {
+type ProjectScreenshotType = {
     name: string;
     url: string;
 }
@@ -27,4 +27,6 @@ type TechIcons = {
     hidden?: boolean;
 }
 
-export type { Language, TranslationLang, ProjectType, TechIcons }
+type RGBType = [number, number, number]
+
+export type { Language, TranslationLang, ProjectType, TechIcons, ProjectScreenshotType, RGBType }

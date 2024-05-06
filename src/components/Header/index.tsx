@@ -43,7 +43,7 @@ const Header: React.FC = () => {
           </span>{" "}
           <span
             className={`line-through  ${raleway.className}`}
-            style={{ color: hook.themeColor }}
+            style={{ color: hook.themeColor.color }}
           >
             vh
           </span>{" "}
@@ -59,7 +59,7 @@ const Header: React.FC = () => {
               className={`absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
               style={{
                 ...hook.wrapperDimensions,
-                backgroundColor: hook.themeColor,
+                backgroundColor: hook.themeColor.color,
                 display: hook.wrapperDisplay || "none",
               }}
             />

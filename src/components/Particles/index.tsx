@@ -37,7 +37,7 @@ export default function ParticlesComponent() {
         <Particles
             id="tsparticles"
             particlesLoaded={particlesLoaded}
-            options={getOptions(themeColor)}
+            options={getOptions(themeColor.color)}
         />
     )
 

@@ -124,7 +124,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           </h2>
 
           {project.deployUrl && (
-            <Link color={themeColor} href={project.deployUrl}>
+            <Link color={themeColor.color} href={project.deployUrl}>
               {translate.productionLinkText}&nbsp;&nbsp;
               <LinkIcon />
             </Link>
@@ -133,7 +133,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           {project.deployUrl && project.repositoryUrl && <br />}
 
           {project.repositoryUrl && (
-            <Link color={themeColor} href={project.repositoryUrl}>
+            <Link color={themeColor.color} href={project.repositoryUrl}>
               {translate.repoLinkText}&nbsp;&nbsp;
               <GitHubIcon />
             </Link>
@@ -179,7 +179,7 @@ const Link: React.FC<{
   <a
     href={props.href}
     style={{ color: props.color }}
-    className=" relative duration-150"
+    className=" relative dark:brightness-0"
     target="_blank"
     rel="noreferrer"
   >
