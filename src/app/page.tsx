@@ -16,7 +16,6 @@ import SwitchThemeColorBtn from "@/components/SwitchThemeColorBtn";
 import { ThemeProvider } from "@/contexts/ThemeColor";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
-import ParticlesComponent from "@/components/Particles";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 
 
