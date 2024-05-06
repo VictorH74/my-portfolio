@@ -17,6 +17,7 @@ import { ThemeProvider } from "@/contexts/ThemeColor";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
 import ParticlesComponent from "@/components/Particles";
+import BackgroundAnimation from "@/components/BackgroundAnimation";
 
 
 const queryClient = new QueryClient();
@@ -42,7 +43,7 @@ export default function HomePage() {
       <SkillsProvider>
         <ThemeProvider>
           <>
-            <ParticlesComponent />
+            <BackgroundAnimation />
             <Header />
             <main className="scroll-smooth blue-scrollbar relative">
               <Presentation />
