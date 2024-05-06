@@ -133,6 +133,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 }
             })
         }
+        // console.log(updatedScreenshots)
         return updatedScreenshots
     }
 
@@ -154,13 +155,26 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 const updatedData = updatedCheckedProjectData(rest)
 
                 // if project screenshots has changed
-                const projectScreenshotsHasChanged = projectScreenshots.join("") !== propProject.screenshots.join("");
-                const notProjectDataChanged = Object.values(updatedData).length === 0;
-
+                if (projectScreenshots.length === 0) return;
+                const prevScreenshots = propProject.screenshots
+                let projectScreenshotsHasChanged = false
+                for (let i = 0; i<projectScreenshots.length; i++) {
+                    const s = projectScreenshots[i]
+                    if (s instanceof File || i >=prevScreenshots.length || s.url !==prevScreenshots[i].url) {
+                        projectScreenshotsHasChanged = true
+                        break;
+                    }
+                }
+                
                 if (projectScreenshotsHasChanged)
                     updatedData.screenshots = await uploadScreenshots();
+
+                const notProjectDataChanged = Object.values(updatedData).length === 0;
                 if (notProjectDataChanged) return;
+
                 const docRef = doc(db, "projects", propProject.id)
+
+                console.log({ ...updatedData, updatedAt: new Date().toISOString() })
 
                 await updateDoc(docRef, { ...updatedData, updatedAt: new Date().toISOString() })
             } else {
@@ -198,6 +212,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 alert(e.message);
             }
             console.error(e)
+            console.log(e instanceof FirebaseError)
             alert(e)
         } finally {
             setIsSubmitting(false)
