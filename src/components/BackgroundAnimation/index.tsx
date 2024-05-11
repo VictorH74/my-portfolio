@@ -13,7 +13,6 @@ export default function BackgroundAnimation() {
         null
     );
     const [w, h] = useWindowSize()
-
     useEffect(() => {
         if (w < 700) return;
         const generateHexagons = () => {
@@ -30,7 +29,7 @@ export default function BackgroundAnimation() {
 
             const hexagons: Hexagon[] = []
 
-            Array(Math.round(w / 130)).fill(null).forEach(() => {
+            Array(Math.round(w / 150)).fill(null).forEach(() => {
                 hexagons.push(new Hexagon(canvas.width, canvas.height, canvasCtx, { right, left, top, bottom }, themeColor.RGBValues))
             })
 

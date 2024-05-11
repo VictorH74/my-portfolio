@@ -28,9 +28,10 @@ const LoginFormChildren = () => {
                 <form action={async (formData) => {
                     let data: string[] = []
                     formData.forEach(a => data.push(a as string))
+                    
+                    setIsSubmitting(() => true)
 
                     try {
-                        setIsSubmitting(true)
                         await setPersistence(auth, browserLocalPersistence)
                         const credentials = await setPersistence(auth, browserLocalPersistence)
                             .then(() => {
@@ -43,7 +44,7 @@ const LoginFormChildren = () => {
                     } catch (e) {
                         alert(e)
                     } finally {
-                        setIsSubmitting(false)
+                        setIsSubmitting(() => false)
                     }
                 }} className='flex flex-col gap-2'  >
 
