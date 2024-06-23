@@ -1,12 +1,12 @@
 "use client"
 import { setServerCookie } from "@/app/lib/actions";
 import { ThemeProvider } from "@/contexts/ThemeColor";
-import { useTheme } from "@/hooks/UseTheme";
 import { useRouter } from "next/navigation";
 import React from "react";
 import nookies from "nookies"
 import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
+import SubmitButton from "./SubmitButton";
 
 export default function LoginForm() {
     return (
@@ -18,8 +18,6 @@ export default function LoginForm() {
 
 const LoginFormChildren = () => {
     const router = useRouter()
-    const { themeColor } = useTheme();
-    const [isSubmitting, setIsSubmitting] = React.useState(false)
 
     return (
         <div className='w-screen h-screen grid place-items-center'>
@@ -28,9 +26,6 @@ const LoginFormChildren = () => {
                 <form action={async (formData) => {
                     let data: string[] = []
                     formData.forEach(a => data.push(a as string))
-                    
-                    setIsSubmitting(() => true)
-
                     try {
                         await setPersistence(auth, browserLocalPersistence)
                         const credentials = await setPersistence(auth, browserLocalPersistence)
@@ -43,8 +38,6 @@ const LoginFormChildren = () => {
                         router.replace("/admin")
                     } catch (e) {
                         alert(e)
-                    } finally {
-                        setIsSubmitting(() => false)
                     }
                 }} className='flex flex-col gap-2'  >
 
@@ -64,12 +57,7 @@ const LoginFormChildren = () => {
                         required
                     />
 
-                    <button
-                        className='p-2 rounded-md font-semibold hover:scale-[101%] hover:shadow-md duration-200'
-                        style={{ backgroundColor: themeColor.color }}
-                        type="submit"
-                        disabled={isSubmitting}
-                    >{isSubmitting ? "Submitting..." : "Submit"}</button>
+                    <SubmitButton />
                 </form>
             </main>
         </div>
