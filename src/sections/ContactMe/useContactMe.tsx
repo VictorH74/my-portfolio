@@ -12,7 +12,7 @@ import { contactMeSection } from "@/utils/translations";
 import { TranslationLang } from "@/types";
 
 export type Fields = "name" | "email" | "subject" | "message";
-type FormValues = {
+export type FormValues = {
     name: string;
     email: string;
     subject: string;
