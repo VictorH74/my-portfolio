@@ -42,7 +42,7 @@ export default function HomePage() {
       <SkillsProvider>
         <ThemeProvider>
           <>
-            <BackgroundAnimation />
+            <div id="bg-animation" />
             <Header />
             <main className="scroll-smooth blue-scrollbar relative">
               <Presentation />
@@ -53,7 +53,6 @@ export default function HomePage() {
               <ContactMe />
               <Contacts />
             </main>
-            <SwitchThemeColorBtn />
           </>
         </ThemeProvider>
       </SkillsProvider>

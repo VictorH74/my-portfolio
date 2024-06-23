@@ -4,6 +4,77 @@ import { downloadResume } from "@/utils/resume";
 import Hamburger from "./components/Hamburger";
 import { Noto_Sans, Raleway } from "next/font/google";
 import useHeader from "./useHeader";
+import NavListItem from "./NavListItem";
+import SettingsMenu from "./SettingsMenu";
+import NavItemWapper from "./NavItemWapper";
+import { useTheme } from "@/hooks/UseTheme";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SwitchThemeColorBtn from "../SwitchThemeColorBtn";
+import { styled } from '@mui/material/styles';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch, { SwitchProps } from '@mui/material/Switch';
+import { createPortal } from "react-dom";
+
+// <BackgroundAnimation />
+
+const BackgroundAnimation = React.lazy(() => import("@/components/BackgroundAnimation"))
+
+interface SwitchBgAnimationProps extends SwitchProps {
+  themeColor: string
+}
+
+const SwitchBgAnimation = styled(({ themeColor, ...props }: SwitchBgAnimationProps) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme, themeColor }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  '& .MuiSwitch-switchBase': {
+    padding: 0,
+    margin: 2,
+    transitionDuration: '300ms',
+    '&.Mui-checked': {
+      transform: 'translateX(16px)',
+      color: '#fff',
+      '& + .MuiSwitch-track': {
+        backgroundColor: themeColor,
+        opacity: 1,
+        border: 0,
+      },
+      '&.Mui-disabled + .MuiSwitch-track': {
+        opacity: 0.5,
+      },
+    },
+    '&.Mui-focusVisible .MuiSwitch-thumb': {
+      color: themeColor,
+      border: '6px solid #fff',
+    },
+    '&.Mui-disabled .MuiSwitch-thumb': {
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    '&.Mui-disabled + .MuiSwitch-track': {
+      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    boxSizing: 'border-box',
+    width: 22,
+    height: 22,
+  },
+  '& .MuiSwitch-track': {
+    borderRadius: 26 / 2,
+    backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+    opacity: 1,
+    transition: theme.transitions.create(['background-color'], {
+      duration: 500,
+    }),
+  },
+}));
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -15,6 +86,7 @@ const notoSans = Noto_Sans({ weight: "400", subsets: ["latin"] });
 
 const Header: React.FC = () => {
   const hook = useHeader();
+  const { themeColor } = useTheme();
 
   return (
     <header className="fixed top-0 inset-x-0 z-10">
@@ -43,7 +115,7 @@ const Header: React.FC = () => {
           </span>{" "}
           <span
             className={`line-through  ${raleway.className}`}
-            style={{ color: hook.themeColor.color }}
+            style={{ color: themeColor.color }}
           >
             vh
           </span>{" "}
@@ -55,13 +127,9 @@ const Header: React.FC = () => {
         </h1>
         {hook.size[0] > 1100 ? (
           <>
-            <div
-              className={`absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
-              style={{
-                ...hook.wrapperDimensions,
-                backgroundColor: hook.themeColor.color,
-                display: hook.wrapperDisplay || "none",
-              }}
+            <NavItemWapper
+              wrapperDimensions={hook.wrapperDimensions}
+              wrapperDisplay={hook.wrapperDisplay}
             />
             <nav
               className="max-lg:hidden z-[4]"
@@ -71,24 +139,16 @@ const Header: React.FC = () => {
                 {hook.navDataArray.map((data, i) => {
                   const last = i === hook.navDataArray.length - 1;
                   return (
-                    <li
+                    <NavListItem
                       className={`
-                    cursor-pointer 
-                    list-none 
                     ${last ? "p-0" : "p-[10px]"}
-                    italic
-                    text-sm
-                    uppercase 
-                    select-none
-                    duration-150
                     ${notoSans.className}
-                    ${
-                      hook.scrollUp
-                        ? hook.wrappedLI === "li-" + data.to
-                          ? "text-[#ececec]"
-                          : "primary-font-color"
-                        : "text-[#ececec]"
-                    }
+                    ${hook.scrollUp
+                          ? hook.wrappedLI === "li-" + data.to
+                            ? "text-[#ececec]"
+                            : "primary-font-color"
+                          : "text-[#ececec]"
+                        }
                   `}
                       id={`li-${data.to}`}
                       key={i}
@@ -110,9 +170,35 @@ const Header: React.FC = () => {
                       ) : (
                         data.label
                       )}
-                    </li>
+                    </NavListItem>
                   );
                 })}
+                <SettingsMenu onMouseOver={hook.handleMouseOver}>
+                  <MenuItem disableTouchRipple>
+                    <label className="flex flex-col">
+                      {hook.translate.showBgAnimation}
+                      <FormControlLabel
+                        control={<SwitchBgAnimation
+                          themeColor={themeColor.color}
+                          sx={{ m: 1 }}
+                          defaultChecked
+                          onChange={e => {
+                            hook.setShowBgAnimation(e.currentTarget.checked)
+                          }}
+                          checked={hook.showBgAnimation}
+                        />}
+                        label=""
+                      />
+                    </label>
+
+                  </MenuItem>
+                  <MenuItem disableTouchRipple >
+                    <div className="flex flex-col">
+                      {hook.translate.switchThemeColor}
+                      <SwitchThemeColorBtn />
+                    </div>
+                  </MenuItem>
+                </SettingsMenu>
               </ul>
             </nav>
           </>
@@ -123,6 +209,15 @@ const Header: React.FC = () => {
           />
         )}
       </div>
+
+      {
+        hook.showBgAnimation && createPortal(
+          <React.Suspense fallback={<></>}>
+            <BackgroundAnimation />
+          </React.Suspense>,
+          document.getElementById("bg-animation") || document.body
+        )
+      }
     </header>
   );
 };

@@ -24,11 +24,12 @@ export default function SwitchThemeColorBtn() {
   const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
 
   return (
-    <div className="fixed bottom-10 left-4">
-      <Box height={100}>
+    <div className="fixeda bottom-10a left-4a">
+      <Box width={170}>
         <Slider
           sx={{
-            color: lightTheme ? "#414141b0" : "#d8d8d845",
+            color: "#000",
+            // color: lightTheme ? "#414141b0" : "#d8d8d845",
             "& .MuiSlider-thumb": {
               backgroundColor: themeColor.color,
             },
@@ -37,7 +38,7 @@ export default function SwitchThemeColorBtn() {
           min={1}
           max={3}
           track={false}
-          orientation="vertical"
+          // orientation="vertical"
           value={sliderValue}
           onChange={handleChange}
         />

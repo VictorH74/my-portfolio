@@ -4,23 +4,23 @@ import React from "react";
 import useWindowSize from "@/hooks/UseWindowsSize";
 import { navTranslations } from "./data";
 import useLanguage from "@/hooks/UseLanguage";
-import { useTheme } from "@/hooks/UseTheme";
+import { WapperDimensionsType } from "./NavItemWapper";
 
 const useHeader = () => {
+  const [showBgAnimation, setShowBgAnimation] = React.useState(true)
   const [scrollUp, setScrollUp] = React.useState(true);
   const [wrapperDisplay, setWrapperDisplay] = React.useState("none");
   const [wrappedLI, setWrappedLI] = React.useState("");
-  const [wrapperDimensions, setWrapperDimensions] = React.useState({
+  const [wrapperDimensions, setWrapperDimensions] = React.useState<WapperDimensionsType>({
     width: 0,
     height: 0,
     left: 0,
   });
   const downloadResumeBtnRef = React.useRef(null);
   const size = useWindowSize();
-  const { themeColor } = useTheme();
   const lang = useLanguage();
   const translate = navTranslations[lang];
-  const navDataArray = translate.data as { label: string; to: string }[];
+  const navDataArray = translate.data;
 
   React.useEffect(() => {
     document.addEventListener("scroll", handleScroll);
@@ -78,7 +78,6 @@ const useHeader = () => {
 
   return {
     scrollUp,
-    themeColor,
     size,
     wrapperDimensions,
     wrapperDisplay,
@@ -87,7 +86,9 @@ const useHeader = () => {
     wrappedLI,
     handleMouseOver,
     downloadResumeBtnRef,
-    translate,
+    translate, 
+    showBgAnimation, 
+    setShowBgAnimation,
   };
 };
 
