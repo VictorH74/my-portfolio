@@ -30,7 +30,7 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
 
   React.useLayoutEffect(() => {
     let recoveredColor = localStorage.getItem(THEME_COLOR_KEY);
-    if (recoveredColor === null) return;
+    if (!recoveredColor) return;
 
     if (recoveredColor.startsWith("#")) {
       setThemeColorState(THEME_COLORS[1])

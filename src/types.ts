@@ -1,5 +1,5 @@
 type Language = "en" | "pt-BR"
-type TranslationLang = Record<Language, Record<string, any>>
+type TranslationLang<T> = Record<Language, T>
 
 type ProjectType = {
     index: number;

@@ -22,7 +22,7 @@ type FormValues = {
 const afterRequiredPtBR = " é obrigatório";
 const afterRequiredEn = " field is required";
 
-export const errorMessages: TranslationLang = {
+export const errorMessages: TranslationLang<FormValues> = {
     "pt-BR": {
         name: "Nome" + afterRequiredPtBR,
         email: "Email" + afterRequiredPtBR,

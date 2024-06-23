@@ -4,6 +4,8 @@ type CenterAreaType = { left: number; top: number, bottom: number, right: number
 
 const grayColorRGBValues = [83, 83, 83] as const
 
+const random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+
 export class Hexagon {
     size: number;
     sizeFactor: number;
@@ -19,13 +21,13 @@ export class Hexagon {
     _RGBValues: RGBType;
 
     constructor(canvasWidth: number, canvasHeight: number, canvasCtx: CanvasRenderingContext2D, centerArea: CenterAreaType, RGBValues: RGBType) {
-        this.size = Math.floor(Math.random() * (200 - 150 + 1)) + 150;
+        this.size = random(150, 200)
         this.sizeFactor = 0.5;
         this._position = {
             x: Math.random() * (canvasWidth + 450 - this.size * 2) + this.size,
             y: Math.random() * (canvasHeight + 450 - this.size * 2) + this.size
         };
-        this._speed = Math.floor(Math.random() * (8 - 3 + 1)) + 3;
+        this._speed = random(8, 15)
         this._directionX = Math.round(Math.random()) > 0 ? 1 : -1;
         this._directionY = Math.round(Math.random()) > 0 ? 1 : -1;
         this._canvasCtx = canvasCtx
