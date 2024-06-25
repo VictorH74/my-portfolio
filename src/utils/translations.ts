@@ -124,7 +124,7 @@ export const contactMeSection = {
         message: "Campo de Messagem",
         submitText: "Enviar",
         successSnackbarText: "Email enviado!",
-        errorSnackbarText: "Houve algum erro ao enviar email",
+        errorSnackbarText: "Houve algum erro ao enviar o email",
     },
     en: {
         title: "Contact Me",

@@ -8,16 +8,12 @@ import NavListItem from "./NavListItem";
 import SettingsMenu from "./SettingsMenu";
 import NavItemWapper from "./NavItemWapper";
 import { useTheme } from "@/hooks/UseTheme";
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import SettingsIcon from '@mui/icons-material/Settings';
 import SwitchThemeColorBtn from "../SwitchThemeColorBtn";
 import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import { createPortal } from "react-dom";
-
-// <BackgroundAnimation />
 
 const BackgroundAnimation = React.lazy(() => import("@/components/BackgroundAnimation"))
 
@@ -173,7 +169,10 @@ const Header: React.FC = () => {
                     </NavListItem>
                   );
                 })}
-                <SettingsMenu onMouseOver={hook.handleMouseOver}>
+                <SettingsMenu
+                  onMouseOver={hook.handleMouseOver}
+                  onClose={hook.moveWrapperToDownloadBtn}
+                >
                   <MenuItem disableTouchRipple>
                     <label className="flex flex-col">
                       {hook.translate.showBgAnimation}
