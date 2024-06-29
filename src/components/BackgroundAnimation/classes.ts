@@ -27,7 +27,7 @@ export class Hexagon {
             x: Math.random() * (canvasWidth + 450 - this.size * 2) + this.size,
             y: Math.random() * (canvasHeight + 450 - this.size * 2) + this.size
         };
-        this._speed = random(8, 15)
+        this._speed = random(15, 20)
         this._directionX = Math.round(Math.random()) > 0 ? 1 : -1;
         this._directionY = Math.round(Math.random()) > 0 ? 1 : -1;
         this._canvasCtx = canvasCtx
@@ -82,12 +82,6 @@ export class Hexagon {
         const hexagonXBeforeCenter = xPos >= centerAreaLeft - centerAreaLeft / 3 && xPos <= centerAreaLeft
         const hexagonXAfterCenter = xPos <= centerAreaRight + centerAreaLeft / 3 && xPos >= centerAreaRight
 
-        // const hexagonYBeforeCenter = yPos >= this._centerArea.top - this._centerArea.top / 3 && yPos <= this._centerArea.top
-        // const hexagonYAfterCenter = yPos <= this._centerArea.bottom + this._centerArea.top / 3 && yPos >= this._centerArea.bottom
-
-
-        // const hexagonInCenterArea = xPos > centerAreaLeft - centerAreaLeft / 3 && xPos < centerAreaRight + centerAreaLeft / 3 && yPos > this._centerArea.top - this._centerArea.top / 3 && yPos < this._centerArea.bottom + this._centerArea.top / 3
-
         if (hexagonXBeforeCenter) {
             const percent = (xPos - (centerAreaLeft - centerAreaLeft / 3)) / (centerAreaLeft / 3)
             this._colorAndSizePercentage = percent
@@ -99,18 +93,6 @@ export class Hexagon {
         else if (xPos > centerAreaLeft && xPos < centerAreaRight) {
             this._colorAndSizePercentage = 1;
         }
-
-
-        // if (hexagonYBeforeCenter) {
-        //     const percent = (yPos - (this._centerArea.top - this._centerArea.top / 3)) / (this._centerArea.top / 3)
-        //     this._colorAndSizePercentage = percent
-        // }
-        // else if (hexagonYAfterCenter) {
-        //     const percent = 1 - ((yPos - this._centerArea.bottom) / (this._centerArea.top / 3));
-        //     this._colorAndSizePercentage = percent
-        // }
-
-        // this._colorAndSizePercentage = (XYPercents[0] + XYPercents[1]) / 2
     }
 
     private calculatePercentageRGBValue = (percentage: number) => {

@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-canvas { position: fixed; touch-action: none; }
+canvas {
+  position: fixed;
+  touch-action: none;
+}
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-
   /* resume-button vars */
   --width: 180px;
   --height: 55px;
@@ -25,17 +24,24 @@ canvas { position: fixed; touch-action: none; }
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --mainColorTransparent: #4d4dcd50;
   }
+  body {
+    background-image: url("https://www.transparenttextures.com/patterns/navy.png");
+  }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     --mainColorTransparent: #4d4dcd50;
+  }
+  body {
+    background-image: url("https://www.transparenttextures.com/patterns/billie-holiday.png");
   }
 }
 * {
@@ -63,6 +69,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  @apply bg-[#e4e4e4] dark:bg-[#1d1d1d];
+
+  background-attachment: fixed;
 }
 
 h1 {

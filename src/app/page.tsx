@@ -12,11 +12,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ContactMe from "@/sections/ContactMe";
 import Experiences from "@/sections/Experiences";
 import Loading from "@/components/Loading";
-import SwitchThemeColorBtn from "@/components/SwitchThemeColorBtn";
 import { ThemeProvider } from "@/contexts/ThemeColor";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import "aos/dist/aos.css";
-import BackgroundAnimation from "@/components/BackgroundAnimation";
 
 
 const queryClient = new QueryClient();
