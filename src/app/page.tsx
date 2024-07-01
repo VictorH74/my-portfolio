@@ -1,6 +1,5 @@
 "use client";
 import Header from "@/components/Header";
-import SkillsProvider from "@/contexts/SkillsContext";
 import AboutMe from "@/sections/AboutMe";
 import Contacts from "@/sections/Contacts";
 import Presentation from "@/sections/Presentation";
@@ -10,9 +9,7 @@ import Aos from "aos";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ContactMe from "@/sections/ContactMe";
-import Experiences from "@/sections/Experiences";
 import Loading from "@/components/Loading";
-import { ThemeProvider } from "@/contexts/ThemeColor";
 import "aos/dist/aos.css";
 import Providers from "@/components/Providers";
 
@@ -43,7 +40,6 @@ export default function HomePage() {
                 <Presentation />
                 <AboutMe />
                 <Skills />
-                <Experiences />
                 {/* TODO: render <Projects /> in server side */}
                 <Projects />
                 <ContactMe />
