@@ -25,6 +25,7 @@ type TechIcons = {
     name: string;
     src: string;
     hidden?: boolean;
+    isMain?: boolean;
 }
 
 type RGBType = [number, number, number]

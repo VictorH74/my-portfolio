@@ -3,11 +3,13 @@ export const presentationSection = {
         iAm: "Olá! Eu sou",
         text_3: "Um Desenvolvedor de Software Jr",
         text_4: "@ FullStack",
+        with: "com"
     },
     en: {
         iAm: "Hello! I'm",
         text_3: "A Mid Software Developer",
         text_4: "@ FullStack",
+        with: "with"
     },
 };
 

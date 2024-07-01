@@ -83,9 +83,6 @@ a {
 button {
   user-select: none;
 }
-section {
-  min-height: 65vh;
-}
 section,
 header {
   @apply max-w-[1300px] m-auto p-5;
