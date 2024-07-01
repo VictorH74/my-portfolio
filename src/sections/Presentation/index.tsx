@@ -75,7 +75,7 @@ const Presentation = () => {
   }
 
   return (
-    <section className={`h-[85vh] mt-[15vh] relative select-none`} ref={ref}>
+    <section className={`h-[100vh] relative select-none`} ref={ref}>
       <div className="h-full grid place-items-center -translate-y-5">
         <div className="text-center">
 

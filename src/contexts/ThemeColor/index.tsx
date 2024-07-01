@@ -7,7 +7,7 @@ interface AppContextInterface {
 }
 
 interface Props {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 export const ThemeContext = React.createContext<AppContextInterface>({
@@ -28,7 +28,7 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
     setThemeColor,
   };
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     let recoveredColor = localStorage.getItem(THEME_COLOR_KEY);
     if (!recoveredColor) return;
 
