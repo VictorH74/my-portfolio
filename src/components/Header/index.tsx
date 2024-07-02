@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { downloadResume } from "@/utils/resume";
-import Hamburger from "./components/Hamburger";
+import Hamburger from "./Hamburger";
 import { Noto_Sans, Raleway } from "next/font/google";
 import useHeader from "./useHeader";
 import NavListItem from "./NavListItem";
@@ -10,67 +10,12 @@ import NavItemWapper from "./NavItemWapper";
 import { useTheme } from "@/hooks/UseTheme";
 import MenuItem from '@mui/material/MenuItem';
 import SwitchThemeColorBtn from "../SwitchThemeColorBtn";
-import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch, { SwitchProps } from '@mui/material/Switch';
+
 import { createPortal } from "react-dom";
+import SwitchBgAnimation from "./SwitchBgAnimation";
 
 const BackgroundAnimation = React.lazy(() => import("@/components/BackgroundAnimation"))
-
-interface SwitchBgAnimationProps extends SwitchProps {
-  themeColor: string
-}
-
-const SwitchBgAnimation = styled(({ themeColor, ...props }: SwitchBgAnimationProps) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme, themeColor }) => ({
-  width: 42,
-  height: 26,
-  padding: 0,
-  '& .MuiSwitch-switchBase': {
-    padding: 0,
-    margin: 2,
-    transitionDuration: '300ms',
-    '&.Mui-checked': {
-      transform: 'translateX(16px)',
-      color: '#fff',
-      '& + .MuiSwitch-track': {
-        backgroundColor: themeColor,
-        opacity: 1,
-        border: 0,
-      },
-      '&.Mui-disabled + .MuiSwitch-track': {
-        opacity: 0.5,
-      },
-    },
-    '&.Mui-focusVisible .MuiSwitch-thumb': {
-      color: themeColor,
-      border: '6px solid #fff',
-    },
-    '&.Mui-disabled .MuiSwitch-thumb': {
-      color:
-        theme.palette.mode === 'light'
-          ? theme.palette.grey[100]
-          : theme.palette.grey[600],
-    },
-    '&.Mui-disabled + .MuiSwitch-track': {
-      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-    },
-  },
-  '& .MuiSwitch-thumb': {
-    boxSizing: 'border-box',
-    width: 22,
-    height: 22,
-  },
-  '& .MuiSwitch-track': {
-    borderRadius: 26 / 2,
-    backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
-    opacity: 1,
-    transition: theme.transitions.create(['background-color'], {
-      duration: 500,
-    }),
-  },
-}));
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -157,6 +102,7 @@ const Header: React.FC = () => {
                     >
                       {last ? (
                         <button
+                          id="li-download-btn"
                           className="uppercase p-[10px] rounded-[20px]"
                           ref={hook.downloadResumeBtnRef}
                           onClick={downloadResume}

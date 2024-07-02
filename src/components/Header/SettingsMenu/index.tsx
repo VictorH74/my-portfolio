@@ -1,11 +1,11 @@
+"use client"
 import React from "react";
-import Menu from '@mui/material/Menu';
-import NavListItem from "./NavListItem";
+import { Menu } from '@/components/mui/MuiMenu';
+import NavListItem from "../NavListItem";
 import SettingsIcon from '@mui/icons-material/Settings';
 
-interface SettingsMenuProps {
+interface SettingsMenuProps extends React.PropsWithChildren {
     onMouseOver?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
-    children: React.ReactNode
     onClose(): void
 }
 

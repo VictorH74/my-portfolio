@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@/components/mui/MuiStyled';
 import MaterialUISwitch from '@mui/material/Switch';
 
 const Switch = styled(MaterialUISwitch)(() => {

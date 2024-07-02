@@ -2,12 +2,10 @@
 import { downloadResume } from "@/utils/resume";
 import React from "react";
 import { useTheme } from "@/hooks/UseTheme";
+import { NavListItemType } from "../data";
 
 interface Props {
-  navData: {
-    label: string;
-    to: string;
-  }[];
+  navData: NavListItemType[];
   downloadResumeBtnInnerText: string;
 }
 
@@ -21,7 +19,7 @@ const Hamburger = (props: Props) => {
   }, []);
 
   return (
-    <div>
+    <div id="hamburger">
       <div className="cursor-pointer h-7 w-8 grid gap-[7px]" onClick={toggle}>
         {Array(3)
           .fill(undefined)
@@ -29,17 +27,15 @@ const Hamburger = (props: Props) => {
             <span
               key={i}
               style={{ backgroundColor: themeColor.color }}
-              className={`h-1 w-full rounded-xl ${
-                [0, 2].includes(i) ? "origin-left duration-300" : "duration-150"
-              } ${
-                show
+              className={`h-1 w-full rounded-xl ${[0, 2].includes(i) ? "origin-left duration-300" : "duration-150"
+                } ${show
                   ? i === 0
                     ? "rotate-45"
                     : i === 1
-                    ? "scale-0"
-                    : "-rotate-45"
+                      ? "scale-0"
+                      : "-rotate-45"
                   : ""
-              }`}
+                }`}
             ></span>
           ))}
       </div>
@@ -49,9 +45,9 @@ const Hamburger = (props: Props) => {
             const last = i === props.navData.length - 1;
             return (
               <li
-                className={`li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 ${
-                  show ? "translate-x-0" : "translate-x-[101%]"
-                }`}
+                id={`li-${data.to}`}
+                className={`li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 ${show ? "translate-x-0" : "translate-x-[101%]"
+                  }`}
                 style={{
                   transitionDelay: `${i || 0}00ms`,
                   background: last

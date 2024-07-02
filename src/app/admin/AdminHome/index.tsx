@@ -2,7 +2,7 @@
 import React from "react"
 import { auth } from "@/configs/firebaseConfig"
 import AdminProjectCard from "./components/AdminProjectCard"
-import Skeleton from '@mui/material/Skeleton';
+import { Skeleton } from '@/components/mui/MuiSkeleton';
 import { createPortal } from "react-dom"
 import useAdminHome, { AdminHomeProps } from "./useAdminHome"
 import CreateUpdateProjectModal from "./components/CreateUpdateProjectModal";
@@ -82,9 +82,9 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
 
                     <div style={{ backgroundColor: themeColor.color }} className="h-[2px] my-6"></div>
 
-                        <form action="">
-                            <input placeholder="" type="text" />
-                        </form>
+                    <form action="">
+                        <input placeholder="" type="text" />
+                    </form>
 
                 </div>
             </main>

@@ -2,7 +2,7 @@ import { TranslationLang } from "@/types";
 
 const NAV_LIST_ITEM_IDS = ["", "about-me", "skills", "projects", "contact-me", "contacts", "download-btn"] as const
 
-type NavListItemType = { label: string, to: typeof NAV_LIST_ITEM_IDS[number]; }
+export type NavListItemType = { label: string, to: typeof NAV_LIST_ITEM_IDS[number] }
 
 type NavTranslationsType = {
   showBgAnimation: string,
