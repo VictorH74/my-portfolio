@@ -24,13 +24,14 @@ const LoginFormChildren = () => {
             <main className='shadow-xl bg-gray-200 dark:bg-[#3f3f3f] w-full max-w-[400px] px-4 py-10 rounded-lg'>
                 <h2 className='text-center mb-3 font-semibold text-base dark:text-white text-gray-500'>Sign in as admin</h2>
                 <form action={async (formData) => {
-                    let data: string[] = []
-                    formData.forEach(a => data.push(a as string))
                     try {
                         await setPersistence(auth, browserLocalPersistence)
                         const credentials = await setPersistence(auth, browserLocalPersistence)
                             .then(() => {
-                                return signInWithEmailAndPassword(auth, data[0], data[1]);
+                                return signInWithEmailAndPassword(auth,
+                                    formData.get("email")?.toString()!,
+                                    formData.get("password")?.toString()!
+                                );
                             })
                         const token = await credentials.user.getIdToken()
                         setServerCookie(token)
