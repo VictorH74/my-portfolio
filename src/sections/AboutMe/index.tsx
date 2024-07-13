@@ -5,9 +5,11 @@ import { Noto_Sans } from "next/font/google";
 import { DownloadResumeBtn } from "./styles";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
-import { downloadResume, fileName } from "@/utils/resume";
+import { fileName, downloadResume } from "@/utils/resume";
 import { aboutMeSection } from "@/utils/translations";
 import React from "react";
+import { useQuery } from "react-query";
+import { getMetadata, getStorage, ref } from "firebase/storage";
 
 const notoSans400 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const notoSans300 = Noto_Sans({ weight: "300", subsets: ["latin"] });
@@ -16,15 +18,23 @@ const AboutMe = () => {
   const lang = useLanguage();
   const translate = aboutMeSection[lang];
   const { themeColor } = useTheme();
-  const [pdfSize, setPdfSize] = React.useState(0);
+  const { data: pdfMetadata, isLoading } = useQuery({
+    queryFn: () => loadPdfMetadata(),
+    onError: (e) => {
+      alert("Erro ao baixar metadata de cv!")
+      console.error(e)
+    },
+    retry: false
+  });
 
-  React.useEffect(() => {
-    (async () => {
-      const res = await fetch(fileName);
-      const blob = await res.blob();
-      setPdfSize(Math.round(blob.size / 1024)); // KB
-    })();
-  }, []);
+  const formatSizeToKB = (size: number) => Math.round(size / 1024);
+
+  const loadPdfMetadata = async () => {
+    const storage = getStorage();
+    const pdfRef = ref(storage, 'my-cv/' + fileName);
+
+    return getMetadata(pdfRef);
+  }
 
   const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
 
@@ -91,8 +101,8 @@ const AboutMe = () => {
           style={{ backgroundColor: themeColor.color }}
         />
         <DownloadResumeBtn
-          onClick={downloadResume}
-          data-tooltip={`${translate.resumeSizeText}: ${pdfSize} KB`}
+          onClick={isLoading ? undefined : downloadResume}
+          data-tooltip={`${translate.resumeSizeText}: ${isLoading ? "Loading..." : formatSizeToKB(pdfMetadata?.size || 0) + "KB"}`}
           style={{ backgroundColor: themeColor.color }}
         >
           <div className="button-wrapper">

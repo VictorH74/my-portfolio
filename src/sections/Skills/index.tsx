@@ -17,7 +17,7 @@ const translations = {
   },
 };
 
-const Skills = () => {
+export default function Skills() {
   const { skillData, notSkills } = useSkills();
   const lang = useLanguage();
 
@@ -30,35 +30,33 @@ const Skills = () => {
       </h1>
       <div className="flex flex-wrap justify-center gap-3">
         {notSkills ? (<p className="text-red-400">{translate.emptySkillsMsg}</p>) : skillData.map(
-            (icon) =>
-              !icon.hidden && (
-                <div
-                  key={icon.id}
-                  className="shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md"
-                  data-aos="flip-left"
-                  data-aos-duration="1000"
-                  data-aos-once="true"
-                >
-                  <Image
-                    loading="lazy"
-                    placeholder="empty"
-                    height={50}
-                    width={50}
-                    className="h-2/5 w-auto"
-                    src={icon.src}
-                    alt="icon"
-                  />
-                  <div className="tech-name ">
-                    <p className="primary-font-color" translate="no">
-                      {icon.name}
-                    </p>
-                  </div>
+          (icon) =>
+            !icon.hidden && (
+              <div
+                key={icon.id}
+                className="shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md"
+                data-aos="flip-left"
+                data-aos-duration="1000"
+                data-aos-once="true"
+              >
+                <Image
+                  loading="lazy"
+                  placeholder="empty"
+                  height={50}
+                  width={50}
+                  className="h-2/5 w-auto"
+                  src={icon.src}
+                  alt="icon"
+                />
+                <div className="tech-name ">
+                  <p className="primary-font-color" translate="no">
+                    {icon.name}
+                  </p>
                 </div>
-              )
-          )}
+              </div>
+            )
+        )}
       </div>
     </section>
   );
 };
-
-export default Skills;

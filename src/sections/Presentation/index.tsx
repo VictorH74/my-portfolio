@@ -2,7 +2,6 @@
 import { useTheme } from "@/hooks/UseTheme";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import React from "react";
-import ContactLinks from "@/components/LinkList";
 import usePresentation from "./usePresentation";
 import useSkills from "@/hooks/UseSkills";
 import Image from "next/image";
@@ -54,12 +53,12 @@ export default function Presentation() {
                 backgroundColor: themeColor.color
               }}
             />
-              {
-                skillData.filter(s => s.isMain).map(skill => (
-                  <Image src={skill.src} alt="skill icon" key={skill.name} width={45} height={45} />
-                )
-                )
-              }
+            {
+              skillData.filter(s => s.isMain).map(skill => (
+                <Image src={skill.src} alt="skill icon" key={skill.name} width={45} height={45} />
+              )
+              )
+            }
             <div
               className="h-[2px] grow"
               style={{

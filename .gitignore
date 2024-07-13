@@ -38,3 +38,4 @@ next-env.d.ts
 
 # project
 /src/app/test
+cors.json

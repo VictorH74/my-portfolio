@@ -10,25 +10,22 @@ import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import { ProjectType } from "@/types";
 import { QueryConstraint, collection, getDocs, limit, orderBy, query, startAfter } from "firebase/firestore";
 import { db } from "@/configs/firebaseConfig";
+import { useQuery } from "react-query";
 
 
 const viewBtnClass = "text-custom-gray-light dark:text-[#a1a1aa]";
 const viewBtnActiveClass = "text-[#303030] dark:text-[#ececec]";
 
-const Projects = () => {
+export default function Projects() {
   const [view, setView] = React.useState(2);
   const containerRef = React.useRef(null);
   const [projects, setProjects] = React.useState<ProjectType[]>([])
-  const [isLoading, setIsLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    (async () => {
-      setIsLoading(true)
-      const retrievedProjects = await getProjectSnapshotsByQuery(limit(3))
-      setProjects(retrievedProjects)
-      setIsLoading(false)
-    })()
-  }, [])
+  const { isLoading } = useQuery('projects', {
+    queryFn: async () => {
+      setProjects((await getProjectSnapshotsByQuery(limit(3))))
+    }
+  })
 
   const fetchMoreProjects = async () => {
     const retrievedProjects = await getProjectSnapshotsByQuery(startAfter(2))
@@ -91,5 +88,3 @@ const Projects = () => {
     </section>
   );
 };
-
-export default React.memo(Projects);
