@@ -3,7 +3,7 @@ import { db } from "@/configs/firebaseConfig";
 import { ProjectType, TechIcons } from "@/types";
 import { collection, doc, onSnapshot, orderBy, query, writeBatch } from "firebase/firestore";
 import React from "react";
-import { ReordableItemType } from "./components/ReordableModal";
+import { ReordableItemType } from "./ReordableModal";
 import useAdminProjects from "@/hooks/useAdminProjects";
 
 export interface AdminHomeProps {

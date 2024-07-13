@@ -40,7 +40,6 @@ export default function HomePage() {
                 <Presentation />
                 <AboutMe />
                 <Skills />
-                {/* TODO: render <Projects /> in server side */}
                 <Projects />
                 <ContactMe />
                 <Contacts />

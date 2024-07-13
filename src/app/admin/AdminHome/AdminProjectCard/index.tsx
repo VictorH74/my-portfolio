@@ -6,7 +6,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import React from "react";
 import { createPortal } from "react-dom";
-import ProjectCardHover from "./components/ProjectCardHover"
+import ProjectCardHover from "./ProjectCardHover"
 import useAdminProjectCard from "./useAdminProjectCard";
 import CreateUpdateProjectModal from "../CreateUpdateProjectModal";
 

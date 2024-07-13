@@ -17,7 +17,7 @@ export const aboutMeSection = {
     "pt-BR": {
         title: "Me conheça",
         paragraphs: [
-            "Iniciei minha jornada na programação em 2020 quando ingressei no curso de Ciência da Computação na faculdade. No entanto, devido à pandemia e outros fatores, tomei a decisão de interromper meus estudos, após concluir o 5º período. A experiência acadêmica proporcionou uma sólida base em desenvolvimento de software, algo que se tornou fundamental para minha jornada autodidata subsequente.",
+            "Iniciei minha jornada na programação em 2020 quando ingressei no curso de Ciência da Computação na faculdade. No entanto, devido à pandemia e outros fatores, tomei a decisão de interromper meus estudos, após concluir o 5º período. A experiência acadêmica proporcionou uma sólida base em desenvolvimento de software, algo que se tornou fundamental para minha jornada autodidata.",
 
             "A programação se tornou um verdadeiro hobby. A maior parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
 
@@ -29,7 +29,7 @@ export const aboutMeSection = {
     en: {
         title: "About Me",
         paragraphs: [
-            "I started my programming journey in 2020 when I enrolled in the Computer Science course at college. However, due to the pandemic and other factors, I made the decision to interrupt my studies after completing the 5th period. The academic experience provided a solid foundation in software development, something that became fundamental to my subsequent self-taught journey.",
+            "I started my programming journey in 2020 when I enrolled in the Computer Science course at college. However, due to the pandemic and other factors, I made the decision to interrupt my studies after completing the 5th period. The academic experience provided a solid foundation in software development, something that became fundamental to my self-taught journey.",
 
             "Programming has become a real hobby. Most of my free time is dedicated to reading articles and documentation about the latest technologies. I firmly believe that this constant dedication will propel me to success in the future.",
 

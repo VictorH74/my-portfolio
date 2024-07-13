@@ -81,15 +81,11 @@ const Header: React.FC = () => {
                   const last = i === hook.navDataArray.length - 1;
                   return (
                     <NavListItem
+                      onPageTop={hook.scrollUp}
+                      onFocused={hook.wrappedLI === "li-" + data.to}
                       className={`
                     ${last ? "p-0" : "p-[10px]"}
                     ${notoSans.className}
-                    ${hook.scrollUp
-                          ? hook.wrappedLI === "li-" + data.to
-                            ? "text-[#ececec]"
-                            : "primary-font-color"
-                          : "text-[#ececec]"
-                        }
                   `}
                       id={`li-${data.to}`}
                       key={i}
@@ -115,35 +111,42 @@ const Header: React.FC = () => {
                     </NavListItem>
                   );
                 })}
-                <SettingsMenu
+                <NavListItem
+                  onPageTop={hook.scrollUp}
+                  onFocused={hook.wrappedLI === "li-settings"}
+                  id="li-settings"
                   onMouseOver={hook.handleMouseOver}
-                  onClose={hook.moveWrapperToDownloadBtn}
                 >
-                  <MenuItem disableTouchRipple>
-                    <label className="flex flex-col">
-                      {hook.translate.showBgAnimation}
-                      <FormControlLabel
-                        control={<SwitchBgAnimation
-                          themeColor={themeColor.color}
-                          sx={{ m: 1 }}
-                          defaultChecked
-                          onChange={e => {
-                            hook.setShowBgAnimation(e.currentTarget.checked)
-                          }}
-                          checked={hook.showBgAnimation}
-                        />}
-                        label=""
-                      />
-                    </label>
+                  <SettingsMenu
+                    onClose={hook.moveWrapperToDownloadBtn}
+                  >
+                    <MenuItem disableTouchRipple>
+                      <label className="flex flex-col">
+                        {hook.translate.showBgAnimation}
+                        <FormControlLabel
+                          control={<SwitchBgAnimation
+                            themeColor={themeColor.color}
+                            sx={{ m: 1 }}
+                            defaultChecked
+                            onChange={e => {
+                              hook.setShowBgAnimation(e.currentTarget.checked)
+                            }}
+                            checked={hook.showBgAnimation}
+                          />}
+                          label=""
+                        />
+                      </label>
 
-                  </MenuItem>
-                  <MenuItem disableTouchRipple >
-                    <div className="flex flex-col">
-                      {hook.translate.switchThemeColor}
-                      <SwitchThemeColorBtn />
-                    </div>
-                  </MenuItem>
-                </SettingsMenu>
+                    </MenuItem>
+                    <MenuItem disableTouchRipple >
+                      <div className="flex flex-col">
+                        {hook.translate.switchThemeColor}
+                        <SwitchThemeColorBtn />
+                      </div>
+                    </MenuItem>
+                  </SettingsMenu>
+                </NavListItem>
+
               </ul>
             </nav>
           </>

@@ -1,5 +1,4 @@
-import { styled } from '@/components/mui/MuiStyled';
-// import { Menu } from '@/components/mui/MuiMenu';
+import { styled } from '@mui/material/styles';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 
 interface SwitchBgAnimationProps extends SwitchProps {

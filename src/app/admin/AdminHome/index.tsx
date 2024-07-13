@@ -1,14 +1,13 @@
 "use client"
 import React from "react"
 import { auth } from "@/configs/firebaseConfig"
-import AdminProjectCard from "./components/AdminProjectCard"
-import { Skeleton } from '@/components/mui/MuiSkeleton';
+import AdminProjectCard from "./AdminProjectCard"
+import Skeleton from '@mui/material/Skeleton';
 import { createPortal } from "react-dom"
 import useAdminHome, { AdminHomeProps } from "./useAdminHome"
-import CreateUpdateProjectModal from "./components/CreateUpdateProjectModal";
-import ReordableModal from "./components/ReordableModal";
+import ReordableModal from "./ReordableModal";
 import { ThemeProvider } from "@/contexts/ThemeColor";
-import Button from "./components/Button";
+import Button from "./Button";
 import AddIcon from '@mui/icons-material/Add';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import AdminProjectsProvider from "@/contexts/AdminProjectsContext";
@@ -17,6 +16,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { useTheme } from "@/hooks/UseTheme";
+import CreateUpdateProjectModal from "./CreateUpdateProjectModal";
 
 export default function AdminHome(props: AdminHomeProps) {
     return (
