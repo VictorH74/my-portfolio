@@ -83,7 +83,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 const prevValue = propProject[currentKey as keyof ProjectType]
                 if (currentValue !== prevValue) {
                     updatedData[currentKey] = (UrlKeys as readonly string[]).includes(currentKey) ?
-                        new URL(currentValue) : updatedData[currentKey] = currentValue
+                        new URL(currentValue).href : updatedData[currentKey] = currentValue
                 }
             } else if (typeof currentValue !== "number") ({
                 description: () => {
