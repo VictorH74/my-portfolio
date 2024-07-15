@@ -72,6 +72,7 @@ export default function Presentation() {
         </div>
       </div>
       <button
+        name="scroll to next section button"
         onClick={() => {
           const height = hook.sectionRef.current?.offsetHeight;
           if (!height) return;

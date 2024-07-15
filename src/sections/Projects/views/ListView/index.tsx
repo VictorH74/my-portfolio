@@ -23,6 +23,7 @@ export default function ListView(props: Props) {
           ))}
       </div>
       <button
+        name="show more or less projects button"
         onMouseOver={(e) => {
           const { style } = e.currentTarget;
           style.color = "white";

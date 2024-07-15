@@ -63,7 +63,8 @@ export default function ContactMe() {
           );
         })}
         <button
-          className={`${notoSans.className} p-3 rounded-md text-base uppercase tracking-wider hover:brightness-125 duration-150 col-span-2 grid place-items-center`}
+          name="submit button"
+          className={`${notoSans.className} p-3 text-white rounded-md text-base uppercase tracking-wider hover:brightness-125 duration-150 col-span-2 grid place-items-center`}
           type="submit"
           style={{ backgroundColor: hook.themeColor.color }}
           disabled={hook.submitting}
@@ -75,12 +76,12 @@ export default function ContactMe() {
           )}
         </button>
 
-        <div 
-        className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 duration-150 text-center max-sm:col-span-2 backdrop-blur-md"
-        onClick={hook.selectContent}
+        <div
+          className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 duration-150 text-center max-sm:col-span-2 backdrop-blur-md"
+          onClick={hook.selectContent}
         >+55 (86) 99470-2018</div>
-        <div className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150 max-sm:col-span-2 backdrop-blur-md" 
-        onClick={hook.selectContent}
+        <div className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150 max-sm:col-span-2 backdrop-blur-md"
+          onClick={hook.selectContent}
         >victorh.almeida7@gmail.com</div>
 
 

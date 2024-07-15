@@ -98,6 +98,7 @@ const Header: React.FC = () => {
                     >
                       {last ? (
                         <button
+                          name="download resume button"
                           id="li-download-btn"
                           className="uppercase p-[10px] rounded-[20px]"
                           ref={hook.downloadResumeBtnRef}

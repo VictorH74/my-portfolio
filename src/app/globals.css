@@ -94,7 +94,7 @@ header {
 
 .primary-font-color,
 .section-title {
-  @apply text-custom-gray-light dark:text-[#ececec];
+  @apply text-custom-gray-light dark:text-[#ffffff];
 }
 
 .secondary-font-color {

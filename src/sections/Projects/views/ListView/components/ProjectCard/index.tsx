@@ -51,11 +51,10 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
         </div>
       )}
       <div
-        className={`relative flex flex-col flex-wrap justify-between my-0 mx-[7%] ${
-          oddScreen1024
+        className={`relative flex flex-col flex-wrap justify-between my-0 mx-[7%] ${oddScreen1024
             ? "lg:flex-row-reverse"
             : "lg:flex-row"
-        }`}
+          }`}
         data-aos="flip-up"
         data-aos-duration="600"
         data-aos-once="true"
@@ -89,33 +88,30 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             </div>
           )}
           <Image
-              className="h-auto w-full"
-              src={project.screenshots[0].url}
-              width={1000}
-              height={780}
-              alt="Project image"
-              onLoad={() => setLoadingImg(false)}
-              loading="lazy"
-              placeholder="empty"
-            />
+            className="h-auto w-full"
+            src={project.screenshots[0].url}
+            width={1000}
+            height={780}
+            alt="Project image"
+            onLoad={() => setLoadingImg(false)}
+            loading="lazy"
+            placeholder="empty"
+          />
           <div
-            className={`absolute inset-0 bg-transparent grid place-items-center ${
-              loadingImg ? "opacity-100" : "opacity-0"
-            }`}
+            className={`absolute inset-0 bg-transparent grid place-items-center ${loadingImg ? "opacity-100" : "opacity-0"
+              }`}
           >
             <Loading />
           </div>
         </div>
 
         <div
-          className={`w-full py-4 ${
-            oddScreen1024 ? "text-end" : "text-start"
-          } lg:w-[47%] py-5 px-7`}
+          className={`w-full py-4 ${oddScreen1024 ? "text-end" : "text-start"
+            } lg:w-[47%] py-5 px-7`}
         >
           <h1
-            className={` text-xl ${
-              oddScreen1024 ? "before:right-0" : "before:left-0"
-            } primary-font-color`}
+            className={` text-xl ${oddScreen1024 ? "before:right-0" : "before:left-0"
+              } primary-font-color`}
           >
             {project.title}
           </h1>
@@ -144,9 +140,8 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
               {translate.skillsTitle}
             </h3>
             <ul
-              className={`flex w-max gap-2 ${
-                oddScreen1024 && "float-right"
-              } pt-1`}
+              className={`flex w-max gap-2 ${oddScreen1024 && "float-right"
+                } pt-1`}
             >
               {icons.map(
                 (icon) =>

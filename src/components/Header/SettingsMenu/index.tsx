@@ -21,6 +21,7 @@ export default function SettingsMenu(props: SettingsMenuProps) {
     return (
         <>
             <button
+                name="settings menu button"
                 className="uppercase p-[10px] rounded-[20px]"
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}

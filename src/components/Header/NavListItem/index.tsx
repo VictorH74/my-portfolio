@@ -16,9 +16,9 @@ export default function NavListItem(props: NavListItemProps) {
         <li
             className={twMerge("cursor-pointer list-none italic text-sm uppercase select-none duration-150", props.className, props.onPageTop
                 ? props.onFocused
-                    ? "text-[#ececec]"
+                    ? "text-[#ffffff] font-bold"
                     : "primary-font-color"
-                : "text-[#ececec]")}
+                : "text-[#fff]")}
             id={props.id}
             onClick={props.onClick}
             onMouseOver={props.onMouseOver}
