@@ -7,6 +7,7 @@ import nookies from "nookies"
 import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 import SubmitButton from "./SubmitButton";
+import { FirebaseError } from "firebase/app";
 
 export default function AdminLoginPage() {
     return (
@@ -18,6 +19,7 @@ export default function AdminLoginPage() {
 
 const LoginFormChildren = () => {
     const router = useRouter()
+    const [errorMsg, setErrorMsg] = React.useState<string | undefined>();
 
     return (
         <div className='w-screen h-screen grid place-items-center'>
@@ -38,7 +40,10 @@ const LoginFormChildren = () => {
                         nookies.set(undefined, 'token', token, { path: '/' });
                         router.replace("/admin")
                     } catch (e) {
-                        alert(e)
+                        console.error(e)
+                        if (e instanceof FirebaseError && e.code === "auth/invalid-credential") {
+                            setErrorMsg("Invalid email or password!")
+                        }
                     }
                 }} className='flex flex-col gap-2'  >
 
@@ -58,7 +63,11 @@ const LoginFormChildren = () => {
                         required
                     />
 
-                    <SubmitButton />
+                    {
+                        errorMsg && (<p className="text-sm text-red-700 font-semibold">{errorMsg}</p>)
+                    }
+
+                    <SubmitButton onClick={() => setErrorMsg(() => undefined)} />
                 </form>
             </main>
         </div>
