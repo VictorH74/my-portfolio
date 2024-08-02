@@ -1,5 +1,5 @@
 "use client"
-import { setServerCookie } from "@/app/lib/actions";
+import { setServerCookie } from "@/lib/actions";
 import { ThemeProvider } from "@/contexts/ThemeColor";
 import { useRouter } from "next/navigation";
 import React from "react";

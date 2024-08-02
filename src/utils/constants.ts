@@ -18,12 +18,10 @@ export const EMAILJS_PUBLIC_KEY =
         throw new Error("EMAILJS_PUBLIC_KEY not defined");
     })();
 
-// rgb(78, 84, 253)
-// rgb(53, 167, 119)
-// rgb(253, 78, 78)
 const RGBValuesArray: [number, number, number][] = [
-    [78, 84, 253],
     [53, 167, 119],
+    [0, 153, 255],
+    [255, 102, 0],
     [253, 78, 78],
 ]
 

@@ -8,7 +8,7 @@ const colors = THEME_COLORS
 
 export default function SwitchThemeColorBtn() {
   const { themeColor, setThemeColor } = useTheme();
-  const [sliderValue, setSliderValue] = React.useState(2);
+  const [sliderValue, setSliderValue] = React.useState(0);
 
   const handleChange = (_: Event, value: number | number[]) => {
     setThemeColor(colors[(value as number) - 1]);
@@ -21,24 +21,20 @@ export default function SwitchThemeColorBtn() {
     })
   }, [themeColor]);
 
-  const lightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
-
   return (
     <div className="fixeda bottom-10a left-4a">
       <Box width={170}>
         <Slider
           sx={{
             color: "#000",
-            // color: lightTheme ? "#414141b0" : "#d8d8d845",
             "& .MuiSlider-thumb": {
               backgroundColor: themeColor.color,
             },
           }}
           marks={true}
           min={1}
-          max={3}
+          max={colors.length}
           track={false}
-          // orientation="vertical"
           value={sliderValue}
           onChange={handleChange}
         />
