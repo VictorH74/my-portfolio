@@ -17,6 +17,8 @@ import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { useTheme } from "@/hooks/UseTheme";
 import CreateUpdateProjectModal from "./CreateUpdateProjectModal";
+import TechnologiesArea from "./TechnologiesArea";
+import CvArea from "./CvArea";
 
 export default function AdminHome(props: AdminHomeProps) {
     return (
@@ -87,6 +89,10 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
                     </form>
 
                 </div>
+
+                <TechnologiesArea />
+                
+                <CvArea />
             </main>
 
             {hook.onCreateProject && createPortal(

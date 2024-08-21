@@ -33,12 +33,14 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                                     <label htmlFor="upload-img" className="px-6 cursor-pointer"><AddPhotoAlternateIcon sx={{ fontSize: 35 }} /></label>
                                     <input onChange={hook.handleSelectChange} className="absolute pointer-events-none opacity-0" multiple type="file" accept=".webp,.png,.jpg,.jpeg" name="" id="upload-img" />
                                 </div>
-                                <button
-                                    onClick={() => hook.setOnReorderScreenshots(true)}
-                                    type="button"
-                                >
-                                    <ReorderIcon sx={{ fontSize: 35 }} />
-                                </button>
+                                {hook.projectScreenshotUrls.length > 1 && (
+                                    <button
+                                        onClick={() => hook.setOnReorderScreenshots(true)}
+                                        type="button"
+                                    >
+                                        <ReorderIcon sx={{ fontSize: 35 }} />
+                                    </button>
+                                )}
                             </div>
 
                             {hook.projectScreenshotUrls.length > 0 && (

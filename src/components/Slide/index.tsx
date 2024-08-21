@@ -77,7 +77,7 @@ export default function Slide(props: SlideProps) {
                                 type="button"
                             >
                                 <div
-                                    className="size-3 rounded-full duration-200 group-hover/btn:scale-125"
+                                    className="size-3 rounded-full duration-200 group-hover/btn:scale-150"
                                     style={{
                                         backgroundColor: currentFileIndex == i ? themeColor.color : "#d6d6d6"
                                     }}
@@ -95,7 +95,7 @@ export default function Slide(props: SlideProps) {
                         <button
                             key={btn.label}
                             onClick={btn.onClick}
-                            className={twMerge("absolute inset-y-0 p-4 opacity-0 group-hover/container:opacity-100 duration-200", btn.className)}
+                            className={twMerge("absolute inset-y-0 p-4 opacity-0 group-hover/container:opacity-100 duration-200 hover:scale-150", btn.className)}
                         >
                             <btn.Icon sx={{ fontSize: 40, color: themeColor.color }} />
                         </button>
@@ -115,12 +115,12 @@ const SlideImage: React.FC<Omit<ImageProps, "className" | "onLoad" | "loading">>
         <div className="size-full relative">
             <Image
                 {...props}
-                className="h-auto w-full"
+                className="h-full w-auto"
                 onLoad={() => setLoadingImg(false)}
                 loading="lazy"
             />
             <div
-                className={`absolute inset-0 bg-transparent grid place-items-center ${loadingImg ? "opacity-100" : "opacity-0"
+                className={`absolute object-cover inset-0 bg-transparent grid place-items-center ${loadingImg ? "opacity-100" : "opacity-0"
                     }`}
             >
                 <Loading />
