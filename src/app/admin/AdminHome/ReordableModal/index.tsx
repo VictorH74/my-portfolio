@@ -30,7 +30,7 @@ const getItemStyle = (
     draggableStyle: DraggingStyle | NotDraggingStyle | undefined
 ) => ({
     // some basic styles to make the items look a bit nicer
-    padding: grid * 2,
+    // padding: grid * 2,
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
@@ -47,11 +47,13 @@ const getListStyle = (isDraggingOver: boolean) => ({
 });
 
 export type ReordableItemType = Record<"value", string> & Record<"id", string>
+export type OutputReordableItemType = ReordableItemType & { prevIndex: number }
 
 interface ReordableModalProps {
     onClose(): void;
     items: ReordableItemType[];
-    onSubmit(items: ReordableItemType[]): Promise<void>;
+    onSubmit(items: OutputReordableItemType[]): Promise<void>;
+    children: (item: ReordableItemType, index: number) => React.ReactElement
 }
 
 export default function ReordableModal(props: ReordableModalProps) {
@@ -84,9 +86,18 @@ export default function ReordableModal(props: ReordableModalProps) {
     const handleSubmit = async () => {
         if (!itemsHasChanged) return;
 
+        const prevItemsObj: Record<string, { value: string, index: number }> = {}
+
+        for (let index = 0; index < props.items.length; index++) {
+            const { id, value } = props.items[index]
+            prevItemsObj[id] = { value, index }
+        }
+
+        const output: OutputReordableItemType[] = items.map((item, index) => ({ ...item, prevIndex: prevItemsObj[item.id].index }))
+
         setIsLoading(true)
         try {
-            await props.onSubmit(items)
+            await props.onSubmit(output)
             props.onClose()
         } catch (e) {
             alert("Error")
@@ -132,7 +143,7 @@ export default function ReordableModal(props: ReordableModalProps) {
                                                     provided.draggableProps.style
                                                 )}
                                             >
-                                                {index} - {item.value}
+                                                {props.children(item, index)}
                                             </div>
                                         )}
                                     </Draggable>

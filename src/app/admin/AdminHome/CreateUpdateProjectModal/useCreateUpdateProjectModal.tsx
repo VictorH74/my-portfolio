@@ -6,6 +6,7 @@ import { FirebaseError } from "firebase/app";
 import { addDoc, collection, doc, runTransaction, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import React, { useRef } from "react";
+import { OutputReordableItemType, ReordableItemType } from "../ReordableModal";
 
 const UrlKeys = ["deployUrl", "repositoryUrl", "videoUrl"] as const
 
@@ -27,6 +28,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
     const techInputRef = useRef<HTMLInputElement>(null)
     const wordSufixSpanRef = useRef<HTMLSpanElement>(null)
     const projectScreenshotUrls = React.useMemo<string[]>(() => projectScreenshots.map(img => img instanceof File ? URL.createObjectURL(img) : img.url), [projectScreenshots])
+    const [onReorderScreenshots, setOnReorderScreenshots] = React.useState(false)
 
     React.useEffect(() => {
         if (props.project) {
@@ -111,8 +113,8 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                     const finalFileName = img.name.split(".").slice(0, -1).join(".")
                     const storageRef = ref(storage, `project-images/${finalFileName}`);
                     try {
-                        const finalImg = await ((await fetch("api/images", { body: img, method: "POST" })).arrayBuffer()) 
-                        const snap = await uploadBytes(storageRef, finalImg, {contentType: "image/webp"})
+                        const finalImg = await ((await fetch("api/images", { body: img, method: "POST" })).arrayBuffer())
+                        const snap = await uploadBytes(storageRef, finalImg, { contentType: "image/webp" })
                         const url = await getDownloadURL(snap.ref)
                         updatedScreenshots[i] = { url, name: snap.metadata.name }
                         resolve()
@@ -145,6 +147,20 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         if (files) setProjectScreenshots(prev => [...prev, ...Array.from(files)])
     };
 
+    const replaceScreenshot = (screenshotIndex: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const fileInput = e.target;
+        const files = fileInput.files
+        if (files) setProjectScreenshots(prev => prev.map((s, i) => i == screenshotIndex ? files[0] : s))
+    };
+
+    const removeScreenshot = (screenshotIndex: number) => () => {
+        const onRemoveScreenshot = projectScreenshots[screenshotIndex]
+        if (!(onRemoveScreenshot instanceof File)) {
+            setOnRemoveScreenshotNames(prev => [...prev, onRemoveScreenshot.name])
+        }
+        setProjectScreenshots(prev => prev.filter((_, i) => i != screenshotIndex))
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
@@ -154,7 +170,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         try {
             // Update project data if it has passed as prop. Else, create project
             if (propProject) {
-                const updatedData = updatedCheckedProjectData(rest)
+                const updatedProjectData = updatedCheckedProjectData(rest)
 
                 // if project screenshots has changed
                 if (projectScreenshots.length === 0) return;
@@ -169,16 +185,16 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
                 }
 
                 if (projectScreenshotsHasChanged)
-                    updatedData.screenshots = await uploadScreenshots();
+                    updatedProjectData.screenshots = await uploadScreenshots();
 
-                const notProjectDataChanged = Object.values(updatedData).length === 0;
+                const notProjectDataChanged = Object.values(updatedProjectData).length === 0;
                 if (notProjectDataChanged) return;
 
                 const docRef = doc(db, "projects", propProject.id)
 
-                console.log({ ...updatedData, updatedAt: new Date().toISOString() })
+                // console.log({ ...updatedProjectData, updatedAt: new Date().toISOString() })
 
-                await updateDoc(docRef, { ...updatedData, updatedAt: new Date().toISOString() })
+                await updateDoc(docRef, { ...updatedProjectData, updatedAt: new Date().toISOString() })
             } else {
                 const { title, description, technologies } = project;
 
@@ -221,10 +237,16 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         }
     }
 
+    const reorderScreenshots = async (items: OutputReordableItemType[]) => {
+        setProjectScreenshots(prev => items.map(item => prev[item.prevIndex]))
+    }
+
     return ({
         handleSubmit,
         projectScreenshots,
         handleSelectChange,
+        replaceScreenshot,
+        removeScreenshot,
         setProjectScreenshots,
         setOnRemoveScreenshotNames,
         updateProjectProps,
@@ -239,5 +261,8 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         setTrieSufix,
         isSubmitting,
         projectScreenshotUrls,
+        reorderScreenshots,
+        onReorderScreenshots,
+        setOnReorderScreenshots,
     })
 }

@@ -94,7 +94,14 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
             )}
 
             {hook.onReorderProject && createPortal(
-                <ReordableModal onSubmit={hook.reorderedProjects} items={hook.projects.map(({ title, id }) => ({ id, value: title }))} onClose={() => hook.setOnReorderProject(false)} />, document.body
+                <ReordableModal
+                    onSubmit={hook.reorderedProjects}
+                    items={hook.projects.map(({ title, id }) => ({ id, value: title }))}
+                    onClose={() => hook.setOnReorderProject(false)}>
+                    {(item, index) => (<div key={item.id} className="p-2">{index} - {item.value}</div>)}
+
+                </ReordableModal>
+                , document.body
             )}
         </div>
     )
