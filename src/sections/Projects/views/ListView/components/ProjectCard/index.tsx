@@ -3,10 +3,11 @@ import React from "react";
 import LinkIcon from "@mui/icons-material/Link";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import Loading from "@/components/Loading";
 import Image from "next/image";
 import useProjectCard from "./useProjectCard";
 import { ProjectType } from "@/types";
+import Slide from "@/components/Slide";
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 
 interface Props {
   index: number;
@@ -52,8 +53,8 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
       )}
       <div
         className={`relative flex flex-col flex-wrap justify-between my-0 mx-[7%] ${oddScreen1024
-            ? "lg:flex-row-reverse"
-            : "lg:flex-row"
+          ? "lg:flex-row-reverse"
+          : "lg:flex-row"
           }`}
         data-aos="flip-up"
         data-aos-duration="600"
@@ -62,47 +63,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
         <div
           className="relative overflow-hidden lg:w-1/2 rounded-xl w-full shadow-xl"
         >
-          {!!project.videoUrl && !loadingImg && (
-            <div
-              onMouseOver={() => {
-                const playIcon = document.getElementById(`play-icon-${id}`);
-                if (playIcon === null) return;
-                playIcon.style.transition = "300ms";
-                playIcon.style.opacity = "1";
-                playIcon.style.fontSize = "100px";
-              }}
-              onMouseLeave={() => {
-                const playIcon = document.getElementById(`play-icon-${id}`);
-                if (playIcon === null) return;
-                playIcon.style.opacity = "0.6";
-                playIcon.style.fontSize = "0";
-              }}
-              className="absolute bg-transparent inset-0 duration-200 grid place-items-center cursor-pointer z-10 hover:bg-[#11170]"
-              onClick={showVideo}
-            >
-              <PlayArrowIcon
-                id={`play-icon-${id}`}
-                className="duration-300"
-                sx={{ fontSize: 0, opacity: 0.6 }}
-              />
-            </div>
-          )}
-          <Image
-            className="h-auto w-full"
-            src={project.screenshots[0].url}
-            width={1000}
-            height={780}
-            alt="Project image"
-            onLoad={() => setLoadingImg(false)}
-            loading="lazy"
-            placeholder="empty"
-          />
-          <div
-            className={`absolute inset-0 bg-transparent grid place-items-center ${loadingImg ? "opacity-100" : "opacity-0"
-              }`}
-          >
-            <Loading />
-          </div>
+          <Slide images={project.screenshots} />
         </div>
 
         <div
@@ -118,6 +79,22 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
           <h2 className="mb-4 text-sm min-[700px]:text-base primary-font-color">
             {translate.projectDescription}
           </h2>
+
+          {project.videoUrl && (
+            <>
+              <button
+                onClick={showVideo}
+                style={{ color: themeColor.color }}
+                className="relative"
+              >
+                <p className="inline-block text-sm min-[700px]:text-lg">
+                  {translate.playVideoDemoText}&nbsp;&nbsp;
+                  <PlayCircleFilledIcon />
+                </p>
+              </button>
+              <br />
+            </>
+          )}
 
           {project.deployUrl && (
             <Link color={themeColor.color} href={project.deployUrl}>
@@ -168,8 +145,9 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
 const Link: React.FC<{
   children: React.ReactNode[];
-  href: string;
+  href?: string;
   color: string;
+  onClick?: () => void
 }> = (props) => (
   <a
     href={props.href}

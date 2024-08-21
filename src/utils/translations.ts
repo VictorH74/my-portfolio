@@ -105,12 +105,14 @@ export const projectsSection = {
 export const projectItem = (projectDescription: { PT: string; EN: string }) => ({
     "pt-BR": {
         skillsTitle: "Habilidades usada",
+        playVideoDemoText: "Reproduzir vídeo",
         productionLinkText: "Demostração",
         repoLinkText: "Repositório do github",
         projectDescription: projectDescription.PT,
     },
     en: {
         skillsTitle: "Skills used",
+        playVideoDemoText: "Play video",
         productionLinkText: "Demo",
         repoLinkText: "Github repository",
         projectDescription: projectDescription.EN,
