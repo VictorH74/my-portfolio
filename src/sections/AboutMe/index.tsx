@@ -5,7 +5,7 @@ import { Noto_Sans } from "next/font/google";
 import { DownloadResumeBtn } from "./styles";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
-import { fileName, downloadResume } from "@/utils/resume";
+import { resumeFileName, downloadResume } from "@/utils/resume";
 import { aboutMeSection } from "@/utils/translations";
 import React from "react";
 import { useQuery } from "react-query";
@@ -31,7 +31,7 @@ const AboutMe = () => {
 
   const loadPdfMetadata = async () => {
     const storage = getStorage();
-    const pdfRef = ref(storage, 'my-cv/' + fileName);
+    const pdfRef = ref(storage, 'my-cv/' + resumeFileName);
 
     return getMetadata(pdfRef);
   }

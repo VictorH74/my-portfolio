@@ -8,7 +8,7 @@ import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "fire
 import React, { useRef } from "react";
 import { OutputReordableItemType, ReordableItemType } from "../ReordableModal";
 
-const UrlKeys = ["deployUrl", "repositoryUrl", "videoUrl"] as const
+const UrlProps = ["deployUrl", "repositoryUrl", "videoUrl"] as const
 
 export interface CreateUpdateProjectModalProps {
     project?: ProjectType;
@@ -84,7 +84,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
             if (typeof currentValue === "string") {
                 const prevValue = propProject[currentKey as keyof ProjectType]
                 if (currentValue !== prevValue) {
-                    updatedData[currentKey] = (UrlKeys as readonly string[]).includes(currentKey) ?
+                    updatedData[currentKey] = (UrlProps as readonly string[]).includes(currentKey) ?
                         new URL(currentValue).href : updatedData[currentKey] = currentValue
                 }
             } else if (typeof currentValue !== "number") ({
@@ -198,7 +198,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
             } else {
                 const { title, description, technologies } = project;
 
-                UrlKeys.forEach((key) => {
+                UrlProps.forEach((key) => {
                     const urlValue = project[key]
                     if (urlValue) new URL(urlValue)
                 })

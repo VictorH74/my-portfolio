@@ -2,17 +2,21 @@
 
 import { getBlob, getStorage, ref } from "firebase/storage";
 
-export const fileName = 'VICTOR HUGO ALMEIDA.pdf'
+export const resumeFileName = 'VICTOR HUGO ALMEIDA.pdf'
+
+export const getResume = async () => {
+    const storage = getStorage();
+    return getBlob(ref(storage, 'my-cv/' + resumeFileName));
+}
 
 export const downloadResume = async () => {
-    const storage = getStorage();
     try {
-        const blob = await getBlob(ref(storage, 'my-cv/' + fileName));
+        const blob = await getResume();
 
         const fileURL = window.URL.createObjectURL(blob);
         let alink = document.createElement('a')
         alink.href = fileURL;
-        alink.download = fileName;
+        alink.download = resumeFileName;
         alink.click();
     } catch (e) {
         alert("Erro ao baixar currículo")

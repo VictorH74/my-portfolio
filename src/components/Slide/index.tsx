@@ -18,11 +18,6 @@ export default function Slide(props: SlideProps) {
 
     const [currentFileIndex, setCurrentFileIndex] = React.useState<number>(0);
 
-    // const screeshotURLs = React.useMemo(() => props.images.map(file => ({
-    //     url: file instanceof File ? URL.createObjectURL(file) : file.url,
-    //     name: file.name,
-    // })), [props.images])
-
     React.useEffect(() => {
         if (!sliderContainerRef.current) return
 
@@ -86,21 +81,18 @@ export default function Slide(props: SlideProps) {
                         ))}
                     </span>
                 )}
-
-                {
-                    [
-                        { label: "prev", Icon: NavigateBeforeIcon, onClick: previousSlide, className: "left-0", },
-                        { label: "next", Icon: NavigateNextIcon, onClick: nextSlide, className: "right-0", },
-                    ].map(btn => (
-                        <button
-                            key={btn.label}
-                            onClick={btn.onClick}
-                            className={twMerge("absolute inset-y-0 p-4 opacity-0 group-hover/container:opacity-100 duration-200 hover:scale-150", btn.className)}
-                        >
-                            <btn.Icon sx={{ fontSize: 40, color: themeColor.color }} />
-                        </button>
-                    ))
-                }
+                {props.images.length > 1 && [
+                    { label: "prev", Icon: NavigateBeforeIcon, onClick: previousSlide, className: "left-0", },
+                    { label: "next", Icon: NavigateNextIcon, onClick: nextSlide, className: "right-0", },
+                ].map(btn => (
+                    <button
+                        key={btn.label}
+                        onClick={btn.onClick}
+                        className={twMerge("absolute inset-y-0 p-4 opacity-0 group-hover/container:opacity-100 duration-200 hover:scale-150", btn.className)}
+                    >
+                        <btn.Icon sx={{ fontSize: 40, color: themeColor.color }} />
+                    </button>
+                ))}
 
             </ul>
         </div>

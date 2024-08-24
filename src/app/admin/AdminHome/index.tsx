@@ -36,7 +36,7 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
     const { themeColor } = useTheme();
 
     return (
-        <div className="w-screen h-screen">
+        <div className="w-screend h-screend">
             <main className="w-full mx-auto max-w-[1400px]" >
                 <div className="rounded-md p-3 text-center my-3 bg-gray-200 dark:bg-[#3f3f3f]">
                     <span className="font-semibold">Admin:</span> <span>{auth.currentUser?.email}</span>
@@ -81,8 +81,6 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
                             <AdminProjectCard key={p.id} {...p} />
                         )) : <CardSkeleton amount={5} />}
                     </div>
-
-                    <div style={{ backgroundColor: themeColor.color }} className="h-[2px] my-6"></div>
 
                     <form action="">
                         <input placeholder="" type="text" />

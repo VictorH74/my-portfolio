@@ -113,7 +113,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                             ].map(obj => (
                                 <div key={obj.id}>
                                     <label htmlFor={obj.id}>{obj.label}:</label>
-                                    <input id={obj.id} className="shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 autofill:none resize-none overflow-hidden w-full" value={hook.project?.[obj.id as keyof typeof hook.project] as string || ""} placeholder={`New ${obj.label}`} onChange={e => hook.updateProjectProps(obj.id as keyof typeof hook.project, e.currentTarget.value || "")} />
+                                    <input id={obj.id} className="shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 autofill:none resize-none overflow-hidden w-full" type="url" value={hook.project?.[obj.id as keyof typeof hook.project] as string || ""} placeholder={`New ${obj.label}`} onChange={e => hook.updateProjectProps(obj.id as keyof typeof hook.project, e.currentTarget.value || "")} />
                                 </div>
                             ))}
 
