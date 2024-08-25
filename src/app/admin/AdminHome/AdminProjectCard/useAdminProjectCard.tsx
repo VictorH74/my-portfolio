@@ -7,7 +7,6 @@ import { deleteObject, getStorage, ref } from "firebase/storage"
 import React from "react"
 
 export default function useAdminProjectCard(props: ProjectType) {
-    const sliderRef = React.useRef<HTMLDivElement>(null)
     const [cardHover, setCardHover] = React.useState(false)
     const [onUpdateProject, setOnUpdateProject] = React.useState(false)
     const [techSrcList, setTechSrcList] = React.useState<string[]>([])
@@ -22,23 +21,6 @@ export default function useAdminProjectCard(props: ProjectType) {
             })
             setTechSrcList(props.technologies.map(tid => techObj[tid]))
         };
-
-        if (sliderRef.current) {
-            const slider = sliderRef.current
-
-            setTimeout(function moveSlide() {
-                const max = slider.scrollWidth - slider.clientWidth;
-                const left = slider.clientWidth;
-
-                if (max === slider.scrollLeft)
-                    slider.scrollTo({ left: 0, behavior: 'smooth' })
-                else
-                    slider.scrollBy({ left, behavior: 'smooth' })
-
-                setTimeout(moveSlide, 2000)
-            }, 2000)
-        }
-
     }, [])
 
     const openEditModal = () => setOnUpdateProject(true)
@@ -70,7 +52,6 @@ export default function useAdminProjectCard(props: ProjectType) {
                     transaction.update(currentProjectRef, { index: currentIndex })
                 }
 
-                // await deleteDoc(docRef)
                 transaction.delete(docRef)
 
                 transaction.update(collectionCountRef, { total })
@@ -82,7 +63,6 @@ export default function useAdminProjectCard(props: ProjectType) {
     }
 
     return ({
-        sliderRef,
         cardHover,
         setCardHover,
         onUpdateProject,
