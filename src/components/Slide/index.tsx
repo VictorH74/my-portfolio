@@ -30,12 +30,12 @@ export default function Slide(props: SlideProps) {
     const changeCurrentFileIndex = (index: number) => setCurrentFileIndex(index)
 
     const previousSlide = React.useCallback(() => {
-        if (currentFileIndex == 0) return;
+        if (currentFileIndex == 0) return setCurrentFileIndex(props.images.length - 1);
         setCurrentFileIndex(prev => prev - 1)
-    }, [currentFileIndex])
+    }, [currentFileIndex, props.images.length])
 
     const nextSlide = React.useCallback(() => {
-        if (currentFileIndex + 1 >= props.images.length) return;
+        if (currentFileIndex + 1 >= props.images.length) return setCurrentFileIndex(0);
         setCurrentFileIndex(prev => prev + 1)
     }, [currentFileIndex, props.images])
 
