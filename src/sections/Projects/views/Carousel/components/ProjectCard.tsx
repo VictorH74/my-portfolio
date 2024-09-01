@@ -1,6 +1,6 @@
 import React from "react";
 import useLanguage from "@/hooks/UseLanguage";
-import useSkills from "@/hooks/UseSkills";
+import useTechnologies from "@/hooks/UseTechnologies";
 import { useTheme } from "@/hooks/UseTheme";
 import { projectItem } from "@/utils/translations";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -13,7 +13,7 @@ export default function ProjectCard(props: {
   project: ProjectType;
   index: number;
 }) {
-  const { skillData } = useSkills();
+  const { technologyArray } = useTechnologies();
   const [video, setShowVideo] = React.useState(false);
 
   const [loadingImg, setLoadingImg] = React.useState(true);
@@ -23,7 +23,7 @@ export default function ProjectCard(props: {
   const translate = projectItem(props.project.description)[lang];
 
   const icons = props.project.technologies.map((name) =>
-    skillData.find((icon) => icon.id === name)
+    technologyArray.find((icon) => icon.id === name)
   );
 
   const showVideo = () => setShowVideo(true);

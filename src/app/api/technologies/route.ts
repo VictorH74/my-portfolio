@@ -1,4 +1,4 @@
-import { TechIcons } from "@/types";
+import { TechnologieType } from "@/types";
 
 const GIST_ID = process.env.GIST_ID || 
  (() => { throw new Error("No Gist Id provided") })()
@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
     if (!gist.files) return Response.json({ "message": "error" });
 
-    const content = JSON.parse(gist.files["skills.json"].content) as TechIcons[];
+    const content = JSON.parse(gist.files["skills.json"].content) as TechnologieType[];
     return Response.json(content)
 }
 

@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Victor Almeida",
@@ -16,7 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AppRouterCacheProvider>
-        <body>{children}</body>
+        <body>
+          <Providers>
+            {children}
+          </Providers>
+        </body>
       </AppRouterCacheProvider>
     </html>
   );

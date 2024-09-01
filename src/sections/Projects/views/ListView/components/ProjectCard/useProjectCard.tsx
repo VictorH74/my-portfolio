@@ -2,12 +2,12 @@
 import React from "react";
 import useLanguage from "@/hooks/UseLanguage";
 import { useTheme } from "@/hooks/UseTheme";
-import useSkills from "@/hooks/UseSkills";
+import useTechnologies from "@/hooks/UseTechnologies";
 import { projectItem } from "@/utils/translations";
 import { ProjectType } from "@/types";
 
 export default function useProjectCard(project: ProjectType) {
-  const { skillData } = useSkills();
+  const { technologyArray } = useTechnologies();
   const [video, setShowVideo] = React.useState(false);
 
   const [loadingImg, setLoadingImg] = React.useState(!!project.screenshots.length);
@@ -17,7 +17,7 @@ export default function useProjectCard(project: ProjectType) {
   const translate = projectItem(project.description)[lang];
 
   const icons = project.technologies.map((name) =>
-    skillData.find((icon) => icon.id === name)
+    technologyArray.find((icon) => icon.id === name)
   );
 
   const showVideo = () => setShowVideo(true);

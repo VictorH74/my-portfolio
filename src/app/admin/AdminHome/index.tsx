@@ -4,9 +4,8 @@ import { auth } from "@/configs/firebaseConfig"
 import AdminProjectCard from "./AdminProjectCard"
 import Skeleton from '@mui/material/Skeleton';
 import { createPortal } from "react-dom"
-import useAdminHome, { AdminHomeProps } from "./useAdminHome"
+import useAdminHome from "./useAdminHome"
 import ReordableModal from "./ReordableModal";
-import { ThemeProvider } from "@/contexts/ThemeColor";
 import Button from "./Button";
 import AddIcon from '@mui/icons-material/Add';
 import ReorderIcon from '@mui/icons-material/Reorder';
@@ -20,19 +19,16 @@ import CreateUpdateProjectModal from "./CreateUpdateProjectModal";
 import TechnologiesArea from "./TechnologiesArea";
 import CvArea from "./CvArea";
 
-export default function AdminHome(props: AdminHomeProps) {
+export default function AdminHome() {
     return (
-        <ThemeProvider>
-            <AdminProjectsProvider>
-                <AdminHomeChildren {...props} />
-            </AdminProjectsProvider>
-        </ThemeProvider>
-
+        <AdminProjectsProvider>
+            <AdminHomeChildren />
+        </AdminProjectsProvider>
     )
 }
 
-const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
-    const hook = useAdminHome(props)
+const AdminHomeChildren: React.FC = () => {
+    const hook = useAdminHome()
     const { themeColor } = useTheme();
 
     return (
@@ -89,7 +85,7 @@ const AdminHomeChildren: React.FC<AdminHomeProps> = (props) => {
                 </div>
 
                 <TechnologiesArea />
-                
+
                 <CvArea />
             </main>
 

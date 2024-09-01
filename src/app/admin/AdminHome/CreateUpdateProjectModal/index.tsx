@@ -62,8 +62,10 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                                                         )
                                                     }}
                                                 />
-                                                <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200">
+                                                <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
                                                     <div className="flex gap-2 items-center justify-center">
+
+                                                        {/* TODO: individual comp */}
                                                         <div className="bg-gray-200 dark:bg-[#3f3f3f] rounded-full p-2">
                                                             <label htmlFor="upload-replace-img" className="cursor-pointer"><EditIcon sx={{ fontSize: 27 }} /></label>
                                                             <input onChange={hook.replaceScreenshot(i)} className="absolute pointer-events-none opacity-0 border-[3px] rounded-md" type="file" accept=".webp,.png,.jpg,.jpeg" name="" id="upload-replace-img" />
@@ -75,6 +77,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                                                         >
                                                             <RemoveIcon sx={{ fontSize: 27 }} />
                                                         </button>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,6 +148,7 @@ export default function CreateUpdateProjectModal(props: CreateUpdateProjectModal
                                         className="shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 resize-none overflow-hidden w-full"
                                         value={hook.technologieValue}
                                         placeholder="New technologie"
+                                        disabled={hook.emptyTechArray}
                                         onKeyDown={e => {
                                             if (e.code === "Tab") {
                                                 const technologies = hook.project.technologies || []

@@ -1,3 +1,4 @@
+"use client"
 import { THEME_COLOR_KEY, THEME_COLORS } from "@/utils/constants";
 import React from "react";
 
@@ -40,6 +41,10 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
     }
 
   }, []);
+
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--theme-color', themeColor.color);
+  }, [themeColor]);
 
   return (
     <ThemeContext.Provider value={values}>{children}</ThemeContext.Provider>

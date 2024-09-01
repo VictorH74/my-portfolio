@@ -1,6 +1,5 @@
 "use client"
 import { setServerCookie } from "@/lib/actions";
-import { ThemeProvider } from "@/contexts/ThemeColor";
 import { useRouter } from "next/navigation";
 import React from "react";
 import nookies from "nookies"
@@ -10,14 +9,6 @@ import SubmitButton from "./SubmitButton";
 import { FirebaseError } from "firebase/app";
 
 export default function AdminLoginPage() {
-    return (
-        <ThemeProvider>
-            <LoginFormChildren />
-        </ThemeProvider>
-    )
-}
-
-const LoginFormChildren = () => {
     const router = useRouter()
     const [errorMsg, setErrorMsg] = React.useState<string | undefined>();
 

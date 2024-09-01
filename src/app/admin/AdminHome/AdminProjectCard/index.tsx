@@ -57,7 +57,7 @@ export default function AdminProjectCard(props: ProjectType) {
 
                     <div className="grow flex flex-wrap gap-2">
                         {hook.techSrcList.map((src, i) => (
-                            <Image height={20} width={20} key={i} className="w-[20px] h-[20px]" src={src} alt="technologie icon" />
+                            <Image height={20} width={20} key={i} className="w-[20px] h-[20px]" src={src} alt="technology icon" />
                         ))}
                     </div>
 

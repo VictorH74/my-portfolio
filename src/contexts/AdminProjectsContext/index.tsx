@@ -29,25 +29,6 @@ export default function AdminProjectsProvider({
                 retrivedProjects.push({ ...doc.data(), id: doc.id } as ProjectType);
             });
             setProjects(retrivedProjects)
-
-            // snapshot.docChanges().forEach((change) => {
-            //     const projectData = { ...change.doc.data(), id: change.doc.id } as ProjectType
-            //     ({
-            //         "added": () => {
-            //             setProjects(prev => [
-            //                 ...prev, projectData
-            //             ]);
-            //         },
-            //         "modified": () => {
-            //             setProjects(prev => prev.map(p => p.id === projectData.id ? projectData : p)
-            //             );
-            //         },
-            //         "removed": () => {
-            //             setProjects(prev => prev.filter(p => p.id !== projectData.id)
-            //             );
-            //         },
-            //     })[change.type]();
-            // });
         });
 
         return () => { unsubscribe() }

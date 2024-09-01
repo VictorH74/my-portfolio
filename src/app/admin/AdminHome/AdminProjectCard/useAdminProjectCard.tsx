@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from "@/configs/firebaseConfig"
 import useAdminProjects from "@/hooks/useAdminProjects"
-import { ProjectType, TechIcons } from "@/types"
+import useTechnologies from "@/hooks/UseTechnologies"
+import { ProjectType } from "@/types"
 import { doc, runTransaction } from "firebase/firestore"
 import { deleteObject, getStorage, ref } from "firebase/storage"
 import React from "react"
@@ -12,16 +13,23 @@ export default function useAdminProjectCard(props: ProjectType) {
     const [techSrcList, setTechSrcList] = React.useState<string[]>([])
     const { projects } = useAdminProjects()
 
+    const { technologyArray, empty } = useTechnologies();
+
     React.useEffect(() => {
-        const techstr = localStorage.getItem("techs")
-        if (techstr) {
+        if (!empty) {
             const techObj: Record<string, string> = {};
-            (JSON.parse(techstr) as TechIcons[]).forEach(t => {
+            technologyArray.forEach(t => {
                 techObj[t.id] = t.src;
             })
-            setTechSrcList(props.technologies.map(tid => techObj[tid]))
+
+            const techSrcList: string[] = []
+            props.technologies.forEach(tid => {
+                const techSrc = techObj[tid]
+                if (techSrc) techSrcList.push(techSrc)
+            })
+            setTechSrcList(techSrcList)
         };
-    }, [])
+    }, [technologyArray, empty])
 
     const openEditModal = () => setOnUpdateProject(true)
 

@@ -26,6 +26,7 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 const grid = 8;
 
 const getItemStyle = (
+    themeColor: string,
     isDragging: boolean,
     draggableStyle: DraggingStyle | NotDraggingStyle | undefined
 ) => ({
@@ -34,8 +35,7 @@ const getItemStyle = (
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "#3B82F6" : "white",
-    // background: isDragging ? "#93C5FD" : "white",
+    background: isDragging ? themeColor : "white",
 
     // styles we need to apply on draggables
     ...draggableStyle,
@@ -139,6 +139,7 @@ export default function ReordableModal(props: ReordableModalProps) {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                                 style={getItemStyle(
+                                                    themeColor.color,
                                                     snapshot.isDragging,
                                                     provided.draggableProps.style
                                                 )}

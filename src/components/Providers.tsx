@@ -1,14 +1,19 @@
-import SkillsProvider from "@/contexts/SkillsContext";
+"use client"
+import TechnologiesProvider from "@/contexts/TechnologiesContext";
 import { ThemeProvider } from "@/contexts/ThemeColor";
 import { PropsWithChildren } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function Providers(props: PropsWithChildren) {
     return (
-        <SkillsProvider>
-            <ThemeProvider>
-                {props.children}
-            </ThemeProvider>
-        </SkillsProvider>
-
+        <QueryClientProvider client={queryClient}>
+            <TechnologiesProvider>
+                <ThemeProvider>
+                    {props.children}
+                </ThemeProvider>
+            </TechnologiesProvider>
+        </QueryClientProvider>
     )
 }

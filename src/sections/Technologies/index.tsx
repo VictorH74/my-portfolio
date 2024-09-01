@@ -1,5 +1,5 @@
 "use client";
-import useSkills from "@/hooks/UseSkills";
+import useTechnologies from "@/hooks/UseTechnologies";
 import Image from "next/image";
 import { Noto_Sans } from "next/font/google";
 import useLanguage from "@/hooks/UseLanguage";
@@ -17,8 +17,8 @@ const translations = {
   },
 };
 
-export default function Skills() {
-  const { skillData, notSkills } = useSkills();
+export default function Technologies() {
+  const { technologyArray, empty: emptyTechArray } = useTechnologies();
   const lang = useLanguage();
 
   const translate = translations[lang];
@@ -28,11 +28,11 @@ export default function Skills() {
       <h1 className={`section-title mb-12 ${notoSans.className}`}>
         {translate.title}
       </h1>
-      <div className="flex flex-wrap justify-center gap-3">
-        {notSkills ? (<p className="text-red-400">{translate.emptySkillsMsg}</p>) : skillData.map(
+      <ul className="flex flex-wrap justify-center gap-3">
+        {emptyTechArray ? (<p className="text-red-400">{translate.emptySkillsMsg}</p>) : technologyArray.map(
           (icon) =>
             !icon.hidden && (
-              <div
+              <li
                 key={icon.id}
                 className="shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md"
                 data-aos="flip-left"
@@ -53,10 +53,10 @@ export default function Skills() {
                     {icon.name}
                   </p>
                 </div>
-              </div>
+              </li>
             )
         )}
-      </div>
+      </ul>
     </section>
   );
 };

@@ -20,7 +20,8 @@ type ProjectScreenshotType = {
     url: string;
 }
 
-type TechIcons = {
+type TechnologieType = {
+    index: number;
     id: string;
     name: string;
     src: string;
@@ -30,4 +31,4 @@ type TechIcons = {
 
 type RGBType = [number, number, number]
 
-export type { Language, TranslationLang, ProjectType, TechIcons, ProjectScreenshotType, RGBType }
+export type { Language, TranslationLang, ProjectType, TechnologieType, ProjectScreenshotType, RGBType }

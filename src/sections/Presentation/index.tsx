@@ -3,13 +3,13 @@ import { useTheme } from "@/hooks/UseTheme";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import React from "react";
 import usePresentation from "./usePresentation";
-import useSkills from "@/hooks/UseSkills";
+import useTechnologies from "@/hooks/UseTechnologies";
 import Image from "next/image";
 
 export default function Presentation() {
   const hook = usePresentation()
   const { themeColor } = useTheme();
-  const { skillData } = useSkills()
+  const { technologyArray } = useTechnologies()
 
 
   return (
@@ -54,8 +54,8 @@ export default function Presentation() {
               }}
             />
             {
-              skillData.filter(s => s.isMain).map(skill => (
-                <Image src={skill.src} alt="skill icon" key={skill.name} width={45} height={45} />
+              technologyArray.filter(s => s.isMain).map(t => (
+                <Image src={t.src} alt="technology icon" key={t.name} width={45} height={45} />
               )
               )
             }

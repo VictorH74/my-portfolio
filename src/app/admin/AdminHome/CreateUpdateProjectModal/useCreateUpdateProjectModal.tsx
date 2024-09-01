@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from "@/configs/firebaseConfig";
-import { ProjectType, ProjectScreenshotType, TechIcons } from "@/types";
+import { ProjectType, ProjectScreenshotType, TechnologieType } from "@/types";
 import { Trie } from "@/utils/trie";
 import { FirebaseError } from "firebase/app";
 import { addDoc, collection, doc, runTransaction, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import React, { useRef } from "react";
 import { OutputReordableItemType, ReordableItemType } from "../ReordableModal";
+import useTechnologies from "@/hooks/UseTechnologies";
 
 const UrlProps = ["deployUrl", "repositoryUrl", "videoUrl"] as const
 
@@ -30,17 +31,18 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
     const projectScreenshotUrls = React.useMemo<string[]>(() => projectScreenshots.map(img => img instanceof File ? URL.createObjectURL(img) : img.url), [projectScreenshots])
     const [onReorderScreenshots, setOnReorderScreenshots] = React.useState(false)
 
+    const { technologyArray, empty: emptyTechArray } = useTechnologies()
+
     React.useEffect(() => {
         if (props.project) {
             setProjectScreenshots([...props.project.screenshots])
             setProject({ ...props.project })
         }
 
-        const techstr = localStorage.getItem("techs")
-        if (!techstr) return;
-        const techNames = (JSON.parse(techstr) as TechIcons[]).map((t) => t.id)
+        if (emptyTechArray) return;
+        const techNames = (technologyArray).map((t) => t.id)
         trieRef.current.insert(techNames)
-    }, [])
+    }, [technologyArray])
 
     React.useEffect(() => {
         if (!technologieValue) {
@@ -67,14 +69,14 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         wordSufixSpanRef.current.style.left = textWidth + 8 + "px"
 
         document.body.removeChild(tempSpan);
-    }
+    };
 
     const updateProjectProps = (prop: keyof ProjectType, value: string) => setProject(prev => ({ ...prev, [prop]: value }))
 
     const updateDescription = (lang: "PT" | "EN", value: string) => {
         const prevDesc = project?.description!
         setProject(prev => ({ ...prev, description: { ...prevDesc, [lang]: value } }))
-    }
+    };
 
     const updatedCheckedProjectData = (projectRest: Omit<typeof project, 'screenshots'>) => {
         const propProject = props.project!;
@@ -100,7 +102,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         })
 
         return updatedData
-    }
+    };
 
     const uploadScreenshots = async () => {
         let updatedScreenshots = [...projectScreenshots]
@@ -139,7 +141,7 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         }
         // console.log(updatedScreenshots)
         return updatedScreenshots
-    }
+    };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileInput = e.target;
@@ -161,6 +163,66 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         setProjectScreenshots(prev => prev.filter((_, i) => i != screenshotIndex))
     };
 
+    const updateProject = async (
+        prevProjectData: ProjectType,
+        rest: Omit<ProjectType, "id" | "index" | 'screenshots'> & { id?: string; }) => {
+        const updatedProjectData = updatedCheckedProjectData(rest)
+
+        // if project screenshots has changed
+        if (projectScreenshots.length === 0) return;
+        const prevScreenshots = prevProjectData.screenshots
+        let projectScreenshotsHasChanged = false
+        for (let i = 0; i < projectScreenshots.length; i++) {
+            const s = projectScreenshots[i]
+            if (s instanceof File || i >= prevScreenshots.length || s.url !== prevScreenshots[i].url) {
+                projectScreenshotsHasChanged = true
+                break;
+            }
+        }
+
+        if (projectScreenshotsHasChanged)
+            updatedProjectData.screenshots = await uploadScreenshots();
+
+        const notProjectDataChanged = Object.values(updatedProjectData).length === 0;
+        if (notProjectDataChanged) return;
+
+        const docRef = doc(db, "projects", prevProjectData.id)
+
+        // console.log({ ...updatedProjectData, updatedAt: new Date().toISOString() })
+
+        await updateDoc(docRef, { ...updatedProjectData, updatedAt: new Date().toISOString() })
+    };
+
+    const createProject = async () => {
+        const { title, description, technologies } = project;
+
+        UrlProps.forEach((key) => {
+            const urlValue = project[key]
+            if (urlValue) new URL(urlValue)
+        })
+
+        // Check empty values
+        const { EN, PT } = description
+        if (!title || !EN || !PT || technologies.length === 0 || projectScreenshots.length === 0) {
+            alert("Required: A new project must contain at least one screenshot and technologie");
+            return;
+        };
+
+        const screenshots = await uploadScreenshots()
+
+        const collectionSizeRef = doc(db, "counts", "projects")
+        await runTransaction(db, async (transaction) => {
+            const collectionCount = await transaction.get(collectionSizeRef)
+            if (!collectionCount.exists()) {
+                throw "Document does not exist!";
+            }
+
+            const collectionSize = collectionCount.data().total as number
+            await addDoc(collection(db, "projects"), { ...project, index: collectionSize, screenshots, createdAt: new Date().toISOString() });
+            transaction.update(collectionSizeRef, { total: collectionSize + 1 })
+        })
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
@@ -168,61 +230,10 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         const propProject = props.project;
 
         try {
-            // Update project data if it has passed as prop. Else, create project
             if (propProject) {
-                const updatedProjectData = updatedCheckedProjectData(rest)
-
-                // if project screenshots has changed
-                if (projectScreenshots.length === 0) return;
-                const prevScreenshots = propProject.screenshots
-                let projectScreenshotsHasChanged = false
-                for (let i = 0; i < projectScreenshots.length; i++) {
-                    const s = projectScreenshots[i]
-                    if (s instanceof File || i >= prevScreenshots.length || s.url !== prevScreenshots[i].url) {
-                        projectScreenshotsHasChanged = true
-                        break;
-                    }
-                }
-
-                if (projectScreenshotsHasChanged)
-                    updatedProjectData.screenshots = await uploadScreenshots();
-
-                const notProjectDataChanged = Object.values(updatedProjectData).length === 0;
-                if (notProjectDataChanged) return;
-
-                const docRef = doc(db, "projects", propProject.id)
-
-                // console.log({ ...updatedProjectData, updatedAt: new Date().toISOString() })
-
-                await updateDoc(docRef, { ...updatedProjectData, updatedAt: new Date().toISOString() })
+                await updateProject(propProject, rest);
             } else {
-                const { title, description, technologies } = project;
-
-                UrlProps.forEach((key) => {
-                    const urlValue = project[key]
-                    if (urlValue) new URL(urlValue)
-                })
-
-                // Check empty values
-                const { EN, PT } = description
-                if (!title || !EN || !PT || technologies.length === 0 || projectScreenshots.length === 0) {
-                    alert("Required: A new project must contain at least one screenshot and technologie");
-                    return;
-                };
-
-                const screenshots = await uploadScreenshots()
-
-                const collectionSizeRef = doc(db, "counts", "projects")
-                await runTransaction(db, async (transaction) => {
-                    const collectionCount = await transaction.get(collectionSizeRef)
-                    if (!collectionCount.exists()) {
-                        throw "Document does not exist!";
-                    }
-
-                    const collectionSize = collectionCount.data().total as number
-                    await addDoc(collection(db, "projects"), { ...project, index: collectionSize, screenshots, createdAt: new Date().toISOString() });
-                    transaction.update(collectionSizeRef, { total: collectionSize + 1 })
-                })
+                await createProject();
             }
             props.onClose();
         } catch (e) {
@@ -235,11 +246,11 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         } finally {
             setIsSubmitting(false)
         }
-    }
+    };
 
     const reorderScreenshots = async (items: OutputReordableItemType[]) => {
         setProjectScreenshots(prev => items.map(item => prev[item.prevIndex]))
-    }
+    };
 
     return ({
         handleSubmit,
@@ -264,5 +275,6 @@ export default function useCreateUpdateProjectModal(props: CreateUpdateProjectMo
         reorderScreenshots,
         onReorderScreenshots,
         setOnReorderScreenshots,
+        emptyTechArray
     })
 }
