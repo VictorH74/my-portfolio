@@ -1,12 +1,11 @@
-import sharp from "sharp";
-
+import sharp from 'sharp';
 
 export async function POST(req: Request) {
     // const { imageBuffer } = await req.json()
-    const readableStream = req.body
+    const readableStream = req.body;
 
     if (!readableStream) {
-        return new Response(`not image file`, { status: 400 })
+        return new Response(`not image file`, { status: 400 });
     }
 
     const reader = readableStream.getReader();
@@ -27,5 +26,5 @@ export async function POST(req: Request) {
     // const imgSrc = `data:${mimeType};base64,${convertedImage.toString('base64')}`;
 
     // return new Response(`<img src="${imgSrc}" />`, { status: 200 })
-    return new Response(convertedImage, { status: 200 })
+    return new Response(convertedImage, { status: 200 });
 }

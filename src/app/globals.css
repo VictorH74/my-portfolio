@@ -3,116 +3,116 @@
 @tailwind utilities;
 
 canvas {
-  position: fixed;
-  touch-action: none;
+    position: fixed;
+    touch-action: none;
 }
 
 :root {
-  --theme-color: #fff;
-  /* resume-button vars */
-  --width: 180px;
-  --height: 55px;
-  --tooltip-height: 35px;
-  --tooltip-width: 130px;
-  --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 3px);
-  --tooltip-color: #fff;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
+    --theme-color: #fff;
+    /* resume-button vars */
+    --width: 180px;
+    --height: 55px;
+    --tooltip-height: 35px;
+    --tooltip-width: 130px;
+    --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 3px);
+    --tooltip-color: #fff;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --mainColorTransparent: #4d4dcd50;
-  }
-  body {
-    background-image: url("https://www.transparenttextures.com/patterns/navy.png");
-  }
+    :root {
+        --mainColorTransparent: #4d4dcd50;
+    }
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/navy.png');
+    }
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    --mainColorTransparent: #4d4dcd50;
-  }
-  body {
-    background-image: url("https://www.transparenttextures.com/patterns/billie-holiday.png");
-  }
+    :root {
+        --mainColorTransparent: #4d4dcd50;
+    }
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/billie-holiday.png');
+    }
 }
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: transparent;
 }
 html,
 body {
-  font-family: "Noto Sans", sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: #fafafa;
+    color-scheme: light dark;
+    color: #fafafa;
 
-  transition: 250ms;
+    transition: 250ms;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
 
-  @apply bg-[#e4e4e4] dark:bg-[#1d1d1d];
+    @apply bg-[#e4e4e4] dark:bg-[#1d1d1d];
 
-  background-attachment: fixed;
+    background-attachment: fixed;
 }
 
 h1 {
-  line-height: 1.1;
+    line-height: 1.1;
 }
 a {
-  color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.87);
 }
 button {
-  user-select: none;
+    user-select: none;
 }
 section,
 header {
-  @apply max-w-[1300px] m-auto p-5;
+    @apply max-w-[1300px] m-auto p-5;
 }
 
 .section-title {
-  @apply text-3xl;
+    @apply text-3xl;
 }
 
 .primary-font-color,
 .section-title {
-  @apply text-custom-gray-light dark:text-[#ffffff];
+    @apply text-custom-gray-light dark:text-[#ffffff];
 }
 
 .secondary-font-color {
-  @apply text-[#303030] dark:text-[#a1a1aa];
+    @apply text-[#303030] dark:text-[#a1a1aa];
 }
 
 .opened-li {
-  @apply translate-x-0;
+    @apply translate-x-0;
 }
 
 .scrollbar::-webkit-scrollbar {
-  @apply bg-transparent w-3;
+    @apply bg-transparent w-3;
 }
 .scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-custom-gray-dark dark:bg-[#5a5a5a36] rounded-md;
+    @apply bg-custom-gray-dark dark:bg-[#5a5a5a36] rounded-md;
 }
 
 #loom-companion-mv3 {
-  display: none;
+    display: none;
 }

@@ -1,5 +1,5 @@
-type Language = "en" | "pt-BR"
-type TranslationLang<T> = Record<Language, T>
+type Language = 'en' | 'pt-BR';
+type TranslationLang<T> = Record<Language, T>;
 
 type ProjectType = {
     index: number;
@@ -13,12 +13,12 @@ type ProjectType = {
     videoUrl?: string;
     createdAt?: string; // ISO String Date
     updatedAt?: string; // ISO String Date
-}
+};
 
 type ProjectScreenshotType = {
     name: string;
     url: string;
-}
+};
 
 type TechnologieType = {
     index: number;
@@ -27,8 +27,15 @@ type TechnologieType = {
     src: string;
     hidden?: boolean;
     isMain?: boolean;
-}
+};
 
-type RGBType = [number, number, number]
+type RGBType = [number, number, number];
 
-export type { Language, TranslationLang, ProjectType, TechnologieType, ProjectScreenshotType, RGBType }
+export type {
+    Language,
+    TranslationLang,
+    ProjectType,
+    TechnologieType,
+    ProjectScreenshotType,
+    RGBType,
+};

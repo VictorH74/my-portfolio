@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import ModalContainer from "@/components/ModalContainer";
-import React from "react";
+import ModalContainer from '@/components/ModalContainer';
+import React from 'react';
 import {
     DragDropContext,
     Droppable,
@@ -8,11 +8,10 @@ import {
     DropResult,
     DraggingStyle,
     NotDraggingStyle,
-} from "@hello-pangea/dnd";
-import { twMerge } from "tailwind-merge";
-import { useTheme } from "@/hooks/UseTheme";
+} from '@hello-pangea/dnd';
+import { twMerge } from 'tailwind-merge';
+import { useTheme } from '@/hooks/UseTheme';
 import CloseIcon from '@mui/icons-material/Close';
-
 
 // a little function to help us with reordering the result
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
@@ -35,7 +34,7 @@ const getItemStyle = (
     margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? themeColor : "white",
+    background: isDragging ? themeColor : 'white',
 
     // styles we need to apply on draggables
     ...draggableStyle,
@@ -46,28 +45,31 @@ const getListStyle = (isDraggingOver: boolean) => ({
     padding: grid,
 });
 
-export type ReordableItemType = Record<"value", string> & Record<"id", string>
-export type OutputReordableItemType = ReordableItemType & { prevIndex: number }
+export type ReordableItemType = Record<'value', string> & Record<'id', string>;
+export type OutputReordableItemType = ReordableItemType & { prevIndex: number };
 
 interface ReordableModalProps {
     onClose(): void;
     items: ReordableItemType[];
     onSubmit(items: OutputReordableItemType[]): Promise<void>;
-    children: (item: ReordableItemType, index: number) => React.ReactElement
+    children: (item: ReordableItemType, index: number) => React.ReactElement;
 }
 
 export default function ReordableModal(props: ReordableModalProps) {
     const [items, setItems] = React.useState<ReordableItemType[]>([]);
-    const [isLoading, setIsLoading] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false);
     const { themeColor } = useTheme();
 
     const itemsHasChanged = React.useMemo(() => {
-        return !(props.items.map(i => i.id).join("") === items.map(i => i.id).join(""))
-    }, [items])
+        return !(
+            props.items.map((i) => i.id).join('') ===
+            items.map((i) => i.id).join('')
+        );
+    }, [items]);
 
     React.useEffect(() => {
-        setItems(props.items)
-    }, [])
+        setItems(props.items);
+    }, []);
 
     const onDragEnd = (result: DropResult) => {
         if (!result.destination) {
@@ -81,35 +83,43 @@ export default function ReordableModal(props: ReordableModalProps) {
         );
 
         setItems(newItems);
-    }
+    };
 
     const handleSubmit = async () => {
         if (!itemsHasChanged) return;
 
-        const prevItemsObj: Record<string, { value: string, index: number }> = {}
+        const prevItemsObj: Record<string, { value: string; index: number }> =
+            {};
 
         for (let index = 0; index < props.items.length; index++) {
-            const { id, value } = props.items[index]
-            prevItemsObj[id] = { value, index }
+            const { id, value } = props.items[index];
+            prevItemsObj[id] = { value, index };
         }
 
-        const output: OutputReordableItemType[] = items.map((item, index) => ({ ...item, prevIndex: prevItemsObj[item.id].index }))
+        const output: OutputReordableItemType[] = items.map((item, index) => ({
+            ...item,
+            prevIndex: prevItemsObj[item.id].index,
+        }));
 
-        setIsLoading(true)
+        setIsLoading(true);
         try {
-            await props.onSubmit(output)
-            props.onClose()
+            await props.onSubmit(output);
+            props.onClose();
         } catch (e) {
-            alert("Error")
-            console.error(e)
-        } finally { setIsLoading(false) }
-    }
+            alert('Error');
+            console.error(e);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <ModalContainer>
             <div className="w-full max-w-[1000px] h-fit animate-scale">
                 <div className="text-right py-2">
-                    <button onClick={props.onClose} ><CloseIcon /></button>
+                    <button onClick={props.onClose}>
+                        <CloseIcon />
+                    </button>
                 </div>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable">
@@ -132,8 +142,8 @@ export default function ReordableModal(props: ReordableModalProps) {
                                                     `rounded-md font-semibold relative text-gray-600 select-none truncate`,
                                                     `rounded-md font-semibold relative select-none truncate`,
                                                     snapshot.isDragging
-                                                        ? "text-white"
-                                                        : ""
+                                                        ? 'text-white'
+                                                        : ''
                                                 )}
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
@@ -141,7 +151,8 @@ export default function ReordableModal(props: ReordableModalProps) {
                                                 style={getItemStyle(
                                                     themeColor.color,
                                                     snapshot.isDragging,
-                                                    provided.draggableProps.style
+                                                    provided.draggableProps
+                                                        .style
                                                 )}
                                             >
                                                 {props.children(item, index)}
@@ -154,8 +165,19 @@ export default function ReordableModal(props: ReordableModalProps) {
                         )}
                     </Droppable>
                 </DragDropContext>
-                <button className="w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200" style={{ backgroundColor: itemsHasChanged ? themeColor.color : "#737373" }} disabled={isLoading || !itemsHasChanged} onClick={handleSubmit}>{isLoading ? "Updating..." : "Update"}</button>
+                <button
+                    className="w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200"
+                    style={{
+                        backgroundColor: itemsHasChanged
+                            ? themeColor.color
+                            : '#737373',
+                    }}
+                    disabled={isLoading || !itemsHasChanged}
+                    onClick={handleSubmit}
+                >
+                    {isLoading ? 'Updating...' : 'Update'}
+                </button>
             </div>
         </ModalContainer>
-    )
+    );
 }

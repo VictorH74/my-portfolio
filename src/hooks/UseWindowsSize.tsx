@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const useWindowSize = () => {
     let [size, setSize] = React.useState([0, 0]); // width, height
@@ -6,9 +6,9 @@ const useWindowSize = () => {
         function updateSize() {
             setSize([window.innerWidth, window.innerHeight]);
         }
-        window.addEventListener("resize", updateSize);
+        window.addEventListener('resize', updateSize);
         updateSize();
-        return () => window.removeEventListener("resize", updateSize);
+        return () => window.removeEventListener('resize', updateSize);
     }, []);
     return size;
 };

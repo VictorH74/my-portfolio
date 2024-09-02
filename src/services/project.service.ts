@@ -1,4 +1,4 @@
-import { ProjectRepository } from "@/repositories/project.repository";
+import { ProjectRepository } from '@/repositories/project.repository';
 
 export class ProjectService {
     private repository;
@@ -7,5 +7,5 @@ export class ProjectService {
         this.repository = repository;
     }
 
-    getProducts = () => this.repository.getProjects()
+    getProducts = () => this.repository.getProjects();
 }

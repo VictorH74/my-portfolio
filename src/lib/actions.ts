@@ -1,6 +1,6 @@
-'use server'
-import { cookies } from "next/headers"
+'use server';
+import { cookies } from 'next/headers';
 
 export async function setServerCookie(token: string) {
-    cookies().set("token", token)
+    cookies().set('token', token);
 }

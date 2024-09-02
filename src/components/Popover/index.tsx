@@ -2,7 +2,10 @@ import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 
-const PopOver: React.FC<{ children: JSX.Element, label: string }> = ({ children, label }) => {
+const PopOver: React.FC<{ children: JSX.Element; label: string }> = ({
+    children,
+    label,
+}) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -47,6 +50,6 @@ const PopOver: React.FC<{ children: JSX.Element, label: string }> = ({ children,
             </Popover>
         </>
     );
-}
+};
 
-export default PopOver
+export default PopOver;

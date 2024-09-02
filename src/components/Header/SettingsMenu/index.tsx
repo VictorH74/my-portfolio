@@ -1,5 +1,5 @@
-"use client"
-import React from "react";
+'use client';
+import React from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Menu from '@mui/material/Menu';
 
@@ -15,7 +15,7 @@ export default function SettingsMenu(props: SettingsMenuProps) {
     };
     const handleClose = () => {
         setAnchorEl(null);
-        setTimeout(props.onClose, 310)
+        setTimeout(props.onClose, 310);
     };
 
     return (
@@ -47,7 +47,6 @@ export default function SettingsMenu(props: SettingsMenuProps) {
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-
                 disableScrollLock
             >
                 {props.children}

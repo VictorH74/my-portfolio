@@ -1,89 +1,113 @@
-"use client";
-import { useTheme } from "@/hooks/UseTheme";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import React from "react";
-import usePresentation from "./usePresentation";
-import useTechnologies from "@/hooks/UseTechnologies";
-import Image from "next/image";
+'use client';
+import { useTheme } from '@/hooks/UseTheme';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import React from 'react';
+import usePresentation from './usePresentation';
+import useTechnologies from '@/hooks/UseTechnologies';
+import Image from 'next/image';
 
 export default function Presentation() {
-  const hook = usePresentation()
-  const { themeColor } = useTheme();
-  const { technologyArray } = useTechnologies()
+    const hook = usePresentation();
+    const { themeColor } = useTheme();
+    const { technologyArray } = useTechnologies();
 
+    return (
+        <section
+            className={`h-[100vh] relative select-none`}
+            ref={hook.sectionRef}
+        >
+            <div className="h-full grid place-items-center -translate-y-5">
+                <div className="text-center">
+                    <h2 className="sm:text-2xl primary-font-color font-semibold tracking-widest">
+                        {hook.translate.iAm}
+                    </h2>
 
-  return (
-    <section className={`h-[100vh] relative select-none`} ref={hook.sectionRef}>
-      <div className="h-full grid place-items-center -translate-y-5">
-        <div className="text-center">
+                    {((name: string) => (
+                        <>
+                            <h1
+                                onClick={(e) =>
+                                    hook.rotateElementText(e.currentTarget)
+                                }
+                                className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest"
+                                style={{ color: themeColor.color }}
+                            >
+                                {name}
+                            </h1>
 
-          <h2 className="sm:text-2xl primary-font-color font-semibold tracking-widest">{hook.translate.iAm}</h2>
+                            <div className="grid place-items-center">
+                                <svg
+                                    width={hook.svgTextWidth}
+                                    height={hook.svgTextHeight}
+                                >
+                                    <text
+                                        x={hook.svgTextXPos}
+                                        y={hook.svgTextYPos}
+                                        fill="none"
+                                        className="text-4xl sm:text-7xl lg:text-8xl tracking-widest"
+                                        stroke={themeColor.color}
+                                        strokeWidth="2"
+                                        fontWeight="bold"
+                                    >
+                                        {name}
+                                    </text>
+                                </svg>
+                            </div>
+                        </>
+                    ))('Victor Almeida')}
 
-          {((name: string) => (
-            <>
-              <h1 onClick={(e) => hook.rotateElementText(e.currentTarget)} className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest" style={{ color: themeColor.color }}>{name}</h1>
+                    <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
+                        {hook.translate.text_3}
+                        <span
+                            className="ml-2"
+                            style={{ color: themeColor.color }}
+                        >
+                            @FullStack
+                        </span>{' '}
+                        {hook.translate.with}
+                    </h2>
 
-              <div className="grid place-items-center">
-                <svg width={hook.svgTextWidth} height={hook.svgTextHeight}>
-                  <text
-                    x={hook.svgTextXPos} y={hook.svgTextYPos}
-                    fill="none"
-                    className="text-4xl sm:text-7xl lg:text-8xl tracking-widest"
-                    stroke={themeColor.color}
-                    strokeWidth="2"
-                    fontWeight="bold"
-                  >
-                    {name}
-                  </text>
-                </svg>
-              </div>
-            </>
-          ))("Victor Almeida")}
+                    <div className="flex flex-row gap-4 items-center">
+                        <div
+                            className="h-[2px] grow"
+                            style={{
+                                backgroundColor: themeColor.color,
+                            }}
+                        />
+                        {technologyArray
+                            .filter((s) => s.isMain)
+                            .map((t) => (
+                                <Image
+                                    src={t.src}
+                                    alt="technology icon"
+                                    key={t.name}
+                                    width={45}
+                                    height={45}
+                                />
+                            ))}
+                        <div
+                            className="h-[2px] grow"
+                            style={{
+                                backgroundColor: themeColor.color,
+                            }}
+                        />
+                    </div>
 
-          <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
-            {hook.translate.text_3}
-            <span className="ml-2" style={{ color: themeColor.color }} >@FullStack</span>
-            {" "}{hook.translate.with}
-          </h2>
-
-          <div className="flex flex-row gap-4 items-center">
-            <div
-              className="h-[2px] grow"
-              style={{
-                backgroundColor: themeColor.color
-              }}
-            />
-            {
-              technologyArray.filter(s => s.isMain).map(t => (
-                <Image src={t.src} alt="technology icon" key={t.name} width={45} height={45} />
-              )
-              )
-            }
-            <div
-              className="h-[2px] grow"
-              style={{
-                backgroundColor: themeColor.color
-              }}
-            />
-          </div>
-
-          {/* <ContactLinks center /> */}
-
-        </div>
-      </div>
-      <button
-        name="scroll to next section button"
-        onClick={() => {
-          const height = hook.sectionRef.current?.offsetHeight;
-          if (!height) return;
-          window.scrollTo({ top: height, behavior: "smooth" });
-        }}
-      >
-        <KeyboardDoubleArrowDownIcon
-          className="absolute left-1/2 bottom-12 -translate-x-1/2 animate-double-arrow-bounce"
-          sx={{ fontSize: 50, color: themeColor.color }}
-        />
-      </button>
-    </section>
-  )
+                    {/* <ContactLinks center /> */}
+                </div>
+            </div>
+            <button
+                name="scroll to next section button"
+                onClick={() => {
+                    const height = hook.sectionRef.current?.offsetHeight;
+                    if (!height) return;
+                    window.scrollTo({ top: height, behavior: 'smooth' });
+                }}
+            >
+                <KeyboardDoubleArrowDownIcon
+                    className="absolute left-1/2 bottom-12 -translate-x-1/2 animate-double-arrow-bounce"
+                    sx={{ fontSize: 50, color: themeColor.color }}
+                />
+            </button>
+        </section>
+    );
 }

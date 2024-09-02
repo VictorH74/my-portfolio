@@ -2,12 +2,18 @@ import { styled } from '@mui/material/styles';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 
 interface SwitchBgAnimationProps extends SwitchProps {
-    themeColor: string
+    themeColor: string;
 }
 
-const SwitchBgAnimation = styled(({ themeColor, ...props }: SwitchBgAnimationProps) => (
-    <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme, themeColor }) => ({
+const SwitchBgAnimation = styled(
+    ({ themeColor, ...props }: SwitchBgAnimationProps) => (
+        <Switch
+            focusVisibleClassName=".Mui-focusVisible"
+            disableRipple
+            {...props}
+        />
+    )
+)(({ theme, themeColor }) => ({
     width: 42,
     height: 26,
     padding: 0,

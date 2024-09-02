@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const DownloadResumeBtn = styled.div`
     --width: 180px;
@@ -26,9 +26,11 @@ export const DownloadResumeBtn = styled.div`
         background-color: var(--tooltip-color);
         font-size: 0.9rem;
         color: #111;
-        border-radius: .25em;
+        border-radius: 0.25em;
         line-height: var(--tooltip-height);
-        bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) + 10px
+        );
         left: calc(50% - var(--tooltip-width) / 2);
     }
 
@@ -40,10 +42,13 @@ export const DownloadResumeBtn = styled.div`
         border: 10px solid transparent;
         border-top-color: var(--tooltip-color);
         left: calc(50% - 10px);
-        bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 10px);
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 10px
+        );
     }
 
-    &::after,&::before {
+    &::after,
+    &::before {
         opacity: 0;
         visibility: hidden;
         -webkit-transition: all 0.5s;
@@ -55,14 +60,16 @@ export const DownloadResumeBtn = styled.div`
         display: -ms-flexbox;
         display: flex;
         -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
         -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
     }
 
-    .button-wrapper,.text,.icon {
+    .button-wrapper,
+    .text,
+    .icon {
         overflow: hidden;
         position: absolute;
         width: 100%;
@@ -75,7 +82,8 @@ export const DownloadResumeBtn = styled.div`
         top: 0;
     }
 
-    .text,.icon {
+    .text,
+    .icon {
         -webkit-transition: top 0.5s;
         transition: top 0.5s;
     }
@@ -102,13 +110,16 @@ export const DownloadResumeBtn = styled.div`
         top: 0;
     }
 
-    &:hover:before,&:hover:after {
+    &:hover:before,
+    &:hover:after {
         opacity: 1;
         visibility: visible;
     }
 
     &:hover:after {
-        bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 20px
+        );
     }
 
     &:hover:before {

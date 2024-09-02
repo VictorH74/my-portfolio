@@ -1,14 +1,14 @@
-import { useTheme } from "@/hooks/UseTheme";
+import { useTheme } from '@/hooks/UseTheme';
 
 export type WapperDimensionsType = {
     width: number;
     height: number;
     left: number;
-}
+};
 
 interface NavItemWapperProps {
-    wrapperDimensions: WapperDimensionsType
-    wrapperDisplay: string
+    wrapperDimensions: WapperDimensionsType;
+    wrapperDisplay: string;
 }
 
 export default function NavItemWapper(props: NavItemWapperProps) {
@@ -19,8 +19,8 @@ export default function NavItemWapper(props: NavItemWapperProps) {
             style={{
                 ...props.wrapperDimensions,
                 backgroundColor: themeColor.color,
-                display: props.wrapperDisplay || "none",
+                display: props.wrapperDisplay || 'none',
             }}
         />
-    )
+    );
 }
