@@ -70,7 +70,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
 
-    @apply bg-[#e4e4e4] dark:bg-[#1d1d1d];
+    @apply bg-[#ffffff] dark:bg-[#1d1d1d];
 
     background-attachment: fixed;
 }
@@ -93,9 +93,13 @@ header {
     @apply text-3xl;
 }
 
+.primary-bg-color {
+    @apply bg-custom-gray-light dark:bg-custom-white;
+}
+
 .primary-font-color,
 .section-title {
-    @apply text-custom-gray-light dark:text-[#ffffff];
+    @apply text-custom-gray-light dark:text-custom-white;
 }
 
 .secondary-font-color {

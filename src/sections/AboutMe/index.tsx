@@ -87,10 +87,8 @@ const AboutMe = () => {
               h-auto
               w-full
               duration-200
+              bg-[var(--theme-color)]
             "
-                        style={{
-                            backgroundColor: themeColor.color,
-                        }}
                         width={300}
                         src={Me}
                         alt="me"
@@ -99,10 +97,7 @@ const AboutMe = () => {
             </div>
 
             <div className="flex flex-row items-center gap-5 mt-8">
-                <div
-                    className="grow shrink basis-auto h-[2px]"
-                    style={{ backgroundColor: themeColor.color }}
-                />
+                <div className="grow shrink basis-auto h-[2px] bg-[var(--theme-color)]" />
                 <DownloadResumeBtn
                     onClick={isLoading ? undefined : downloadResume}
                     data-tooltip={`${translate.resumeSizeText}: ${
@@ -110,7 +105,7 @@ const AboutMe = () => {
                             ? 'Loading...'
                             : formatSizeToKB(pdfMetadata?.size || 0) + 'KB'
                     }`}
-                    style={{ backgroundColor: themeColor.color }}
+                    className="bg-[var(--theme-color)]"
                 >
                     <div className="button-wrapper">
                         <div className="text text-base">
@@ -138,10 +133,7 @@ const AboutMe = () => {
                         </span>
                     </div>
                 </DownloadResumeBtn>
-                <div
-                    className="grow shrink basis-auto h-[2px]"
-                    style={{ backgroundColor: themeColor.color }}
-                />
+                <div className="grow shrink basis-auto h-[2px] bg-[var(--theme-color)]" />
             </div>
         </section>
     );

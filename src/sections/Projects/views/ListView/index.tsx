@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectCard from './components/ProjectCard';
 import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
     projectArray: ProjectType[];
@@ -34,11 +35,12 @@ export default function ListView(props: Props) {
                     style.color = themeColor.color;
                     style.backgroundColor = 'transparent';
                 }}
+                className={twMerge(
+                    'uppercase px-4 py-3 inline-block mt-12 relative overflow-hidden border-2 text-md dark:font-medium rounded-md duration-150 font-[inherit] font-semibold border-[var(--theme-color)]'
+                )}
                 style={{
-                    border: '2px solid ' + themeColor.color,
                     color: themeColor.color,
                 }}
-                className="uppercase px-4 py-3 inline-block mt-12 relative overflow-hidden border-2 text-md dark:font-medium rounded-md duration-150 font-[inherit] font-semibold"
                 onClick={async () => {
                     if (!showMore && !(props.projectArray.length > 3)) {
                         await props.fetchMoreProjectsFunc();
@@ -48,16 +50,6 @@ export default function ListView(props: Props) {
             >
                 {showMore ? props.showMoreOnText : props.showMoreOffText}
             </button>
-        </>
-    );
-
-    return (
-        <>
-            {props.projectArray
-                .filter((_, i) => i < 3 || showMore)
-                .map((project, i) => (
-                    <ProjectCard key={i} project={project} index={i} />
-                ))}
         </>
     );
 }

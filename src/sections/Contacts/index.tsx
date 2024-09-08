@@ -15,13 +15,10 @@ export default function Contacts() {
                             : 'opacity-0 scale-50'
                     }`}
                 >
-                    <h1
-                        style={{ color: hook.themeColor.color }}
-                        className="text-3xl"
-                    >
+                    <h1 className="text-3xl text-[var(--theme-color)]">
                         THANKS FOR SCROLLING!
                     </h1>
-                    <p className="mt-7 secondary-font-color">
+                    <p className="mt-7 text-custom-white">
                         {hook.translate.time}: {hook.formatTime()}
                     </p>
                 </div>
@@ -30,13 +27,10 @@ export default function Contacts() {
                     <ContactLinks center />
                 </div>
             </section>
-            <div
-                style={{ backgroundColor: hook.themeColor.color }}
-                className="h-[2px] mb-3"
-            />
+            <div className="h-[2px] mb-3 bg-[var(--theme-color)]" />
             <footer className="mt-4">
                 {' '}
-                <p className="secondary-font-color">
+                <p className="text-custom-white">
                     &copy; {hook.translate.footerParagraph}
                 </p>{' '}
             </footer>

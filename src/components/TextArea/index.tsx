@@ -6,7 +6,7 @@ interface TextAreaProps {
     placeholder?: string;
     id?: string;
     className?: string;
-    onChange(value: string): void;
+    onChange(_value: string): void;
     required?: boolean;
 }
 

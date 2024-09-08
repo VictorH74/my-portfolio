@@ -5,7 +5,7 @@ export interface NavListItemProps {
     className?: string;
     id: string;
     onClick?: () => void;
-    onMouseOver?: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+    onMouseOver?: (_e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
     children?: React.ReactNode;
     onPageTop: boolean;
     onFocused: boolean;
@@ -15,13 +15,10 @@ export default function NavListItem(props: NavListItemProps) {
     return (
         <li
             className={twMerge(
-                'cursor-pointer list-none italic text-sm uppercase select-none duration-150',
+                'cursor-pointer list-none font-semibold text-sm uppercase select-none duration-150 text-gray-800 dark:text-white',
                 props.className,
-                props.onPageTop
-                    ? props.onFocused
-                        ? 'text-[#ffffff] font-bold'
-                        : 'primary-font-color'
-                    : 'text-[#fff]'
+                props.onFocused &&
+                    'text-[var(--theme-color)] dark:text-[var(--theme-color)]'
             )}
             id={props.id}
             onClick={props.onClick}

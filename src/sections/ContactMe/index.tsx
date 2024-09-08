@@ -6,6 +6,7 @@ import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import Loading from '@/components/Loading';
 import { fields } from './data';
 import useContactMe, { Fields, errorMessages } from './useContactMe';
+import { twMerge } from 'tailwind-merge';
 
 const notoSans = Noto_Sans({ subsets: ['latin'], weight: '400' });
 const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full backdrop-blur-md`;
@@ -74,9 +75,11 @@ export default function ContactMe() {
                 })}
                 <button
                     name="submit button"
-                    className={`${notoSans.className} p-3 text-white rounded-md text-base uppercase tracking-wider hover:brightness-125 duration-150 col-span-2 grid place-items-center`}
+                    className={twMerge(
+                        'p-3 text-white rounded-md text-base uppercase tracking-wider hover:brightness-125 duration-150 col-span-2 grid place-items-center bg-[var(--theme-color)]',
+                        notoSans.className
+                    )}
                     type="submit"
-                    style={{ backgroundColor: hook.themeColor.color }}
                     disabled={hook.submitting}
                 >
                     {hook.submitting ? (

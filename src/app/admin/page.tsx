@@ -12,13 +12,12 @@ export default async function AdminPage() {
 
     if (!recoveredToken) loginPage();
 
-    let user;
     try {
         const token = await adminSDK.auth().verifyIdToken(recoveredToken!);
         if (!token) loginPage();
 
         const { uid } = token;
-        user = await adminSDK.auth().getUser(uid);
+        await adminSDK.auth().getUser(uid);
     } catch (e) {
         console.error(e);
         loginPage();

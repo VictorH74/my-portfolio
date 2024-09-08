@@ -90,7 +90,7 @@ export class Hexagon {
         };
 
         // UPDATE HEXAGON SIZE AND COLOR LEVEL
-        const { x: xPos, y: yPos } = this._position;
+        const { x: xPos } = this._position;
         const { left: centerAreaLeft, right: centerAreaRight } =
             this._centerArea;
 

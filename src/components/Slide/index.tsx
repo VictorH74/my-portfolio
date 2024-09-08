@@ -71,13 +71,11 @@ export default function Slide(props: SlideProps) {
                                 type="button"
                             >
                                 <div
-                                    className="size-3 rounded-full duration-200 group-hover/btn:scale-150"
-                                    style={{
-                                        backgroundColor:
-                                            currentFileIndex == i
-                                                ? themeColor.color
-                                                : '#d6d6d6',
-                                    }}
+                                    className={twMerge(
+                                        'size-3 rounded-full duration-200 group-hover/btn:scale-150 bg-[#d6d6d6]',
+                                        currentFileIndex == i &&
+                                            'bg-[var(--theme-color)]'
+                                    )}
                                 />
                             </button>
                         ))}

@@ -40,8 +40,7 @@ const getItemStyle = (
     ...draggableStyle,
 });
 
-const getListStyle = (isDraggingOver: boolean) => ({
-    //   background: isDraggingOver ? "lightblue" : "lightgrey",
+const getListStyle = () => ({
     padding: grid,
 });
 
@@ -51,8 +50,8 @@ export type OutputReordableItemType = ReordableItemType & { prevIndex: number };
 interface ReordableModalProps {
     onClose(): void;
     items: ReordableItemType[];
-    onSubmit(items: OutputReordableItemType[]): Promise<void>;
-    children: (item: ReordableItemType, index: number) => React.ReactElement;
+    onSubmit(_items: OutputReordableItemType[]): Promise<void>;
+    children: (_item: ReordableItemType, _index: number) => React.ReactElement;
 }
 
 export default function ReordableModal(props: ReordableModalProps) {
@@ -96,7 +95,7 @@ export default function ReordableModal(props: ReordableModalProps) {
             prevItemsObj[id] = { value, index };
         }
 
-        const output: OutputReordableItemType[] = items.map((item, index) => ({
+        const output: OutputReordableItemType[] = items.map((item) => ({
             ...item,
             prevIndex: prevItemsObj[item.id].index,
         }));
@@ -123,12 +122,12 @@ export default function ReordableModal(props: ReordableModalProps) {
                 </div>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable">
-                        {(provided, snapshot) => (
+                        {(provided) => (
                             <div
-                                className="rounded-md bg-gray-300 overflow-auto"
+                                className="rounded-md bg-gray-300 overflow-y-auto max-h-[90vh]"
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}
-                                style={getListStyle(snapshot.isDraggingOver)}
+                                style={getListStyle()}
                             >
                                 {items.map((item, index) => (
                                     <Draggable
@@ -166,12 +165,10 @@ export default function ReordableModal(props: ReordableModalProps) {
                     </Droppable>
                 </DragDropContext>
                 <button
-                    className="w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200"
-                    style={{
-                        backgroundColor: itemsHasChanged
-                            ? themeColor.color
-                            : '#737373',
-                    }}
+                    className={twMerge(
+                        'w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200 bg-[#737373]',
+                        itemsHasChanged && 'bg-[var(--theme-color)]'
+                    )}
                     disabled={isLoading || !itemsHasChanged}
                     onClick={handleSubmit}
                 >

@@ -10,17 +10,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { twMerge } from 'tailwind-merge';
-import { useTheme } from '@/hooks/UseTheme';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ReorderIcon from '@mui/icons-material/Reorder';
-import ReordableModal from '../ReordableModal';
+import ReordableModal from '@/app/admin/AdminHome/ReordableModal';
 import { createPortal } from 'react-dom';
+import { IconButton } from '@/components/IconButton';
 
 export default function CreateUpdateProjectModal(
     props: CreateUpdateProjectModalProps
 ) {
     const hook = useCreateUpdateModal(props);
-    const { themeColor } = useTheme();
 
     return (
         <>
@@ -134,6 +133,7 @@ export default function CreateUpdateProjectModal(
                                                 <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
                                                     <div className="flex gap-2 items-center justify-center">
                                                         {/* TODO: individual comp */}
+
                                                         <div className="bg-gray-200 dark:bg-[#3f3f3f] rounded-full p-2">
                                                             <label
                                                                 htmlFor="upload-replace-img"
@@ -156,19 +156,14 @@ export default function CreateUpdateProjectModal(
                                                                 id="upload-replace-img"
                                                             />
                                                         </div>
-                                                        <button
-                                                            className="bg-gray-200 dark:bg-[#3f3f3f] rounded-full p-2"
+
+                                                        <IconButton
+                                                            Icon={RemoveIcon}
                                                             onClick={hook.removeScreenshot(
                                                                 i
                                                             )}
                                                             type="button"
-                                                        >
-                                                            <RemoveIcon
-                                                                sx={{
-                                                                    fontSize: 27,
-                                                                }}
-                                                            />
-                                                        </button>
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
@@ -287,7 +282,7 @@ export default function CreateUpdateProjectModal(
                                                                 .technologies ||
                                                             []
                                                         ).filter(
-                                                            (t, i) => t !== tech
+                                                            (t) => t !== tech
                                                         );
                                                         hook.setProject(
                                                             (prev) => ({
@@ -309,13 +304,10 @@ export default function CreateUpdateProjectModal(
                                 <div className="relative w-full">
                                     <span
                                         ref={hook.wordSufixSpanRef}
-                                        style={{
-                                            opacity:
-                                                hook.trieSufix !== undefined
-                                                    ? 1
-                                                    : 0,
-                                        }}
-                                        className="absolute inset-y-0 pointer-events-none py-2 text-gray-400"
+                                        className={twMerge(
+                                            'absolute inset-y-0 pointer-events-none py-2 text-gray-400 opacity-0',
+                                            !!hook.trieSufix && 'opacity-100'
+                                        )}
                                     >
                                         {hook.trieSufix}
                                         <span className="ml-1 border rounded-sm py-[2px] px-1 border-gray-400 text-sm font-semibold">
@@ -377,10 +369,9 @@ export default function CreateUpdateProjectModal(
                             </div>
 
                             <button
-                                style={{ backgroundColor: themeColor.color }}
                                 disabled={hook.isSubmitting}
                                 type="submit"
-                                className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4"
+                                className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4 bg-[var(--theme-color)]"
                             >
                                 {props.project
                                     ? hook.isSubmitting
@@ -406,7 +397,7 @@ export default function CreateUpdateProjectModal(
                         )}
                         onClose={() => hook.setOnReorderScreenshots(false)}
                     >
-                        {(item, index) => (
+                        {(item) => (
                             <div
                                 key={item.id}
                                 className="flex justify-between p-2 items-center"

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
-import { ProjectType, ProjectScreenshotType, TechnologieType } from '@/types';
+import { ProjectType, ProjectScreenshotType } from '@/types';
 import { Trie } from '@/utils/trie';
 import { FirebaseError } from 'firebase/app';
 import {
@@ -18,7 +18,7 @@ import {
     uploadBytes,
 } from 'firebase/storage';
 import React, { useRef } from 'react';
-import { OutputReordableItemType, ReordableItemType } from '../ReordableModal';
+import { OutputReordableItemType } from '../ReordableModal';
 import useTechnologies from '@/hooks/UseTechnologies';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
@@ -343,7 +343,7 @@ export default function useCreateUpdateProjectModal(
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        const { screenshots, ...rest } = project;
+        const { screenshots: _screenshots, ...rest } = project;
         const propProject = props.project;
 
         try {

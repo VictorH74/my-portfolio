@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { createPortal } from 'react-dom';
 import SwitchBgAnimation from './SwitchBgAnimation';
+import { twMerge } from 'tailwind-merge';
 
 const BackgroundAnimation = React.lazy(
     () => import('@/components/BackgroundAnimation')
@@ -34,53 +35,30 @@ const Header: React.FC = () => {
     return (
         <header className="fixed top-0 inset-x-0 z-10">
             <div
-                className={`
-          m-auto
-          py-3
-          px-5
-          rounded-2xl
-          backdrop-blur-[8px]
-          flex
-          items-center
-          h-fit
-          duration-300
-          uppercase
-          ${hook.scrollUp ? 'bg-transparent' : 'bg-[#00000055]'}
-        `}
+                className={twMerge(
+                    'm-auto py-2 px-5 rounded-full backdrop-blur-[8px] flex items-center h-fit duration-300 uppercase bg-[#cccccce5] dark:bg-[#383838e5] shadow-xl',
+                    hook.scrollUp && 'bg-transparent dark:bg-transparent'
+                )}
             >
                 <h1
                     className={`grow text-4xl shrink-0 basis-auto  z-[9910] select-none`}
                 >
+                    <span className={twMerge('primary-font-color')}>&lt;</span>{' '}
                     <span
-                        className={
-                            hook.scrollUp
-                                ? 'primary-font-color'
-                                : 'text-custom-white'
-                        }
-                    >
-                        &lt;
-                    </span>{' '}
-                    <span
-                        className={`line-through  ${raleway.className}`}
-                        style={{ color: themeColor.color }}
+                        className={twMerge(
+                            'line-through text-[var(--theme-color)]',
+                            raleway.className
+                        )}
                     >
                         vh
                     </span>{' '}
-                    <span
-                        className={
-                            hook.scrollUp
-                                ? 'primary-font-color'
-                                : 'text-custom-white'
-                        }
-                    >
-                        /&gt;
-                    </span>
+                    <span className={twMerge('primary-font-color')}>/&gt;</span>
                 </h1>
                 {hook.size[0] > 1100 ? (
                     <>
                         <NavItemWapper
                             wrapperDimensions={hook.wrapperDimensions}
-                            wrapperDisplay={hook.wrapperDisplay}
+                            showWrapper={hook.showWrapper}
                         />
                         <nav
                             className="max-lg:hidden z-[4]"
@@ -97,10 +75,11 @@ const Header: React.FC = () => {
                                                 hook.wrappedLI ===
                                                 'li-' + data.to
                                             }
-                                            className={`
-                    ${last ? 'p-0' : 'p-[10px]'}
-                    ${notoSans.className}
-                  `}
+                                            className={twMerge(
+                                                'p-[10px]',
+                                                last && 'p-0'
+                                                // notoSans.className
+                                            )}
                                             id={`li-${data.to}`}
                                             key={i}
                                             onClick={

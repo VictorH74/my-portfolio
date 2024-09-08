@@ -9,7 +9,7 @@ import { WapperDimensionsType } from './NavItemWapper';
 const useHeader = () => {
     const [showBgAnimation, setShowBgAnimation] = React.useState(true);
     const [scrollUp, setScrollUp] = React.useState(true);
-    const [wrapperDisplay, setWrapperDisplay] = React.useState('none');
+    const [showWrapper, setShowWrapper] = React.useState(false);
     const [wrappedLI, setWrappedLI] = React.useState('');
     const [wrapperDimensions, setWrapperDimensions] =
         React.useState<WapperDimensionsType>({
@@ -34,7 +34,7 @@ const useHeader = () => {
     React.useEffect(() => {
         setTimeout(() => {
             moveWrapperToDownloadBtn();
-            setWrapperDisplay(() => 'block');
+            setShowWrapper(() => true);
         }, 100);
     }, [downloadResumeBtnRef]);
 
@@ -78,10 +78,10 @@ const useHeader = () => {
     }, []);
 
     return {
+        showWrapper,
         scrollUp,
         size,
         wrapperDimensions,
-        wrapperDisplay,
         moveWrapperToDownloadBtn,
         navDataArray,
         wrappedLI,

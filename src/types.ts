@@ -1,7 +1,10 @@
-type Language = 'en' | 'pt-BR';
-type TranslationLang<T> = Record<Language, T>;
+import { SvgIconTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
-type ProjectType = {
+export type Language = 'en' | 'pt-BR';
+export type TranslationLang<T> = Record<Language, T>;
+
+export type ProjectType = {
     index: number;
     id: string;
     title: string;
@@ -15,12 +18,12 @@ type ProjectType = {
     updatedAt?: string; // ISO String Date
 };
 
-type ProjectScreenshotType = {
+export type ProjectScreenshotType = {
     name: string;
     url: string;
 };
 
-type TechnologieType = {
+export type TechnologieType = {
     index: number;
     id: string;
     name: string;
@@ -29,13 +32,8 @@ type TechnologieType = {
     isMain?: boolean;
 };
 
-type RGBType = [number, number, number];
+export type RGBType = [number, number, number];
 
-export type {
-    Language,
-    TranslationLang,
-    ProjectType,
-    TechnologieType,
-    ProjectScreenshotType,
-    RGBType,
+export type MuiIconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+    muiName: string;
 };

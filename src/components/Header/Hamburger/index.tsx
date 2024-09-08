@@ -24,13 +24,13 @@ const Hamburger = (props: Props) => {
                 className="cursor-pointer h-7 w-8 grid gap-[7px]"
                 onClick={toggle}
             >
+                {/* TODO: improve className */}
                 {Array(3)
                     .fill(undefined)
                     .map((_, i) => (
                         <span
                             key={i}
-                            style={{ backgroundColor: themeColor.color }}
-                            className={`h-1 w-full rounded-xl ${
+                            className={`h-1 w-full rounded-xl bg-[var(--theme-color)] ${
                                 [0, 2].includes(i)
                                     ? 'origin-left duration-300'
                                     : 'duration-150'

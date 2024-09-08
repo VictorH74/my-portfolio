@@ -1,4 +1,4 @@
-import { useTheme } from '@/hooks/UseTheme';
+import { twMerge } from 'tailwind-merge';
 
 export type WapperDimensionsType = {
     width: number;
@@ -8,18 +8,18 @@ export type WapperDimensionsType = {
 
 interface NavItemWapperProps {
     wrapperDimensions: WapperDimensionsType;
-    wrapperDisplay: string;
+    showWrapper: boolean;
 }
 
 export default function NavItemWapper(props: NavItemWapperProps) {
-    const { themeColor } = useTheme();
     return (
         <div
-            className={`absolute rounded-[20px] duration-200 pointer-events-none z-[3]`}
+            className={twMerge(
+                'absolute rounded-[20px] duration-200 pointer-events-none z-[3] bg-[#f7f7f7] dark:bg-[#d6d6d6] outline outline-2 outline-[var(--theme-color)] shadow-md',
+                props.showWrapper && 'block'
+            )}
             style={{
                 ...props.wrapperDimensions,
-                backgroundColor: themeColor.color,
-                display: props.wrapperDisplay || 'none',
             }}
         />
     );

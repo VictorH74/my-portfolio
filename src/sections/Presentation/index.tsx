@@ -28,8 +28,7 @@ export default function Presentation() {
                                 onClick={(e) =>
                                     hook.rotateElementText(e.currentTarget)
                                 }
-                                className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest"
-                                style={{ color: themeColor.color }}
+                                className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest text-[var(--theme-color)]"
                             >
                                 {name}
                             </h1>
@@ -57,22 +56,14 @@ export default function Presentation() {
 
                     <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
                         {hook.translate.text_3}
-                        <span
-                            className="ml-2"
-                            style={{ color: themeColor.color }}
-                        >
+                        <span className="ml-2 text-[var(--theme-color)]">
                             @FullStack
                         </span>{' '}
                         {hook.translate.with}
                     </h2>
 
                     <div className="flex flex-row gap-4 items-center">
-                        <div
-                            className="h-[2px] grow"
-                            style={{
-                                backgroundColor: themeColor.color,
-                            }}
-                        />
+                        <div className="h-[2px] grow bg-[var(--theme-color)]" />
                         {technologyArray
                             .filter((s) => s.isMain)
                             .map((t) => (
@@ -84,12 +75,7 @@ export default function Presentation() {
                                     height={45}
                                 />
                             ))}
-                        <div
-                            className="h-[2px] grow"
-                            style={{
-                                backgroundColor: themeColor.color,
-                            }}
-                        />
+                        <div className="h-[2px] grow bg-[var(--theme-color)]" />
                     </div>
 
                     {/* <ContactLinks center /> */}

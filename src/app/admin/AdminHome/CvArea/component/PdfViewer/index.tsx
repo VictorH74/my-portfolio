@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import ModalContainer from '@/components/ModalContainer';
 
 interface PdfViewerProps {
     fileUrl: string;
@@ -12,7 +13,7 @@ interface PdfViewerProps {
 
 export default function PdfViewer(props: PdfViewerProps) {
     return (
-        <div className="fixed inset-0 overflow-auto bg-black/80">
+        <ModalContainer className="block">
             <div className="max-w-[1000px] overflow-auto m-auto">
                 <button
                     className="fixed top-3 right-5 p-5"
@@ -22,6 +23,6 @@ export default function PdfViewer(props: PdfViewerProps) {
                 </button>
                 <Viewer fileUrl={props.fileUrl} />
             </div>
-        </div>
+        </ModalContainer>
     );
 }

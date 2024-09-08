@@ -6,7 +6,7 @@ interface SwitchBgAnimationProps extends SwitchProps {
 }
 
 const SwitchBgAnimation = styled(
-    ({ themeColor, ...props }: SwitchBgAnimationProps) => (
+    ({ themeColor: _themeColor, ...props }: SwitchBgAnimationProps) => (
         <Switch
             focusVisibleClassName=".Mui-focusVisible"
             disableRipple

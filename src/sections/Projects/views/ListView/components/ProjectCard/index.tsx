@@ -2,7 +2,6 @@
 import React from 'react';
 import LinkIcon from '@mui/icons-material/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Image from 'next/image';
 import useProjectCard from './useProjectCard';
 import { ProjectType } from '@/types';
@@ -18,17 +17,7 @@ const randomVideoUrl =
     'https://player.vimeo.com/video/723658039?h=57b6d0ac88&color=ffffff&byline=0&portrait=0';
 
 const ProjectCard: React.FC<Props> = ({ index, project }) => {
-    const {
-        loadingImg,
-        themeColor,
-        translate,
-        video,
-        icons,
-        id,
-        showVideo,
-        hiddenVideo,
-        setLoadingImg,
-    } = useProjectCard(project);
+    const hook = useProjectCard(project);
 
     const odd = index % 2 !== 0;
     const oddScreen1024 = odd && window.innerWidth > 1024;
@@ -37,10 +26,10 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
     return (
         <div>
-            {video && (
+            {hook.video && (
                 <div
                     className="grid place-items-center fixed inset-0 bg-[#00000070] z-[9999]"
-                    onClick={hiddenVideo}
+                    onClick={hook.hiddenVideo}
                 >
                     <iframe
                         className="w-[1000px] aspect-video bg-transparent max-lg:w-full"
@@ -76,18 +65,18 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                         {project.title}
                     </h1>
                     <h2 className="mb-4 text-sm min-[700px]:text-base primary-font-color">
-                        {translate.projectDescription}
+                        {hook.translate.projectDescription}
                     </h2>
 
                     {project.videoUrl && (
                         <>
                             <button
-                                onClick={showVideo}
-                                style={{ color: themeColor.color }}
-                                className="relative"
+                                onClick={hook.showVideo}
+                                className="relative text-[var(--theme-color)]"
                             >
                                 <p className="inline-block text-sm min-[700px]:text-lg">
-                                    {translate.playVideoDemoText}&nbsp;&nbsp;
+                                    {hook.translate.playVideoDemoText}
+                                    &nbsp;&nbsp;
                                     <PlayCircleFilledIcon />
                                 </p>
                             </button>
@@ -96,8 +85,11 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                     )}
 
                     {project.deployUrl && (
-                        <Link color={themeColor.color} href={project.deployUrl}>
-                            {translate.productionLinkText}&nbsp;&nbsp;
+                        <Link
+                            color={hook.themeColor.color}
+                            href={project.deployUrl}
+                        >
+                            {hook.translate.productionLinkText}&nbsp;&nbsp;
                             <LinkIcon />
                         </Link>
                     )}
@@ -106,24 +98,24 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
                     {project.repositoryUrl && (
                         <Link
-                            color={themeColor.color}
+                            color={hook.themeColor.color}
                             href={project.repositoryUrl}
                         >
-                            {translate.repoLinkText}&nbsp;&nbsp;
+                            {hook.translate.repoLinkText}&nbsp;&nbsp;
                             <GitHubIcon />
                         </Link>
                     )}
 
                     <div>
                         <h3 className="text-xl mt-2 primary-font-color">
-                            {translate.skillsTitle}
+                            {hook.translate.skillsTitle}
                         </h3>
                         <ul
                             className={`flex w-max gap-2 ${
                                 oddScreen1024 && 'float-right'
                             } pt-1`}
                         >
-                            {icons.map(
+                            {hook.icons.map(
                                 (icon) =>
                                     icon && (
                                         <li key={icon.id}>

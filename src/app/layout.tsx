@@ -6,7 +6,6 @@ import Providers from '@/components/Providers';
 export const metadata: Metadata = {
     title: 'Victor Almeida',
     description: 'Personal web portfolio',
-    icons: '/icons/favicon.svg',
 };
 
 export default function RootLayout({

@@ -1,9 +1,11 @@
 'use client';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
-const ModalContainer: React.FC<{ children: React.ReactElement }> = ({
-    children,
-}) => {
+const ModalContainer: React.FC<{
+    children: React.ReactElement;
+    className?: string;
+}> = ({ children, className }) => {
     React.useEffect(() => {
         const paddingRight =
             window.innerWidth - document.documentElement.clientWidth;
@@ -16,7 +18,12 @@ const ModalContainer: React.FC<{ children: React.ReactElement }> = ({
     }, []);
 
     return (
-        <div className="fixed inset-0 bg-black/70 grid place-items-center">
+        <div
+            className={twMerge(
+                'fixed inset-0 bg-black/70 grid place-items-center overflow-auto',
+                className
+            )}
+        >
             {children}
         </div>
     );
