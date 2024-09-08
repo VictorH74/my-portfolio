@@ -2,7 +2,6 @@ import React from 'react';
 import CustomCheckbox from './CustomCheckbox';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { useTheme } from '@/hooks/UseTheme';
 import { twMerge } from 'tailwind-merge';
 import { TechnologieType } from '@/types';
 import { getTechDocRef } from '..';
@@ -34,8 +33,6 @@ export default function AddTechForm(props: AddTechFormProps) {
     const [nameValue, setNameValue] = React.useState('');
     const [isHidden, setIsHidden] = React.useState(false);
     const [isMain, setIsMain] = React.useState(false);
-
-    const { themeColor } = useTheme();
 
     React.useEffect(() => {
         if (!props.selectedTech) return;

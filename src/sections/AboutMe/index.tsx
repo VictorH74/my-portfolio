@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { DownloadResumeBtn } from './styles';
 import useLanguage from '@/hooks/UseLanguage';
-import { useTheme } from '@/hooks/UseTheme';
 import { resumeFileName, downloadResume } from '@/utils/resume';
 import { aboutMeSection } from '@/utils/translations';
 import React from 'react';
@@ -17,7 +16,6 @@ const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
 const AboutMe = () => {
     const lang = useLanguage();
     const translate = aboutMeSection[lang];
-    const { themeColor } = useTheme();
     const { data: pdfMetadata, isLoading } = useQuery({
         queryFn: () => loadPdfMetadata(),
         onError: (e) => {

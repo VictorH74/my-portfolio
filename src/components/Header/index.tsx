@@ -2,7 +2,7 @@
 import React from 'react';
 import { downloadResume } from '@/utils/resume';
 import Hamburger from './Hamburger';
-import { Noto_Sans, Raleway } from 'next/font/google';
+import { Raleway } from 'next/font/google';
 import useHeader from './useHeader';
 import NavListItem from './NavListItem';
 import SettingsMenu from './SettingsMenu';
@@ -26,7 +26,7 @@ const raleway = Raleway({
     style: 'italic',
     weight: '300',
 });
-const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
+// const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
 const Header: React.FC = () => {
     const hook = useHeader();

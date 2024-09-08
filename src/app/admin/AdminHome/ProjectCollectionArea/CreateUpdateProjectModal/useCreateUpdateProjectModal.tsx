@@ -18,7 +18,7 @@ import {
     uploadBytes,
 } from 'firebase/storage';
 import React, { useRef } from 'react';
-import { OutputReordableItemType } from '../ReordableModal';
+import { OutputReordableItemType } from '../../ReordableModal';
 import useTechnologies from '@/hooks/UseTechnologies';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
