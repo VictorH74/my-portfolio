@@ -77,8 +77,6 @@ export default function Presentation() {
                             ))}
                         <div className="h-[2px] grow bg-[var(--theme-color)]" />
                     </div>
-
-                    {/* <ContactLinks center /> */}
                 </div>
             </div>
             <button

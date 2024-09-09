@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { auth } from '@/configs/firebaseConfig';
 import AdminProjectsProvider from '@/contexts/AdminProjectsContext';
 import TechCollectionArea from './TechCollectionArea';
 import CvArea from './CvArea';
@@ -10,9 +9,10 @@ export default function AdminHome() {
     return (
         <AdminProjectsProvider>
             <main className="w-full mx-auto max-w-[1400px] py-6">
-                <div className="rounded-md p-3 text-center my-3 bg-white dark:bg-[#3f3f3f] primary-font-color">
-                    <span className="font-semibold">Admin:</span>{' '}
-                    <span>{auth.currentUser?.email}</span>
+                <div className="rounded-md py-4 text-center my-3 bg-[var(--theme-color)] text-custom-white">
+                    <h1 className="uppercase font-semibold text-xl tracking-wider">
+                        Admin area
+                    </h1>
                 </div>
 
                 <ProjectCollectionArea />

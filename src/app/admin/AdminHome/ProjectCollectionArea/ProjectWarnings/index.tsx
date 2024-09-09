@@ -42,7 +42,7 @@ export default function AdminProjectWarnings(props: AdminProjectWarningsProps) {
                         <h3 className="text-3xl">
                             {projectCount - count} / {projectCount}
                         </h3>
-                        <p>
+                        <p className="tracking-wide">
                             <Icon className="-translate-y-[2px] mr-2" />
                             Without {name} Url
                         </p>
