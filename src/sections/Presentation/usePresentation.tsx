@@ -8,8 +8,8 @@ export default function usePresentation() {
     const translate = presentationSection[lang];
     const sectionRef = useRef<HTMLElement>(null);
     const timeOutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-    const [svgTextWidth, setSvgTextWidth] = React.useState('700px');
-    const [svgTextHeight, setSvgTextHeight] = React.useState('40px');
+    const [svgTextWidth, setSvgTextWidth] = React.useState('');
+    const [svgTextHeight, setSvgTextHeight] = React.useState('');
     const [svgTextYPos, setSvgTextYPos] = React.useState(20);
     const [svgTextXPos, setSvgTextXPos] = React.useState(35);
     const [width] = useWindowSize();
