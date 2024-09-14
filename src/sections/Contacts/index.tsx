@@ -2,6 +2,7 @@
 import ContactList from '@/components/ContactList';
 import useContacts from './useContacts';
 import { twMerge } from 'tailwind-merge';
+import Timer from './Timer';
 
 export default function Contacts() {
     const hook = useContacts();
@@ -18,9 +19,7 @@ export default function Contacts() {
                     <h1 className="text-3xl text-[var(--theme-color)]">
                         THANKS FOR SCROLLING!
                     </h1>
-                    <p className="mt-7 text-custom-white">
-                        {hook.translate.time}: {hook.formatTime()}
-                    </p>
+                    <Timer reachedBottom={hook.reachedBottom} />
                 </div>
 
                 <div className="mt-4">

@@ -153,14 +153,21 @@ export const contactMeSection = {
 
 export const contactsSection = {
     'pt-BR': {
-        time: 'Tempo decorrido',
         footerParagraph: 'criado por Victor Almeida em 2022',
+    },
+    en: {
+        footerParagraph: 'create by Victor Almeida in 2022',
+    },
+};
+
+export const timer = {
+    'pt-BR': {
+        time: 'Tempo decorrido',
         seconds: 'segundos',
         minutes: 'minutos',
     },
     en: {
         time: 'Elapsed time',
-        footerParagraph: 'create by Victor Almeida in 2022',
         seconds: 'seconds',
         minutes: 'minutes',
     },

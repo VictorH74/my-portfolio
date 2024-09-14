@@ -21,8 +21,6 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
     const odd = index % 2 !== 0;
     const oddScreen1024 = odd && window.innerWidth > 1024;
-    // !odd || window.innerWidth < 900 = ROW REVERSE
-    // odd && window.innerWidth > 900 = ROW
 
     return (
         <div>

@@ -22,11 +22,17 @@ export default function HomePage() {
 
     return (
         <Providers>
-            <div id="bg-animation" />
+            <div
+                id="bg-animation"
+                className={twMerge(
+                    'duration-300',
+                    initialLoading && 'opacity-0'
+                )}
+            />
             <Header isLoading={initialLoading} />
             <main
                 className={twMerge(
-                    'scroll-smooth blue-scrollbar relative duration-200',
+                    'scroll-smooth blue-scrollbar relative duration-300',
                     initialLoading && 'opacity-0'
                 )}
             >

@@ -87,15 +87,7 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                             className="opacity-0 pointer-events-none"
                         >
                             vh
-                        </span>
-                        {/* <span
-                            className={twMerge(
-                                'line-through text-[var(--theme-color)] fixed top-1/2 ',
-                                raleway.className
-                            )}
-                        >
-                            vh
-                        </span> */}{' '}
+                        </span>{' '}
                         <span
                             className={twMerge(
                                 'primary-font-color duration-300'
@@ -239,7 +231,6 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                     )}
                 </div>
 
-                {/* TODO: find a way to make smooth fade display BackgroundAnimation component*/}
                 {hook.showBgAnimation &&
                     createPortal(
                         <React.Suspense fallback={<></>}>
