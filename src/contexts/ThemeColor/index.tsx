@@ -1,14 +1,11 @@
 'use client';
+import { ThemeColorType } from '@/types';
 import { THEME_COLOR_KEY, THEME_COLORS } from '@/utils/constants';
 import React from 'react';
 
 interface AppContextInterface {
-    themeColor: (typeof THEME_COLORS)[0];
-    setThemeColor: (_e: (typeof THEME_COLORS)[0]) => void;
-}
-
-interface Props {
-    children: React.ReactNode;
+    themeColor: ThemeColorType;
+    setThemeColor: (_e: ThemeColorType) => void;
 }
 
 export const ThemeContext = React.createContext<AppContextInterface>({
@@ -16,26 +13,24 @@ export const ThemeContext = React.createContext<AppContextInterface>({
     setThemeColor: () => {},
 });
 
-export const ThemeProvider: React.FC<Props> = ({ children }) => {
-    const [themeColor, setThemeColorState] = React.useState<
-        (typeof THEME_COLORS)[0] | undefined
-    >();
-
-    const setThemeColor = (color: (typeof THEME_COLORS)[0]) => {
-        localStorage.setItem(THEME_COLOR_KEY, JSON.stringify(color));
-        setThemeColorState(color);
-    };
+export default function ThemeProvider({ children }: React.PropsWithChildren) {
+    const [themeColor, setThemeColorState] = React.useState<ThemeColorType>(
+        THEME_COLORS[1]
+    );
 
     React.useEffect(() => {
         let recoveredColor = localStorage.getItem(THEME_COLOR_KEY);
-        if (!recoveredColor) return;
-
-        if (recoveredColor.startsWith('#')) {
-            setThemeColorState(THEME_COLORS[1]);
-        } else {
-            setThemeColorState(JSON.parse(recoveredColor));
-        }
+        setThemeColorState(
+            !recoveredColor || recoveredColor.startsWith('#')
+                ? THEME_COLORS[1]
+                : JSON.parse(recoveredColor)
+        );
     }, []);
+
+    const setThemeColor = (color: ThemeColorType) => {
+        localStorage.setItem(THEME_COLOR_KEY, JSON.stringify(color));
+        setThemeColorState(color);
+    };
 
     React.useEffect(() => {
         if (!themeColor) return;
@@ -92,7 +87,7 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
         setFavicon('/icons/favicon.svg', themeColor.color);
     }, [themeColor]);
 
-    if (!themeColor) return null;
+    // if (!themeColor) return null;
 
     return (
         <ThemeContext.Provider
@@ -104,4 +99,4 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
             {children}
         </ThemeContext.Provider>
     );
-};
+}

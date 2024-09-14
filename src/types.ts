@@ -46,3 +46,8 @@ export type ProfileContactsType = {
     linkedin_url: string;
     phone: string;
 };
+
+export type ThemeColorType = {
+    RGBValues: RGBType;
+    color: `rgb(${number}, ${number}, ${number})`;
+};

@@ -1,8 +1,14 @@
+'use client';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { MuiIconType, ProfileContactsType } from '@/types';
+import {
+    MuiIconType,
+    ProfileContactsType,
+    RGBType,
+    ThemeColorType,
+} from '@/types';
 
 export const BRAZIL_PHONE_PATTERN = '\\d{13}';
 
@@ -26,14 +32,14 @@ export const EMAILJS_PUBLIC_KEY =
         throw new Error('EMAILJS_PUBLIC_KEY not defined');
     })();
 
-const RGBValuesArray: [number, number, number][] = [
+const RGBValuesArray: RGBType[] = [
     [53, 167, 119],
     [0, 153, 255],
     [255, 102, 0],
     [253, 78, 78],
 ];
 
-export const THEME_COLORS = RGBValuesArray.map((v) => ({
+export const THEME_COLORS: ThemeColorType[] = RGBValuesArray.map((v) => ({
     RGBValues: v,
     color: `rgb(${v[0]}, ${v[1]}, ${v[2]})`,
 }));

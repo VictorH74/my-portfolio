@@ -1,6 +1,6 @@
 'use client';
 import TechnologiesProvider from '@/contexts/TechnologiesContext';
-import { ThemeProvider } from '@/contexts/ThemeColor';
+import ThemeProvider from '@/contexts/ThemeColor';
 import { PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 

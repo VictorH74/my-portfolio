@@ -15,40 +15,42 @@ interface CtxValue {
 
 export const TechnologiesCtx = React.createContext<CtxValue | null>(null);
 
-const TechnologiesProvider: React.FC<React.PropsWithChildren> = ({
+export default function TechnologiesProvider({
     children,
-}) => {
+}: React.PropsWithChildren) {
     const { isLoading } = useQuery({
         queryKey: ['techs'],
         queryFn: () => getTechnologies(),
         refetchOnWindowFocus: false,
     });
 
-    const [empty, setNotTechnologies] = React.useState(false);
+    const [empty, setEmpty] = React.useState(false);
     const [error, setError] = React.useState(false);
     const [technologyArray, setTechnologyArray] = React.useState<
         TechnologieType[]
     >([]);
 
-    const getTechnologies = React.useCallback(async () => {
+    const getTechnologies = async () => {
         try {
             const q = query(
                 collection(db, 'technologies'),
                 orderBy('index', 'asc')
             );
             const querySnapshot = await getDocs(q);
-            // querySnapshot.docs.forEach((doc) => console.log(doc.data()));
-            setTechnologyArray(
-                querySnapshot.docs.map((doc) => doc.data() as TechnologieType)
-            );
+
+            const tempArray: TechnologieType[] = [];
+            querySnapshot.docs.forEach((doc) => {
+                tempArray.push(doc.data() as TechnologieType);
+            });
+            setTechnologyArray(tempArray);
         } catch (err) {
             console.error(err);
             setError(true);
         }
-    }, []);
+    };
 
     React.useEffect(() => {
-        if (!isLoading) setNotTechnologies(technologyArray.length == 0);
+        if (!isLoading) setEmpty(technologyArray.length == 0);
     }, [technologyArray, isLoading]);
 
     return (
@@ -64,6 +66,4 @@ const TechnologiesProvider: React.FC<React.PropsWithChildren> = ({
             {children}
         </TechnologiesCtx.Provider>
     );
-};
-
-export default TechnologiesProvider;
+}

@@ -1,12 +1,12 @@
 import { useTheme } from '@/hooks/UseTheme';
 
-interface Props {
+interface LoadingProps {
     color?: string;
     width?: number;
     height?: number;
 }
 
-const Loading = (props: Props) => {
+const Loading = (props: LoadingProps) => {
     const { themeColor } = useTheme();
 
     return (
