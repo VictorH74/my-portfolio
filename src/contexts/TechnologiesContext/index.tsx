@@ -15,7 +15,7 @@ interface CtxValue {
 
 export const TechnologiesCtx = React.createContext<CtxValue | null>(null);
 
-const TechnologiesProvider: React.FC<{ children: JSX.Element }> = ({
+const TechnologiesProvider: React.FC<React.PropsWithChildren> = ({
     children,
 }) => {
     const { isLoading } = useQuery({

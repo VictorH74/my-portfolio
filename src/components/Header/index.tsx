@@ -11,7 +11,6 @@ import { useTheme } from '@/hooks/UseTheme';
 import MenuItem from '@mui/material/MenuItem';
 import SwitchThemeColorBtn from '../SwitchThemeColorBtn';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
 import { createPortal } from 'react-dom';
 import SwitchBgAnimation from './SwitchBgAnimation';
 import { twMerge } from 'tailwind-merge';
@@ -26,11 +25,18 @@ const raleway = Raleway({
     style: 'italic',
     weight: '300',
 });
-// const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
 const Header: React.FC = () => {
+    const [isClient, setIsClient] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
     const hook = useHeader();
     const { themeColor } = useTheme();
+
+    if (!isClient) return null;
 
     return (
         <header className="fixed top-0 inset-x-0 z-10">

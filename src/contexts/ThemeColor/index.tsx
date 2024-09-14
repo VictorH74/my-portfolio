@@ -18,17 +18,12 @@ export const ThemeContext = React.createContext<AppContextInterface>({
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
     const [themeColor, setThemeColorState] = React.useState<
-        (typeof THEME_COLORS)[0]
-    >(THEME_COLORS[1]);
+        (typeof THEME_COLORS)[0] | undefined
+    >();
 
     const setThemeColor = (color: (typeof THEME_COLORS)[0]) => {
         localStorage.setItem(THEME_COLOR_KEY, JSON.stringify(color));
         setThemeColorState(color);
-    };
-
-    const values: AppContextInterface = {
-        themeColor,
-        setThemeColor,
     };
 
     React.useEffect(() => {
@@ -43,6 +38,8 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
     }, []);
 
     React.useEffect(() => {
+        if (!themeColor) return;
+
         document.documentElement.style.setProperty(
             '--theme-color',
             themeColor.color
@@ -95,7 +92,16 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
         setFavicon('/icons/favicon.svg', themeColor.color);
     }, [themeColor]);
 
+    if (!themeColor) return null;
+
     return (
-        <ThemeContext.Provider value={values}>{children}</ThemeContext.Provider>
+        <ThemeContext.Provider
+            value={{
+                themeColor: themeColor!,
+                setThemeColor,
+            }}
+        >
+            {children}
+        </ThemeContext.Provider>
     );
 };

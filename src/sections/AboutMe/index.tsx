@@ -14,6 +14,12 @@ const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
 const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
 
 const AboutMe = () => {
+    const [isClient, setIsClient] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
     const lang = useLanguage();
     const translate = aboutMeSection[lang];
     const { data: pdfMetadata, isLoading } = useQuery({
@@ -34,6 +40,8 @@ const AboutMe = () => {
 
         return getMetadata(pdfRef);
     };
+
+    if (!isClient) return null;
 
     const lightTheme = window.matchMedia(
         '(prefers-color-scheme: light)'
