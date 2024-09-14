@@ -1,7 +1,6 @@
-import { MuiIconType } from '@/types';
+import { BtnAttrType, MuiIconType } from '@/types';
 
-interface IconButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends BtnAttrType {
     Icon: MuiIconType;
 }
 

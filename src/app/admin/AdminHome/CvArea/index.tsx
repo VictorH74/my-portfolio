@@ -3,11 +3,10 @@ import { getResume, resumeFileName } from '@/utils/resume';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import React from 'react';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import { createPortal } from 'react-dom';
-import { Worker } from '@react-pdf-viewer/core';
 import PdfViewer from './component/PdfViewer';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Image from 'next/image';
+import { headingClassName } from '../CollectionActions';
 
 export default function CvArea() {
     const [resumeBlob, setResumeBlob] = React.useState<Blob | undefined>();
@@ -60,8 +59,8 @@ export default function CvArea() {
     if (!loadingResume && !resumeBlob) return <p>undefined resume blob</p>;
 
     return (
-        <div className="primary-font-color">
-            <h1 className="text-2xl mb-2">Resume CV</h1>
+        <section className="primary-font-color">
+            <h1 className={headingClassName}>Resume CV</h1>
 
             <div className="rounded-md bg-white dark:bg-[#3f3f3f] max-w-[500px] p-2 flex items-center gap-2 relative">
                 <Image
@@ -108,16 +107,12 @@ export default function CvArea() {
                 onChange={handleSelectChange}
             />
 
-            {showPdfViewer &&
-                createPortal(
-                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                        <PdfViewer
-                            onClose={handleClosePdfViewer}
-                            fileUrl={resumeUrl!}
-                        />
-                    </Worker>,
-                    document.body
-                )}
-        </div>
+            {showPdfViewer && (
+                <PdfViewer
+                    onClose={handleClosePdfViewer}
+                    fileUrl={resumeUrl!}
+                />
+            )}
+        </section>
     );
 }

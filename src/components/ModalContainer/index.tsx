@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
 
 const ModalContainer: React.FC<{
@@ -17,7 +18,7 @@ const ModalContainer: React.FC<{
         };
     }, []);
 
-    return (
+    return createPortal(
         <div
             className={twMerge(
                 'fixed inset-0 bg-black/70 grid place-items-center overflow-auto',
@@ -25,7 +26,8 @@ const ModalContainer: React.FC<{
             )}
         >
             {children}
-        </div>
+        </div>,
+        document.body
     );
 };
 

@@ -1,19 +1,19 @@
 'use client';
 import ContactLinks from '@/components/LinkList';
 import useContacts from './useContacts';
+import { twMerge } from 'tailwind-merge';
 
 export default function Contacts() {
     const hook = useContacts();
 
     return (
         <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl backdrop-blur-md">
-            <section className="min-h-[auto]" id="contacts">
+            <section className="home-section min-h-[auto]" id="contacts">
                 <div
-                    className={`mt-12 mb-10 duration-300 select-none ${
-                        hook.reachedBottom
-                            ? 'opacity-100 scale-100'
-                            : 'opacity-0 scale-50'
-                    }`}
+                    className={twMerge(
+                        'mt-12 mb-10 duration-300 select-none opacity-0 scale-50',
+                        hook.reachedBottom && 'opacity-100 scale-100'
+                    )}
                 >
                     <h1 className="text-3xl text-[var(--theme-color)]">
                         THANKS FOR SCROLLING!

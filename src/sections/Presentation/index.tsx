@@ -5,15 +5,16 @@ import React from 'react';
 import usePresentation from './usePresentation';
 import useTechnologies from '@/hooks/UseTechnologies';
 import Image from 'next/image';
+import Skeleton from '@mui/material/Skeleton';
 
 export default function Presentation() {
     const hook = usePresentation();
     const { themeColor } = useTheme();
-    const { technologyArray } = useTechnologies();
+    const { technologyArray, isLoading, empty, error } = useTechnologies();
 
     return (
         <section
-            className={`h-[100vh] relative select-none`}
+            className={`home-section h-[100vh] relative select-none`}
             ref={hook.sectionRef}
         >
             <div className="h-full grid place-items-center -translate-y-5">
@@ -64,17 +65,41 @@ export default function Presentation() {
 
                     <div className="flex flex-row gap-4 items-center">
                         <div className="h-[2px] grow bg-[var(--theme-color)]" />
-                        {technologyArray
-                            .filter((s) => s.isMain)
-                            .map((t) => (
-                                <Image
-                                    src={t.src}
-                                    alt="technology icon"
-                                    key={t.name}
-                                    width={45}
-                                    height={45}
-                                />
-                            ))}
+                        {isLoading ? (
+                            Array(5)
+                                .fill(null)
+                                .map((_, i) => (
+                                    <Skeleton
+                                        key={i}
+                                        variant="circular"
+                                        width={45}
+                                        height={45}
+                                        sx={{
+                                            backgroundColor: '#4e4e4e',
+                                        }}
+                                    />
+                                ))
+                        ) : empty ? (
+                            <p className="font-semibold text-custom-gray-light">
+                                {hook.translate.emptyTechListText}
+                            </p>
+                        ) : error ? (
+                            <p className="font-semibold text-red-500">
+                                {hook.translate.techListErrorText}
+                            </p>
+                        ) : (
+                            technologyArray
+                                .filter((s) => s.isMain)
+                                .map((t) => (
+                                    <Image
+                                        src={t.src}
+                                        alt="technology icon"
+                                        key={t.name}
+                                        width={45}
+                                        height={45}
+                                    />
+                                ))
+                        )}
                         <div className="h-[2px] grow bg-[var(--theme-color)]" />
                     </div>
                 </div>

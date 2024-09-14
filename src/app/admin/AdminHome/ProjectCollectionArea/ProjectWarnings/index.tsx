@@ -10,7 +10,7 @@ interface AdminProjectWarningsProps {
 
 export default function AdminProjectWarnings(props: AdminProjectWarningsProps) {
     return (
-        <div className="mb-2 flex gap-2">
+        <ul className="mb-2 grid grid-cols-3 max-lg:grid-cols-1 gap-2">
             {(() => {
                 const counts: [number, number, number] = [0, 0, 0];
                 const projectCount = props.projects.length;
@@ -28,7 +28,7 @@ export default function AdminProjectWarnings(props: AdminProjectWarningsProps) {
                         [counts[2], 'Repository', GitHubIcon],
                     ] as const
                 ).map(([count, name, Icon], i) => (
-                    <div
+                    <li
                         key={i}
                         className={twMerge(
                             'p-4 grow rounded-md text-gray-600x font-semibold text-center relative',
@@ -46,9 +46,9 @@ export default function AdminProjectWarnings(props: AdminProjectWarningsProps) {
                             <Icon className="-translate-y-[2px] mr-2" />
                             Without {name} Url
                         </p>
-                    </div>
+                    </li>
                 ));
             })()}
-        </div>
+        </ul>
     );
 }

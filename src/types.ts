@@ -37,3 +37,5 @@ export type RGBType = [number, number, number];
 export type MuiIconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
     muiName: string;
 };
+
+export type BtnAttrType = React.ButtonHTMLAttributes<HTMLButtonElement>;

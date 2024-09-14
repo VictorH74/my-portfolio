@@ -42,7 +42,7 @@ const AboutMe = () => {
     const paragraphFont = lightTheme ? notoSans400 : notoSans300;
 
     return (
-        <section id="about-me" className="pt-24">
+        <section id="about-me" className="home-section pt-24">
             <h1
                 className={`section-title mb-12 ${notoSans400.className} max-md:text-center`}
             >

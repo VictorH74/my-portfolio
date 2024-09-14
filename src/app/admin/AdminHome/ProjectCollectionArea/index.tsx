@@ -5,7 +5,6 @@ import CollectionActions from '../CollectionActions';
 import AdminProjectWarnings from './ProjectWarnings';
 import CardSkeletonCollection from './CardSkeletonCollection';
 import useAdminProjects from '@/hooks/useAdminProjects';
-import { createPortal } from 'react-dom';
 import CreateUpdateProjectModal from './CreateUpdateProjectModal';
 import ReordableModal, { OutputReordableItemType } from '../ReordableModal';
 import { doc, writeBatch } from 'firebase/firestore';
@@ -32,7 +31,7 @@ export default function ProjectCollectionArea() {
 
     return (
         <>
-            <div className="w-full p-4">
+            <section>
                 <AdminProjectWarnings projects={projects} />
 
                 <div className="h-[2px] my-6 bg-[var(--theme-color)]"></div>
@@ -56,34 +55,30 @@ export default function ProjectCollectionArea() {
                 <form action="">
                     <input placeholder="" type="text" />
                 </form>
-            </div>
-            {onCreateProject &&
-                createPortal(
-                    <CreateUpdateProjectModal
-                        projectIndex={projects.length}
-                        onClose={() => setOnCreateProject(false)}
-                    />,
-                    document.body
-                )}
+            </section>
+            {onCreateProject && (
+                <CreateUpdateProjectModal
+                    projectIndex={projects.length}
+                    onClose={() => setOnCreateProject(false)}
+                />
+            )}
 
-            {onReorderProject &&
-                createPortal(
-                    <ReordableModal
-                        onSubmit={reorderedProjects}
-                        items={projects.map(({ title, id }) => ({
-                            id,
-                            value: title,
-                        }))}
-                        onClose={() => setOnReorderProject(false)}
-                    >
-                        {(item, index) => (
-                            <div key={item.id} className="p-2">
-                                {index} - {item.value}
-                            </div>
-                        )}
-                    </ReordableModal>,
-                    document.body
-                )}
+            {onReorderProject && (
+                <ReordableModal
+                    onSubmit={reorderedProjects}
+                    items={projects.map(({ title, id }) => ({
+                        id,
+                        value: title,
+                    }))}
+                    onClose={() => setOnReorderProject(false)}
+                >
+                    {(item, index) => (
+                        <div key={item.id} className="p-2">
+                            {index} - {item.value}
+                        </div>
+                    )}
+                </ReordableModal>
+            )}
         </>
     );
 }

@@ -13,10 +13,8 @@ import useTechnologies from '@/hooks/UseTechnologies';
 import { IconButton } from '@/components/IconButton';
 import CollectionActions from '../CollectionActions';
 import ReordableModal, { OutputReordableItemType } from '../ReordableModal';
-import { createPortal } from 'react-dom';
-// import AddTechForm from './AddTechForm';
 
-const AddTechForm = React.lazy(() => import('./AddTechForm'));
+const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
 
 export const getTechDocRef = (id: string) => doc(db, 'technologies', id);
 
@@ -71,8 +69,10 @@ export default function TechnologiesArea() {
         }
     };
 
-    const makeSelectTech = (tech: TechnologieType) => () =>
+    const makeSelectTech = (tech: TechnologieType) => () => {
         setSelectedTech(tech);
+        setShowAddTechForm(true);
+    };
 
     const makeRemoveFunc = (id: string, index: number) => () =>
         removeTech(id, index);
@@ -107,7 +107,7 @@ export default function TechnologiesArea() {
     };
 
     return (
-        <div className="mb-5">
+        <section>
             <CollectionActions
                 collectionName="Technologies"
                 addFunc={toggleAddTechFormVisibillity}
@@ -115,11 +115,21 @@ export default function TechnologiesArea() {
             />
 
             {showAddTechForm && (
-                <React.Suspense fallback={<h2>Loading...</h2>}>
-                    <AddTechForm
+                <React.Suspense
+                    fallback={
+                        <span className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 py-2 w-full max-w-[400px] mx-2 text-center rounded-md bg-custom-gray-light">
+                            Loading...
+                        </span>
+                    }
+                >
+                    <AddTechFormModal
                         selectedTech={selectedTech}
                         setTechnologyArray={setTechnologyArray}
                         resetFieldsCallback={() => setSelectedTech(null)}
+                        onClose={() => {
+                            if (!!selectedTech) setSelectedTech(null);
+                            setShowAddTechForm(false);
+                        }}
                     />
                 </React.Suspense>
             )}
@@ -183,36 +193,34 @@ export default function TechnologiesArea() {
                 ))}
             </ul>
 
-            {showReorderModal &&
-                createPortal(
-                    <ReordableModal
-                        onSubmit={reorderTechs}
-                        items={technologyArray.map(({ id, name, src }) => ({
-                            id,
-                            value: JSON.stringify({ name, src }),
-                        }))}
-                        onClose={() => setShowReorderModal(false)}
-                    >
-                        {(item, index) => (
-                            <div
-                                key={item.id}
-                                className="p-2 flex justify-between items-center"
-                            >
-                                <p>
-                                    {index} - {JSON.parse(item.value).name}
-                                </p>
-                                <Image
-                                    height={0}
-                                    width={0}
-                                    className="rounded-md w-auto h-[40px]"
-                                    alt="technology icon url"
-                                    src={JSON.parse(item.value).src}
-                                />
-                            </div>
-                        )}
-                    </ReordableModal>,
-                    document.body
-                )}
-        </div>
+            {showReorderModal && (
+                <ReordableModal
+                    onSubmit={reorderTechs}
+                    items={technologyArray.map(({ id, name, src }) => ({
+                        id,
+                        value: JSON.stringify({ name, src }),
+                    }))}
+                    onClose={() => setShowReorderModal(false)}
+                >
+                    {(item, index) => (
+                        <div
+                            key={item.id}
+                            className="p-2 flex justify-between items-center"
+                        >
+                            <p>
+                                {index} - {JSON.parse(item.value).name}
+                            </p>
+                            <Image
+                                height={0}
+                                width={0}
+                                className="rounded-md w-auto h-[40px]"
+                                alt="technology icon url"
+                                src={JSON.parse(item.value).src}
+                            />
+                        </div>
+                    )}
+                </ReordableModal>
+            )}
+        </section>
     );
 }

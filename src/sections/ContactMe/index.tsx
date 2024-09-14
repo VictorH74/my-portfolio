@@ -22,7 +22,7 @@ export default function ContactMe() {
     const hook = useContactMe();
 
     return (
-        <section id="contact-me" className="max-w-[1000px] pt-24">
+        <section id="contact-me" className="home-section max-w-[1000px] pt-24 ">
             <form className="grid gap-3 grid-cols-2" onSubmit={hook.onSubmit}>
                 <h1 className="section-title col-span-2">
                     {hook.translate.title}

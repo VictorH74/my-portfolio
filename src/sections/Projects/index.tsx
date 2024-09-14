@@ -62,7 +62,7 @@ export default function Projects() {
         <section
             ref={containerRef}
             id="projects"
-            className="pt-24 px-0 text-center"
+            className="home-section pt-24 px-0 text-center"
         >
             {!isLoading && projects ? (
                 <>

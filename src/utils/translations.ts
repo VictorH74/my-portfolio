@@ -4,12 +4,16 @@ export const presentationSection = {
         text_3: 'Um Desenvolvedor de Software Jr',
         text_4: '@ FullStack',
         with: 'com',
+        techListErrorText: 'Erro ao tentar carregar tecnologias',
+        emptyTechListText: 'Nenhuma tecnologia encontrada',
     },
     en: {
         iAm: "Hello! I'm",
         text_3: 'A Mid Software Developer',
         text_4: '@ FullStack',
         with: 'with',
+        techListErrorText: 'Error trying to load technologies',
+        emptyTechListText: 'No technology found',
     },
 };
 

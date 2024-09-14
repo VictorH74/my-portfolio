@@ -34,7 +34,7 @@ export default function useContacts() {
             const clientHeight =
                 document.documentElement.clientHeight || window.innerHeight;
             const scrolledToBottom =
-                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+                Math.ceil(scrollTop + clientHeight) >= scrollHeight - 50;
 
             if (scrolledToBottom) {
                 setReachedBottom(true);

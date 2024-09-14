@@ -6,20 +6,51 @@ import useCreateUpdateModal, {
 import Image from 'next/image';
 import TextArea from '@/components/TextArea';
 import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { twMerge } from 'tailwind-merge';
-import RemoveIcon from '@mui/icons-material/Remove';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import ReordableModal from '@/app/admin/AdminHome/ReordableModal';
-import { createPortal } from 'react-dom';
-import { IconButton } from '@/components/IconButton';
+import ProjectTechList from './ProjectTechList';
+import ProjectScreenshotList from './ProjectScreenshotList';
 
 export default function CreateUpdateProjectModal(
     props: CreateUpdateProjectModalProps
 ) {
     const hook = useCreateUpdateModal(props);
+
+    const removeScreenshot = React.useCallback(
+        (index: number) => {
+            hook.setProjectScreenshots((prev) => {
+                if (
+                    props.project &&
+                    !(prev[index] instanceof File) &&
+                    typeof prev[index] === 'object' &&
+                    Object.hasOwn(prev[index], 'url')
+                ) {
+                    hook.setOnRemoveScreenshotNames((rPrev) => [
+                        ...rPrev,
+                        prev[index].name,
+                    ]);
+                }
+                return prev.filter((_, index) => index !== index);
+            });
+        },
+        [hook, props.project]
+    );
+
+    const removeTechByName = React.useCallback(
+        (techName: string) => {
+            const technologies = (hook.project.technologies || []).filter(
+                (t) => t !== techName
+            );
+            hook.setProject((prev) => ({
+                ...prev,
+                technologies,
+            }));
+        },
+        [hook]
+    );
 
     return (
         <>
@@ -72,107 +103,17 @@ export default function CreateUpdateProjectModal(
                                 )}
                             </div>
 
-                            {hook.projectScreenshotUrls.length > 0 && (
-                                <div className="flex gap-2 overflow-auto">
-                                    {hook.projectScreenshotUrls.map(
-                                        (url, i) => (
-                                            <div
-                                                key={i}
-                                                className="relative shrink-0 group/img-container"
-                                            >
-                                                <Image
-                                                    className="rounded-md w-auto h-[183px]"
-                                                    width={300}
-                                                    height={113}
-                                                    src={url}
-                                                    alt="project screenshot"
-                                                    onClick={() => {
-                                                        hook.setProjectScreenshots(
-                                                            (prev) => {
-                                                                if (
-                                                                    props.project &&
-                                                                    !(
-                                                                        prev[
-                                                                            i
-                                                                        ] instanceof
-                                                                        File
-                                                                    ) &&
-                                                                    typeof prev[
-                                                                        i
-                                                                    ] ===
-                                                                        'object' &&
-                                                                    Object.hasOwn(
-                                                                        prev[i],
-                                                                        'url'
-                                                                    )
-                                                                ) {
-                                                                    hook.setOnRemoveScreenshotNames(
-                                                                        (
-                                                                            rPrev
-                                                                        ) => [
-                                                                            ...rPrev,
-                                                                            prev[
-                                                                                i
-                                                                            ]
-                                                                                .name,
-                                                                        ]
-                                                                    );
-                                                                }
-                                                                return prev.filter(
-                                                                    (
-                                                                        _,
-                                                                        index
-                                                                    ) =>
-                                                                        i !==
-                                                                        index
-                                                                );
-                                                            }
-                                                        );
-                                                    }}
-                                                />
-                                                <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
-                                                    <div className="flex gap-2 items-center justify-center">
-                                                        {/* TODO: individual comp */}
-
-                                                        <div className="bg-gray-200 dark:bg-[#3f3f3f] rounded-full p-2">
-                                                            <label
-                                                                htmlFor="upload-replace-img"
-                                                                className="cursor-pointer"
-                                                            >
-                                                                <EditIcon
-                                                                    sx={{
-                                                                        fontSize: 27,
-                                                                    }}
-                                                                />
-                                                            </label>
-                                                            <input
-                                                                onChange={hook.replaceScreenshot(
-                                                                    i
-                                                                )}
-                                                                className="absolute pointer-events-none opacity-0 border-[3px] rounded-md"
-                                                                type="file"
-                                                                accept=".webp,.png,.jpg,.jpeg"
-                                                                name=""
-                                                                id="upload-replace-img"
-                                                            />
-                                                        </div>
-
-                                                        <IconButton
-                                                            Icon={RemoveIcon}
-                                                            onClick={hook.removeScreenshot(
-                                                                i
-                                                            )}
-                                                            type="button"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            )}
+                            <ProjectScreenshotList
+                                projectScreenshotUrls={
+                                    hook.projectScreenshotUrls
+                                }
+                                replaceScreenshotFunc={hook.replaceScreenshot}
+                                removeScreenshotFunc={hook.removeScreenshot}
+                                onScreenshotClick={removeScreenshot}
+                            />
                         </div>
 
+                        {/* TODO: implement diviser component */}
                         {/* Diviser */}
                         <div className="h-[2px] w-full bg-slate-300 my-6" />
 
@@ -270,36 +211,10 @@ export default function CreateUpdateProjectModal(
                                     Technologies:
                                 </label>
 
-                                {/* Technologie list */}
-                                {hook.project.technologies.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 mb-1">
-                                        {hook.project.technologies.map(
-                                            (tech) => (
-                                                <p
-                                                    onClick={() => {
-                                                        const technologies = (
-                                                            hook.project
-                                                                .technologies ||
-                                                            []
-                                                        ).filter(
-                                                            (t) => t !== tech
-                                                        );
-                                                        hook.setProject(
-                                                            (prev) => ({
-                                                                ...prev,
-                                                                technologies,
-                                                            })
-                                                        );
-                                                    }}
-                                                    className="bg-gray-800 p-2 rounded-xl hover:bg-red-400 select-none"
-                                                    key={tech}
-                                                >
-                                                    {tech}
-                                                </p>
-                                            )
-                                        )}
-                                    </div>
-                                )}
+                                <ProjectTechList
+                                    techArray={hook.project.technologies}
+                                    onRemoveTechItem={removeTechByName}
+                                />
 
                                 <div className="relative w-full">
                                     <span
@@ -358,7 +273,7 @@ export default function CreateUpdateProjectModal(
                                             }
                                         }}
                                         onChange={(e) => {
-                                            const value = e.currentTarget.value; // value.length <= 20 ? value :
+                                            const value = e.currentTarget.value;
                                             if (value.length <= 20)
                                                 hook.setTechnologieValue(
                                                     e.currentTarget.value
@@ -385,40 +300,34 @@ export default function CreateUpdateProjectModal(
                     </form>
                 </div>
             </ModalContainer>
-            {hook.onReorderScreenshots &&
-                createPortal(
-                    <ReordableModal
-                        onSubmit={hook.reorderScreenshots}
-                        items={hook.projectScreenshots.map(
-                            ({ name }, index) => ({
-                                id: String(index),
-                                value: name,
-                            })
-                        )}
-                        onClose={() => hook.setOnReorderScreenshots(false)}
-                    >
-                        {(item) => (
-                            <div
-                                key={item.id}
-                                className="flex justify-between p-2 items-center"
-                            >
-                                <p className="truncate">{item.value}</p>
-                                <Image
-                                    width={300}
-                                    height={113}
-                                    className="rounded-md w-auto h-[70px]"
-                                    alt="screeshot"
-                                    src={
-                                        hook.projectScreenshotUrls[
-                                            Number(item.id)
-                                        ]
-                                    }
-                                />
-                            </div>
-                        )}
-                    </ReordableModal>,
-                    document.body
-                )}
+            {hook.onReorderScreenshots && (
+                <ReordableModal
+                    onSubmit={hook.reorderScreenshots}
+                    items={hook.projectScreenshots.map(({ name }, index) => ({
+                        id: String(index),
+                        value: name,
+                    }))}
+                    onClose={() => hook.setOnReorderScreenshots(false)}
+                >
+                    {(item) => (
+                        <div
+                            key={item.id}
+                            className="flex justify-between p-2 items-center"
+                        >
+                            <p className="truncate">{item.value}</p>
+                            <Image
+                                width={300}
+                                height={113}
+                                className="rounded-md w-auto h-[70px]"
+                                alt="screeshot"
+                                src={
+                                    hook.projectScreenshotUrls[Number(item.id)]
+                                }
+                            />
+                        </div>
+                    )}
+                </ReordableModal>
+            )}
         </>
     );
 }

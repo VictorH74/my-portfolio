@@ -24,7 +24,10 @@ export default function Technologies() {
     const translate = translations[lang];
 
     return (
-        <section id="skills" className="pt-24 text-center section px-0">
+        <section
+            id="skills"
+            className="home-section pt-24 text-center section px-0"
+        >
             <h1 className={`section-title mb-12 ${notoSans.className}`}>
                 {translate.title}
             </h1>
