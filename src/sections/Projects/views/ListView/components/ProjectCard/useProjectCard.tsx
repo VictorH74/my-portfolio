@@ -7,7 +7,7 @@ import { projectItem } from '@/utils/translations';
 import { ProjectType } from '@/types';
 
 export default function useProjectCard(project: ProjectType) {
-    const { technologyArray } = useTechnologies();
+    const { technologyArray, empty } = useTechnologies();
     const [video, setShowVideo] = React.useState(false);
 
     const [loadingImg, setLoadingImg] = React.useState(
@@ -18,9 +18,11 @@ export default function useProjectCard(project: ProjectType) {
     const { themeColor } = useTheme();
     const translate = projectItem(project.description)[lang];
 
-    const icons = project.technologies.map((name) =>
-        technologyArray.find((icon) => icon.id === name)
-    );
+    const icons = empty
+        ? undefined
+        : project.technologies.map((name) =>
+              technologyArray.find((icon) => icon.id === name)
+          );
 
     const showVideo = () => setShowVideo(true);
 

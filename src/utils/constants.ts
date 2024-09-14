@@ -1,3 +1,11 @@
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { MuiIconType, ProfileContactsType } from '@/types';
+
+export const BRAZIL_PHONE_PATTERN = '\\d{13}';
+
 export const THEME_COLOR_KEY = 'theme-color';
 
 export const EMAILJS_SERVICE_ID =
@@ -29,3 +37,10 @@ export const THEME_COLORS = RGBValuesArray.map((v) => ({
     RGBValues: v,
     color: `rgb(${v[0]}, ${v[1]}, ${v[2]})`,
 }));
+
+export const contactIcon: Record<keyof ProfileContactsType, MuiIconType> = {
+    email: EmailIcon,
+    github_url: GitHubIcon,
+    linkedin_url: LinkedInIcon,
+    phone: WhatsAppIcon,
+};

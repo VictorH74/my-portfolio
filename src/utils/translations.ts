@@ -111,14 +111,16 @@ export const projectItem = (projectDescription: {
     EN: string;
 }) => ({
     'pt-BR': {
-        skillsTitle: 'Habilidades usada',
+        emptyTechListMsg: 'Não foi possivel listar tecnologias',
+        techListTitle: 'Tecnologias usada',
         playVideoDemoText: 'Reproduzir vídeo',
         productionLinkText: 'Demostração',
         repoLinkText: 'Repositório do github',
         projectDescription: projectDescription.PT,
     },
     en: {
-        skillsTitle: 'Skills used',
+        emptyTechListMsg: 'Unable to list technologies',
+        techListTitle: 'Technologies used',
         playVideoDemoText: 'Play video',
         productionLinkText: 'Demo',
         repoLinkText: 'Github repository',

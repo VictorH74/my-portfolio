@@ -1,5 +1,5 @@
 'use client';
-import ContactLinks from '@/components/LinkList';
+import ContactList from '@/components/ContactList';
 import useContacts from './useContacts';
 import { twMerge } from 'tailwind-merge';
 
@@ -24,7 +24,7 @@ export default function Contacts() {
                 </div>
 
                 <div className="mt-4">
-                    <ContactLinks center />
+                    <ContactList center />
                 </div>
             </section>
             <div className="h-[2px] mb-3 bg-[var(--theme-color)]" />

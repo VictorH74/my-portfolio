@@ -8,11 +8,11 @@ const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
 const translations = {
     'pt-BR': {
-        title: 'Habilidades',
+        title: 'Tecnologias',
         emptySkillsMsg: 'Ocorreu um erro ao carregar o conteúdo.',
     },
     en: {
-        title: 'Skills',
+        title: 'Technologies',
         emptySkillsMsg: 'An error occurred while loading the content.',
     },
 };

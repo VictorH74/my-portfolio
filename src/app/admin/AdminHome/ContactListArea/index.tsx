@@ -1,31 +1,15 @@
 import { headingClassName } from '../CollectionActions';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import EmailIcon from '@mui/icons-material/Email';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/configs/firebaseConfig';
-import { MuiIconType } from '@/types';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import { IconButton } from '@/components/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import ModalContainer from '@/components/ModalContainer';
 import CloseIcon from '@mui/icons-material/Close';
-
-type ProfileContactsType = {
-    email: string;
-    github_url: string;
-    linkedin_url: string;
-    phone: string;
-};
-
-const contactIcon: Record<keyof ProfileContactsType, MuiIconType> = {
-    email: EmailIcon,
-    github_url: GitHubIcon,
-    linkedin_url: LinkedInIcon,
-    phone: WhatsAppIcon,
-};
+import { BRAZIL_PHONE_PATTERN, contactIcon } from '@/utils/constants';
+import { getContacts } from '@/utils/functions';
+import { ProfileContactsType } from '@/types';
 
 const inputType: Record<
     keyof ProfileContactsType,
@@ -46,21 +30,12 @@ export default function ContactListArea() {
     );
 
     React.useEffect(() => {
-        getContacts();
-    }, []);
-
-    const getContacts = async () => {
-        try {
-            const docRef = doc(db, 'profile', 'contacts');
-            const contacts = (
-                await getDoc(docRef)
-            ).data() as ProfileContactsType;
+        (async () => {
+            const contacts = await getContacts();
+            if (!contacts) return;
             setContacts(contacts);
-        } catch (err) {
-            alert('error trying fetching contacts!');
-            console.error(err);
-        }
-    };
+        })();
+    }, []);
 
     const makeSelectContact =
         (key: keyof ProfileContactsType, value: string) => () => {
@@ -198,6 +173,10 @@ const UpdateContactModal: React.FC<{
                     <Icon sx={{ width: 50, height: 50 }} />
                     <input
                         type={inputType[props.contactKey]}
+                        {...(props.contactKey == 'phone' && {
+                            pattern: BRAZIL_PHONE_PATTERN,
+                            title: 'Must be only digits',
+                        })}
                         className="w-full p-2 border-2 border-custom-white rounded-md ml-2"
                         value={inputValue}
                         required

@@ -37,10 +37,12 @@ const TechnologiesProvider: React.FC<React.PropsWithChildren> = ({
                 orderBy('index', 'asc')
             );
             const querySnapshot = await getDocs(q);
+            // querySnapshot.docs.forEach((doc) => console.log(doc.data()));
             setTechnologyArray(
                 querySnapshot.docs.map((doc) => doc.data() as TechnologieType)
             );
         } catch (err) {
+            console.error(err);
             setError(true);
         }
     }, []);

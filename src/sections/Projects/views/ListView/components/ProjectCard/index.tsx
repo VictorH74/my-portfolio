@@ -108,29 +108,35 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
 
                     <div>
                         <h3 className="text-xl mt-2 primary-font-color">
-                            {hook.translate.skillsTitle}
+                            {hook.translate.techListTitle}
                         </h3>
-                        <ul
-                            className={`flex w-max gap-2 ${
-                                oddScreen1024 && 'float-right'
-                            } pt-1`}
-                        >
-                            {hook.icons.map(
-                                (icon) =>
-                                    icon && (
-                                        <li key={icon.id}>
-                                            <Image
-                                                loading="lazy"
-                                                placeholder="empty"
-                                                height={25}
-                                                width={25}
-                                                src={icon.src}
-                                                alt={`${icon.id} icon`}
-                                            />
-                                        </li>
-                                    )
-                            )}
-                        </ul>
+                        {!!hook.icons ? (
+                            <ul
+                                className={`flex w-max gap-2 ${
+                                    oddScreen1024 && 'float-right'
+                                } pt-1`}
+                            >
+                                {hook.icons.map(
+                                    (icon) =>
+                                        icon && (
+                                            <li key={icon.id}>
+                                                <Image
+                                                    loading="lazy"
+                                                    placeholder="empty"
+                                                    height={25}
+                                                    width={25}
+                                                    src={icon.src}
+                                                    alt={`${icon.id} icon`}
+                                                />
+                                            </li>
+                                        )
+                                )}
+                            </ul>
+                        ) : (
+                            <p className="text-sm text-red-500 font-semibold">
+                                {hook.translate.emptyTechListMsg}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

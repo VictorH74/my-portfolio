@@ -39,3 +39,10 @@ export type MuiIconType = OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
 };
 
 export type BtnAttrType = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export type ProfileContactsType = {
+    email: string;
+    github_url: string;
+    linkedin_url: string;
+    phone: string;
+};
