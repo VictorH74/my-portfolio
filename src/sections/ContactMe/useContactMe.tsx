@@ -37,7 +37,7 @@ export default function useContactMe() {
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 {
-                    from_name,
+                    from_name.toUpperCase(),
                     from_email,
                     subject: subject.toUpperCase(),
                     message,
