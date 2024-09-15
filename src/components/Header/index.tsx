@@ -3,7 +3,7 @@ import React from 'react';
 import { downloadResume } from '@/utils/resume';
 import Hamburger from './Hamburger';
 import { Raleway } from 'next/font/google';
-import useHeader from './useHeader';
+import useHeader, { navlinkArray } from './useHeader';
 import NavListItem from './NavListItem';
 import SettingsMenu from './SettingsMenu';
 import NavItemWapper from './NavItemWapper';
@@ -15,6 +15,7 @@ import { createPortal } from 'react-dom';
 import SwitchBgAnimation from './SwitchBgAnimation';
 import { twMerge } from 'tailwind-merge';
 import useWindowSize from '@/hooks/UseWindowsSize';
+import { useTranslations } from 'next-intl';
 
 const BackgroundAnimation = React.lazy(
     () => import('@/components/BackgroundAnimation')
@@ -32,6 +33,8 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     const shadowLogoRef = React.useRef<HTMLSpanElement>(null);
     const logoRef = React.useRef<HTMLSpanElement>(null);
     const size = useWindowSize();
+    const t = useTranslations('Header');
+    const navLabelT = useTranslations('nav_link_label');
 
     React.useEffect(() => {
         setIsClient(true);
@@ -109,32 +112,29 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                                 onMouseOut={hook.moveWrapperToDownloadBtn}
                             >
                                 <ul className="flex flex-wrap items-center py-1">
-                                    {hook.navDataArray.map((data, i) => {
+                                    {navlinkArray.map((link, i) => {
                                         const last =
-                                            i === hook.navDataArray.length - 1;
+                                            i === navlinkArray.length - 1;
                                         return (
                                             <NavListItem
                                                 onPageTop={hook.scrollUp}
                                                 onFocused={
                                                     hook.wrappedLI ===
-                                                    'li-' + data.to
+                                                    `li-${link}`
                                                 }
                                                 className={twMerge(
                                                     'p-[10px]',
                                                     last && 'p-0'
                                                     // notoSans.className
                                                 )}
-                                                id={`li-${data.to}`}
+                                                id={`li-${link}`}
                                                 key={i}
                                                 onClick={
                                                     last
                                                         ? downloadResume
                                                         : () =>
                                                               window.location.replace(
-                                                                  `#${
-                                                                      data.to ||
-                                                                      ''
-                                                                  }`
+                                                                  link
                                                               )
                                                 }
                                                 onMouseOver={
@@ -144,20 +144,19 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                                                 {last ? (
                                                     <button
                                                         name="download resume button"
-                                                        id="li-download-btn"
+                                                        id="li-#download-btn"
                                                         className="uppercase p-[10px] rounded-[20px]"
                                                         ref={
                                                             hook.downloadResumeBtnRef
                                                         }
                                                         onClick={downloadResume}
                                                     >
-                                                        {
-                                                            hook.translate
-                                                                .downloadResumeBtnInnerText
-                                                        }
+                                                        {t(
+                                                            'download_resume_btn_inner_text'
+                                                        )}
                                                     </button>
                                                 ) : (
-                                                    data.label
+                                                    navLabelT(link)
                                                 )}
                                             </NavListItem>
                                         );
@@ -177,10 +176,7 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                                         >
                                             <MenuItem disableTouchRipple>
                                                 <label className="flex flex-col">
-                                                    {
-                                                        hook.translate
-                                                            .showBgAnimation
-                                                    }
+                                                    {t('show_bg_animation')}
                                                     <FormControlLabel
                                                         control={
                                                             <SwitchBgAnimation
@@ -209,10 +205,7 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                                             </MenuItem>
                                             <MenuItem disableTouchRipple>
                                                 <div className="flex flex-col">
-                                                    {
-                                                        hook.translate
-                                                            .switchThemeColor
-                                                    }
+                                                    {t('switch_theme_color')}
                                                     <SwitchThemeColorBtn />
                                                 </div>
                                             </MenuItem>
@@ -223,10 +216,9 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                         </>
                     ) : (
                         <Hamburger
-                            navData={hook.navDataArray}
-                            downloadResumeBtnInnerText={
-                                hook.translate.downloadResumeBtnInnerText
-                            }
+                            downloadResumeBtnInnerText={t(
+                                'download_resume_btn_inner_text'
+                            )}
                         />
                     )}
                 </div>

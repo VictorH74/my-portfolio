@@ -2,6 +2,7 @@ import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import { getContacts } from '@/utils/functions';
 import ContactListContent from './ContactListContent';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
     center?: boolean;
@@ -10,9 +11,10 @@ interface Props {
 export default React.memo(function ContactList(props: Props) {
     return (
         <ul
-            className={`flex flex-row gap-5 ${
+            className={twMerge(
+                'flex flex-row gap-5',
                 props.center && 'justify-center'
-            }`}
+            )}
         >
             <React.Suspense fallback={<Fallback />}>
                 <ContactListContent promise={getContacts()} />

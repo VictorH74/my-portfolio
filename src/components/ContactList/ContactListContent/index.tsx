@@ -50,7 +50,7 @@ export default function ContactListContent(props: ContactListContentProps) {
                             aria-label={contactArialLabel[key]}
                         >
                             <ContactIcon
-                                className="primary-font-color"
+                                className="text-custom-white"
                                 sx={{
                                     fontSize: 35,
                                 }}

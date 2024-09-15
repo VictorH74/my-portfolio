@@ -16,7 +16,6 @@ export default function SwitchThemeColorBtn(props: SwitchThemeColorBtnProps) {
     const [sliderValue, setSliderValue] = React.useState(0);
 
     const handleChange = (_: Event, value: number | number[]) => {
-        console.log(value);
         if (props.vertical) return;
         setThemeColor(colors[(value as number) - 1]);
     };

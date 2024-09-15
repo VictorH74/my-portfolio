@@ -1,0 +1,73 @@
+{
+    "Header": {
+        "download_resume_btn_inner_text": "baixar currículo",
+        "show_bg_animation": "Animação de fundo",
+        "switch_theme_color": "Alternar cor do tema"
+    },
+    "nav_link_label": {
+        "#": "Boas-vindas",
+        "#about-me": "Sobre mim",
+        "#technologies": "Tecnologias",
+        "#projects": "Projetos",
+        "#contact-me": "Fale Comigo",
+        "#contacts": "Contatos",
+        "#download-btn": "Baixar Currículo"
+    },
+    "Presentation_Section": {
+        "i_am": "Olá! Eu sou",
+        "text_3": "Um Desenvolvedor de Software Jr",
+        "text_4": "@ FullStack",
+        "with": "com",
+        "tech_list_error_text": "Erro ao tentar carregar tecnologias",
+        "empty_tech_list_text": "Nenhuma tecnologia encontrada"
+    },
+    "AboutMe_Section": {
+        "title": "Me conheça",
+        "paragraph_1": "Iniciei minha jornada na programação em 2020 quando ingressei no curso de Ciência da Computação na faculdade. No entanto, devido à pandemia e outros fatores, tomei a decisão de interromper meus estudos, após concluir o 5º período. A experiência acadêmica proporcionou uma sólida base em desenvolvimento de software, algo que se tornou fundamental para minha jornada autodidata.",
+        "paragraph_2": "A programação se tornou um verdadeiro hobby. A maior parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
+        "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir qualquer conhecimento e experiência necessária para meu crescimento profissional. Minha disposição para enfrentar desafios e abraçar oportunidades de aprendizado é uma característica que me impulsiona constantemente na minha jornada.",
+        "download_resume_btn_text": "Baixar Currículo",
+        "resume_size_text": "Tamanho"
+    },
+    "Technologies_Section": {
+        "title": "Tecnologias",
+        "empty_skills_msg": "Ocorreu um erro ao carregar o conteúdo."
+    },
+    "Projects_Section": {
+        "title": "Veja meus projetos!",
+        "show_more_on": "mostrar menos",
+        "show_more_off": "mostrar tudo"
+    },
+    "project_card": {
+        "empty_tech_list_msg": "Não foi possivel listar tecnologias",
+        "tech_list_title": "Tecnologias usada",
+        "play_video_demo_text": "Reproduzir vídeo",
+        "production_link_text": "Demostração",
+        "repo_link_text": "Repositório do github",
+        "description_lang_prop": "PT"
+    },
+    "ContactMe_Section": {
+        "title": "Entre em Contato",
+        "name": "Nome completo",
+        "email": "Endereço de Email",
+        "subject": "Assunto",
+        "message": "Campo de Messagem",
+        "submit_text": "Enviar",
+        "success_snackbar_text": "Email enviado!",
+        "error_snackbar_text": "Houve algum erro ao enviar o email"
+    },
+    "contactMe_error_message": {
+        "name": "Nome é obrigatório",
+        "email": "Email é obrigatório",
+        "subject": "Assunto é obrigatório",
+        "message": "Mensagem é obrigatório"
+    },
+    "Contacts_Section": {
+        "footer_paragraph": "criado por Victor Almeida em 2022"
+    },
+    "contacts_section_timer": {
+        "time": "Tempo decorrido",
+        "seconds": "segundos",
+        "minutes": "minutos"
+    }
+}

@@ -76,7 +76,7 @@ export default function useAdminProjectCard(props: ProjectType) {
                 transaction.update(collectionCountRef, { total });
             });
         } catch (e) {
-            console.log(e);
+            console.error(e);
             alert('Error');
         }
     };

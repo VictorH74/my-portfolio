@@ -5,11 +5,12 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import Loading from '@/components/Loading';
 import { fields } from './data';
-import useContactMe, { Fields, errorMessages } from './useContactMe';
+import useContactMe, { Fields } from './useContactMe';
 import { twMerge } from 'tailwind-merge';
+import { useTranslations } from 'next-intl';
 
 const notoSans = Noto_Sans({ subsets: ['latin'], weight: '400' });
-const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-50 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full backdrop-blur-md`;
+const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-90 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full backdrop-blur-md`;
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -20,20 +21,20 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function ContactMe() {
     const hook = useContactMe();
+    const t = useTranslations('ContactMe_Section');
+    const tErrorMsg = useTranslations('contactMe_error_message');
 
     return (
         <section id="contact-me" className="home-section max-w-[1000px] pt-24 ">
             <form className="grid gap-3 grid-cols-2" onSubmit={hook.onSubmit}>
-                <h1 className="section-title col-span-2">
-                    {hook.translate.title}
-                </h1>
+                <h1 className="section-title col-span-2">{t('title')}</h1>
                 {fields.map((f) => {
                     if (f.name === 'message')
                         return (
                             <div key={f.name} className="col-span-2">
                                 <textarea
                                     className={inputClassName}
-                                    placeholder={hook.translate.message}
+                                    placeholder={t('message')}
                                     rows={6}
                                     {...hook.register(f.name, {
                                         required: true,
@@ -41,7 +42,7 @@ export default function ContactMe() {
                                 />
                                 {hook.errors[f.name]?.type === 'required' && (
                                     <p className="text-red-500" role="alert">
-                                        {errorMessages[hook.lang][f.name]}
+                                        {tErrorMsg(f.name)}
                                     </p>
                                 )}
                             </div>
@@ -55,11 +56,7 @@ export default function ContactMe() {
                         >
                             <input
                                 className={inputClassName}
-                                placeholder={
-                                    hook.translate[
-                                        f.name as keyof typeof hook.translate
-                                    ]
-                                }
+                                placeholder={t(f.name)}
                                 {...hook.register(f.name as Fields, {
                                     required: true,
                                 })}
@@ -67,7 +64,7 @@ export default function ContactMe() {
                             {hook.errors[f.name as Fields]?.type ===
                                 'required' && (
                                 <p className="text-red-500" role="alert">
-                                    {errorMessages[hook.lang][f.name]}
+                                    {tErrorMsg(f.name)}
                                 </p>
                             )}
                         </div>
@@ -85,7 +82,7 @@ export default function ContactMe() {
                     {hook.submitting ? (
                         <Loading color="#fff" width={10} height={24} />
                     ) : (
-                        hook.translate.submitText
+                        t('submit_text')
                     )}
                 </button>
 
@@ -107,13 +104,13 @@ export default function ContactMe() {
                     open: hook.openSuccessSnackbar,
                     close: hook.closeSuccessSnackbar,
                     alertSeverity: 'success',
-                    text: hook.translate.successSnackbarText + ' 👍',
+                    text: t('success_snackbar_text') + ' 👍',
                 },
                 {
                     open: hook.openErrorSnackbar,
                     close: hook.closeErrorSnackbar,
                     alertSeverity: 'error',
-                    text: hook.translate.errorSnackbarText + ' 😐',
+                    text: t('error_snackbar_text') + ' 😐',
                 },
             ].map((d) => (
                 <Snackbar

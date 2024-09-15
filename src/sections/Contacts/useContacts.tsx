@@ -1,14 +1,10 @@
 import React from 'react';
-import useLanguage from '@/hooks/UseLanguage';
 import { useTheme } from '@/hooks/UseTheme';
-import { contactsSection } from '@/utils/translations';
 
 export default function useContacts() {
     const [reachedBottom, setReachedBottom] = React.useState(false);
     const { themeColor } = useTheme();
     const endOfPageRef = React.useRef(null);
-    const lang = useLanguage();
-    const translate = contactsSection[lang];
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -38,7 +34,6 @@ export default function useContacts() {
     return {
         reachedBottom,
         themeColor,
-        translate,
         endOfPageRef,
     };
 }

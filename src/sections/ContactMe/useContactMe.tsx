@@ -1,4 +1,3 @@
-import useLanguage from '@/hooks/UseLanguage';
 import { useTheme } from '@/hooks/UseTheme';
 import { useForm } from 'react-hook-form';
 import React from 'react';
@@ -8,8 +7,6 @@ import {
     EMAILJS_SERVICE_ID,
     EMAILJS_TEMPLATE_ID,
 } from '@/utils/constants';
-import { contactMeSection } from '@/utils/translations';
-import { TranslationLang } from '@/types';
 
 export type Fields = 'name' | 'email' | 'subject' | 'message';
 export type FormValues = {
@@ -19,27 +16,27 @@ export type FormValues = {
     message: string;
 };
 
-const afterRequiredPtBR = ' é obrigatório';
-const afterRequiredEn = ' field is required';
+// const sendEmailData = async (_: unknown, formData: FormData) => {
+//     const from_name = formData.get('name') as string;
+//     const from_email = formData.get('email') as string;
+//     const subject = formData.get('subject') as string;
+//     const message = formData.get('message') as string;
 
-export const errorMessages: TranslationLang<FormValues> = {
-    'pt-BR': {
-        name: 'Nome' + afterRequiredPtBR,
-        email: 'Email' + afterRequiredPtBR,
-        subject: 'Assunto' + afterRequiredPtBR,
-        message: 'Mensagem' + afterRequiredPtBR,
-    },
-    en: {
-        name: 'Name' + afterRequiredEn,
-        email: 'Email' + afterRequiredEn,
-        subject: 'Subject' + afterRequiredEn,
-        message: 'Message' + afterRequiredEn,
-    },
-};
+//     await emailjs.send(
+//         EMAILJS_SERVICE_ID,
+//         EMAILJS_TEMPLATE_ID,
+//         {
+//             from_name,
+//             from_email,
+//             subject: subject.toUpperCase(),
+//             message,
+//         },
+//         EMAILJS_PUBLIC_KEY
+//     );
+// };
 
 export default function useContactMe() {
-    const lang = useLanguage();
-    const translate = contactMeSection[lang];
+    // const [] = React.useActionState(onSubmit, undefined);
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = React.useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false);
     const [submitting, setSubmitting] = React.useState(false);
@@ -73,7 +70,7 @@ export default function useContactMe() {
                     setSubmitting(false);
                 },
                 (error) => {
-                    console.log(error.text);
+                    console.error(error.text);
                     setOpenErrorSnackbar(true);
                     setSubmitting(false);
                 }
@@ -93,12 +90,10 @@ export default function useContactMe() {
     };
 
     return {
-        translate,
         openSuccessSnackbar,
         openErrorSnackbar,
         handleSubmit,
         onSubmit,
-        lang,
         register,
         errors,
         closeSuccessSnackbar,

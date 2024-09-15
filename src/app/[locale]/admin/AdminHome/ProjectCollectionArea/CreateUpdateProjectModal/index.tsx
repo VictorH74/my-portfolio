@@ -10,7 +10,7 @@ import React from 'react';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { twMerge } from 'tailwind-merge';
 import ReorderIcon from '@mui/icons-material/Reorder';
-import ReordableModal from '@/app/admin/AdminHome/ReordableModal';
+import ReordableModal from '@/app/[locale]/admin/AdminHome/ReordableModal';
 import ProjectTechList from './ProjectTechList';
 import ProjectScreenshotList from './ProjectScreenshotList';
 

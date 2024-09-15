@@ -7,6 +7,7 @@ import useProjectCard from './useProjectCard';
 import { ProjectType } from '@/types';
 import Slide from '@/components/Slide';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import { useTranslations } from 'next-intl';
 
 interface Props {
     index: number;
@@ -18,6 +19,7 @@ const randomVideoUrl =
 
 const ProjectCard: React.FC<Props> = ({ index, project }) => {
     const hook = useProjectCard(project);
+    const t = useTranslations('project_card');
 
     const odd = index % 2 !== 0;
     const oddScreen1024 = odd && window.innerWidth > 1024;
@@ -63,7 +65,13 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                         {project.title}
                     </h1>
                     <h2 className="mb-4 text-sm min-[700px]:text-base primary-font-color">
-                        {hook.translate.projectDescription}
+                        {
+                            project.description[
+                                t(
+                                    'description_lang_prop'
+                                ) as keyof typeof project.description
+                            ]
+                        }
                     </h2>
 
                     {project.videoUrl && (
@@ -73,7 +81,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                                 className="relative text-[var(--theme-color)]"
                             >
                                 <p className="inline-block text-sm min-[700px]:text-lg">
-                                    {hook.translate.playVideoDemoText}
+                                    {t('play_video_demo_text')}
                                     &nbsp;&nbsp;
                                     <PlayCircleFilledIcon />
                                 </p>
@@ -87,7 +95,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                             color={hook.themeColor.color}
                             href={project.deployUrl}
                         >
-                            {hook.translate.productionLinkText}&nbsp;&nbsp;
+                            {t('production_link_text')}&nbsp;&nbsp;
                             <LinkIcon />
                         </Link>
                     )}
@@ -99,14 +107,14 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                             color={hook.themeColor.color}
                             href={project.repositoryUrl}
                         >
-                            {hook.translate.repoLinkText}&nbsp;&nbsp;
+                            {t('repo_link_text')}&nbsp;&nbsp;
                             <GitHubIcon />
                         </Link>
                     )}
 
                     <div>
                         <h3 className="text-xl mt-2 primary-font-color">
-                            {hook.translate.techListTitle}
+                            {t('tech_list_title')}
                         </h3>
                         {!!hook.icons ? (
                             <ul
@@ -132,7 +140,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                             </ul>
                         ) : (
                             <p className="text-sm text-red-500 font-semibold">
-                                {hook.translate.emptyTechListMsg}
+                                {t('empty_tech_list_msg')}
                             </p>
                         )}
                     </div>

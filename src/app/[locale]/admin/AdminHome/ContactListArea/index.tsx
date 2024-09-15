@@ -141,7 +141,6 @@ const UpdateContactModal: React.FC<{
             const contactProp = {
                 [props.contactKey]: inputValue,
             };
-            console.log(contactProp);
             const docRef = doc(db, 'profile', 'contacts');
             await updateDoc(docRef, contactProp);
             props.onSubmitted(contactProp);

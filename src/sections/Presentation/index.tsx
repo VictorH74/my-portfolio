@@ -6,9 +6,11 @@ import usePresentation from './usePresentation';
 import useTechnologies from '@/hooks/UseTechnologies';
 import Image from 'next/image';
 import Skeleton from '@mui/material/Skeleton';
+import { useTranslations } from 'next-intl';
 
 export default function Presentation() {
     const hook = usePresentation();
+    const t = useTranslations('Presentation_Section');
     const { themeColor } = useTheme();
     const { technologyArray, isLoading, empty, error } = useTechnologies();
 
@@ -20,7 +22,7 @@ export default function Presentation() {
             <div className="h-full grid place-items-center -translate-y-5">
                 <div className="text-center">
                     <h2 className="sm:text-2xl primary-font-color font-semibold tracking-widest">
-                        {hook.translate.iAm}
+                        {t('i_am')}
                     </h2>
 
                     {((name: string) => (
@@ -56,11 +58,11 @@ export default function Presentation() {
                     ))('Victor Almeida')}
 
                     <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
-                        {hook.translate.text_3}
+                        {t('text_3')}
                         <span className="ml-2 text-[var(--theme-color)]">
                             @FullStack
                         </span>{' '}
-                        {hook.translate.with}
+                        {t('with')}
                     </h2>
 
                     <div className="flex flex-row gap-4 items-center">
@@ -81,11 +83,11 @@ export default function Presentation() {
                                 ))
                         ) : empty ? (
                             <p className="font-semibold text-custom-gray-light">
-                                {hook.translate.emptyTechListText}
+                                {t('empty_tech_list_text')}
                             </p>
                         ) : error ? (
                             <p className="font-semibold text-red-500">
-                                {hook.translate.techListErrorText}
+                                {t('tech_list_error_text')}
                             </p>
                         ) : (
                             technologyArray

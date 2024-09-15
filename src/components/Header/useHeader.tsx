@@ -2,9 +2,17 @@
 'use client';
 import React from 'react';
 import useWindowSize from '@/hooks/UseWindowsSize';
-import { navTranslations } from './data';
-import useLanguage from '@/hooks/UseLanguage';
 import { WapperDimensionsType } from './NavItemWapper';
+
+export const navlinkArray = [
+    '#',
+    '#about-me',
+    '#technologies',
+    '#projects',
+    '#contact-me',
+    '#contacts',
+    '#download-btn',
+];
 
 const useHeader = () => {
     const [showBgAnimation, setShowBgAnimation] = React.useState(true);
@@ -19,9 +27,6 @@ const useHeader = () => {
         });
     const downloadResumeBtnRef = React.useRef(null);
     const size = useWindowSize();
-    const lang = useLanguage();
-    const translate = navTranslations[lang];
-    const navDataArray = translate.data;
 
     React.useEffect(() => {
         document.addEventListener('scroll', handleScroll);
@@ -74,7 +79,7 @@ const useHeader = () => {
     const moveWrapperToDownloadBtn = React.useCallback(() => {
         if (!downloadResumeBtnRef?.current) return;
 
-        changeWrapperPosition(downloadResumeBtnRef.current, 'li-download-btn');
+        changeWrapperPosition(downloadResumeBtnRef.current, 'li-#download-btn');
     }, []);
 
     return {
@@ -83,11 +88,9 @@ const useHeader = () => {
         size,
         wrapperDimensions,
         moveWrapperToDownloadBtn,
-        navDataArray,
         wrappedLI,
         handleMouseOver,
         downloadResumeBtnRef,
-        translate,
         showBgAnimation,
         setShowBgAnimation,
     };

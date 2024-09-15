@@ -1,9 +1,7 @@
 'use client';
 import React from 'react';
-import useLanguage from '@/hooks/UseLanguage';
 import { useTheme } from '@/hooks/UseTheme';
 import useTechnologies from '@/hooks/UseTechnologies';
-import { projectItem } from '@/utils/translations';
 import { ProjectType } from '@/types';
 
 export default function useProjectCard(project: ProjectType) {
@@ -14,9 +12,7 @@ export default function useProjectCard(project: ProjectType) {
         !!project.screenshots.length
     );
     const id = React.useId();
-    const lang = useLanguage();
     const { themeColor } = useTheme();
-    const translate = projectItem(project.description)[lang];
 
     const icons = empty
         ? undefined
@@ -33,7 +29,6 @@ export default function useProjectCard(project: ProjectType) {
         loadingImg,
         id,
         themeColor,
-        translate,
         icons,
         showVideo,
         hiddenVideo,

@@ -1,21 +1,16 @@
-import { cookies } from 'next/headers';
-import type { NextRequest } from 'next/server';
-
-const ProtectedRoutes = ['/admin'];
-const LogOutRoutes = ['/admin/login'];
+import { type NextRequest } from 'next/server';
+import { authMiddleware } from './middleware/authMiddleware';
+import { intlMiddleware } from './middleware/intlMiddleware';
 
 export function middleware(req: NextRequest) {
-    const token = cookies().get('token')?.value;
+    const authResponse = authMiddleware(req);
+    if (authResponse) {
+        return authResponse; // redirect response
+    }
 
-    if (
-        token &&
-        LogOutRoutes.some((path) => req.nextUrl.pathname.startsWith(path))
-    )
-        return Response.redirect(new URL(ProtectedRoutes[0], req.url));
-    if (!token && ProtectedRoutes.some((path) => req.url.startsWith(path)))
-        return Response.redirect(new URL('/login', req.url));
+    return intlMiddleware(req);
 }
 
 export const config = {
-    matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+    matcher: ['/', '/(pt-br|en)/:path*', '/admin/:path*'],
 };

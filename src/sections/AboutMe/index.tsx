@@ -3,25 +3,23 @@ import Me from '@/assets/me.webp';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { DownloadResumeBtn } from './styles';
-import useLanguage from '@/hooks/UseLanguage';
 import { resumeFileName, downloadResume } from '@/utils/resume';
-import { aboutMeSection } from '@/utils/translations';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { getMetadata, getStorage, ref } from 'firebase/storage';
+import { useTranslations } from 'next-intl';
 
 const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
 const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
 
 const AboutMe = () => {
     const [isClient, setIsClient] = React.useState(false);
+    const t = useTranslations('AboutMe_Section');
 
     React.useEffect(() => {
         setIsClient(true);
     }, []);
 
-    const lang = useLanguage();
-    const translate = aboutMeSection[lang];
     const { data: pdfMetadata, isLoading } = useQuery({
         queryFn: () => loadPdfMetadata(),
         onError: (e) => {
@@ -54,7 +52,7 @@ const AboutMe = () => {
             <h1
                 className={`section-title mb-12 ${notoSans400.className} max-md:text-center`}
             >
-                {translate.title}
+                {t('title')}
             </h1>
             <div className="flex flex-col lg:flex-row">
                 <div
@@ -64,7 +62,11 @@ const AboutMe = () => {
                     data-aos-duration="1000"
                 >
                     <div className="paragraphs max-w-[800px] grid gap-4">
-                        {translate.paragraphs.map((p, i) => (
+                        {[
+                            t('paragraph_1'),
+                            t('paragraph_2'),
+                            t('paragraph_3'),
+                        ].map((p, i) => (
                             <p
                                 className={`text-base ${paragraphFont.className} primary-font-color`}
                                 key={i}
@@ -106,7 +108,7 @@ const AboutMe = () => {
                 <div className="grow shrink basis-auto h-[2px] bg-[var(--theme-color)]" />
                 <DownloadResumeBtn
                     onClick={isLoading ? undefined : downloadResume}
-                    data-tooltip={`${translate.resumeSizeText}: ${
+                    data-tooltip={`${t('resume_size_text')}: ${
                         isLoading
                             ? 'Loading...'
                             : formatSizeToKB(pdfMetadata?.size || 0) + 'KB'
@@ -115,7 +117,7 @@ const AboutMe = () => {
                 >
                     <div className="button-wrapper">
                         <div className="text text-base">
-                            {translate.downloadResumeBtnText}
+                            {t('download_resume_btn_text')}
                         </div>
                         <span className="icon">
                             <svg

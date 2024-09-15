@@ -4,7 +4,7 @@ import AboutMe from '@/sections/AboutMe';
 import Contacts from '@/sections/Contacts';
 import Presentation from '@/sections/Presentation';
 import Projects from '@/sections/Projects';
-import Skills from '@/sections/Technologies';
+import Technologies from '@/sections/Technologies';
 import Aos from 'aos';
 import React from 'react';
 import ContactMe from '@/sections/ContactMe';
@@ -38,7 +38,7 @@ export default function HomePage() {
             >
                 <Presentation />
                 <AboutMe />
-                <Skills />
+                <Technologies />
                 <Projects />
                 <ContactMe />
                 <Contacts />

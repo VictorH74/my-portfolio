@@ -2,38 +2,27 @@
 import useTechnologies from '@/hooks/UseTechnologies';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
-import useLanguage from '@/hooks/UseLanguage';
+import { useTranslations } from 'next-intl';
 
 const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
-const translations = {
-    'pt-BR': {
-        title: 'Tecnologias',
-        emptySkillsMsg: 'Ocorreu um erro ao carregar o conteúdo.',
-    },
-    en: {
-        title: 'Technologies',
-        emptySkillsMsg: 'An error occurred while loading the content.',
-    },
-};
-
 export default function Technologies() {
     const { technologyArray, empty: emptyTechArray } = useTechnologies();
-    const lang = useLanguage();
-
-    const translate = translations[lang];
+    const t = useTranslations('Technologies_Section');
 
     return (
         <section
-            id="skills"
+            id="technologies"
             className="home-section pt-24 text-center section px-0"
         >
             <h1 className={`section-title mb-12 ${notoSans.className}`}>
-                {translate.title}
+                {t('title')}
             </h1>
             <ul className="flex flex-wrap justify-center gap-3">
                 {emptyTechArray ? (
-                    <p className="text-red-400">{translate.emptySkillsMsg}</p>
+                    <p className="text-red-400">
+                        {t('empty_technologies_msg')}
+                    </p>
                 ) : (
                     technologyArray.map(
                         (icon) =>

@@ -1,11 +1,10 @@
 import React from 'react';
-import useLanguage from '@/hooks/UseLanguage';
-import { projectItem } from '@/utils/translations';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Loading from '@/components/Loading';
 import Image from 'next/image';
 import { Carousel } from 'react-bootstrap';
 import { ProjectType } from '@/types';
+import { useTranslations } from 'next-intl';
 
 export default function ProjectCard(props: {
     project: ProjectType;
@@ -15,12 +14,12 @@ export default function ProjectCard(props: {
 
     const [loadingImg] = React.useState(true);
     const id = React.useId();
-    const lang = useLanguage();
-    const translate = projectItem(props.project.description)[lang];
 
     const showVideo = () => setShowVideo(true);
 
     const hiddenVideo = () => setShowVideo(false);
+
+    const t = useTranslations('project_card');
 
     return (
         <>
@@ -85,7 +84,15 @@ export default function ProjectCard(props: {
             </div>
             <Carousel.Caption>
                 <h3>{props.project.title}</h3>
-                <p>{translate.projectDescription}</p>
+                <p>
+                    {
+                        props.project.description[
+                            t(
+                                'description_lang_prop'
+                            ) as keyof typeof props.project.description
+                        ]
+                    }
+                </p>
             </Carousel.Caption>
         </>
     );

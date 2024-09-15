@@ -2,14 +2,15 @@
 import { downloadResume } from '@/utils/resume';
 import React from 'react';
 import { useTheme } from '@/hooks/UseTheme';
-import { NavListItemType } from '../data';
+import { navlinkArray } from '../useHeader';
+import { useTranslations } from 'next-intl';
 
 interface Props {
-    navData: NavListItemType[];
     downloadResumeBtnInnerText: string;
 }
 
 const Hamburger = (props: Props) => {
+    const navLabelT = useTranslations('nav_link_label');
     const [show, setShow] = React.useState(false);
     const liItemRef = React.useRef(null);
     const { themeColor } = useTheme();
@@ -48,11 +49,11 @@ const Hamburger = (props: Props) => {
             </div>
             <div className="fixed top-24 -right-5 pointer-events-none">
                 <ul className="nav-ul">
-                    {props.navData.map((data, i) => {
-                        const last = i === props.navData.length - 1;
+                    {navlinkArray.map((link, i) => {
+                        const last = i == navlinkArray.length - 1;
                         return (
                             <li
-                                id={`li-${data.to}`}
+                                id={`li-${link}`}
                                 className={`li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 ${
                                     show
                                         ? 'translate-x-0'
@@ -69,15 +70,12 @@ const Hamburger = (props: Props) => {
                                 onClick={
                                     last
                                         ? downloadResume
-                                        : () =>
-                                              window.location.replace(
-                                                  `#${data.to || ''}`
-                                              )
+                                        : () => window.location.replace(link)
                                 }
                             >
                                 {last
                                     ? props.downloadResumeBtnInnerText
-                                    : data.label}
+                                    : navLabelT(link)}
                             </li>
                         );
                     })}

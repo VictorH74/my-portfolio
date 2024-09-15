@@ -1,11 +1,7 @@
-import useLanguage from '@/hooks/UseLanguage';
-import { presentationSection } from '@/utils/translations';
 import React, { useRef } from 'react';
 import useWindowSize from '@/hooks/UseWindowsSize';
 
 export default function usePresentation() {
-    const lang = useLanguage();
-    const translate = presentationSection[lang];
     const sectionRef = useRef<HTMLElement>(null);
     const timeOutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
     const [svgTextWidth, setSvgTextWidth] = React.useState('');
@@ -64,7 +60,6 @@ export default function usePresentation() {
     };
 
     return {
-        translate,
         rotateElementText,
         sectionRef,
         svgTextWidth,

@@ -42,7 +42,10 @@ export default function ThemeProvider({ children }: React.PropsWithChildren) {
 
         const setFavicon = async (svgUrl: string, newColor: string) => {
             // Fetch the original SVG content
-            const response = await fetch(svgUrl);
+            const faviconUrl = new URL(svgUrl, window.location.origin);
+            const response = await fetch(faviconUrl.href, {
+                cache: 'no-store',
+            });
             const svgText = await response.text();
 
             // Create a new DOMParser to parse the SVG text and manipulate it
@@ -84,7 +87,7 @@ export default function ThemeProvider({ children }: React.PropsWithChildren) {
         };
 
         // Use the function to change the favicon
-        setFavicon('/icons/favicon.svg', themeColor.color);
+        setFavicon('icons/favicon.svg', themeColor.color);
     }, [themeColor]);
 
     // if (!themeColor) return null;

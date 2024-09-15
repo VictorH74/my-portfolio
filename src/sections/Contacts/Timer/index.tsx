@@ -1,5 +1,4 @@
-import useLanguage from '@/hooks/UseLanguage';
-import { timer } from '@/utils/translations';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 interface TimerProps {
@@ -8,8 +7,7 @@ interface TimerProps {
 
 export default function Timer(props: TimerProps) {
     const [time, setTime] = React.useState(0);
-    const lang = useLanguage();
-    const translate = timer[lang];
+    const t = useTranslations('contacts_section_timer');
 
     React.useEffect(() => {
         const intervalId = setInterval(() => {
@@ -23,7 +21,7 @@ export default function Timer(props: TimerProps) {
 
     function formatTime() {
         if (time < 60) {
-            return time + ' ' + translate.seconds;
+            return time + ' ' + t('seconds');
         } else {
             let minutes = Math.floor(time / 60);
             let seconds = time % 60;
@@ -32,14 +30,14 @@ export default function Timer(props: TimerProps) {
                 ':' +
                 (seconds < 10 ? '0' + seconds : seconds) +
                 ' ' +
-                translate.minutes
+                t('minutes')
             );
         }
     }
 
     return (
         <p className="mt-7 text-custom-white">
-            {translate.time}: {formatTime()}
+            {t('time')}: {formatTime()}
         </p>
     );
 }

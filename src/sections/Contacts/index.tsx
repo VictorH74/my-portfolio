@@ -3,9 +3,11 @@ import ContactList from '@/components/ContactList';
 import useContacts from './useContacts';
 import { twMerge } from 'tailwind-merge';
 import Timer from './Timer';
+import { useTranslations } from 'next-intl';
 
 export default function Contacts() {
     const hook = useContacts();
+    const t = useTranslations('Contacts_Section');
 
     return (
         <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl backdrop-blur-md">
@@ -30,7 +32,7 @@ export default function Contacts() {
             <footer className="mt-4">
                 {' '}
                 <p className="text-custom-white">
-                    &copy; {hook.translate.footerParagraph}
+                    &copy; {t('footer_paragraph')}
                 </p>{' '}
             </footer>
             <div ref={hook.endOfPageRef} />
