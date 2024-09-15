@@ -1,25 +1,12 @@
 import { headingClassName } from '../CollectionActions';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/configs/firebaseConfig';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import { IconButton } from '@/components/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
-import ModalContainer from '@/components/ModalContainer';
-import CloseIcon from '@mui/icons-material/Close';
-import { BRAZIL_PHONE_PATTERN, contactIcon } from '@/utils/constants';
+import { contactIcon } from '@/utils/constants';
 import { getContacts } from '@/utils/functions';
 import { ProfileContactsType } from '@/types';
-
-const inputType: Record<
-    keyof ProfileContactsType,
-    React.InputHTMLAttributes<HTMLInputElement>['type']
-> = {
-    email: 'email',
-    github_url: 'url',
-    linkedin_url: 'url',
-    phone: 'text',
-};
+import UpdateContactModal from './UpdateContactModal';
 
 export default function ContactListArea() {
     const [toUpdateContact, setToUpdateContact] = React.useState<
@@ -113,83 +100,3 @@ export default function ContactListArea() {
         </section>
     );
 }
-
-const UpdateContactModal: React.FC<{
-    contactKey: keyof ProfileContactsType;
-    contactValue: string;
-    onSubmitted(_contactProp: Record<string, string>): void;
-    onClose(): void;
-}> = (props) => {
-    const [inputValue, setInputValue] = React.useState('');
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    const Icon = React.useMemo(
-        () => contactIcon[props.contactKey as keyof typeof contactIcon],
-        [props.contactKey]
-    );
-
-    React.useEffect(() => {
-        setInputValue(props.contactValue);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        try {
-            const contactProp = {
-                [props.contactKey]: inputValue,
-            };
-            const docRef = doc(db, 'profile', 'contacts');
-            await updateDoc(docRef, contactProp);
-            props.onSubmitted(contactProp);
-            props.onClose();
-        } catch (err) {
-            alert('Error trying update contact');
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    return (
-        <ModalContainer>
-            <form
-                onSubmit={handleSubmit}
-                className="w-full max-w-[500px] bg-gray-200 dark:bg-[#3f3f3f] rounded-md px-2 pb-3 animate-scale"
-            >
-                <div className="text-right py-2">
-                    <button
-                        disabled={isLoading}
-                        onClick={props.onClose}
-                        type="button"
-                    >
-                        <CloseIcon />
-                    </button>
-                </div>
-                <div className="flex flex-row w-full">
-                    <Icon sx={{ width: 50, height: 50 }} />
-                    <input
-                        type={inputType[props.contactKey]}
-                        {...(props.contactKey == 'phone' && {
-                            pattern: BRAZIL_PHONE_PATTERN,
-                            title: 'Must be only digits',
-                        })}
-                        className="w-full p-2 border-2 border-custom-white rounded-md ml-2"
-                        value={inputValue}
-                        required
-                        onChange={(e) => setInputValue(e.currentTarget.value)}
-                    />
-                </div>
-
-                <button
-                    disabled={isLoading}
-                    className="p-2 bg-[var(--theme-color)] w-full mt-2 rounded-md"
-                >
-                    {isLoading ? 'Updating...' : 'Update'}
-                </button>
-            </form>
-        </ModalContainer>
-    );
-};

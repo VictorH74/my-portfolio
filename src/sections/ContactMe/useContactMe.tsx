@@ -16,27 +16,7 @@ export type FormValues = {
     message: string;
 };
 
-// const sendEmailData = async (_: unknown, formData: FormData) => {
-//     const from_name = formData.get('name') as string;
-//     const from_email = formData.get('email') as string;
-//     const subject = formData.get('subject') as string;
-//     const message = formData.get('message') as string;
-
-//     await emailjs.send(
-//         EMAILJS_SERVICE_ID,
-//         EMAILJS_TEMPLATE_ID,
-//         {
-//             from_name,
-//             from_email,
-//             subject: subject.toUpperCase(),
-//             message,
-//         },
-//         EMAILJS_PUBLIC_KEY
-//     );
-// };
-
 export default function useContactMe() {
-    // const [] = React.useActionState(onSubmit, undefined);
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = React.useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false);
     const [submitting, setSubmitting] = React.useState(false);
@@ -48,12 +28,12 @@ export default function useContactMe() {
         formState: { errors },
     } = useForm<FormValues>();
 
-    const onSubmit = handleSubmit((data) => {
+    const onSubmit = handleSubmit(async (data) => {
         const [from_name, from_email, subject, message] = Object.values(data);
-        reset();
-        setSubmitting(true);
-        emailjs
-            .send(
+
+        try {
+            setSubmitting(true);
+            await emailjs.send(
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 {
@@ -63,18 +43,15 @@ export default function useContactMe() {
                     message,
                 },
                 EMAILJS_PUBLIC_KEY
-            )
-            .then(
-                () => {
-                    setOpenSuccessSnackbar(true);
-                    setSubmitting(false);
-                },
-                (error) => {
-                    console.error(error.text);
-                    setOpenErrorSnackbar(true);
-                    setSubmitting(false);
-                }
             );
+            setOpenSuccessSnackbar(true);
+            reset();
+        } catch (err) {
+            console.error(err);
+            setOpenErrorSnackbar(true);
+        } finally {
+            setSubmitting(false);
+        }
     });
 
     const closeSuccessSnackbar = () => setOpenSuccessSnackbar(false);

@@ -1,23 +1,46 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-export interface TimerProps {
-    reachedBottom: boolean;
-}
-
-export default function useTimer(props: TimerProps) {
+export default function useTimer() {
     const [time, setTime] = React.useState(0);
     const t = useTranslations('contacts_section_timer');
+    const [reachedBottom, setReachedBottom] = React.useState(false);
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop =
+                (document.documentElement &&
+                    document.documentElement.scrollTop) ||
+                document.body.scrollTop;
+            const scrollHeight =
+                (document.documentElement &&
+                    document.documentElement.scrollHeight) ||
+                document.body.scrollHeight;
+            const clientHeight =
+                document.documentElement.clientHeight || window.innerHeight;
+            const scrolledToBottom =
+                Math.ceil(scrollTop + clientHeight) >= scrollHeight - 50;
+
+            if (scrolledToBottom) {
+                setReachedBottom(true);
+                window.removeEventListener('scroll', handleScroll);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     React.useEffect(() => {
         const intervalId = setInterval(() => {
-            if (!props.reachedBottom) {
+            if (!reachedBottom) {
                 setTime(time + 1);
+                console.count('timing: ');
             }
         }, 1000);
 
         return () => clearInterval(intervalId);
-    }, [time, props.reachedBottom]);
+    }, [time, reachedBottom]);
 
     function formatTime() {
         if (time < 60) {
@@ -37,6 +60,7 @@ export default function useTimer(props: TimerProps) {
 
     return {
         formatTime,
+        reachedBottom,
         t,
     };
 }

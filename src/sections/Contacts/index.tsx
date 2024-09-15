@@ -1,28 +1,19 @@
 'use client';
 import ContactList from '@/components/ContactList';
 import useContacts from './useContacts';
-import { twMerge } from 'tailwind-merge';
 import Timer from './Timer';
 import { useTranslations } from 'next-intl';
+import useWindowSize from '@/hooks/UseWindowsSize';
 
 export default function Contacts() {
     const hook = useContacts();
     const t = useTranslations('Contacts_Section');
+    const [w] = useWindowSize();
 
     return (
         <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl backdrop-blur-md">
             <section className="home-section min-h-[auto]" id="contacts">
-                <div
-                    className={twMerge(
-                        'mt-12 mb-10 duration-300 select-none opacity-0 scale-50',
-                        hook.reachedBottom && 'opacity-100 scale-100'
-                    )}
-                >
-                    <h1 className="text-3xl text-[var(--theme-color)]">
-                        THANKS FOR SCROLLING!
-                    </h1>
-                    <Timer reachedBottom={hook.reachedBottom} />
-                </div>
+                {w > 768 && <Timer />}
 
                 <div className="mt-4">
                     <ContactList center />
