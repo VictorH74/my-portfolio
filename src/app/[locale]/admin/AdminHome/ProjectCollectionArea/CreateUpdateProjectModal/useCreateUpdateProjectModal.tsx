@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
-import { ProjectType, ProjectScreenshotType } from '@/types';
+import { ProjectType, ScreenshotType } from '@/types';
 import { Trie } from '@/utils/trie';
 import { FirebaseError } from 'firebase/app';
 import {
@@ -45,7 +45,7 @@ export default function useCreateUpdateProjectModal(
         React.useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [projectScreenshots, setProjectScreenshots] = React.useState<
-        Array<ProjectScreenshotType | File>
+        Array<ScreenshotType | File>
     >([]);
     const [trieSufix, setTrieSufix] = React.useState<string>();
     const trieRef = React.useRef(new Trie());

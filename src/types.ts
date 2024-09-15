@@ -8,7 +8,7 @@ export type ProjectType = {
     index: number;
     id: string;
     title: string;
-    screenshots: ProjectScreenshotType[];
+    screenshots: ScreenshotType[];
     description: { PT: string; EN: string };
     technologies: string[];
     deployUrl?: string;
@@ -18,7 +18,7 @@ export type ProjectType = {
     updatedAt?: string; // ISO String Date
 };
 
-export type ProjectScreenshotType = {
+export type ScreenshotType = {
     name: string;
     url: string;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { ProjectScreenshotType } from '@/types';
-import Image, { ImageProps } from 'next/image';
 import React from 'react';
+import { ScreenshotType } from '@/types';
+import Image, { ImageProps } from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import Loading from '../Loading';
 import { useTheme } from '@/hooks/UseTheme';
@@ -9,14 +9,17 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 interface SlideProps {
-    images: ProjectScreenshotType[];
+    images: ScreenshotType[];
 }
 
 export default function Slide(props: SlideProps) {
     const sliderContainerRef = React.useRef<HTMLUListElement>(null);
     const { themeColor } = useTheme();
-
     const [currentFileIndex, setCurrentFileIndex] = React.useState<number>(0);
+
+    // Variáveis de controle de arraste
+    const [startPos, setStartPos] = React.useState<number | null>(null);
+    const [isDragging, setIsDragging] = React.useState(false);
 
     React.useEffect(() => {
         if (!sliderContainerRef.current) return;
@@ -42,8 +45,62 @@ export default function Slide(props: SlideProps) {
         setCurrentFileIndex((prev) => prev + 1);
     }, [currentFileIndex, props.images]);
 
+    // Funções de arraste (drag/swipe)
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setStartPos(e.touches[0].clientX);
+        setIsDragging(true);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (!isDragging || startPos === null) return;
+        const currentPos = e.touches[0].clientX;
+        const diff = startPos - currentPos;
+        if (diff > 50) {
+            nextSlide(); // Deslizar para a esquerda
+            setIsDragging(false);
+        } else if (diff < -50) {
+            previousSlide(); // Deslizar para a direita
+            setIsDragging(false);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setIsDragging(false);
+        setStartPos(null);
+    };
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setStartPos(e.clientX);
+        setIsDragging(true);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging || startPos === null) return;
+        const diff = startPos - e.clientX;
+        if (diff > 50) {
+            nextSlide();
+            setIsDragging(false);
+        } else if (diff < -50) {
+            previousSlide();
+            setIsDragging(false);
+        }
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        setStartPos(null);
+    };
+
     return (
-        <div className="relative">
+        <div
+            className="relative"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+        >
             <ul
                 ref={sliderContainerRef}
                 className="flex w-full overflow-hidden group/container"
@@ -120,7 +177,7 @@ const SlideImage: React.FC<
     const [loadingImg, setLoadingImg] = React.useState(true);
 
     return (
-        <div className="size-full relative">
+        <div className="size-full relative select-none">
             <Image
                 {...props}
                 className="h-full w-auto"
