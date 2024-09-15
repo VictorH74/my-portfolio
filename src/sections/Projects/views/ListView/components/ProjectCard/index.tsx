@@ -41,7 +41,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                 </div>
             )}
             <div
-                className={`relative flex flex-col flex-wrap justify-between my-0 mx-[7%] ${
+                className={`relative flex flex-col flex-wrap justify-between my-0 lg:mx-[7%] ${
                     oddScreen1024 ? 'lg:flex-row-reverse' : 'lg:flex-row'
                 }`}
                 data-aos="flip-up"
@@ -55,7 +55,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                 <div
                     className={`w-full py-4 ${
                         oddScreen1024 ? 'text-end' : 'text-start'
-                    } lg:w-[47%] py-5 px-7`}
+                    } lg:w-[47%] lg:py-5 lg:px-7 px-2`}
                 >
                     <h1
                         className={` text-xl ${

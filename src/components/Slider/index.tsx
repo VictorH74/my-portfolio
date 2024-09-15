@@ -79,7 +79,7 @@ export default function Slider(props: SliderProps) {
                             key={btn.label}
                             onClick={btn.onClick}
                             className={twMerge(
-                                'absolute inset-y-0 p-4 opacity-0 max-lg:opacity-100 group-hover/container:opacity-100 duration-200 hover:scale-150',
+                                'absolute inset-y-0 p-4 opacity-0 max-lg:opacity-100 group-hover/container:opacity-100 duration-200 lg:hover:scale-150',
                                 btn.className
                             )}
                         >
