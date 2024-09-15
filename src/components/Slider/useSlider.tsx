@@ -48,10 +48,10 @@ export default function useSlider(props: SliderProps) {
         if (!isDragging || startPos === null) return;
         const currentPos = e.touches[0].clientX;
         const diff = startPos - currentPos;
-        if (diff > 65) {
+        if (diff > 50) {
             nextSlide();
             setIsDragging(false);
-        } else if (diff < -65) {
+        } else if (diff < -50) {
             previousSlide();
             setIsDragging(false);
         }
@@ -70,10 +70,10 @@ export default function useSlider(props: SliderProps) {
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDragging || startPos === null) return;
         const diff = startPos - e.clientX;
-        if (diff > 65) {
+        if (diff > 50) {
             nextSlide();
             setIsDragging(false);
-        } else if (diff < -65) {
+        } else if (diff < -50) {
             previousSlide();
             setIsDragging(false);
         }
