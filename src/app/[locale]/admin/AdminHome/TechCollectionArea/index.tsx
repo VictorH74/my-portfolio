@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import RemoveIcon from '@mui/icons-material/Remove';
 import GradeIcon from '@mui/icons-material/Grade';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import useTechnologies from '@/hooks/UseTechnologies';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { IconButton } from '@/components/IconButton';
 import CollectionActions from '../CollectionActions';
 import ReordableModal, { OutputReordableItemType } from '../ReordableModal';
@@ -25,7 +25,7 @@ export default function TechnologiesArea() {
     const [showAddTechForm, setShowAddTechForm] = React.useState(false);
     const [showReorderModal, setShowReorderModal] = React.useState(false);
 
-    const { technologyArray, setTechnologyArray } = useTechnologies();
+    const { technologyArray, setTechnologyArray } = useGlobalTechnologies();
 
     const removeTech = async (techId: string, techIndex: number) => {
         if (

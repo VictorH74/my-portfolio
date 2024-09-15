@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import { useTheme } from '@/hooks/UseTheme';
-import useTechnologies from '@/hooks/UseTechnologies';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { ProjectType } from '@/types';
 
 export default function useProjectCard(project: ProjectType) {
-    const { technologyArray, empty } = useTechnologies();
+    const { technologyArray, empty } = useGlobalTechnologies();
     const [video, setShowVideo] = React.useState(false);
 
     const [loadingImg, setLoadingImg] = React.useState(

@@ -3,7 +3,7 @@ import React from 'react';
 import { downloadResume } from '@/utils/resume';
 import Hamburger from './Hamburger';
 import { Raleway } from 'next/font/google';
-import useHeader, { navlinkArray } from './useHeader';
+import useHeader, { HeaderProps, navlinkArray } from './useHeader';
 import NavListItem from './NavListItem';
 import SettingsMenu from './SettingsMenu';
 import NavItemWapper from './NavItemWapper';
@@ -14,7 +14,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { createPortal } from 'react-dom';
 import SwitchBgAnimation from './SwitchBgAnimation';
 import { twMerge } from 'tailwind-merge';
-import useWindowSize from '@/hooks/UseWindowsSize';
 import { useTranslations } from 'next-intl';
 
 const BackgroundAnimation = React.lazy(
@@ -28,41 +27,23 @@ const raleway = Raleway({
     weight: '300',
 });
 
-const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
-    const [isClient, setIsClient] = React.useState(false);
-    const shadowLogoRef = React.useRef<HTMLSpanElement>(null);
-    const logoRef = React.useRef<HTMLSpanElement>(null);
-    const size = useWindowSize();
+const Header: React.FC<HeaderProps> = (props) => {
     const t = useTranslations('Header');
     const navLabelT = useTranslations('nav_link_label');
 
-    React.useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    React.useEffect(() => {
-        if (isLoading || !shadowLogoRef.current || !logoRef.current) return;
-        const { top, left } = shadowLogoRef.current!.getBoundingClientRect();
-        logoRef.current!.style.top = top + 'px';
-        logoRef.current!.style.left = left + 'px';
-        logoRef.current!.style.fontSize = '2.25rem';
-        logoRef.current!.style.lineHeight = '2.5rem';
-        logoRef.current!.style.transform = 'translate(0)';
-    }, [isClient, size, isLoading]);
-
-    const hook = useHeader();
+    const hook = useHeader(props);
     const { themeColor } = useTheme();
 
-    if (!isClient) return null;
+    if (!hook.isClient) return null;
 
     return (
         <>
             <span
-                ref={logoRef}
+                ref={hook.logoRef}
                 className={twMerge(
                     'line-through text-[var(--theme-color)] fixed -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 text-9xl uppercase z-[9999] duration-300',
                     raleway.className,
-                    isLoading && 'animate-pulse'
+                    props.isLoading && 'animate-pulse'
                 )}
             >
                 vh
@@ -72,7 +53,7 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                     className={twMerge(
                         'm-auto py-2 px-5 rounded-full backdrop-blur-[8px] flex items-center h-fit duration-300 uppercase bg-[#cccccce5] dark:bg-[#383838e5] shadow-xl',
                         hook.scrollUp && 'bg-transparent dark:bg-transparent',
-                        isLoading && 'opacity-0'
+                        props.isLoading && 'opacity-0'
                     )}
                 >
                     <h1
@@ -86,7 +67,7 @@ const Header: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                             &lt;
                         </span>{' '}
                         <span
-                            ref={shadowLogoRef}
+                            ref={hook.shadowLogoRef}
                             className="opacity-0 pointer-events-none"
                         >
                             vh

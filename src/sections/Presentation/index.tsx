@@ -3,7 +3,7 @@ import { useTheme } from '@/hooks/UseTheme';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import React from 'react';
 import usePresentation from './usePresentation';
-import useTechnologies from '@/hooks/UseTechnologies';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import Image from 'next/image';
 import Skeleton from '@mui/material/Skeleton';
 import { useTranslations } from 'next-intl';
@@ -12,7 +12,8 @@ export default function Presentation() {
     const hook = usePresentation();
     const t = useTranslations('Presentation_Section');
     const { themeColor } = useTheme();
-    const { technologyArray, isLoading, empty, error } = useTechnologies();
+    const { technologyArray, isLoading, empty, error } =
+        useGlobalTechnologies();
 
     return (
         <section

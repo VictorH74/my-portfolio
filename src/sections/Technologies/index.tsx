@@ -1,5 +1,5 @@
 'use client';
-import useTechnologies from '@/hooks/UseTechnologies';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { useTranslations } from 'next-intl';
@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
 export default function Technologies() {
-    const { technologyArray, empty: emptyTechArray } = useTechnologies();
+    const { technologyArray, empty: emptyTechArray } = useGlobalTechnologies();
     const t = useTranslations('Technologies_Section');
 
     return (

@@ -2,21 +2,13 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
+import useModalContainer from './useModalContainer';
 
 const ModalContainer: React.FC<{
     children: React.ReactElement;
     className?: string;
 }> = ({ children, className }) => {
-    React.useEffect(() => {
-        const paddingRight =
-            window.innerWidth - document.documentElement.clientWidth;
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = `${paddingRight}px`;
-        return () => {
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-        };
-    }, []);
+    useModalContainer();
 
     return createPortal(
         <div

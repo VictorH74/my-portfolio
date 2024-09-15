@@ -3,43 +3,19 @@ import Me from '@/assets/me.webp';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { DownloadResumeBtn } from './styles';
-import { resumeFileName, downloadResume } from '@/utils/resume';
+import { downloadResume } from '@/utils/resume';
 import React from 'react';
-import { useQuery } from 'react-query';
-import { getMetadata, getStorage, ref } from 'firebase/storage';
 import { useTranslations } from 'next-intl';
+import useAboutMe from './useAboutMe';
 
 const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
 const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
 
 const AboutMe = () => {
-    const [isClient, setIsClient] = React.useState(false);
     const t = useTranslations('AboutMe_Section');
+    const hook = useAboutMe();
 
-    React.useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    const { data: pdfMetadata, isLoading } = useQuery({
-        queryFn: () => loadPdfMetadata(),
-        onError: (e) => {
-            alert('Erro ao baixar metadata de cv!');
-            console.error(e);
-        },
-        retry: false,
-        refetchOnWindowFocus: false,
-    });
-
-    const formatSizeToKB = (size: number) => Math.round(size / 1024);
-
-    const loadPdfMetadata = async () => {
-        const storage = getStorage();
-        const pdfRef = ref(storage, 'my-cv/' + resumeFileName);
-
-        return getMetadata(pdfRef);
-    };
-
-    if (!isClient) return null;
+    if (!hook.isClient) return null;
 
     const lightTheme = window.matchMedia(
         '(prefers-color-scheme: light)'
@@ -107,11 +83,12 @@ const AboutMe = () => {
             <div className="flex flex-row items-center gap-5 mt-8">
                 <div className="grow shrink basis-auto h-[2px] bg-[var(--theme-color)]" />
                 <DownloadResumeBtn
-                    onClick={isLoading ? undefined : downloadResume}
+                    onClick={hook.isLoading ? undefined : downloadResume}
                     data-tooltip={`${t('resume_size_text')}: ${
-                        isLoading
+                        hook.isLoading
                             ? 'Loading...'
-                            : formatSizeToKB(pdfMetadata?.size || 0) + 'KB'
+                            : hook.formatSizeToKB(hook.pdfMetadata?.size || 0) +
+                              'KB'
                     }`}
                     className="bg-[var(--theme-color)]"
                 >

@@ -19,7 +19,7 @@ import {
 } from 'firebase/storage';
 import React, { useRef } from 'react';
 import { OutputReordableItemType } from '../../ReordableModal';
-import useTechnologies from '@/hooks/UseTechnologies';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
 
@@ -61,7 +61,7 @@ export default function useCreateUpdateProjectModal(
     const [onReorderScreenshots, setOnReorderScreenshots] =
         React.useState(false);
 
-    const { technologyArray, empty: emptyTechArray } = useTechnologies();
+    const { technologyArray, empty: emptyTechArray } = useGlobalTechnologies();
 
     React.useEffect(() => {
         if (props.project) {

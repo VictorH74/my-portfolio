@@ -14,11 +14,18 @@ export const navlinkArray = [
     '#download-btn',
 ];
 
-const useHeader = () => {
+export interface HeaderProps {
+    isLoading: boolean;
+}
+
+const useHeader = (props: HeaderProps) => {
     const [showBgAnimation, setShowBgAnimation] = React.useState(true);
     const [scrollUp, setScrollUp] = React.useState(true);
     const [showWrapper, setShowWrapper] = React.useState(false);
     const [wrappedLI, setWrappedLI] = React.useState('');
+    const [isClient, setIsClient] = React.useState(false);
+    const shadowLogoRef = React.useRef<HTMLSpanElement>(null);
+    const logoRef = React.useRef<HTMLSpanElement>(null);
     const [wrapperDimensions, setWrapperDimensions] =
         React.useState<WapperDimensionsType>({
             width: 0,
@@ -31,10 +38,23 @@ const useHeader = () => {
     React.useEffect(() => {
         document.addEventListener('scroll', handleScroll);
 
+        setIsClient(true);
+
         return () => {
             document.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    React.useEffect(() => {
+        if (props.isLoading || !shadowLogoRef.current || !logoRef.current)
+            return;
+        const { top, left } = shadowLogoRef.current!.getBoundingClientRect();
+        logoRef.current!.style.top = top + 'px';
+        logoRef.current!.style.left = left + 'px';
+        logoRef.current!.style.fontSize = '2.25rem';
+        logoRef.current!.style.lineHeight = '2.5rem';
+        logoRef.current!.style.transform = 'translate(0)';
+    }, [isClient, size, props.isLoading]);
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -93,6 +113,9 @@ const useHeader = () => {
         downloadResumeBtnRef,
         showBgAnimation,
         setShowBgAnimation,
+        isClient,
+        logoRef,
+        shadowLogoRef,
     };
 };
 

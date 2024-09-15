@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
 import useAdminProjects from '@/hooks/useAdminProjects';
-import useTechnologies from '@/hooks/UseTechnologies';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { ProjectType } from '@/types';
 import { doc, runTransaction } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
@@ -13,7 +13,7 @@ export default function useAdminProjectCard(props: ProjectType) {
     const [techSrcList, setTechSrcList] = React.useState<string[]>([]);
     const { projects } = useAdminProjects();
 
-    const { technologyArray, empty } = useTechnologies();
+    const { technologyArray, empty } = useGlobalTechnologies();
 
     React.useEffect(() => {
         if (!empty) {

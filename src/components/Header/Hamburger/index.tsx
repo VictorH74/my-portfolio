@@ -4,6 +4,7 @@ import React from 'react';
 import { useTheme } from '@/hooks/UseTheme';
 import { navlinkArray } from '../useHeader';
 import { useTranslations } from 'next-intl';
+import useHamburger from './useHamburger';
 
 interface Props {
     downloadResumeBtnInnerText: string;
@@ -11,19 +12,16 @@ interface Props {
 
 const Hamburger = (props: Props) => {
     const navLabelT = useTranslations('nav_link_label');
-    const [show, setShow] = React.useState(false);
     const liItemRef = React.useRef(null);
     const { themeColor } = useTheme();
 
-    const toggle = React.useCallback(() => {
-        setShow((prev) => !prev);
-    }, []);
+    const hook = useHamburger();
 
     return (
         <div id="hamburger">
             <div
                 className="cursor-pointer h-7 w-8 grid gap-[7px]"
-                onClick={toggle}
+                onClick={hook.toggle}
             >
                 {/* TODO: improve className */}
                 {Array(3)
@@ -36,7 +34,7 @@ const Hamburger = (props: Props) => {
                                     ? 'origin-left duration-300'
                                     : 'duration-150'
                             } ${
-                                show
+                                hook.show
                                     ? i === 0
                                         ? 'rotate-45'
                                         : i === 1
@@ -55,7 +53,7 @@ const Hamburger = (props: Props) => {
                             <li
                                 id={`li-${link}`}
                                 className={`li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 ${
-                                    show
+                                    hook.show
                                         ? 'translate-x-0'
                                         : 'translate-x-[101%]'
                                 }`}

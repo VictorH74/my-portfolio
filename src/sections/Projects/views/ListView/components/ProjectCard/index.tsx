@@ -5,7 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import Image from 'next/image';
 import useProjectCard from './useProjectCard';
 import { ProjectType } from '@/types';
-import Slide from '@/components/Slide';
+import Slider from '@/components/Slider';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { useTranslations } from 'next-intl';
 
@@ -49,7 +49,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                 data-aos-once="true"
             >
                 <div className="relative overflow-hidden lg:w-1/2 rounded-xl w-full shadow-xl">
-                    <Slide images={project.screenshots} />
+                    <Slider images={project.screenshots} />
                 </div>
 
                 <div
