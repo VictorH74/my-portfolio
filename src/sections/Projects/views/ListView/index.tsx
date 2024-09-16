@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectCard from './components/ProjectCard';
+import ProjectCard from './ProjectCard';
 import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
 import { twMerge } from 'tailwind-merge';

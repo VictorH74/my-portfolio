@@ -13,6 +13,8 @@ import ReorderIcon from '@mui/icons-material/Reorder';
 import ReordableModal from '@/app/[locale]/admin/AdminHome/ReordableModal';
 import ProjectTechList from './ProjectTechList';
 import ProjectScreenshotList from './ProjectScreenshotList';
+import { LANGUAGES } from '@/utils/server-constants';
+import ProjectDescriptionField from './ProjectDescriptionField';
 
 export default function CreateUpdateProjectModal(
     props: CreateUpdateProjectModalProps
@@ -132,48 +134,22 @@ export default function CreateUpdateProjectModal(
                                 />
                             </div>
 
+                            {/* TODO: implement component to below */}
                             <div>
                                 <p>Description:</p>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <label
-                                        className="font-semibold text-sm uppercase"
-                                        htmlFor="descriptionPT"
-                                    >
-                                        pt
-                                    </label>
-                                    <TextArea
-                                        required
-                                        id="descriptionPT"
-                                        className="w-full"
-                                        value={
-                                            hook.project.description?.PT || ''
-                                        }
-                                        placeholder="New description (PT)"
+                                {LANGUAGES.map((lang) => (
+                                    <ProjectDescriptionField
+                                        key={lang}
+                                        lang={lang}
                                         onChange={(value) =>
-                                            hook.updateDescription('PT', value)
+                                            hook.updateDescription(lang, value)
+                                        }
+                                        value={
+                                            hook.project.description?.[lang] ??
+                                            ''
                                         }
                                     />
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <label
-                                        className="font-semibold text-sm uppercase"
-                                        htmlFor="descriptionEN"
-                                    >
-                                        en
-                                    </label>
-                                    <TextArea
-                                        required
-                                        id="descriptionEN"
-                                        className="w-full"
-                                        value={
-                                            hook.project.description?.EN || ''
-                                        }
-                                        placeholder="New description (EN)"
-                                        onChange={(value) =>
-                                            hook.updateDescription('EN', value)
-                                        }
-                                    />
-                                </div>
+                                ))}
                             </div>
 
                             {[

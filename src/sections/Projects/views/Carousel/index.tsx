@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import ProjectCard from './components/ProjectCard';
+import ProjectCard from './ProjectCard';
 import { ProjectType } from '@/types';
 
 interface Props {

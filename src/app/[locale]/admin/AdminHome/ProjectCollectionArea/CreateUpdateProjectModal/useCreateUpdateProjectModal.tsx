@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
-import { ProjectType, ScreenshotType } from '@/types';
+import {
+    CreateUpdateProjectType,
+    LangType,
+    ProjectType,
+    ScreenshotType,
+} from '@/types';
 import { Trie } from '@/utils/trie';
 import { FirebaseError } from 'firebase/app';
 import {
@@ -32,10 +37,8 @@ export interface CreateUpdateProjectModalProps {
 export default function useCreateUpdateProjectModal(
     props: CreateUpdateProjectModalProps
 ) {
-    const [project, setProject] = React.useState<
-        Omit<ProjectType, 'id' | 'index'> & { id?: string }
-    >({
-        description: { EN: '', PT: '' },
+    const [project, setProject] = React.useState<CreateUpdateProjectType>({
+        description: { en: '', 'pt-br': '' },
         screenshots: [],
         technologies: [],
         title: '',
@@ -112,7 +115,7 @@ export default function useCreateUpdateProjectModal(
     const updateProjectProps = (prop: keyof ProjectType, value: string) =>
         setProject((prev) => ({ ...prev, [prop]: value }));
 
-    const updateDescription = (lang: 'PT' | 'EN', value: string) => {
+    const updateDescription = (lang: LangType, value: string) => {
         const prevDesc = project?.description!;
         setProject((prev) => ({
             ...prev,
@@ -304,11 +307,10 @@ export default function useCreateUpdateProjectModal(
         });
 
         // Check empty values
-        const { EN, PT } = description;
+        const { en } = description;
         if (
             !title ||
-            !EN ||
-            !PT ||
+            !en ||
             technologies.length === 0 ||
             projectScreenshots.length === 0
         ) {

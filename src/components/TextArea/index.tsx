@@ -8,6 +8,8 @@ interface TextAreaProps {
     className?: string;
     onChange(_value: string): void;
     required?: boolean;
+    onFocus?: (_: React.FocusEvent<HTMLTextAreaElement, Element>) => void;
+    onBlur?: (_: React.FocusEvent<HTMLTextAreaElement, Element>) => void;
 }
 
 export default function TextArea(props: TextAreaProps) {
@@ -33,6 +35,8 @@ export default function TextArea(props: TextAreaProps) {
             rows={1}
             placeholder={props.placeholder}
             value={props.value}
+            onFocus={props.onFocus}
+            onBlur={props.onBlur}
             onChange={(e) => {
                 props.onChange(e.currentTarget.value);
             }}

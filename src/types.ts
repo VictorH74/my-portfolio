@@ -1,21 +1,25 @@
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { LANGUAGES } from './utils/server-constants';
 
-export type Language = 'en' | 'pt-BR';
-export type TranslationLang<T> = Record<Language, T>;
+export type LangType = (typeof LANGUAGES)[number];
 
 export type ProjectType = {
     index: number;
     id: string;
     title: string;
     screenshots: ScreenshotType[];
-    description: { PT: string; EN: string };
+    description: Record<LangType, string | undefined>;
     technologies: string[];
     deployUrl?: string;
     repositoryUrl?: string;
     videoUrl?: string;
     createdAt?: string; // ISO String Date
     updatedAt?: string; // ISO String Date
+};
+
+export type CreateUpdateProjectType = Omit<ProjectType, 'id' | 'index'> & {
+    id?: string;
 };
 
 export type ScreenshotType = {

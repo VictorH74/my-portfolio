@@ -57,7 +57,7 @@ export default function AdminProjectCard(props: ProjectType) {
                         {props.title}
                     </h2>
 
-                    <p className="truncate">{props.description.EN}</p>
+                    <p className="truncate">{props.description.en}</p>
 
                     <div className="flex flex-row gap-2">
                         {props.deployUrl && <LinkIcon />}

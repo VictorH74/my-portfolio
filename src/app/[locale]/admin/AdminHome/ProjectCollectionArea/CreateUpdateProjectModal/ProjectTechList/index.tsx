@@ -11,7 +11,7 @@ export default function ProjectTechList(props: ProjectTechListProps) {
                     <li key={techName}>
                         <p
                             onClick={() => props.onRemoveTechItem(techName)}
-                            className="bg-gray-800 p-2 rounded-xl hover:bg-red-400 select-none"
+                            className="bg-gray-800 p-2 rounded-xl hover:bg-red-400 select-none duration-200"
                         >
                             {techName}
                         </p>

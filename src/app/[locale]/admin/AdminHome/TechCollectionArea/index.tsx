@@ -13,6 +13,7 @@ import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { IconButton } from '@/components/IconButton';
 import CollectionActions from '../CollectionActions';
 import ReordableModal, { OutputReordableItemType } from '../ReordableModal';
+import Skeleton from '@mui/material/Skeleton';
 
 const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
 
@@ -25,7 +26,11 @@ export default function TechnologiesArea() {
     const [showAddTechForm, setShowAddTechForm] = React.useState(false);
     const [showReorderModal, setShowReorderModal] = React.useState(false);
 
-    const { technologyArray, setTechnologyArray } = useGlobalTechnologies();
+    const {
+        technologyArray,
+        setTechnologyArray,
+        isLoading: isTechArrayLoading,
+    } = useGlobalTechnologies();
 
     const removeTech = async (techId: string, techIndex: number) => {
         if (
@@ -136,61 +141,91 @@ export default function TechnologiesArea() {
 
             <ul className="flex flex-wrap justify-center gap-3 mt-5">
                 {/* TODO: implement component to empty tech array */}
-                {technologyArray.map((icon) => (
-                    <li
-                        key={icon.id}
-                        className={twMerge(
-                            'shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] aspect-square select-none duration-200 backdrop-blur-md relative rounded-md',
-                            selectedTech?.index == icon.index &&
-                                'outline outline-[var(--theme-color)]'
-                        )}
-                        data-aos="flip-left"
-                        data-aos-duration="1000"
-                        data-aos-once="true"
-                    >
-                        <div className="absolute inset-0 bg-black/50 duration-200 opacity-0 hover:opacity-100 flex gap-2 items-center justify-center">
-                            <IconButton
-                                Icon={EditIcon}
-                                onClick={makeSelectTech(icon)}
-                                type="button"
-                            />
-                            <IconButton
-                                Icon={RemoveIcon}
-                                onClick={makeRemoveFunc(icon.id, icon.index)}
-                                type="button"
-                                disabled={!!selectedTech}
-                            />
-                        </div>
+                {isTechArrayLoading
+                    ? Array(6)
+                          .fill(null)
+                          .map((_, i) => (
+                              <li
+                                  key={i}
+                                  className={twMerge(
+                                      'shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] aspect-square select-none duration-200 backdrop-blur-md relative rounded-md overflow-hidden'
+                                  )}
+                                  data-aos="flip-left"
+                                  data-aos-duration="1000"
+                                  data-aos-once="true"
+                              >
+                                  <Skeleton
+                                      variant="circular"
+                                      width={70}
+                                      height={70}
+                                      sx={{
+                                          backgroundColor: '#66666667',
+                                      }}
+                                      animation="pulse"
+                                  />
+                              </li>
+                          ))
+                    : technologyArray.map((icon) => (
+                          <li
+                              key={icon.id}
+                              className={twMerge(
+                                  'shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] aspect-square select-none duration-200 backdrop-blur-md relative rounded-md',
+                                  selectedTech?.index == icon.index &&
+                                      'outline outline-[var(--theme-color)]'
+                              )}
+                              data-aos="flip-left"
+                              data-aos-duration="1000"
+                              data-aos-once="true"
+                          >
+                              <div className="absolute inset-0 bg-black/50 duration-200 opacity-0 hover:opacity-100 flex gap-2 items-center justify-center">
+                                  <IconButton
+                                      Icon={EditIcon}
+                                      onClick={makeSelectTech(icon)}
+                                      type="button"
+                                  />
+                                  <IconButton
+                                      Icon={RemoveIcon}
+                                      onClick={makeRemoveFunc(
+                                          icon.id,
+                                          icon.index
+                                      )}
+                                      type="button"
+                                      disabled={!!selectedTech}
+                                  />
+                              </div>
 
-                        {icon.isMain && icon.hidden ? (
-                            <>
-                                <GradeIcon className="absolute top-3 right-3 text-[var(--theme-color)] pointer-events-none" />
-                                <VisibilityOffIcon className="absolute top-10 right-3 text-gray-500 pointer-events-none" />
-                            </>
-                        ) : icon.isMain ? (
-                            <GradeIcon className="absolute top-3 right-3 text-[var(--theme-color)] pointer-events-none" />
-                        ) : (
-                            icon.hidden && (
-                                <VisibilityOffIcon className="absolute top-3 right-3 text-gray-500 dark:text-[#3f3f3f] pointer-events-none" />
-                            )
-                        )}
+                              {icon.isMain && icon.hidden ? (
+                                  <>
+                                      <GradeIcon className="absolute top-3 right-3 text-[var(--theme-color)] pointer-events-none" />
+                                      <VisibilityOffIcon className="absolute top-10 right-3 text-gray-500 pointer-events-none" />
+                                  </>
+                              ) : icon.isMain ? (
+                                  <GradeIcon className="absolute top-3 right-3 text-[var(--theme-color)] pointer-events-none" />
+                              ) : (
+                                  icon.hidden && (
+                                      <VisibilityOffIcon className="absolute top-3 right-3 text-gray-500 dark:text-[#3f3f3f] pointer-events-none" />
+                                  )
+                              )}
 
-                        <Image
-                            loading="lazy"
-                            placeholder="empty"
-                            height={50}
-                            width={50}
-                            className="h-2/5 w-auto"
-                            src={icon.src}
-                            alt="icon"
-                        />
-                        <div className="tech-name ">
-                            <p className="primary-font-color" translate="no">
-                                {icon.name}
-                            </p>
-                        </div>
-                    </li>
-                ))}
+                              <Image
+                                  loading="lazy"
+                                  placeholder="empty"
+                                  height={50}
+                                  width={50}
+                                  className="h-2/5 w-auto"
+                                  src={icon.src}
+                                  alt="icon"
+                              />
+                              <div className="tech-name ">
+                                  <p
+                                      className="primary-font-color"
+                                      translate="no"
+                                  >
+                                      {icon.name}
+                                  </p>
+                              </div>
+                          </li>
+                      ))}
             </ul>
 
             {showReorderModal && (
