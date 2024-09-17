@@ -60,6 +60,7 @@ export default function AdminLoginPage() {
                         name="email"
                         placeholder="Email"
                         required
+                        autoFocus
                     />
 
                     <input

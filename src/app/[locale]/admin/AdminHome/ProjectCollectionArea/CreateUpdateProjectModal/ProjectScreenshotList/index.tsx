@@ -10,7 +10,6 @@ interface ProjectScreenshotListProps {
         _screenshotIndex: number
     ): (_: React.ChangeEvent<HTMLInputElement>) => void;
     removeScreenshotFunc(_screenshotIndex: number): () => void;
-    onScreenshotClick(_screenshotIndex: number): void;
 }
 
 export default function ProjectScreenshotList(
@@ -30,13 +29,10 @@ export default function ProjectScreenshotList(
                             height={113}
                             src={url}
                             alt="project screenshot"
-                            onClick={() => props.onScreenshotClick(index)}
                         />
                         <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
                             <div className="flex gap-2 items-center justify-center">
-                                {/* TODO: individual comp */}
-
-                                <div className="bg-gray-200 dark:bg-[#3f3f3f] rounded-full p-2">
+                                <div className={IconButton.className}>
                                     <label
                                         htmlFor="upload-replace-img"
                                         className="cursor-pointer"

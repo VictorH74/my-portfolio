@@ -2,9 +2,8 @@
 import React from 'react';
 import AdminProjectsProvider from '@/contexts/AdminProjectsContext';
 import TechCollectionArea from './TechCollectionArea';
-import CvArea from './CvArea';
 import ProjectCollectionArea from './ProjectCollectionArea';
-import ContactListArea from './ContactListArea';
+import ProfileArea from './ProfileArea';
 
 export default function AdminHome() {
     return (
@@ -20,9 +19,7 @@ export default function AdminHome() {
 
                 <TechCollectionArea />
 
-                <ContactListArea />
-
-                <CvArea />
+                <ProfileArea />
             </main>
         </AdminProjectsProvider>
     );

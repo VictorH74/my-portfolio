@@ -1,14 +1,12 @@
-'use client';
 import { getResume, resumeFileName } from '@/utils/resume';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import React from 'react';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-import PdfViewer from './component/PdfViewer';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import Image from 'next/image';
-import { headingClassName } from '../CollectionActions';
+import React from 'react';
+import PdfViewer from './PdfViewer';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
-export default function CvArea() {
+export default function ResumeCV() {
     const [resumeBlob, setResumeBlob] = React.useState<Blob | undefined>();
     const [showPdfViewer, setShowPdfViewer] = React.useState(false);
     const [loadingResume, setLoadingResume] = React.useState(true);
@@ -59,9 +57,7 @@ export default function CvArea() {
     if (!loadingResume && !resumeBlob) return <p>undefined resume blob</p>;
 
     return (
-        <section className="primary-font-color">
-            <h1 className={headingClassName}>Resume CV</h1>
-
+        <>
             <div className="rounded-md bg-white dark:bg-[#3f3f3f] max-w-[500px] p-2 flex items-center gap-2 relative">
                 <Image
                     src="/icons/fileIcon.svg"
@@ -113,6 +109,6 @@ export default function CvArea() {
                     fileUrl={resumeUrl!}
                 />
             )}
-        </section>
+        </>
     );
 }

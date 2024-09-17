@@ -1,17 +1,17 @@
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
+
 const ProtectedRoutes = ['/admin'];
-const LogOutRoutes = ['/admin/login'];
 
 export const authMiddleware = (req: NextRequest) => {
-    const token = cookies().get('token')?.value;
+    const recoveredToken = cookies().get('recoveredToken')?.value;
 
-    if (
-        token &&
-        LogOutRoutes.some((path) => req.nextUrl.pathname.startsWith(path))
-    )
+    if (!!recoveredToken && req.nextUrl.pathname.startsWith('/admin/login'))
         return Response.redirect(new URL(ProtectedRoutes[0], req.url));
-    if (!token && ProtectedRoutes.some((path) => req.url.startsWith(path)))
+    if (
+        !recoveredToken &&
+        ProtectedRoutes.some((path) => req.url.startsWith(path))
+    )
         return Response.redirect(new URL('/login', req.url));
 
     return undefined;

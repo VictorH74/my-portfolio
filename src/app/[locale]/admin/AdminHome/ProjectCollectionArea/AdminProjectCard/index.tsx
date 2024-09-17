@@ -9,6 +9,7 @@ import { createPortal } from 'react-dom';
 import ProjectCardHover from './ProjectCardHover';
 import useAdminProjectCard from './useAdminProjectCard';
 import CreateUpdateProjectModal from '../CreateUpdateProjectModal';
+import Divider from '@/components/Divider';
 
 const DateParagraph: React.FC<{ label: string; isoDate: string }> = ({
     label,
@@ -65,8 +66,7 @@ export default function AdminProjectCard(props: ProjectType) {
                         {props.videoUrl && <PlayCircleFilledIcon />}
                     </div>
 
-                    {/* Diviser */}
-                    <div className="primary-bg-color w-full h-[2px] my-2" />
+                    <Divider className="my-2 primary-bg-color" />
 
                     <div className="grow flex flex-wrap gap-2">
                         {hook.techSrcList.map((src, i) => (

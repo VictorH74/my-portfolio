@@ -7,6 +7,7 @@ import { downloadResume } from '@/utils/resume';
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import useAboutMe from './useAboutMe';
+import Divider from '@/components/Divider';
 
 const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
 const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
@@ -81,7 +82,7 @@ const AboutMe = () => {
             </div>
 
             <div className="flex flex-row items-center gap-5 mt-8">
-                <div className="grow shrink basis-auto h-[2px] bg-[var(--theme-color)]" />
+                <Divider className="grow shrink basis-auto" />
                 <DownloadResumeBtn
                     onClick={hook.isLoading ? undefined : downloadResume}
                     data-tooltip={`${t('resume_size_text')}: ${
@@ -118,7 +119,7 @@ const AboutMe = () => {
                         </span>
                     </div>
                 </DownloadResumeBtn>
-                <div className="grow shrink basis-auto h-[2px] bg-[var(--theme-color)]" />
+                <Divider className="grow shrink basis-auto" />
             </div>
         </section>
     );

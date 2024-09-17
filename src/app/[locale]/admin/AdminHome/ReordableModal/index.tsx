@@ -44,18 +44,28 @@ const getListStyle = () => ({
     padding: grid,
 });
 
-export type ReordableItemType = Record<'value', string> & Record<'id', string>;
-export type OutputReordableItemType = ReordableItemType & { prevIndex: number };
+export namespace ReordableModal {
+    export type ReordableItemType = Record<'value', string> &
+        Record<'id', string>;
+    export type OutputReordableItemType = ReordableItemType & {
+        prevIndex: number;
+    };
+}
 
 interface ReordableModalProps {
     onClose(): void;
-    items: ReordableItemType[];
-    onSubmit(_items: OutputReordableItemType[]): Promise<void>;
-    children: (_item: ReordableItemType, _index: number) => React.ReactElement;
+    items: ReordableModal.ReordableItemType[];
+    onSubmit(_items: ReordableModal.OutputReordableItemType[]): Promise<void>;
+    children: (
+        _item: ReordableModal.ReordableItemType,
+        _index: number
+    ) => React.ReactElement;
 }
 
-export default function ReordableModal(props: ReordableModalProps) {
-    const [items, setItems] = React.useState<ReordableItemType[]>([]);
+export function ReordableModal(props: ReordableModalProps) {
+    const [items, setItems] = React.useState<
+        ReordableModal.ReordableItemType[]
+    >([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const { themeColor } = useTheme();
 
@@ -95,10 +105,12 @@ export default function ReordableModal(props: ReordableModalProps) {
             prevItemsObj[id] = { value, index };
         }
 
-        const output: OutputReordableItemType[] = items.map((item) => ({
-            ...item,
-            prevIndex: prevItemsObj[item.id].index,
-        }));
+        const output: ReordableModal.OutputReordableItemType[] = items.map(
+            (item) => ({
+                ...item,
+                prevIndex: prevItemsObj[item.id].index,
+            })
+        );
 
         setIsLoading(true);
         try {

@@ -3,6 +3,7 @@ import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { useTranslations } from 'next-intl';
+import TechnologyLiItem from '@/components/TechnologyLiItem';
 
 const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
@@ -27,9 +28,8 @@ export default function Technologies() {
                     technologyArray.map(
                         (icon) =>
                             !icon.hidden && (
-                                <li
+                                <TechnologyLiItem
                                     key={icon.id}
-                                    className="shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md"
                                     data-aos="flip-left"
                                     data-aos-duration="1000"
                                     data-aos-once="true"
@@ -51,7 +51,7 @@ export default function Technologies() {
                                             {icon.name}
                                         </p>
                                     </div>
-                                </li>
+                                </TechnologyLiItem>
                             )
                     )
                 )}

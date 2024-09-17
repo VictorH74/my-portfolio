@@ -44,6 +44,7 @@ export default function useUpdateContactModal(props: UpdateContactModalProps) {
                 [props.contactKey]: inputValue,
             };
             const docRef = doc(db, 'profile', 'contacts');
+            console.log(contactProp);
             await updateDoc(docRef, contactProp);
             props.onSubmitted(contactProp);
             props.onClose();

@@ -1,125 +1,32 @@
 'use client';
-import { twMerge } from 'tailwind-merge';
 import React from 'react';
-import { TechnologieType } from '@/types';
-import { doc, runTransaction, writeBatch } from 'firebase/firestore';
-import { db } from '@/configs/firebaseConfig';
 import Image from 'next/image';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveIcon from '@mui/icons-material/Remove';
 import GradeIcon from '@mui/icons-material/Grade';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { IconButton } from '@/components/IconButton';
 import CollectionActions from '../CollectionActions';
-import ReordableModal, { OutputReordableItemType } from '../ReordableModal';
+import { ReordableModal } from '../ReordableModal';
 import Skeleton from '@mui/material/Skeleton';
+import TechnologyLiItem from '@/components/TechnologyLiItem';
+import useTechnologiesArea from './useTechnologiesArea';
+import { twMerge } from 'tailwind-merge';
 
 const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
 
-export const getTechDocRef = (id: string) => doc(db, 'technologies', id);
-
 export default function TechnologiesArea() {
-    const [selectedTech, setSelectedTech] =
-        React.useState<TechnologieType | null>(null);
-
-    const [showAddTechForm, setShowAddTechForm] = React.useState(false);
-    const [showReorderModal, setShowReorderModal] = React.useState(false);
-
-    const {
-        technologyArray,
-        setTechnologyArray,
-        isLoading: isTechArrayLoading,
-    } = useGlobalTechnologies();
-
-    const removeTech = async (techId: string, techIndex: number) => {
-        if (
-            confirm(
-                'Are you sure you want to remove this technologie from your collection?'
-            )
-        ) {
-            const docRef = getTechDocRef(techId);
-            const collectionCountRef = doc(db, 'counts', 'projects');
-
-            await runTransaction(db, async (transaction) => {
-                const collectionCount = await transaction.get(
-                    collectionCountRef
-                );
-                if (!collectionCount.exists()) {
-                    throw 'Document does not exist!';
-                }
-
-                const total = (collectionCount.data().total as number) - 1;
-
-                for (
-                    let currentIndex = techIndex;
-                    currentIndex < total;
-                    currentIndex++
-                ) {
-                    const { id, index } = technologyArray[currentIndex + 1];
-                    if (index !== currentIndex + 1)
-                        throw new Error(
-                            `Technology index is incorrect. index: ${index}, currentIndex: ${currentIndex}`
-                        );
-                    const currentTechRef = getTechDocRef(id);
-                    transaction.update(currentTechRef, { index: currentIndex });
-                }
-
-                transaction.delete(docRef);
-
-                transaction.update(collectionCountRef, { total });
-            });
-
-            setTechnologyArray((prev) => prev.filter((t) => t.id !== techId));
-        }
-    };
-
-    const makeSelectTech = (tech: TechnologieType) => () => {
-        setSelectedTech(tech);
-        setShowAddTechForm(true);
-    };
-
-    const makeRemoveFunc = (id: string, index: number) => () =>
-        removeTech(id, index);
-
-    const toggleAddTechFormVisibillity = () =>
-        setShowAddTechForm((prev) => !prev);
-
-    const toggleReorderModalVisibillity = () =>
-        setShowReorderModal((prev) => !prev);
-
-    const reorderTechs = async (items: OutputReordableItemType[]) => {
-        const batch = writeBatch(db);
-
-        const prevTechnologyArray = technologyArray;
-        const updatedTechnologyArray = Array(technologyArray.length).fill(null);
-
-        items.forEach((item, currentIndex) => {
-            const updatedIndexProp = { index: currentIndex };
-            updatedTechnologyArray[currentIndex] = {
-                ...prevTechnologyArray[item.prevIndex],
-                ...updatedIndexProp,
-            };
-
-            if (currentIndex !== item.prevIndex) {
-                const docRef = getTechDocRef(item.id);
-                batch.update(docRef, updatedIndexProp);
-            }
-        });
-
-        await batch.commit();
-        setTechnologyArray(updatedTechnologyArray);
-    };
+    const hook = useTechnologiesArea();
 
     return (
         <section>
             <CollectionActions
                 collectionName="Technologies"
-                addFunc={toggleAddTechFormVisibillity}
-                reorderFunc={toggleReorderModalVisibillity}
+                addFunc={hook.toggleAddTechFormVisibillity}
+                reorderFunc={hook.toggleReorderModalVisibillity}
             />
 
-            {showAddTechForm && (
+            {hook.showAddTechForm && (
                 <React.Suspense
                     fallback={
                         <span className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 py-2 w-full max-w-[400px] mx-2 text-center rounded-md bg-custom-gray-light">
@@ -128,31 +35,25 @@ export default function TechnologiesArea() {
                     }
                 >
                     <AddTechFormModal
-                        selectedTech={selectedTech}
-                        setTechnologyArray={setTechnologyArray}
-                        resetFieldsCallback={() => setSelectedTech(null)}
+                        selectedTech={hook.selectedTech}
+                        setTechnologyArray={hook.setTechnologyArray}
+                        resetFieldsCallback={() => hook.setSelectedTech(null)}
                         onClose={() => {
-                            if (!!selectedTech) setSelectedTech(null);
-                            setShowAddTechForm(false);
+                            if (!!hook.selectedTech) hook.setSelectedTech(null);
+                            hook.setShowAddTechForm(false);
                         }}
                     />
                 </React.Suspense>
             )}
 
             <ul className="flex flex-wrap justify-center gap-3 mt-5">
-                {/* TODO: implement component to empty tech array */}
-                {isTechArrayLoading
+                {hook.isTechArrayLoading
                     ? Array(6)
                           .fill(null)
                           .map((_, i) => (
-                              <li
+                              <TechnologyLiItem
                                   key={i}
-                                  className={twMerge(
-                                      'shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] aspect-square select-none duration-200 backdrop-blur-md relative rounded-md overflow-hidden'
-                                  )}
-                                  data-aos="flip-left"
-                                  data-aos-duration="1000"
-                                  data-aos-once="true"
+                                  className="max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] relative rounded-md overflow-hidden"
                               >
                                   <Skeleton
                                       variant="circular"
@@ -163,34 +64,31 @@ export default function TechnologiesArea() {
                                       }}
                                       animation="pulse"
                                   />
-                              </li>
+                              </TechnologyLiItem>
                           ))
-                    : technologyArray.map((icon) => (
-                          <li
+                    : hook.technologyArray.map((icon) => (
+                          <TechnologyLiItem
                               key={icon.id}
                               className={twMerge(
-                                  'shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] aspect-square select-none duration-200 backdrop-blur-md relative rounded-md',
-                                  selectedTech?.index == icon.index &&
+                                  'max-sm:w-[70px] sm:w-[170px] sm:min-w-[170px] relative rounded-md',
+                                  hook.selectedTech?.index == icon.index &&
                                       'outline outline-[var(--theme-color)]'
                               )}
-                              data-aos="flip-left"
-                              data-aos-duration="1000"
-                              data-aos-once="true"
                           >
                               <div className="absolute inset-0 bg-black/50 duration-200 opacity-0 hover:opacity-100 flex gap-2 items-center justify-center">
                                   <IconButton
                                       Icon={EditIcon}
-                                      onClick={makeSelectTech(icon)}
+                                      onClick={hook.makeSelectTech(icon)}
                                       type="button"
                                   />
                                   <IconButton
                                       Icon={RemoveIcon}
-                                      onClick={makeRemoveFunc(
+                                      onClick={hook.makeRemoveFunc(
                                           icon.id,
                                           icon.index
                                       )}
                                       type="button"
-                                      disabled={!!selectedTech}
+                                      disabled={!!hook.selectedTech}
                                   />
                               </div>
 
@@ -224,18 +122,18 @@ export default function TechnologiesArea() {
                                       {icon.name}
                                   </p>
                               </div>
-                          </li>
+                          </TechnologyLiItem>
                       ))}
             </ul>
 
-            {showReorderModal && (
+            {hook.showReorderModal && (
                 <ReordableModal
-                    onSubmit={reorderTechs}
-                    items={technologyArray.map(({ id, name, src }) => ({
+                    onSubmit={hook.reorderTechs}
+                    items={hook.technologyArray.map(({ id, name, src }) => ({
                         id,
                         value: JSON.stringify({ name, src }),
                     }))}
-                    onClose={() => setShowReorderModal(false)}
+                    onClose={() => hook.setShowReorderModal(false)}
                 >
                     {(item, index) => (
                         <div

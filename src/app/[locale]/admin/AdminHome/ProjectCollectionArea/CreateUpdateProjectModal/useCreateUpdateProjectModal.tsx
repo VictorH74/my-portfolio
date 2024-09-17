@@ -6,7 +6,6 @@ import {
     ProjectType,
     ScreenshotType,
 } from '@/types';
-import { Trie } from '@/utils/trie';
 import { FirebaseError } from 'firebase/app';
 import {
     addDoc,
@@ -22,8 +21,8 @@ import {
     ref,
     uploadBytes,
 } from 'firebase/storage';
-import React, { useRef } from 'react';
-import { OutputReordableItemType } from '../../ReordableModal';
+import React from 'react';
+import { ReordableModal } from '../../ReordableModal';
 import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
@@ -43,17 +42,13 @@ export default function useCreateUpdateProjectModal(
         technologies: [],
         title: '',
     });
-    const [technologieValue, setTechnologieValue] = React.useState('');
     const [onRemoveScreenshotNames, setOnRemoveScreenshotNames] =
         React.useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [projectScreenshots, setProjectScreenshots] = React.useState<
         Array<ScreenshotType | File>
     >([]);
-    const [trieSufix, setTrieSufix] = React.useState<string>();
-    const trieRef = React.useRef(new Trie());
-    const techInputRef = useRef<HTMLInputElement>(null);
-    const wordSufixSpanRef = useRef<HTMLSpanElement>(null);
+
     const projectScreenshotUrls = React.useMemo<string[]>(
         () =>
             projectScreenshots.map((img) =>
@@ -61,56 +56,15 @@ export default function useCreateUpdateProjectModal(
             ),
         [projectScreenshots]
     );
-    const [onReorderScreenshots, setOnReorderScreenshots] =
-        React.useState(false);
 
-    const { technologyArray, empty: emptyTechArray } = useGlobalTechnologies();
+    const { technologyArray } = useGlobalTechnologies();
 
     React.useEffect(() => {
         if (props.project) {
             setProjectScreenshots([...props.project.screenshots]);
             setProject({ ...props.project });
         }
-
-        if (emptyTechArray) return;
-        const techNames = technologyArray.map((t) => t.id);
-        trieRef.current.insert(techNames);
     }, [technologyArray]);
-
-    React.useEffect(() => {
-        if (!technologieValue) {
-            setTrieSufix(undefined);
-            return;
-        }
-
-        const currenValue = technologieValue.toLowerCase();
-        const trieResult = trieRef.current?.findFirstByPrefix(currenValue);
-        setTrieSufix(
-            !(project.technologies || []).includes(
-                technologieValue + trieResult
-            )
-                ? trieResult
-                : undefined
-        );
-
-        updateWordSufixSpanPosition();
-    }, [technologieValue]);
-
-    const updateWordSufixSpanPosition = () => {
-        if (!techInputRef.current || !wordSufixSpanRef.current) return;
-
-        const tempSpan = document.createElement('span');
-        tempSpan.style.font = window.getComputedStyle(
-            techInputRef.current
-        ).font;
-        tempSpan.textContent = techInputRef.current.value;
-        document.body.appendChild(tempSpan);
-
-        const textWidth = tempSpan.getBoundingClientRect().width;
-        wordSufixSpanRef.current.style.left = textWidth + 8 + 'px';
-
-        document.body.removeChild(tempSpan);
-    };
 
     const updateProjectProps = (prop: keyof ProjectType, value: string) =>
         setProject((prev) => ({ ...prev, [prop]: value }));
@@ -123,21 +77,19 @@ export default function useCreateUpdateProjectModal(
         }));
     };
 
-    const updatedCheckedProjectData = (
+    // TODO: validate field data with react-form
+    const validateProjectFieldData = (
         projectRest: Omit<typeof project, 'screenshots'>
     ) => {
         const propProject = props.project!;
 
-        const updatedData: Record<string, object | string> = {};
+        const validatedData: Record<string, object | string> = {};
+
         Object.entries(projectRest).forEach(([currentKey, currentValue]) => {
             if (typeof currentValue === 'string') {
                 const prevValue = propProject[currentKey as keyof ProjectType];
                 if (currentValue !== prevValue) {
-                    updatedData[currentKey] = (
-                        UrlProps as readonly string[]
-                    ).includes(currentKey)
-                        ? new URL(currentValue).href
-                        : (updatedData[currentKey] = currentValue);
+                    validatedData[currentKey] = currentValue;
                 }
             } else if (typeof currentValue !== 'number')
                 (
@@ -149,27 +101,27 @@ export default function useCreateUpdateProjectModal(
                                 ) !==
                                 Object.values(propProject.description).join('')
                             )
-                                updatedData[currentKey] = currentValue;
+                                validatedData[currentKey] = currentValue;
                         },
                         technologies: () => {
                             if (
                                 projectRest.technologies.join('') !==
                                 propProject.technologies.join('')
                             )
-                                updatedData[currentKey] = currentValue;
+                                validatedData[currentKey] = currentValue;
                         },
                     }) as Record<string, () => void>
                 )[currentKey]();
         });
 
-        return updatedData;
+        return validatedData;
     };
 
     const uploadScreenshots = async () => {
         let updatedScreenshots = [...projectScreenshots];
         const promises: Promise<void>[] = [];
 
-        projectScreenshots.forEach(async (img, i) => {
+        projectScreenshots.forEach((img, i) => {
             if (img instanceof File) {
                 promises.push(
                     new Promise(async (resolve, reject) => {
@@ -207,6 +159,7 @@ export default function useCreateUpdateProjectModal(
                 );
             }
         });
+
         await Promise.all(promises);
 
         // remove deleted screenshots from storage
@@ -263,7 +216,7 @@ export default function useCreateUpdateProjectModal(
             id?: string;
         }
     ) => {
-        const updatedProjectData = updatedCheckedProjectData(rest);
+        const validatedProjectData = validateProjectFieldData(rest);
 
         // if project screenshots has changed
         if (projectScreenshots.length === 0) return;
@@ -282,18 +235,18 @@ export default function useCreateUpdateProjectModal(
         }
 
         if (projectScreenshotsHasChanged)
-            updatedProjectData.screenshots = await uploadScreenshots();
+            validatedProjectData.screenshots = await uploadScreenshots();
 
         const notProjectDataChanged =
-            Object.values(updatedProjectData).length === 0;
+            Object.values(validatedProjectData).length === 0;
         if (notProjectDataChanged) return;
 
         const docRef = doc(db, 'projects', prevProjectData.id);
 
-        // console.log({ ...updatedProjectData, updatedAt: new Date().toISOString() })
+        // console.log({ ...validatedProjectData, updatedAt: new Date().toISOString() })
 
         await updateDoc(docRef, {
-            ...updatedProjectData,
+            ...validatedProjectData,
             updatedAt: new Date().toISOString(),
         });
     };
@@ -367,11 +320,26 @@ export default function useCreateUpdateProjectModal(
         }
     };
 
-    const reorderScreenshots = async (items: OutputReordableItemType[]) => {
+    const reorderScreenshots = async (
+        items: ReordableModal.OutputReordableItemType[]
+    ) => {
         setProjectScreenshots((prev) =>
             items.map((item) => prev[item.prevIndex])
         );
     };
+
+    const removeTechByName = React.useCallback(
+        (techName: string) => {
+            const technologies = (project.technologies || []).filter(
+                (t) => t !== techName
+            );
+            setProject((prev) => ({
+                ...prev,
+                technologies,
+            }));
+        },
+        [project.technologies]
+    );
 
     return {
         handleSubmit,
@@ -379,23 +347,13 @@ export default function useCreateUpdateProjectModal(
         handleSelectChange,
         replaceScreenshot,
         removeScreenshot,
-        setProjectScreenshots,
-        setOnRemoveScreenshotNames,
         updateProjectProps,
         updateDescription,
         project,
         setProject,
-        wordSufixSpanRef,
-        trieSufix,
-        techInputRef,
-        setTechnologieValue,
-        technologieValue,
-        setTrieSufix,
         isSubmitting,
         projectScreenshotUrls,
         reorderScreenshots,
-        onReorderScreenshots,
-        setOnReorderScreenshots,
-        emptyTechArray,
+        removeTechByName,
     };
 }

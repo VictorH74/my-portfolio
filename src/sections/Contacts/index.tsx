@@ -4,6 +4,7 @@ import useContacts from './useContacts';
 import Timer from './Timer';
 import { useTranslations } from 'next-intl';
 import useWindowSize from '@/hooks/UseWindowsSize';
+import Divider from '@/components/Divider';
 
 export default function Contacts() {
     const hook = useContacts();
@@ -19,7 +20,7 @@ export default function Contacts() {
                     <ContactList center />
                 </div>
             </section>
-            <div className="h-[2px] mb-3 bg-[var(--theme-color)]" />
+            <Divider className="my-0 mb-3" />
             <footer className="mt-4">
                 {' '}
                 <p className="text-custom-white">

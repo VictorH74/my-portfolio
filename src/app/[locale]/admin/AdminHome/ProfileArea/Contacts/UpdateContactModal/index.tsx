@@ -36,6 +36,9 @@ export default function UpdateContactModal(props: UpdateContactModalProps) {
                         name="contact-value"
                         className="w-full p-2 border-2 border-custom-white rounded-md ml-2"
                         defaultValue={props.contactValue}
+                        onChange={(e) =>
+                            hook.setInputValue(e.currentTarget.value)
+                        }
                         required
                     />
                 </div>

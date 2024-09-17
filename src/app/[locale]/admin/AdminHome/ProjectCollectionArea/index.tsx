@@ -6,16 +6,19 @@ import AdminProjectWarnings from './ProjectWarnings';
 import CardSkeletonCollection from './CardSkeletonCollection';
 import useAdminProjects from '@/hooks/useAdminProjects';
 import CreateUpdateProjectModal from './CreateUpdateProjectModal';
-import ReordableModal, { OutputReordableItemType } from '../ReordableModal';
+import { ReordableModal } from '../ReordableModal';
 import { doc, writeBatch } from 'firebase/firestore';
 import { db } from '@/configs/firebaseConfig';
+import Divider from '@/components/Divider';
 
 export default function ProjectCollectionArea() {
     const [onCreateProject, setOnCreateProject] = React.useState(false);
     const [onReorderProject, setOnReorderProject] = React.useState(false);
     const { projects } = useAdminProjects();
 
-    const reorderedProjects = async (items: OutputReordableItemType[]) => {
+    const reorderedProjects = async (
+        items: ReordableModal.OutputReordableItemType[]
+    ) => {
         const batch = writeBatch(db);
 
         items.forEach((item, currentIndex) => {
@@ -34,7 +37,7 @@ export default function ProjectCollectionArea() {
             <section>
                 <AdminProjectWarnings projects={projects} />
 
-                <div className="h-[2px] my-6 bg-[var(--theme-color)]"></div>
+                <Divider />
 
                 <CollectionActions
                     collectionName="Projects"

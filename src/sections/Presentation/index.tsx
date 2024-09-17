@@ -7,6 +7,7 @@ import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import Image from 'next/image';
 import Skeleton from '@mui/material/Skeleton';
 import { useTranslations } from 'next-intl';
+import Divider from '@/components/Divider';
 
 export default function Presentation() {
     const hook = usePresentation();
@@ -67,7 +68,7 @@ export default function Presentation() {
                     </h2>
 
                     <div className="flex flex-row gap-4 items-center">
-                        <div className="h-[2px] grow bg-[var(--theme-color)]" />
+                        <Divider className="grow" />
                         {isLoading ? (
                             Array(5)
                                 .fill(null)
@@ -103,7 +104,7 @@ export default function Presentation() {
                                     />
                                 ))
                         )}
-                        <div className="h-[2px] grow bg-[var(--theme-color)]" />
+                        <Divider className="grow" />
                     </div>
                 </div>
             </div>

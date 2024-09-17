@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { TextareaHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-interface TextAreaProps {
-    value: string;
-    placeholder?: string;
-    id?: string;
-    className?: string;
+interface TextAreaProps
+    extends Omit<
+        TextareaHTMLAttributes<HTMLTextAreaElement>,
+        'onChange' | 'value' | 'rows'
+    > {
     onChange(_value: string): void;
-    required?: boolean;
-    onFocus?: (_: React.FocusEvent<HTMLTextAreaElement, Element>) => void;
-    onBlur?: (_: React.FocusEvent<HTMLTextAreaElement, Element>) => void;
+    value: string;
 }
 
-export default function TextArea(props: TextAreaProps) {
+export default function TextArea({
+    className,
+    onChange,
+    ...textAreaAttrs
+}: TextAreaProps) {
     const ref = React.useRef<HTMLTextAreaElement>(null);
 
     React.useEffect(() => {
@@ -21,25 +23,20 @@ export default function TextArea(props: TextAreaProps) {
             textarea.style.height = 'auto';
             textarea.style.height = `${textarea.scrollHeight + 2}px`;
         }
-    }, [props.value]);
+    }, [textAreaAttrs.value]);
 
     return (
         <textarea
-            required={props.required}
-            id={props.id}
             ref={ref}
             className={twMerge(
                 'shadow-lg bg-[#444444] p-2 rounded-md outline-blue-500 autofill:none resize-none overflow-hidden',
-                props.className
+                className
             )}
             rows={1}
-            placeholder={props.placeholder}
-            value={props.value}
-            onFocus={props.onFocus}
-            onBlur={props.onBlur}
             onChange={(e) => {
-                props.onChange(e.currentTarget.value);
+                onChange(e.currentTarget.value);
             }}
+            {...textAreaAttrs}
         />
     );
 }
