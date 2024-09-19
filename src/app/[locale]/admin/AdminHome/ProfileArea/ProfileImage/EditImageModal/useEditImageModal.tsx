@@ -33,19 +33,27 @@ export default function useEditImageModal(props: EditImageModalProps) {
         null
     );
 
-    const percentStrToNumber = (percent: `${string}%`) => {
-        return parseFloat(percent.replace('%', ''));
-    };
-
     React.useEffect(() => {
         loadPreviewImg();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cropArea]);
 
+    const getImgElRemainingHeight = () => {
+        const imgElHeight = imgRef.current!.getBoundingClientRect().height;
+        const cAElHeight = cropAreaRef.current!.getBoundingClientRect().height;
+        return imgElHeight - cAElHeight;
+    };
+
+    const getImgElRemainingWidth = () => {
+        const imgElWidth = imgRef.current!.getBoundingClientRect().width;
+        const cAElWidth = cropAreaRef.current!.getBoundingClientRect().width;
+        return imgElWidth - cAElWidth;
+    };
+
     const moveMaskByDirection = (
         d: DirectionType,
         newValue: number,
-        containerDimention: [number, number]
+        containerDimention: readonly [number, number]
     ) => {
         const containerMeasure =
             containerDimention[['top', 'bottom'].includes(d) ? 1 : 0];
@@ -55,34 +63,39 @@ export default function useEditImageModal(props: EditImageModalProps) {
             ((containerMeasure - newValue) / containerMeasure) * 100
         }%`;
 
-        switch (d) {
-            case 'left':
+        const action: {
+            [_K in DirectionType]: () => void;
+        } = {
+            left: () => {
                 maskWestRef.current!.style.right = revertedValue;
-                break;
-            case 'top':
+            },
+            top: () => {
                 maskNorthRef.current!.style.bottom = revertedValue;
                 maskWestRef.current!.style.top = value;
                 maskEastRef.current!.style.top = value;
-                break;
-            case 'right':
+            },
+            right: () => {
                 maskEastRef.current!.style.left = revertedValue;
-                break;
-            case 'bottom':
+            },
+            bottom: () => {
                 maskSouthRef.current!.style.top = revertedValue;
                 maskWestRef.current!.style.bottom = value;
                 maskEastRef.current!.style.bottom = value;
-                break;
-        }
+            },
+        };
+
+        action[d]();
     };
 
     const handleDragStart = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
-        if (onDrag) return;
-        const imgRect = imgRef.current!.getBoundingClientRect();
+        if (onDrag || !imgRef.current) return;
+        const { left, top } = imgRef.current.getBoundingClientRect();
+        const { clientX, clientY } = e;
         setLastMousePos({
-            left: e.clientX - imgRect.left,
-            top: e.clientY - imgRect.top,
+            left: clientX - left,
+            top: clientY - top,
         });
         setOnDrag(true);
         document.body.style.cursor = 'grabbing';
@@ -99,134 +112,123 @@ export default function useEditImageModal(props: EditImageModalProps) {
     };
 
     const onDraggableMove = (e: React.MouseEvent) => {
-        if (onDrag) {
-            const [cropAreaEl, imgEl] = [cropAreaRef.current!, imgRef.current!];
-            const cropAreaRect = cropAreaEl.getBoundingClientRect();
-            const imgRect = imgEl.getBoundingClientRect();
+        if (!onDrag) return;
 
-            const xFactor = e.clientX - imgRect.left - lastMousePos.left;
-            const yFactor = e.clientY - imgRect.top - lastMousePos.top;
+        const cropAreaEl = cropAreaRef.current;
+        const imgEl = imgRef.current;
 
-            // previous resizable box diretions values
-            const top = cropAreaRect.top - imgRect.top;
-            const bottom = imgRect.height - (top + cropAreaRect.height);
-            const left = cropAreaRect.left - imgRect.left;
-            const right = imgRect.width - (left + cropAreaRect.width);
+        if (!cropAreaEl || !imgEl) return;
 
-            // new resizable box diretions values
-            const newLeft = left + xFactor;
-            const newRight = right - xFactor;
-            const newTop = top + yFactor;
-            const newBottom = bottom - yFactor;
+        const {
+            top: cATop,
+            left: cALeft,
+            height: cAHeight,
+            width: cAWidth,
+        } = cropAreaEl.getBoundingClientRect();
 
-            const getWidthLimitRestPercent = () => {
-                const restPercent =
-                    (imgRect.width - cropAreaRect.width) / imgRect.width;
-                return restPercent * 100 + '%';
-            };
+        const {
+            top: imgTop,
+            left: imgLeft,
+            height: imgHeight,
+            width: imgWidth,
+        } = imgEl.getBoundingClientRect();
 
-            // X position border constraints
-            if (newLeft < 0) {
-                cropAreaEl.style.left = '0%';
-                cropAreaEl.style.right = getWidthLimitRestPercent();
-            } else if (newRight < 0) {
-                cropAreaEl.style.right = '0%';
-                cropAreaEl.style.left = getWidthLimitRestPercent();
-            } else {
-                cropAreaEl.style.left = `${(newLeft / imgRect.width) * 100}%`;
-                cropAreaEl.style.right = `${(newRight / imgRect.width) * 100}%`;
+        const { clientX, clientY } = e;
+        const xFactor = clientX - imgLeft - lastMousePos.left;
+        const yFactor = clientY - imgTop - lastMousePos.top;
 
-                moveMaskByDirection('left', newLeft, [
-                    imgRect.width,
-                    imgRect.height,
-                ]);
-                moveMaskByDirection('right', newRight, [
-                    imgRect.width,
-                    imgRect.height,
-                ]);
-            }
+        const relativeCATop = cATop - imgTop;
+        const relativeCABottom = imgHeight - (relativeCATop + cAHeight);
+        const relativeCALeft = cALeft - imgLeft;
+        const relativeCARight = imgWidth - (relativeCALeft + cAWidth);
 
-            const getHeightLimitRestPercent = () => {
-                const restPercent =
-                    (imgRect.height - cropAreaRect.height) / imgRect.height;
-                return restPercent * 100 + '%';
-            };
+        const getPositiveInt = (num: number) => Math.max(0, num);
+        let newTop = getPositiveInt(relativeCATop + yFactor);
+        let newBottom = getPositiveInt(relativeCABottom - yFactor);
+        let newLeft = getPositiveInt(relativeCALeft + xFactor);
+        let newRight = getPositiveInt(relativeCARight - xFactor);
 
-            // Y position border constraints
-            if (newTop < 0) {
-                cropAreaEl.style.top = '0%';
-                cropAreaEl.style.bottom = getHeightLimitRestPercent();
-            } else if (newBottom < 0) {
-                cropAreaEl.style.bottom = '0%';
-                cropAreaEl.style.top = getHeightLimitRestPercent();
-                // if (props.onBottomLimit) props.onBottomLimit();
-            } else {
-                cropAreaEl.style.top = `${(newTop / imgRect.height) * 100}%`;
-                cropAreaEl.style.bottom = `${
-                    (newBottom / imgRect.height) * 100
-                }%`;
+        if (newTop == 0) newBottom = getImgElRemainingHeight();
+        else if (newBottom == 0) newTop = getImgElRemainingHeight();
 
-                moveMaskByDirection('top', newTop, [
-                    imgRect.width,
-                    imgRect.height,
-                ]);
-                moveMaskByDirection('bottom', newBottom, [
-                    imgRect.width,
-                    imgRect.height,
-                ]);
-            }
+        if (newLeft == 0) newRight = getImgElRemainingWidth();
+        else if (newRight == 0) newLeft = getImgElRemainingWidth();
 
-            setLastMousePos({
-                left: e.clientX - imgRect.left,
-                top: e.clientY - imgRect.top,
-            });
-        }
+        const toStrPercent = (num1: number) => `${num1 * 100}%`;
+        cropAreaEl.style.top = toStrPercent(newTop / imgHeight);
+        cropAreaEl.style.bottom = toStrPercent(newBottom / imgHeight);
+        cropAreaEl.style.left = toStrPercent(newLeft / imgWidth);
+        cropAreaEl.style.right = toStrPercent(newRight / imgWidth);
+
+        const dimensions = [imgWidth, imgHeight] as const;
+        moveMaskByDirection('top', newTop, dimensions);
+        moveMaskByDirection('bottom', newBottom, dimensions);
+        moveMaskByDirection('left', newLeft, dimensions);
+        moveMaskByDirection('right', newRight, dimensions);
+
+        setLastMousePos({
+            left: clientX - imgLeft,
+            top: clientY - imgTop,
+        });
     };
 
     const setupCropArea = () => {
-        if (!cropAreaRef.current) return;
-
         const cropAreaEl = cropAreaRef.current;
-        const img = imgRef.current!;
+        const imgEl = imgRef.current;
+        const maskNorthEl = maskNorthRef.current;
+        const maskEastEl = maskEastRef.current;
+        const maskWestEl = maskWestRef.current;
+        const maskSouthEl = maskSouthRef.current;
 
-        const { height, width } = img.getBoundingClientRect();
+        if (
+            !cropAreaEl ||
+            !imgEl ||
+            !maskNorthEl ||
+            !maskEastEl ||
+            !maskWestEl ||
+            !maskSouthEl
+        )
+            return;
+
+        const { height, width } = imgEl.getBoundingClientRect();
         const minSize = Math.min(height, width);
 
-        const cropAreaYIntPercent = ((height - minSize) / 2 / height) * 100;
-        const cropAreaXIntPercent = ((width - minSize) / 2 / width) * 100;
+        const getCAIntPercent = (size: number) =>
+            ((size - minSize) / 2 / size) * 100;
+        const cAElYIntPercent = getCAIntPercent(height);
+        const cAElXIntPercent = getCAIntPercent(width);
 
-        const cropAreaYStyle = (cropAreaYIntPercent + '%') as `${string}%`;
-        const cropAreaXStyle = (cropAreaXIntPercent + '%') as `${string}%`;
+        const toPercentStr = (value: number) => `${value}%`;
 
-        cropAreaEl.style.top = cropAreaYStyle;
-        cropAreaEl.style.bottom = cropAreaYStyle;
+        const cAElYStyle = toPercentStr(cAElYIntPercent);
+        const cAElXStyle = toPercentStr(cAElXIntPercent);
 
-        cropAreaEl.style.left = cropAreaXStyle;
-        cropAreaEl.style.right = cropAreaXStyle;
+        cropAreaEl.style.top = cAElYStyle;
+        cropAreaEl.style.bottom = cAElYStyle;
 
-        maskNorthRef.current!.style.bottom =
-            100 - percentStrToNumber(cropAreaYStyle) + '%';
-        maskEastRef.current!.style.left =
-            100 - percentStrToNumber(cropAreaXStyle) + '%';
-        maskWestRef.current!.style.right =
-            100 - percentStrToNumber(cropAreaXStyle) + '%';
-        maskSouthRef.current!.style.top =
-            100 - percentStrToNumber(cropAreaYStyle) + '%';
+        cropAreaEl.style.left = cAElXStyle;
+        cropAreaEl.style.right = cAElXStyle;
 
-        maskWestRef.current!.style.top = cropAreaYStyle;
-        maskWestRef.current!.style.bottom = cropAreaYStyle;
+        maskNorthEl.style.bottom = toPercentStr(100 - cAElYIntPercent);
+        maskEastEl.style.left = toPercentStr(100 - cAElXIntPercent);
+        maskWestEl.style.right = toPercentStr(100 - cAElXIntPercent);
+        maskSouthEl.style.top = toPercentStr(100 - cAElYIntPercent);
 
-        maskEastRef.current!.style.top = cropAreaYStyle;
-        maskEastRef.current!.style.bottom = cropAreaYStyle;
+        maskWestEl.style.top = cAElYStyle;
+        maskWestEl.style.bottom = cAElYStyle;
+
+        maskEastEl.style.top = cAElYStyle;
+        maskEastEl.style.bottom = cAElYStyle;
 
         loadPreviewImg();
     };
 
     const applyImageCrop = () => {
-        const imageEl = imgRef.current!;
-        const cropAreaEl = cropAreaRef.current!;
-        const canvas = document.createElement('canvas');
+        const imgEl = imgRef.current;
+        const cropAreaEl = cropAreaRef.current;
+        if (!imgEl || !cropAreaEl) return;
 
+        const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
@@ -235,46 +237,41 @@ export default function useEditImageModal(props: EditImageModalProps) {
             width: imgElWidth,
             left: imgElLeft,
             top: imgElTop,
-        } = imageEl.getBoundingClientRect();
+        } = imgEl.getBoundingClientRect();
 
         const {
-            left: cropAreaElLeft,
-            top: cropAreaElTop,
-            height: cropAreaElHeight,
-            width: cropAreaElWidth,
+            left: cAElLeft,
+            top: cAElTop,
+            width: cAElWidth,
         } = cropAreaEl.getBoundingClientRect();
 
-        const imgMinSize = Math.min(
-            imageEl.naturalHeight,
-            imageEl.naturalWidth
-        );
+        const { naturalHeight, naturalWidth } = imgEl;
+        const imgMinSize = Math.min(naturalHeight, naturalWidth);
 
         canvas.width = imgMinSize;
         canvas.height = imgMinSize;
 
         const imgElMinSize = Math.min(imgElHeight, imgElWidth);
 
-        const remainingWidth = imgElWidth - cropAreaElWidth;
-        const relativeCropAreaElLeft = cropAreaElLeft - imgElLeft;
+        const relativeCAElLeft = cAElLeft - imgElLeft;
 
         const dx =
-            (relativeCropAreaElLeft / remainingWidth) *
-                (imageEl.naturalWidth - imgMinSize) || 0;
+            (relativeCAElLeft / getImgElRemainingWidth()) *
+                (imgEl.naturalWidth - imgMinSize) || 0;
 
-        const remainingHeight = imgElHeight - cropAreaElHeight;
-        const relativeCropAreaElTop = cropAreaElTop - imgElTop;
+        const relativeCropAreaElTop = cAElTop - imgElTop;
         const dy =
-            (relativeCropAreaElTop / remainingHeight) *
-                (imageEl.naturalHeight - imgMinSize) || 0;
+            (relativeCropAreaElTop / getImgElRemainingHeight()) *
+                (imgEl.naturalHeight - imgMinSize) || 0;
 
-        const cropAreaElWidthPercent = cropAreaElWidth / imgElMinSize;
+        const cAElWidthPercent = cAElWidth / imgElMinSize;
 
         ctx.drawImage(
-            imageEl,
+            imgEl,
             dx,
             dy,
-            imgMinSize * cropAreaElWidthPercent,
-            imgMinSize * cropAreaElWidthPercent,
+            imgMinSize * cAElWidthPercent,
+            imgMinSize * cAElWidthPercent,
             0,
             0,
             imgMinSize,

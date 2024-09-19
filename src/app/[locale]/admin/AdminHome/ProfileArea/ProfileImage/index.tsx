@@ -95,7 +95,15 @@ export default function ProfileImage() {
                     alt="me"
                 />
             ) : (
-                <Skeleton width={300} />
+                <Skeleton
+                    sx={{
+                        backgroundColor: '#5a5a5a',
+                    }}
+                    height={355}
+                    width={355}
+                    variant="rectangular"
+                    animation="wave"
+                />
             )}
 
             <div

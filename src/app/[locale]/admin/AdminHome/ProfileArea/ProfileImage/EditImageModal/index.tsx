@@ -7,18 +7,19 @@ export default function EditImageModal(props: EditImageModalProps) {
     const hook = useEditImageModal(props);
 
     return (
-        <ModalContainer>
-            <div className="size-auto bg-custom-gray-dark rounded-md w-auto relative">
+        <ModalContainer className="bg-transparent backdrop-blur-md">
+            <div className="size-auto bg-custom-gray-light rounded-md w-auto relative shadow-md">
                 {hook.previewImgSrc && (
                     <Image
                         alt="preview image"
                         src={hook.previewImgSrc}
                         width={200}
                         height={200}
-                        className="select-none max-w-[200px] max-h-[200px] size-fit pointer-events-none fixed bottom-3 left-3"
+                        className="select-none max-w-[200px] max-h-[200px] size-fit pointer-events-none fixed bottom-3 left-3 rounded-md shadow-md"
+                        loading="lazy"
                     />
                 )}
-                <div className="w-[1400px] max-[1400px]:w-[98vw] h-[80vh] grid place-items-center">
+                <div className="w-[1400px] max-[1400px]:w-[98vw] max-h-[80vh] grid place-items-center">
                     <div className="relative size-fit">
                         <Image
                             ref={hook.imgRef}
@@ -55,15 +56,15 @@ export default function EditImageModal(props: EditImageModalProps) {
                         ></div>
                     </div>
                 </div>
-                <div className="text-center my-2 space-x-2">
+                <div className="text-center py-4 space-x-2 bg-zinc-800">
                     <button
-                        className="py-1 px-5 bg-[var(--theme-color)] rounded-md"
+                        className="py-2 px-10 bg-[var(--theme-color)] rounded-md hover:brightness-110 duration-200"
                         onClick={hook.handleSave}
                     >
                         Save
                     </button>
                     <button
-                        className="py-1 px-5 bg-custom-gray-light rounded-md"
+                        className="py-2 px-10 bg-custom-gray-light rounded-md hover:brightness-110 duration-200"
                         onClick={props.cancelFunc}
                     >
                         Close
