@@ -2,6 +2,23 @@ import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { LANGUAGES } from './utils/server-constants';
 
+export type HandlerType =
+    | 'sw'
+    | 'se'
+    | 'nw'
+    | 'ne'
+    | 'w'
+    | 'e'
+    | 'n'
+    | 's'
+    | undefined;
+
+export type DirectionType = 'left' | 'top' | 'right' | 'bottom';
+
+export type Directions = Record<'left' | 'top' | 'right' | 'bottom', string>;
+
+export type DimentionType = [number, number]; // [w, h]
+
 export type LangType = (typeof LANGUAGES)[number];
 
 export type ProjectType = {

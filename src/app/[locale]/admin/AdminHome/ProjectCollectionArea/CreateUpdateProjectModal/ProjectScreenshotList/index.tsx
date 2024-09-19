@@ -1,5 +1,5 @@
 import { IconButton } from '@/components/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
+import SelectFileIconButton from '@/components/SelectFileIconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Image from 'next/image';
 import React from 'react';
@@ -8,7 +8,7 @@ interface ProjectScreenshotListProps {
     projectScreenshotUrls: string[];
     replaceScreenshotFunc(
         _screenshotIndex: number
-    ): (_: React.ChangeEvent<HTMLInputElement>) => void;
+    ): (_: FileList | null) => void;
     removeScreenshotFunc(_screenshotIndex: number): () => void;
 }
 
@@ -32,28 +32,14 @@ export default function ProjectScreenshotList(
                         />
                         <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
                             <div className="flex gap-2 items-center justify-center">
-                                <div className={IconButton.className}>
-                                    <label
-                                        htmlFor="upload-replace-img"
-                                        className="cursor-pointer"
-                                    >
-                                        <EditIcon
-                                            sx={{
-                                                fontSize: 27,
-                                            }}
-                                        />
-                                    </label>
-                                    <input
-                                        onChange={props.replaceScreenshotFunc(
-                                            index
-                                        )}
-                                        className="absolute pointer-events-none opacity-0 border-[3px] rounded-md"
-                                        type="file"
-                                        accept=".webp,.png,.jpg,.jpeg"
-                                        name=""
-                                        id="upload-replace-img"
-                                    />
-                                </div>
+                                <SelectFileIconButton
+                                    onChange={props.replaceScreenshotFunc(
+                                        index
+                                    )}
+                                    accept=".webp,.png,.jpg,.jpeg"
+                                    name=""
+                                    id="upload-replace-img"
+                                />
 
                                 <IconButton
                                     Icon={RemoveIcon}

@@ -187,10 +187,7 @@ export default function useCreateUpdateProjectModal(
     };
 
     const replaceScreenshot =
-        (screenshotIndex: number) =>
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            const fileInput = e.target;
-            const files = fileInput.files;
+        (screenshotIndex: number) => (files: FileList | null) => {
             if (files)
                 setProjectScreenshots((prev) =>
                     prev.map((s, i) => (i == screenshotIndex ? files[0] : s))

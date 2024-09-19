@@ -1,7 +1,6 @@
 import sharp from 'sharp';
 
 export async function POST(req: Request) {
-    // const { imageBuffer } = await req.json()
     const readableStream = req.body;
 
     if (!readableStream) {

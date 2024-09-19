@@ -14,7 +14,6 @@ const Loading = (props: LoadingProps) => {
             className="flex items-center gap-2 w-fit"
             style={{ height: props.height }}
         >
-            {/* TODO: improve className */}
             {Array(3)
                 .fill(undefined)
                 .map((_, i) => (
