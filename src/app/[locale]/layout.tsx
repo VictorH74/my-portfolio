@@ -19,8 +19,6 @@ export default async function LocaleLayout({
     children,
     params: { locale },
 }: LocaleLayoutProps) {
-    // Providing all messages to the client
-    // side is the easiest way to get started
     const messages = await getMessages();
 
     return (

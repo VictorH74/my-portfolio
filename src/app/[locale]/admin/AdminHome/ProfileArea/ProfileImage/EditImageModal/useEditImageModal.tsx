@@ -1,4 +1,3 @@
-import { DirectionType } from '@/types';
 import React from 'react';
 
 export interface EditImageModalProps {
@@ -7,25 +6,19 @@ export interface EditImageModalProps {
     cancelFunc(): void;
 }
 
-const DIRECTION = ['left', 'top', 'right', 'bottom'] as const;
+const DIRECTION = ['left', 'top'] as const;
 
-type CropAreaType = Record<(typeof DIRECTION)[number], `${string}%`>;
+type CropAreaType = Record<(typeof DIRECTION)[number], number>;
 
 export default function useEditImageModal(props: EditImageModalProps) {
-    const imgRef = React.useRef<HTMLImageElement>(null);
     const cropAreaRef = React.useRef<HTMLDivElement>(null);
+    const imgRef = React.useRef<HTMLImageElement>(null);
+    const cropBoxRef = React.useRef<HTMLDivElement>(null);
 
     const maskWestRef = React.useRef<HTMLDivElement>(null);
-    const maskNorthRef = React.useRef<HTMLDivElement>(null);
     const maskEastRef = React.useRef<HTMLDivElement>(null);
-    const maskSouthRef = React.useRef<HTMLDivElement>(null);
 
-    const [cropArea, setCropArea] = React.useState<CropAreaType>({
-        left: '0%',
-        top: '0%',
-        right: '0%',
-        bottom: '0%',
-    });
+    const [cropArea, setCropArea] = React.useState<CropAreaType | undefined>();
     const [onDrag, setOnDrag] = React.useState(false);
     const [lastMousePos, setLastMousePos] = React.useState({ left: 0, top: 0 });
 
@@ -34,68 +27,55 @@ export default function useEditImageModal(props: EditImageModalProps) {
     );
 
     React.useEffect(() => {
-        loadPreviewImg();
+        if (!!cropArea) loadPreviewImg();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cropArea]);
 
-    const getImgElRemainingHeight = () => {
-        const imgElHeight = imgRef.current!.getBoundingClientRect().height;
-        const cAElHeight = cropAreaRef.current!.getBoundingClientRect().height;
-        return imgElHeight - cAElHeight;
-    };
+    const setup = () => {
+        const imgEl = imgRef.current;
+        const cropAreaEl = cropAreaRef.current;
+        const cropBoxEl = cropBoxRef.current;
 
-    const getImgElRemainingWidth = () => {
-        const imgElWidth = imgRef.current!.getBoundingClientRect().width;
-        const cAElWidth = cropAreaRef.current!.getBoundingClientRect().width;
-        return imgElWidth - cAElWidth;
-    };
+        if (!imgEl || !cropAreaEl || !cropBoxEl) return;
 
-    const moveMaskByDirection = (
-        d: DirectionType,
-        newValue: number,
-        containerDimention: readonly [number, number]
-    ) => {
-        const containerMeasure =
-            containerDimention[['top', 'bottom'].includes(d) ? 1 : 0];
+        const cropAreaRect = cropAreaEl.getBoundingClientRect();
 
-        const value = `${(newValue / containerMeasure) * 100}%`;
-        const revertedValue = `${
-            ((containerMeasure - newValue) / containerMeasure) * 100
-        }%`;
+        const cropBoxWidth = cropBoxEl.getBoundingClientRect().width;
+        const cropBoxLeft = cropAreaRect.width / 2 - cropBoxWidth / 2;
 
-        const action: {
-            [_K in DirectionType]: () => void;
-        } = {
-            left: () => {
-                maskWestRef.current!.style.right = revertedValue;
-            },
-            top: () => {
-                maskNorthRef.current!.style.bottom = revertedValue;
-                maskWestRef.current!.style.top = value;
-                maskEastRef.current!.style.top = value;
-            },
-            right: () => {
-                maskEastRef.current!.style.left = revertedValue;
-            },
-            bottom: () => {
-                maskSouthRef.current!.style.top = revertedValue;
-                maskWestRef.current!.style.bottom = value;
-                maskEastRef.current!.style.bottom = value;
-            },
-        };
+        cropBoxEl.style.left = cropBoxLeft + 'px';
+        // TODO: setup masks
+        const maskXPos = cropBoxWidth + (cropAreaRect.width - cropBoxWidth) / 2;
+        maskWestRef.current!.style.right = maskXPos + 'px';
+        maskEastRef.current!.style.left = maskXPos + 'px';
 
-        action[d]();
+        if (imgEl.naturalHeight >= imgEl.naturalWidth) {
+            // const imgElHeight = imgEl.getBoundingClientRect().height;
+            imgEl.style.width = cropBoxWidth + 'px';
+            imgEl.style.height = 'auto';
+            imgEl.style.maxHeight = 'none';
+            imgEl.style.top = '0px'; // TODO: improve center precision
+            imgEl.style.left = cropBoxLeft + 'px';
+        } else {
+            // const imgElWidth = imgEl.getBoundingClientRect().width;
+            imgEl.style.width = 'auto';
+            imgEl.style.height = '100%';
+            imgEl.style.maxWidth = 'none';
+            imgEl.style.left = '0px'; // TODO: improve center precision
+        }
+
+        loadPreviewImg();
     };
 
     const handleDragStart = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
         if (onDrag || !imgRef.current) return;
-        const { left, top } = imgRef.current.getBoundingClientRect();
         const { clientX, clientY } = e;
+
         setLastMousePos({
-            left: clientX - left,
-            top: clientY - top,
+            left: clientX,
+            top: clientY,
         });
         setOnDrag(true);
         document.body.style.cursor = 'grabbing';
@@ -105,145 +85,92 @@ export default function useEditImageModal(props: EditImageModalProps) {
         if (!onDrag) return;
         setOnDrag(false);
         document.body.style.cursor = 'default';
-        const cropArea = cropAreaRef.current!;
+        const img = imgRef.current!;
 
-        const { left, top, right, bottom } = cropArea.style;
-        setCropArea({ left, top, right, bottom } as CropAreaType);
+        const { left, top } = img.getBoundingClientRect();
+        setCropArea({ left, top } as CropAreaType);
     };
 
     const onDraggableMove = (e: React.MouseEvent) => {
         if (!onDrag) return;
 
-        const cropAreaEl = cropAreaRef.current;
         const imgEl = imgRef.current;
+        const cropAreaEl = cropAreaRef.current;
+        const cropBoxEl = cropBoxRef.current;
 
-        if (!cropAreaEl || !imgEl) return;
+        if (!imgEl || !cropAreaEl || !cropBoxEl) return;
 
-        const {
-            top: cATop,
-            left: cALeft,
-            height: cAHeight,
-            width: cAWidth,
-        } = cropAreaEl.getBoundingClientRect();
+        const imgRect = imgEl.getBoundingClientRect();
+        const cropAreaRect = cropAreaEl.getBoundingClientRect();
+        const cropBoxRect = cropBoxEl.getBoundingClientRect();
 
-        const {
-            top: imgTop,
-            left: imgLeft,
-            height: imgHeight,
-            width: imgWidth,
-        } = imgEl.getBoundingClientRect();
+        const imgTop = imgRect.top - cropAreaRect.top;
+        const imgLeft = imgRect.left - cropAreaRect.left;
 
         const { clientX, clientY } = e;
-        const xFactor = clientX - imgLeft - lastMousePos.left;
-        const yFactor = clientY - imgTop - lastMousePos.top;
+        const yFactor = clientY - lastMousePos.top;
+        const xFactor = clientX - lastMousePos.left;
 
-        const relativeCATop = cATop - imgTop;
-        const relativeCABottom = imgHeight - (relativeCATop + cAHeight);
-        const relativeCALeft = cALeft - imgLeft;
-        const relativeCARight = imgWidth - (relativeCALeft + cAWidth);
+        const relativeCropBoxTop = cropBoxRect.top - cropAreaRect.top;
+        const relativeCropBoxLeft = cropBoxRect.left - cropAreaRect.left;
 
-        const getPositiveInt = (num: number) => Math.max(0, num);
-        let newTop = getPositiveInt(relativeCATop + yFactor);
-        let newBottom = getPositiveInt(relativeCABottom - yFactor);
-        let newLeft = getPositiveInt(relativeCALeft + xFactor);
-        let newRight = getPositiveInt(relativeCARight - xFactor);
+        const newTop = getMedian(
+            relativeCropBoxTop,
+            imgTop + yFactor,
+            relativeCropBoxTop - imgRect.height + cropBoxRect.height
+        );
+        const newLeft = getMedian(
+            relativeCropBoxLeft,
+            imgLeft + xFactor,
+            relativeCropBoxLeft - imgRect.width + cropBoxRect.width
+        );
 
-        if (newTop == 0) newBottom = getImgElRemainingHeight();
-        else if (newBottom == 0) newTop = getImgElRemainingHeight();
-
-        if (newLeft == 0) newRight = getImgElRemainingWidth();
-        else if (newRight == 0) newLeft = getImgElRemainingWidth();
-
-        const toStrPercent = (num1: number) => `${num1 * 100}%`;
-        cropAreaEl.style.top = toStrPercent(newTop / imgHeight);
-        cropAreaEl.style.bottom = toStrPercent(newBottom / imgHeight);
-        cropAreaEl.style.left = toStrPercent(newLeft / imgWidth);
-        cropAreaEl.style.right = toStrPercent(newRight / imgWidth);
-
-        const dimensions = [imgWidth, imgHeight] as const;
-        moveMaskByDirection('top', newTop, dimensions);
-        moveMaskByDirection('bottom', newBottom, dimensions);
-        moveMaskByDirection('left', newLeft, dimensions);
-        moveMaskByDirection('right', newRight, dimensions);
+        imgEl.style.top = newTop + 'px';
+        imgEl.style.left = newLeft + 'px';
 
         setLastMousePos({
-            left: clientX - imgLeft,
-            top: clientY - imgTop,
+            left: clientX,
+            top: clientY,
         });
     };
 
-    const setupCropArea = () => {
-        const cropAreaEl = cropAreaRef.current;
-        const imgEl = imgRef.current;
-        const maskNorthEl = maskNorthRef.current;
-        const maskEastEl = maskEastRef.current;
-        const maskWestEl = maskWestRef.current;
-        const maskSouthEl = maskSouthRef.current;
+    const getMedian = (a: number, b: number, c: number): number => {
+        const numbers: [number, number, number] = [a, b, c];
+        const total = a + b + c;
+        return total - Math.max(...numbers) - Math.min(...numbers);
+    };
 
-        if (
-            !cropAreaEl ||
-            !imgEl ||
-            !maskNorthEl ||
-            !maskEastEl ||
-            !maskWestEl ||
-            !maskSouthEl
-        )
-            return;
+    const getImgElRemainingHeight = () => {
+        const imgElHeight = imgRef.current!.getBoundingClientRect().height;
+        const cBElHeight = cropBoxRef.current!.getBoundingClientRect().height;
+        return imgElHeight - cBElHeight;
+    };
 
-        const { height, width } = imgEl.getBoundingClientRect();
-        const minSize = Math.min(height, width);
-
-        const getCAIntPercent = (size: number) =>
-            ((size - minSize) / 2 / size) * 100;
-        const cAElYIntPercent = getCAIntPercent(height);
-        const cAElXIntPercent = getCAIntPercent(width);
-
-        const toPercentStr = (value: number) => `${value}%`;
-
-        const cAElYStyle = toPercentStr(cAElYIntPercent);
-        const cAElXStyle = toPercentStr(cAElXIntPercent);
-
-        cropAreaEl.style.top = cAElYStyle;
-        cropAreaEl.style.bottom = cAElYStyle;
-
-        cropAreaEl.style.left = cAElXStyle;
-        cropAreaEl.style.right = cAElXStyle;
-
-        maskNorthEl.style.bottom = toPercentStr(100 - cAElYIntPercent);
-        maskEastEl.style.left = toPercentStr(100 - cAElXIntPercent);
-        maskWestEl.style.right = toPercentStr(100 - cAElXIntPercent);
-        maskSouthEl.style.top = toPercentStr(100 - cAElYIntPercent);
-
-        maskWestEl.style.top = cAElYStyle;
-        maskWestEl.style.bottom = cAElYStyle;
-
-        maskEastEl.style.top = cAElYStyle;
-        maskEastEl.style.bottom = cAElYStyle;
-
-        loadPreviewImg();
+    const getImgElRemainingWidth = () => {
+        const imgElWidth = imgRef.current!.getBoundingClientRect().width;
+        const cBElWidth = cropBoxRef.current!.getBoundingClientRect().width;
+        return imgElWidth - cBElWidth;
     };
 
     const applyImageCrop = () => {
         const imgEl = imgRef.current;
-        const cropAreaEl = cropAreaRef.current;
-        if (!imgEl || !cropAreaEl) return;
+        const cropBoxEl = cropBoxRef.current;
+        if (!imgEl || !cropBoxEl) return;
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const {
-            height: imgElHeight,
-            width: imgElWidth,
-            left: imgElLeft,
-            top: imgElTop,
-        } = imgEl.getBoundingClientRect();
+        const imgRect = imgEl.getBoundingClientRect();
+        const imgElHeight = imgRect.height;
+        const imgElWidth = imgRect.width;
+        const imgElLeft = imgRect.left;
+        const imgElTop = imgRect.top;
 
-        const {
-            left: cAElLeft,
-            top: cAElTop,
-            width: cAElWidth,
-        } = cropAreaEl.getBoundingClientRect();
+        const cropBoxRect = cropBoxEl.getBoundingClientRect();
+        const cropBoxLeft = cropBoxRect.left;
+        const cropBoxTop = cropBoxRect.top;
+        const cropBoxWidth = cropBoxRect.width;
 
         const { naturalHeight, naturalWidth } = imgEl;
         const imgMinSize = Math.min(naturalHeight, naturalWidth);
@@ -253,18 +180,18 @@ export default function useEditImageModal(props: EditImageModalProps) {
 
         const imgElMinSize = Math.min(imgElHeight, imgElWidth);
 
-        const relativeCAElLeft = cAElLeft - imgElLeft;
+        const relativeCBElLeft = cropBoxLeft - imgElLeft;
 
         const dx =
-            (relativeCAElLeft / getImgElRemainingWidth()) *
+            (relativeCBElLeft / getImgElRemainingWidth()) *
                 (imgEl.naturalWidth - imgMinSize) || 0;
 
-        const relativeCropAreaElTop = cAElTop - imgElTop;
+        const relativeCropAreaElTop = cropBoxTop - imgElTop;
         const dy =
             (relativeCropAreaElTop / getImgElRemainingHeight()) *
                 (imgEl.naturalHeight - imgMinSize) || 0;
 
-        const cAElWidthPercent = cAElWidth / imgElMinSize;
+        const cAElWidthPercent = cropBoxWidth / imgElMinSize;
 
         ctx.drawImage(
             imgEl,
@@ -298,15 +225,14 @@ export default function useEditImageModal(props: EditImageModalProps) {
     return {
         previewImgSrc,
         imgRef,
-        setupCropArea,
         maskWestRef,
-        maskNorthRef,
         maskEastRef,
-        maskSouthRef,
+        cropBoxRef,
         cropAreaRef,
         handleDragEnd,
         handleDragStart,
         onDraggableMove,
         handleSave,
+        setup,
     };
 }

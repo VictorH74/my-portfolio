@@ -2,13 +2,64 @@ import ModalContainer from '@/components/ModalContainer';
 import Image from 'next/image';
 import React from 'react';
 import useEditImageModal, { EditImageModalProps } from './useEditImageModal';
+import CloseIcon from '@mui/icons-material/Close';
+import Divider from '@/components/Divider';
 
 export default function EditImageModal(props: EditImageModalProps) {
     const hook = useEditImageModal(props);
 
     return (
-        <ModalContainer className="bg-transparent backdrop-blur-md">
-            <div className="size-auto bg-custom-gray-light rounded-md w-auto relative shadow-md">
+        <ModalContainer className="bg-black/50 backdrop-blur-[2px]">
+            <div className="bg-zinc-800 rounded-lg">
+                <div className="flex justify-between p-4 items-center">
+                    <h1 className="text-xl font-semibold">Edit Image</h1>
+                    <button onClick={props.cancelFunc}>
+                        <CloseIcon />
+                    </button>
+                </div>
+                <Divider className="m-0 mb-6 h-[1px] bg-zinc-600" />
+
+                {/* CROP AREA */}
+                <div
+                    ref={hook.cropAreaRef}
+                    className="bg-black w-[750px] h-[400px] overflow-hidden relative"
+                    onMouseUp={hook.handleDragEnd}
+                    onMouseLeave={hook.handleDragEnd}
+                    onMouseDown={hook.handleDragStart}
+                    onMouseMove={hook.onDraggableMove}
+                >
+                    {/* EDITABLE IMG */}
+                    <Image
+                        ref={hook.imgRef}
+                        src={props.imageSrc}
+                        width={0}
+                        height={0}
+                        alt=""
+                        onLoad={hook.setup}
+                        className="object-contain select-none pointer-events-none absolute"
+                    />
+
+                    <div
+                        ref={hook.maskWestRef}
+                        className="absolute pointer-events-none left-0 inset-y-0 bg-[#00000094]"
+                    />
+                    <div
+                        ref={hook.maskEastRef}
+                        className="absolute pointer-events-none right-0 inset-y-0 bg-[#00000094]"
+                    />
+
+                    {/* CROP BOX */}
+                    <div
+                        className="h-full aspect-square mx-auto absolute top-0 border pointer-events-none"
+                        ref={hook.cropBoxRef}
+                    ></div>
+                </div>
+                <Divider className="m-0 mt-6 h-[1px] bg-zinc-600" />
+                <div className="p-4 space-x-2 text-end">
+                    <button className="py-2 px-10 bg-[var(--theme-color)] rounded-md hover:brightness-110 duration-200 font-semibold tracking-wider">
+                        Save
+                    </button>
+                </div>
                 {hook.previewImgSrc && (
                     <Image
                         alt="preview image"
@@ -19,57 +70,6 @@ export default function EditImageModal(props: EditImageModalProps) {
                         loading="lazy"
                     />
                 )}
-                <div className="w-[1400px] max-[1400px]:w-[98vw] max-h-[80vh] grid place-items-center">
-                    <div className="relative size-fit">
-                        <Image
-                            ref={hook.imgRef}
-                            alt="editable image"
-                            src={props.imageSrc}
-                            width={100}
-                            height={100}
-                            className="size-fit max-h-[80vh] select-none pointer-events-none"
-                            onLoad={hook.setupCropArea}
-                        />
-                        <div
-                            ref={hook.maskWestRef}
-                            className="absolute pointer-events-none left-0 bg-[#00000094]"
-                        />
-                        <div
-                            ref={hook.maskNorthRef}
-                            className="absolute pointer-events-none top-0 inset-x-0 bg-[#00000094]"
-                        />
-                        <div
-                            ref={hook.maskEastRef}
-                            className="absolute pointer-events-none right-0 bg-[#00000094]"
-                        />
-                        <div
-                            ref={hook.maskSouthRef}
-                            className="absolute pointer-events-none bottom-0 inset-x-0 bg-[#00000094]"
-                        />
-                        <div
-                            ref={hook.cropAreaRef}
-                            className="absolute outline outline-1 outline-gray-300 cursor-move"
-                            onMouseUp={hook.handleDragEnd}
-                            onMouseLeave={hook.handleDragEnd}
-                            onMouseDown={hook.handleDragStart}
-                            onMouseMove={hook.onDraggableMove}
-                        ></div>
-                    </div>
-                </div>
-                <div className="text-center py-4 space-x-2 bg-zinc-800">
-                    <button
-                        className="py-2 px-10 bg-[var(--theme-color)] rounded-md hover:brightness-110 duration-200"
-                        onClick={hook.handleSave}
-                    >
-                        Save
-                    </button>
-                    <button
-                        className="py-2 px-10 bg-custom-gray-light rounded-md hover:brightness-110 duration-200"
-                        onClick={props.cancelFunc}
-                    >
-                        Close
-                    </button>
-                </div>
             </div>
         </ModalContainer>
     );

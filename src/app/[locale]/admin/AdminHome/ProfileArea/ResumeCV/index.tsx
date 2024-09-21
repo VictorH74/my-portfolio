@@ -58,7 +58,7 @@ export default function ResumeCV() {
 
     return (
         <>
-            <div className="rounded-md bg-white dark:bg-[#3f3f3f] max-w-[500px] p-2 flex items-center gap-2 relative">
+            <div className="rounded-md bg-white dark:bg-[#3f3f3f] max-w-[500px] max-md:max-w-full p-2 flex items-center gap-2 relative">
                 <Image
                     src="/icons/fileIcon.svg"
                     alt=""

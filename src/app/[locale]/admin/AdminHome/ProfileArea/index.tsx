@@ -8,8 +8,8 @@ export default function ProfileArea() {
     return (
         <section>
             <h1 className={headingClassName}>Profile</h1>
-            <div className="flex flex-row gap-2">
-                <div className="flex flex-col gap-2 w-[500px]">
+            <div className="flex flex-row gap-2 max-md:flex-col">
+                <div className="flex flex-col gap-2 w-[500px] max-md:w-full">
                     <ProfileImage />
                     <ResumeCV />
                 </div>

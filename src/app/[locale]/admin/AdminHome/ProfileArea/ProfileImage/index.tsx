@@ -83,7 +83,6 @@ export default function ProfileImage() {
                     className="
               rounded-md
               object-cover 
-              max-md:max-w-[300px]
               h-auto
               w-full
               duration-200
