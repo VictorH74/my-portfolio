@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export interface EditImageModalProps {
     imageSrc: string;
@@ -6,37 +6,39 @@ export interface EditImageModalProps {
     cancelFunc(): void;
 }
 
-const DIRECTION = ['left', 'top'] as const;
+const DIRECTIONS = ['left', 'top'] as const;
 
-type CropAreaType = Record<(typeof DIRECTION)[number], number>;
+type CropAreaType = Record<(typeof DIRECTIONS)[number], number>;
+
+type StylePropType = {
+    styleProp: string;
+    value: number | string;
+};
 
 export default function useEditImageModal(props: EditImageModalProps) {
-    const cropAreaRef = React.useRef<HTMLDivElement>(null);
-    const imgRef = React.useRef<HTMLImageElement>(null);
-    const cropBoxRef = React.useRef<HTMLDivElement>(null);
+    const cropAreaRef = useRef<HTMLDivElement>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
+    const cropBoxRef = useRef<HTMLDivElement>(null);
 
-    const maskWestRef = React.useRef<HTMLDivElement>(null);
-    const maskEastRef = React.useRef<HTMLDivElement>(null);
+    const maskWestRef = useRef<HTMLDivElement>(null);
+    const maskEastRef = useRef<HTMLDivElement>(null);
 
-    const [imgScaleIncrement, setImgScaleIncrement] = React.useState(0.5);
-    const [imgSizeProp, setImgSizeProp] = React.useState<
-        | {
-              styleProp: string;
-              value: number | string;
-          }
-        | undefined
-    >();
+    const [imgScaleIncrement, setImgScaleIncrement] = useState(0);
+    const [imgSizeProp, setImgSizeProp] = useState<StylePropType | undefined>();
 
-    const [cropArea, setCropArea] = React.useState<CropAreaType | undefined>();
-    const [onDrag, setOnDrag] = React.useState(false);
-    const [lastMousePos, setLastMousePos] = React.useState({ left: 0, top: 0 });
+    const [cropArea, setCropArea] = useState<CropAreaType | undefined>();
+    const [onDrag, setOnDrag] = useState(false);
+    const [lastMousePos, setLastMousePos] = useState({ left: 0, top: 0 });
 
-    const [previewImgSrc, setPreviewImgSrc] = React.useState<string | null>(
-        null
-    );
+    const [previewImgSrc, setPreviewImgSrc] = useState<string | null>(null);
 
-    React.useEffect(() => {
-        if (!!cropArea) loadPreviewImg();
+    useEffect(() => {
+        if (!!cropArea) {
+            if (imgScaleIncrement > 0) {
+                changeImgPosition();
+            }
+            loadPreviewImg();
+        }
         const cropBoxEl = cropBoxRef.current;
 
         if (!cropBoxEl) return;
@@ -45,15 +47,10 @@ export default function useEditImageModal(props: EditImageModalProps) {
         setImgSizeProp((prev) =>
             prev ? { ...prev, value: getImgSize(cropBoxSize) } : undefined
         );
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cropArea, imgScaleIncrement]);
 
-    const handleSliderChange = (event: Event, newValue: number | number[]) => {
-        setImgScaleIncrement((newValue as number) / 100);
-    };
-
-    const getImgSize = (cropBoxSize: number) =>
-        cropBoxSize + cropBoxSize * imgScaleIncrement;
     const setup = () => {
         const imgEl = imgRef.current;
         const cropAreaEl = cropAreaRef.current;
@@ -64,6 +61,8 @@ export default function useEditImageModal(props: EditImageModalProps) {
         const cropAreaRect = cropAreaEl.getBoundingClientRect();
 
         const cropBoxSize = cropBoxEl.getBoundingClientRect().width;
+
+        console.log(cropAreaRect.width, cropBoxSize);
         const cropBoxLeft = cropAreaRect.width / 2 - cropBoxSize / 2;
 
         cropBoxEl.style.left = cropBoxLeft + 'px';
@@ -73,22 +72,28 @@ export default function useEditImageModal(props: EditImageModalProps) {
         maskEastRef.current!.style.left = maskXPos + 'px';
 
         if (imgEl.naturalHeight >= imgEl.naturalWidth) {
+            imgEl.style.height = 'auto';
+            imgEl.style.width = getImgSize(cropBoxSize) + 'px';
+            imgEl.style.maxHeight = 'none';
+            imgEl.style.left = cropBoxLeft + 'px';
+            const imgElHeight = imgEl.getBoundingClientRect().height;
+            imgEl.style.top = cropAreaRect.height / 2 - imgElHeight / 2 + 'px';
+
             setImgSizeProp({
                 styleProp: 'width',
                 value: getImgSize(cropBoxSize) + 'px',
             });
-            imgEl.style.height = 'auto';
-            imgEl.style.maxHeight = 'none';
-            imgEl.style.top = '0px'; // TODO: improve center precision
-            imgEl.style.left = cropBoxLeft + 'px';
         } else {
             imgEl.style.width = 'auto';
+            imgEl.style.height = getImgSize(cropBoxSize) + 'px';
+            imgEl.style.maxWidth = 'none';
+            const imgElWidth = imgEl.getBoundingClientRect().width;
+            imgEl.style.left = cropAreaRect.width / 2 - imgElWidth / 2 + 'px';
+
             setImgSizeProp({
                 styleProp: 'height',
                 value: getImgSize(cropBoxSize) + 'px',
             });
-            imgEl.style.maxWidth = 'none';
-            imgEl.style.left = '0px'; // TODO: improve center precision
         }
 
         loadPreviewImg();
@@ -121,6 +126,19 @@ export default function useEditImageModal(props: EditImageModalProps) {
     const onDraggableMove = (e: React.MouseEvent) => {
         if (!onDrag) return;
 
+        const { clientX, clientY } = e;
+        const yFactor = clientY - lastMousePos.top;
+        const xFactor = clientX - lastMousePos.left;
+
+        changeImgPosition(xFactor, yFactor);
+
+        setLastMousePos({
+            left: clientX,
+            top: clientY,
+        });
+    };
+
+    const changeImgPosition = (xPos: number = 0, yPos: number = 0) => {
         const imgEl = imgRef.current;
         const cropAreaEl = cropAreaRef.current;
         const cropBoxEl = cropBoxRef.current;
@@ -134,32 +152,32 @@ export default function useEditImageModal(props: EditImageModalProps) {
         const imgTop = imgRect.top - cropAreaRect.top;
         const imgLeft = imgRect.left - cropAreaRect.left;
 
-        const { clientX, clientY } = e;
-        const yFactor = clientY - lastMousePos.top;
-        const xFactor = clientX - lastMousePos.left;
-
         const relativeCropBoxTop = cropBoxRect.top - cropAreaRect.top;
         const relativeCropBoxLeft = cropBoxRect.left - cropAreaRect.left;
 
-        const newTop = getMedian(
-            relativeCropBoxTop,
-            imgTop + yFactor,
-            relativeCropBoxTop - imgRect.height + cropBoxRect.height
-        );
         const newLeft = getMedian(
             relativeCropBoxLeft,
-            imgLeft + xFactor,
+            imgLeft + xPos,
             relativeCropBoxLeft - imgRect.width + cropBoxRect.width
         );
+        const newTop = getMedian(
+            relativeCropBoxTop,
+            imgTop + yPos,
+            relativeCropBoxTop - imgRect.height + cropBoxRect.height
+        );
 
-        imgEl.style.top = newTop + 'px';
+        console.log('newLeft', newLeft);
+
         imgEl.style.left = newLeft + 'px';
-
-        setLastMousePos({
-            left: clientX,
-            top: clientY,
-        });
+        imgEl.style.top = newTop + 'px';
     };
+
+    const handleSliderChange = (_: Event, newValue: number | number[]) => {
+        setImgScaleIncrement((newValue as number) / 100);
+    };
+
+    const getImgSize = (cropBoxSize: number) =>
+        cropBoxSize + cropBoxSize * imgScaleIncrement;
 
     const getMedian: (_a: number, _b: number, _c: number) => number = (
         ...numbers
