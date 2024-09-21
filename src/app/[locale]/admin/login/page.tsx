@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
                             });
                             const token = await credentials.user.getIdToken();
                             setServerCookie(token);
-                            nookies.set(undefined, 'token', token, {
+                            nookies.set(undefined, 'firebase_token', token, {
                                 path: '/',
                             });
                             router.replace('/admin');
