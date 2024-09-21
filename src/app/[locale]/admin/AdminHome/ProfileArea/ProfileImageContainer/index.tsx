@@ -1,15 +1,14 @@
-import Image from 'next/image';
-import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import Loading from '@/components/Loading';
 import EditImageModal from './EditImageModal';
 import SelectFileIconButton from '@/components/SelectFileIconButton';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/configs/firebaseConfig';
+import ProfileImage from '@/components/ProfileImage/indext';
 
-export default function ProfileImage() {
+export default function ProfileImageContainer() {
     const [submitting, setSubmitting] = React.useState(false);
     const [currentImgSrc, setCurrentImgSrc] = React.useState<string | null>(
         null
@@ -18,19 +17,6 @@ export default function ProfileImage() {
         string | null
     >(null);
     const selectFileRef = React.useRef<HTMLInputElement>(null);
-
-    React.useEffect(() => {
-        (async () => {
-            const docRef = doc(db, 'profile', 'image');
-            const docData = (await getDoc(docRef)).data();
-            if (!docData) {
-                // not found
-                alert('erro trying loadin profile image!');
-                return;
-            }
-            setCurrentImgSrc(docData.url);
-        })();
-    }, []);
 
     const handleSelectImg = (files: FileList | null) => {
         if (!files) return;
@@ -76,35 +62,7 @@ export default function ProfileImage() {
 
     return (
         <div className="relative">
-            {!!currentImgSrc ? (
-                <Image
-                    loading="lazy"
-                    placeholder="empty"
-                    className="
-              rounded-md
-              object-cover 
-              h-auto
-              w-full
-              duration-200
-              bg-[var(--theme-color)]
-            "
-                    height={300}
-                    width={300}
-                    src={currentImgSrc}
-                    alt="me"
-                />
-            ) : (
-                <Skeleton
-                    sx={{
-                        backgroundColor: '#5a5a5a',
-                    }}
-                    height={355}
-                    width={355}
-                    variant="rectangular"
-                    animation="wave"
-                />
-            )}
-
+            <ProfileImage currentImgSrc={currentImgSrc} />
             <div
                 className={twMerge(
                     'absolute inset-0 opacity-0 hover:opacity-100 bg-black/80 rounded-md duration-200 grid place-items-center',

@@ -1,6 +1,4 @@
 'use client';
-import Me from '@/assets/me.webp';
-import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { DownloadResumeBtn } from './styles';
 import { downloadResume } from '@/utils/resume';
@@ -8,6 +6,7 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import useAboutMe from './useAboutMe';
 import Divider from '@/components/Divider';
+import ProfileImage from '@/components/ProfileImage/indext';
 
 const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
 const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
@@ -60,24 +59,7 @@ const AboutMe = () => {
                     data-aos-delay="300"
                     data-aos-duration="400"
                 >
-                    <Image
-                        loading="lazy"
-                        placeholder="empty"
-                        className="
-              rounded-e-full
-              rounded-ss-full
-              max-lg:rounded-es-full
-              object-cover 
-              max-md:max-w-[300px]
-              h-auto
-              w-full
-              duration-200
-              bg-[var(--theme-color)]
-            "
-                        width={300}
-                        src={Me}
-                        alt="me"
-                    />
+                    <ProfileImage className="rounded-e-full rounded-ss-full max-lg:rounded-es-full" />
                 </div>
             </div>
 

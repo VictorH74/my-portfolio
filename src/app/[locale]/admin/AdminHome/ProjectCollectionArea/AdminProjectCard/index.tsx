@@ -30,12 +30,6 @@ export default function AdminProjectCard(props: ProjectType) {
                 onMouseOver={() => hook.setCardHover(true)}
                 onMouseLeave={() => hook.setCardHover(false)}
             >
-                <ProjectCardHover
-                    show={hook.cardHover}
-                    editFunc={hook.openEditModal}
-                    removeFunc={hook.removeProject}
-                />
-
                 <div className="w-[300px] h-[310px] overflow-hidden flex flex-nowrap text-center relative">
                     <Image
                         width={300}
@@ -45,11 +39,9 @@ export default function AdminProjectCard(props: ProjectType) {
                         alt="project screenshot"
                     />
                     {props.screenshots.length > 1 && (
-                        <div className="absolute right-3 bottom-3 rounded-full p-[6px] shadow-md bg-[var(--theme-color)]">
-                            <p className="text-sm font-semibold">
-                                +{props.screenshots.length - 1}
-                            </p>
-                        </div>
+                        <p className="absolute right-3 bottom-3 rounded-full size-7 text-sm font-semibold grid place-items-center bg-[var(--theme-color)]">
+                            +{props.screenshots.length - 1}
+                        </p>
                     )}
                 </div>
 
@@ -95,6 +87,12 @@ export default function AdminProjectCard(props: ProjectType) {
                         )}
                     </div>
                 </div>
+
+                <ProjectCardHover
+                    show={hook.cardHover}
+                    editFunc={hook.openEditModal}
+                    removeFunc={hook.removeProject}
+                />
             </div>
 
             {hook.onUpdateProject &&
