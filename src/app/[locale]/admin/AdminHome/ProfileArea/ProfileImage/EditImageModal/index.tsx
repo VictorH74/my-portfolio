@@ -4,6 +4,9 @@ import React from 'react';
 import useEditImageModal, { EditImageModalProps } from './useEditImageModal';
 import CloseIcon from '@mui/icons-material/Close';
 import Divider from '@/components/Divider';
+import Slider from '@mui/material/Slider';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function EditImageModal(props: EditImageModalProps) {
     const hook = useEditImageModal(props);
@@ -12,7 +15,9 @@ export default function EditImageModal(props: EditImageModalProps) {
         <ModalContainer className="bg-black/50 backdrop-blur-[2px]">
             <div className="bg-zinc-800 rounded-lg">
                 <div className="flex justify-between p-4 items-center">
-                    <h1 className="text-xl font-semibold">Edit Image</h1>
+                    <h1 className="text-xl font-semibold tracking-wider">
+                        Edit Image
+                    </h1>
                     <button onClick={props.cancelFunc}>
                         <CloseIcon />
                     </button>
@@ -35,6 +40,12 @@ export default function EditImageModal(props: EditImageModalProps) {
                         width={0}
                         height={0}
                         alt=""
+                        style={
+                            hook.imgSizeProp && {
+                                [hook.imgSizeProp.styleProp]:
+                                    hook.imgSizeProp?.value,
+                            }
+                        }
                         onLoad={hook.setup}
                         className="object-contain select-none pointer-events-none absolute"
                     />
@@ -54,9 +65,27 @@ export default function EditImageModal(props: EditImageModalProps) {
                         ref={hook.cropBoxRef}
                     ></div>
                 </div>
-                <Divider className="m-0 mt-6 h-[1px] bg-zinc-600" />
+                <div className="p-3">
+                    <p className="font-semibold tracking-wider">Zoom</p>
+                    <div className="flex items-center gap-2">
+                        <RemoveIcon sx={{ fontSize: 30 }} />
+                        <Slider
+                            defaultValue={0}
+                            aria-label="Default"
+                            valueLabelDisplay="auto"
+                            onChange={hook.handleSliderChange}
+                            value={hook.imgScaleIncrement * 100}
+                            aria-labelledby="input-slider"
+                        />
+                        <AddIcon sx={{ fontSize: 30 }} />
+                    </div>
+                </div>
+                <Divider className="m-0  h-[1px] bg-zinc-600" />
                 <div className="p-4 space-x-2 text-end">
-                    <button className="py-2 px-10 bg-[var(--theme-color)] rounded-md hover:brightness-110 duration-200 font-semibold tracking-wider">
+                    <button
+                        className="py-2 px-10 bg-[var(--theme-color)] rounded-md hover:brightness-110 duration-200 font-semibold tracking-wider"
+                        onClick={hook.handleSave}
+                    >
                         Save
                     </button>
                 </div>

@@ -18,6 +18,15 @@ export default function useEditImageModal(props: EditImageModalProps) {
     const maskWestRef = React.useRef<HTMLDivElement>(null);
     const maskEastRef = React.useRef<HTMLDivElement>(null);
 
+    const [imgScaleIncrement, setImgScaleIncrement] = React.useState(0.5);
+    const [imgSizeProp, setImgSizeProp] = React.useState<
+        | {
+              styleProp: string;
+              value: number | string;
+          }
+        | undefined
+    >();
+
     const [cropArea, setCropArea] = React.useState<CropAreaType | undefined>();
     const [onDrag, setOnDrag] = React.useState(false);
     const [lastMousePos, setLastMousePos] = React.useState({ left: 0, top: 0 });
@@ -28,9 +37,23 @@ export default function useEditImageModal(props: EditImageModalProps) {
 
     React.useEffect(() => {
         if (!!cropArea) loadPreviewImg();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cropArea]);
+        const cropBoxEl = cropBoxRef.current;
 
+        if (!cropBoxEl) return;
+
+        const cropBoxSize = cropBoxEl.getBoundingClientRect().width;
+        setImgSizeProp((prev) =>
+            prev ? { ...prev, value: getImgSize(cropBoxSize) } : undefined
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cropArea, imgScaleIncrement]);
+
+    const handleSliderChange = (event: Event, newValue: number | number[]) => {
+        setImgScaleIncrement((newValue as number) / 100);
+    };
+
+    const getImgSize = (cropBoxSize: number) =>
+        cropBoxSize + cropBoxSize * imgScaleIncrement;
     const setup = () => {
         const imgEl = imgRef.current;
         const cropAreaEl = cropAreaRef.current;
@@ -40,26 +63,30 @@ export default function useEditImageModal(props: EditImageModalProps) {
 
         const cropAreaRect = cropAreaEl.getBoundingClientRect();
 
-        const cropBoxWidth = cropBoxEl.getBoundingClientRect().width;
-        const cropBoxLeft = cropAreaRect.width / 2 - cropBoxWidth / 2;
+        const cropBoxSize = cropBoxEl.getBoundingClientRect().width;
+        const cropBoxLeft = cropAreaRect.width / 2 - cropBoxSize / 2;
 
         cropBoxEl.style.left = cropBoxLeft + 'px';
-        // TODO: setup masks
-        const maskXPos = cropBoxWidth + (cropAreaRect.width - cropBoxWidth) / 2;
+
+        const maskXPos = cropBoxSize + (cropAreaRect.width - cropBoxSize) / 2;
         maskWestRef.current!.style.right = maskXPos + 'px';
         maskEastRef.current!.style.left = maskXPos + 'px';
 
         if (imgEl.naturalHeight >= imgEl.naturalWidth) {
-            // const imgElHeight = imgEl.getBoundingClientRect().height;
-            imgEl.style.width = cropBoxWidth + 'px';
+            setImgSizeProp({
+                styleProp: 'width',
+                value: getImgSize(cropBoxSize) + 'px',
+            });
             imgEl.style.height = 'auto';
             imgEl.style.maxHeight = 'none';
             imgEl.style.top = '0px'; // TODO: improve center precision
             imgEl.style.left = cropBoxLeft + 'px';
         } else {
-            // const imgElWidth = imgEl.getBoundingClientRect().width;
             imgEl.style.width = 'auto';
-            imgEl.style.height = '100%';
+            setImgSizeProp({
+                styleProp: 'height',
+                value: getImgSize(cropBoxSize) + 'px',
+            });
             imgEl.style.maxWidth = 'none';
             imgEl.style.left = '0px'; // TODO: improve center precision
         }
@@ -134,22 +161,11 @@ export default function useEditImageModal(props: EditImageModalProps) {
         });
     };
 
-    const getMedian = (a: number, b: number, c: number): number => {
-        const numbers: [number, number, number] = [a, b, c];
-        const total = a + b + c;
+    const getMedian: (_a: number, _b: number, _c: number) => number = (
+        ...numbers
+    ) => {
+        const total = numbers.reduce((total, num) => total + num, 0);
         return total - Math.max(...numbers) - Math.min(...numbers);
-    };
-
-    const getImgElRemainingHeight = () => {
-        const imgElHeight = imgRef.current!.getBoundingClientRect().height;
-        const cBElHeight = cropBoxRef.current!.getBoundingClientRect().height;
-        return imgElHeight - cBElHeight;
-    };
-
-    const getImgElRemainingWidth = () => {
-        const imgElWidth = imgRef.current!.getBoundingClientRect().width;
-        const cBElWidth = cropBoxRef.current!.getBoundingClientRect().width;
-        return imgElWidth - cBElWidth;
     };
 
     const applyImageCrop = () => {
@@ -162,47 +178,40 @@ export default function useEditImageModal(props: EditImageModalProps) {
         if (!ctx) return;
 
         const imgRect = imgEl.getBoundingClientRect();
-        const imgElHeight = imgRect.height;
-        const imgElWidth = imgRect.width;
         const imgElLeft = imgRect.left;
         const imgElTop = imgRect.top;
 
         const cropBoxRect = cropBoxEl.getBoundingClientRect();
         const cropBoxLeft = cropBoxRect.left;
         const cropBoxTop = cropBoxRect.top;
-        const cropBoxWidth = cropBoxRect.width;
 
         const { naturalHeight, naturalWidth } = imgEl;
-        const imgMinSize = Math.min(naturalHeight, naturalWidth);
 
-        canvas.width = imgMinSize;
-        canvas.height = imgMinSize;
-
-        const imgElMinSize = Math.min(imgElHeight, imgElWidth);
+        canvas.width = cropBoxRect.width;
+        canvas.height = cropBoxRect.height;
 
         const relativeCBElLeft = cropBoxLeft - imgElLeft;
+        const relativeCBElTop = cropBoxTop - imgElTop;
 
-        const dx =
-            (relativeCBElLeft / getImgElRemainingWidth()) *
-                (imgEl.naturalWidth - imgMinSize) || 0;
+        // Calcula o deslocamento na imagem original (dx, dy)
+        const dx = (relativeCBElLeft / imgRect.width) * naturalWidth;
+        const dy = (relativeCBElTop / imgRect.height) * naturalHeight;
 
-        const relativeCropAreaElTop = cropBoxTop - imgElTop;
-        const dy =
-            (relativeCropAreaElTop / getImgElRemainingHeight()) *
-                (imgEl.naturalHeight - imgMinSize) || 0;
+        // Calcula o tamanho da área de recorte na imagem original (sWidth, sHeight)
+        const sWidth = (cropBoxRect.width / imgRect.width) * naturalWidth;
+        const sHeight = (cropBoxRect.height / imgRect.height) * naturalHeight;
 
-        const cAElWidthPercent = cropBoxWidth / imgElMinSize;
-
+        // Desenha a imagem no canvas com base no recorte calculado
         ctx.drawImage(
             imgEl,
             dx,
             dy,
-            imgMinSize * cAElWidthPercent,
-            imgMinSize * cAElWidthPercent,
+            sWidth,
+            sHeight,
             0,
             0,
-            imgMinSize,
-            imgMinSize
+            canvas.width,
+            canvas.height
         );
 
         return canvas;
@@ -226,12 +235,15 @@ export default function useEditImageModal(props: EditImageModalProps) {
         previewImgSrc,
         imgRef,
         maskWestRef,
+        imgSizeProp,
         maskEastRef,
         cropBoxRef,
+        imgScaleIncrement,
         cropAreaRef,
         handleDragEnd,
         handleDragStart,
         onDraggableMove,
+        handleSliderChange,
         handleSave,
         setup,
     };
