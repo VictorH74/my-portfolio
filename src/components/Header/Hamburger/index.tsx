@@ -3,6 +3,7 @@ import { useTheme } from '@/hooks/UseTheme';
 import { downloadResume } from '@/utils/resume';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import useHamburger from './useHamburger';
 import { navlinkArray } from '../useHeader';
@@ -53,13 +54,12 @@ const Hamburger = (props: Props) => {
                         return (
                             <li
                                 id={`li-${link}`}
-                                className={`li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 ${
-                                    hook.show
-                                        ? 'translate-x-0'
-                                        : 'translate-x-[101%]'
-                                }`}
+                                className={twMerge(
+                                    `li-item select-none rounded-tl-xl rounded-bl-xl pointer-events-auto z-10 cursor-pointer text-sm p-3 my-4 duration-150 translate-x-[101%]`,
+                                    hook.show && 'translate-x-0'
+                                )}
                                 style={{
-                                    transitionDelay: `${i || 0}00ms`,
+                                    transitionDelay: `${(i * 100) / 2}ms`,
                                     background: last
                                         ? 'linear-gradient(30deg, rgba(181, 22, 212, 1) 20%, rgba(77, 77, 205, 1) 100%)'
                                         : themeColor.color,

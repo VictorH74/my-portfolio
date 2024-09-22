@@ -15,7 +15,6 @@ export default function useSlider(props: SliderProps) {
 
     const [currentFileIndex, setCurrentFileIndex] = React.useState<number>(0);
 
-    // Variáveis de controle de arraste
     const [startPos, setStartPos] = React.useState<PositionType | null>(null);
     const [isDragging, setIsDragging] = React.useState(false);
 
@@ -43,7 +42,6 @@ export default function useSlider(props: SliderProps) {
         setCurrentFileIndex((prev) => prev + 1);
     }, [currentFileIndex, props.images]);
 
-    // Funções de arraste (drag/swipe)
     const handleTouchStart = (e: React.TouchEvent) => {
         const { clientX, clientY } = e.touches[0];
         setStartPos({ x: clientX, y: clientY });
@@ -57,7 +55,7 @@ export default function useSlider(props: SliderProps) {
         const xDiff = startPos.x - currentXPos;
         const yDiff = startPos.y - currentYPos;
 
-        const longYMoviment = yDiff < 20 && yDiff > -20;
+        const longYMoviment = yDiff < 30 && yDiff > -30;
         if (longYMoviment && xDiff > 50) {
             nextSlide();
             setIsDragging(false);
@@ -83,7 +81,7 @@ export default function useSlider(props: SliderProps) {
         const xDiff = startPos.x - e.clientX;
         const yDiff = startPos.y - e.clientY;
 
-        const longYMoviment = yDiff < 20 && yDiff > -20;
+        const longYMoviment = yDiff < 30 && yDiff > -30;
 
         if (longYMoviment && xDiff > 50) {
             nextSlide();
