@@ -35,7 +35,6 @@ export default function useTimer() {
         const intervalId = setInterval(() => {
             if (!reachedBottom) {
                 setTime(time + 1);
-                console.count('timing: ');
             }
         }, 1000);
 

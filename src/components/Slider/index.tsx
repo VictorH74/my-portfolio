@@ -20,6 +20,7 @@ export default function Slider(props: SliderProps) {
             onTouchStart={hook.handleTouchStart}
             onTouchMove={hook.handleTouchMove}
             onTouchEnd={hook.handleTouchEnd}
+            onMouseLeave={hook.handleMouseUp}
             onMouseDown={hook.handleMouseDown}
             onMouseMove={hook.handleMouseMove}
             onMouseUp={hook.handleMouseUp}

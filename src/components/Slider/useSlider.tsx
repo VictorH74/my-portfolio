@@ -5,13 +5,18 @@ export interface SliderProps {
     images: ScreenshotType[];
 }
 
+type PositionType = {
+    x: number;
+    y: number;
+};
+
 export default function useSlider(props: SliderProps) {
     const sliderContainerRef = React.useRef<HTMLUListElement>(null);
 
     const [currentFileIndex, setCurrentFileIndex] = React.useState<number>(0);
 
     // Variáveis de controle de arraste
-    const [startPos, setStartPos] = React.useState<number | null>(null);
+    const [startPos, setStartPos] = React.useState<PositionType | null>(null);
     const [isDragging, setIsDragging] = React.useState(false);
 
     React.useEffect(() => {
@@ -40,18 +45,23 @@ export default function useSlider(props: SliderProps) {
 
     // Funções de arraste (drag/swipe)
     const handleTouchStart = (e: React.TouchEvent) => {
-        setStartPos(e.touches[0].clientX);
+        const { clientX, clientY } = e.touches[0];
+        setStartPos({ x: clientX, y: clientY });
         setIsDragging(true);
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
         if (!isDragging || startPos === null) return;
-        const currentPos = e.touches[0].clientX;
-        const diff = startPos - currentPos;
-        if (diff > 50) {
+        const currentXPos = e.touches[0].clientX;
+        const currentYPos = e.touches[0].clientY;
+        const xDiff = startPos.x - currentXPos;
+        const yDiff = startPos.y - currentYPos;
+
+        const longYMoviment = yDiff < 20 && yDiff > -20;
+        if (longYMoviment && xDiff > 50) {
             nextSlide();
             setIsDragging(false);
-        } else if (diff < -50) {
+        } else if (longYMoviment && xDiff < -50) {
             previousSlide();
             setIsDragging(false);
         }
@@ -63,17 +73,22 @@ export default function useSlider(props: SliderProps) {
     };
 
     const handleMouseDown = (e: React.MouseEvent) => {
-        setStartPos(e.clientX);
+        const { clientX, clientY } = e;
+        setStartPos({ x: clientX, y: clientY });
         setIsDragging(true);
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDragging || startPos === null) return;
-        const diff = startPos - e.clientX;
-        if (diff > 50) {
+        const xDiff = startPos.x - e.clientX;
+        const yDiff = startPos.y - e.clientY;
+
+        const longYMoviment = yDiff < 20 && yDiff > -20;
+
+        if (longYMoviment && xDiff > 50) {
             nextSlide();
             setIsDragging(false);
-        } else if (diff < -50) {
+        } else if (longYMoviment && xDiff < -50) {
             previousSlide();
             setIsDragging(false);
         }
