@@ -60,7 +60,7 @@ const AboutMe = () => {
                     data-aos-delay="300"
                     data-aos-duration="400"
                 >
-                    <ProfileImage className="rounded-e-full rounded-ss-full max-lg:rounded-es-full" />
+                    <ProfileImage className="rounded-e-full rounded-ss-full max-lg:rounded-es-full h-auto w-full max-w-[300px]" />
                 </div>
             </div>
 
