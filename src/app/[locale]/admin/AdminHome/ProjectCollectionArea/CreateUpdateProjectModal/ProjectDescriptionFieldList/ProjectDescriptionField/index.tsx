@@ -1,9 +1,10 @@
 import TextArea from '@/components/TextArea';
+import useAi from '@/hooks/useAi';
 import { LangType } from '@/types';
 import React from 'react';
-import GeminiAiButton from './GeminiAiButton';
-import useAi from '@/hooks/useAi';
 import { twMerge } from 'tailwind-merge';
+
+import GeminiAiButton from './GeminiAiButton';
 
 interface ProjectDescriptionFieldProps {
     lang: LangType;

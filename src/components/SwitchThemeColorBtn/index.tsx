@@ -1,7 +1,8 @@
-import React from 'react';
-import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
+
 import useSwitchThemeColorBtn, {
     SwitchThemeColorBtnProps,
 } from './useSwitchThemeColorBtn';

@@ -1,8 +1,9 @@
-import { headingClassName } from '../CollectionActions';
-import ResumeCV from './ResumeCV';
 import React from 'react';
+
 import Contacts from './Contacts';
 import ProfileImageContainer from './ProfileImageContainer';
+import ResumeCV from './ResumeCV';
+import { headingClassName } from '../CollectionActions';
 
 export default function ProfileArea() {
     return (

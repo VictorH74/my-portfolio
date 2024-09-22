@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import {
     CreateUpdateProjectType,
     LangType,
@@ -22,8 +23,8 @@ import {
     uploadBytes,
 } from 'firebase/storage';
 import React from 'react';
+
 import { ReordableModal } from '../../ReordableModal';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
 

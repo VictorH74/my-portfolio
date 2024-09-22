@@ -1,10 +1,11 @@
 'use client';
-import { downloadResume } from '@/utils/resume';
-import React from 'react';
 import { useTheme } from '@/hooks/UseTheme';
-import { navlinkArray } from '../useHeader';
+import { downloadResume } from '@/utils/resume';
 import { useTranslations } from 'next-intl';
+import React from 'react';
+
 import useHamburger from './useHamburger';
+import { navlinkArray } from '../useHeader';
 
 interface Props {
     downloadResumeBtnInnerText: string;

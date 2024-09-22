@@ -1,12 +1,13 @@
+import Loading from '@/components/Loading';
+import ProfileImage from '@/components/ProfileImage/indext';
+import SelectFileIconButton from '@/components/SelectFileIconButton';
+import { db } from '@/configs/firebaseConfig';
+import { doc, updateDoc } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import Loading from '@/components/Loading';
+
 import EditImageModal from './EditImageModal';
-import SelectFileIconButton from '@/components/SelectFileIconButton';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/configs/firebaseConfig';
-import ProfileImage from '@/components/ProfileImage/indext';
 
 export default function ProfileImageContainer() {
     const [submitting, setSubmitting] = React.useState(false);

@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
 import useWindowSize from '@/hooks/UseWindowsSize';
+import React, { useRef } from 'react';
 
 export default function usePresentation() {
     const sectionRef = useRef<HTMLElement>(null);

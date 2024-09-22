@@ -1,10 +1,11 @@
 import { getResume, resumeFileName } from '@/utils/resume';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import Image from 'next/image';
 import React from 'react';
+
 import PdfViewer from './PdfViewer';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function ResumeCV() {
     const [resumeBlob, setResumeBlob] = React.useState<Blob | undefined>();

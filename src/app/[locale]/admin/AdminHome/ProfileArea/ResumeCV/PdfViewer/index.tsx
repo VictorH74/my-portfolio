@@ -1,11 +1,9 @@
 // Import the main component
-import { Viewer } from '@react-pdf-viewer/core';
+import ModalContainer from '@/components/ModalContainer';
 import CloseIcon from '@mui/icons-material/Close';
-import { Worker } from '@react-pdf-viewer/core';
-
+import { Viewer, Worker } from '@react-pdf-viewer/core';
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import ModalContainer from '@/components/ModalContainer';
 
 interface PdfViewerProps {
     fileUrl: string;

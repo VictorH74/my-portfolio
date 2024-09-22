@@ -1,17 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useTheme } from '@/hooks/UseTheme';
-import React from 'react';
-import { Hexagon } from './classes';
 import useWindowSize from '@/hooks/UseWindowsSize';
+import React from 'react';
+
+import { Hexagon } from './classes';
 
 export default function useBackgroundAnimation() {
     const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
     const centerRef = React.useRef<HTMLSpanElement | null>(null);
-    const [hexState, stHexState] = React.useState<Hexagon[]>([]);
-    const { themeColor } = useTheme();
     const debouncedFunction = React.useRef<ReturnType<
         typeof setTimeout
     > | null>(null);
+
+    const [hexState, stHexState] = React.useState<Hexagon[]>([]);
+
+    const { themeColor } = useTheme();
+
     const [w, h] = useWindowSize();
     React.useEffect(() => {
         if (w < 700) return;

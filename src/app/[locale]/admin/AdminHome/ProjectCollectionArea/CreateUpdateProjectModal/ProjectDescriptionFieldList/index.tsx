@@ -1,6 +1,7 @@
-import { LANGUAGES } from '@/utils/server-constants';
-import ProjectDescriptionField from './ProjectDescriptionField';
 import { LangType, ProjectType } from '@/types';
+import { LANGUAGES } from '@/utils/server-constants';
+
+import ProjectDescriptionField from './ProjectDescriptionField';
 
 interface ProjectDescriptionFieldListProps {
     projectDescription: ProjectType['description'];

@@ -1,9 +1,9 @@
 'use client';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
-import Image from 'next/image';
-import { Noto_Sans } from 'next/font/google';
-import { useTranslations } from 'next-intl';
 import TechnologyLiItem from '@/components/TechnologyLiItem';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { Noto_Sans } from 'next/font/google';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 

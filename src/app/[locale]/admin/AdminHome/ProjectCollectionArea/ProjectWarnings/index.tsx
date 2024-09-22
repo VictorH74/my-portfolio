@@ -1,8 +1,8 @@
 import { ProjectType } from '@/types';
-import { twMerge } from 'tailwind-merge';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import { twMerge } from 'tailwind-merge';
 
 interface AdminProjectWarningsProps {
     projects: ProjectType[];

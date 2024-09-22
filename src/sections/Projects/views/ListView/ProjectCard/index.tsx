@@ -1,13 +1,14 @@
 'use client';
-import React from 'react';
-import LinkIcon from '@mui/icons-material/Link';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import Image from 'next/image';
-import useProjectCard from './useProjectCard';
-import { ProjectType } from '@/types';
 import Slider from '@/components/Slider';
+import { ProjectType } from '@/types';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import React from 'react';
+
+import useProjectCard from './useProjectCard';
 
 interface Props {
     index: number;

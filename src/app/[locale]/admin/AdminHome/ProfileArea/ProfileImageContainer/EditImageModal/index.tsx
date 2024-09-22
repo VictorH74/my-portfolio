@@ -1,12 +1,13 @@
+import Divider from '@/components/Divider';
 import ModalContainer from '@/components/ModalContainer';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import RemoveIcon from '@mui/icons-material/Remove';
+import Slider from '@mui/material/Slider';
 import Image from 'next/image';
 import React from 'react';
+
 import useEditImageModal, { EditImageModalProps } from './useEditImageModal';
-import CloseIcon from '@mui/icons-material/Close';
-import Divider from '@/components/Divider';
-import Slider from '@mui/material/Slider';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
 
 export default function EditImageModal(props: EditImageModalProps) {
     const hook = useEditImageModal(props);

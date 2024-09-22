@@ -1,8 +1,9 @@
-import React from 'react';
-import CustomCheckbox from './CustomCheckbox';
-import { twMerge } from 'tailwind-merge';
 import ModalContainer from '@/components/ModalContainer';
 import CloseIcon from '@mui/icons-material/Close';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import CustomCheckbox from './CustomCheckbox';
 import useAddTechFormModal, {
     AddTechFormModalProps,
 } from './useAddTechFormModal';

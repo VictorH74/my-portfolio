@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import ReorderIcon from '@mui/icons-material/Reorder';
+
 import Button from '../Button';
 
 interface CollectionActionsProps {

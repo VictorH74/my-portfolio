@@ -1,10 +1,11 @@
-import { ProfileContactsType } from '@/types';
-import { getContacts } from '@/utils/functions';
-import { BRAZIL_PHONE_PATTERN, contactIcon } from '@/utils/constants';
 import { IconButton } from '@/components/IconButton';
-import Skeleton from '@mui/material/Skeleton';
+import { ProfileContactsType } from '@/types';
+import { BRAZIL_PHONE_PATTERN, contactIcon } from '@/utils/constants';
+import { getContacts } from '@/utils/functions';
 import EditIcon from '@mui/icons-material/Edit';
+import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
+
 import UpdateContactModal from './UpdateContactModal';
 
 export default function Contacts() {

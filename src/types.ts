@@ -1,5 +1,6 @@
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+
 import { LANGUAGES } from './utils/server-constants';
 
 export type HandlerType =

@@ -1,6 +1,6 @@
 import { IconButton } from '@/components/IconButton';
-import RemoveIcon from '@mui/icons-material/Remove';
 import EditIcon from '@mui/icons-material/Edit';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { twMerge } from 'tailwind-merge';
 
 interface ProjectCardHoverProps {

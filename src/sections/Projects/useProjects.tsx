@@ -1,3 +1,4 @@
+import { db } from '@/configs/firebaseConfig';
 import { ProjectType } from '@/types';
 import {
     QueryConstraint,
@@ -8,9 +9,8 @@ import {
     query,
     startAfter,
 } from 'firebase/firestore';
-import { db } from '@/configs/firebaseConfig';
-import { useQuery } from 'react-query';
 import React from 'react';
+import { useQuery } from 'react-query';
 
 export default function useProjects() {
     const [view, setView] = React.useState(2);

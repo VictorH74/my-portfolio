@@ -1,8 +1,9 @@
-import React from 'react';
-import ProjectCard from './ProjectCard';
 import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import ProjectCard from './ProjectCard';
 
 interface Props {
     projectArray: ProjectType[];

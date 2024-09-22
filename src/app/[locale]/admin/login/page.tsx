@@ -1,16 +1,17 @@
 'use client';
+import { auth } from '@/configs/firebaseConfig';
 import { setServerCookie } from '@/lib/actions';
-import { useRouter } from 'next/navigation';
-import React from 'react';
-import nookies from 'nookies';
+import { FirebaseError } from 'firebase/app';
 import {
     browserLocalPersistence,
     setPersistence,
     signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { auth } from '@/configs/firebaseConfig';
+import { useRouter } from 'next/navigation';
+import nookies from 'nookies';
+import React from 'react';
+
 import SubmitButton from './SubmitButton';
-import { FirebaseError } from 'firebase/app';
 
 export default function AdminLoginPage() {
     const router = useRouter();

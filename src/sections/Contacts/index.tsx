@@ -1,10 +1,11 @@
 'use client';
 import ContactList from '@/components/ContactList';
-import useContacts from './useContacts';
-import Timer from './Timer';
-import { useTranslations } from 'next-intl';
-import useWindowSize from '@/hooks/UseWindowsSize';
 import Divider from '@/components/Divider';
+import useWindowSize from '@/hooks/UseWindowsSize';
+import { useTranslations } from 'next-intl';
+
+import Timer from './Timer';
+import useContacts from './useContacts';
 
 export default function Contacts() {
     const hook = useContacts();

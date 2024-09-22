@@ -1,8 +1,9 @@
+import { getContacts } from '@/utils/functions';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
-import { getContacts } from '@/utils/functions';
-import ContactListContent from './ContactListContent';
 import { twMerge } from 'tailwind-merge';
+
+import ContactListContent from './ContactListContent';
 
 interface Props {
     center?: boolean;

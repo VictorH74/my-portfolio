@@ -1,13 +1,14 @@
 import { db } from '@/configs/firebaseConfig';
 import { BtnAttrType, TechnologieType } from '@/types';
-import { doc, runTransaction, setDoc } from 'firebase/firestore';
-import React from 'react';
-import { getTechDocRef } from '../useTechnologiesArea';
 import GradeIcon from '@mui/icons-material/Grade';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { doc, runTransaction, setDoc } from 'firebase/firestore';
+import React from 'react';
+
 import { CustomCheckboxProps } from './CustomCheckbox';
+import { getTechDocRef } from '../useTechnologiesArea';
 
 export interface AddTechFormModalProps {
     selectedTech: TechnologieType | null;

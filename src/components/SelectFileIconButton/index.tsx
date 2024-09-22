@@ -1,5 +1,6 @@
-import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
+import React from 'react';
+
 import { IconButton } from '../IconButton';
 
 interface SelectFileIconButtonProps {

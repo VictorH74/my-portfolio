@@ -1,19 +1,20 @@
 'use client';
+import Divider from '@/components/Divider';
 import ModalContainer from '@/components/ModalContainer';
-import useCreateUpdateModal, {
-    CreateUpdateProjectModalProps,
-} from './useCreateUpdateProjectModal';
 import TextArea from '@/components/TextArea';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import ProjectTechList from './ProjectTechList';
+
+import ProjectDescriptionFieldList from './ProjectDescriptionFieldList';
 import ProjectScreenshotList from './ProjectScreenshotList';
 import ProjectScreenshotListActions from './ProjectScreenshotListActions';
-import ProjectDescriptionFieldList from './ProjectDescriptionFieldList';
+import ProjectTechList from './ProjectTechList';
 import ProjectTechValueField from './ProjectTechValueField';
-import Divider from '@/components/Divider';
 import ProjectUrlFields from './ProjectUrlFields';
+import useCreateUpdateModal, {
+    CreateUpdateProjectModalProps,
+} from './useCreateUpdateProjectModal';
 
 export default function CreateUpdateProjectModal(
     props: CreateUpdateProjectModalProps

@@ -1,20 +1,21 @@
 'use client';
-import React from 'react';
+import { useTheme } from '@/hooks/UseTheme';
 import { downloadResume } from '@/utils/resume';
-import Hamburger from './Hamburger';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import MenuItem from '@mui/material/MenuItem';
 import { Raleway } from 'next/font/google';
-import useHeader, { HeaderProps, navlinkArray } from './useHeader';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+import { createPortal } from 'react-dom';
+import { twMerge } from 'tailwind-merge';
+
+import Hamburger from './Hamburger';
+import NavItemWapper from './NavItemWapper';
 import NavListItem from './NavListItem';
 import SettingsMenu from './SettingsMenu';
-import NavItemWapper from './NavItemWapper';
-import { useTheme } from '@/hooks/UseTheme';
-import MenuItem from '@mui/material/MenuItem';
-import SwitchThemeColorBtn from '../SwitchThemeColorBtn';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { createPortal } from 'react-dom';
 import SwitchBgAnimation from './SwitchBgAnimation';
-import { twMerge } from 'tailwind-merge';
-import { useTranslations } from 'next-intl';
+import useHeader, { HeaderProps, navlinkArray } from './useHeader';
+import SwitchThemeColorBtn from '../SwitchThemeColorBtn';
 
 const BackgroundAnimation = React.lazy(
     () => import('@/components/BackgroundAnimation')

@@ -1,13 +1,14 @@
 'use client';
-import { Noto_Sans } from 'next/font/google';
-import React from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import Loading from '@/components/Loading';
+import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { Noto_Sans } from 'next/font/google';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import { fields } from './data';
 import useContactMe, { Fields } from './useContactMe';
-import { twMerge } from 'tailwind-merge';
-import { useTranslations } from 'next-intl';
 
 const notoSans = Noto_Sans({ subsets: ['latin'], weight: '400' });
 const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-90 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full backdrop-blur-md`;

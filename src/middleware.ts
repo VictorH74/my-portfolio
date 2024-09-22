@@ -1,4 +1,5 @@
 import { type NextRequest } from 'next/server';
+
 import { authMiddleware } from './middleware/authMiddleware';
 import { intlMiddleware } from './middleware/intlMiddleware';
 

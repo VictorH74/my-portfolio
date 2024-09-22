@@ -1,15 +1,16 @@
 'use client';
+import Divider from '@/components/Divider';
 import { ProjectType } from '@/types';
-import Image from 'next/image';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import Image from 'next/image';
 import React from 'react';
 import { createPortal } from 'react-dom';
+
 import ProjectCardHover from './ProjectCardHover';
 import useAdminProjectCard from './useAdminProjectCard';
 import CreateUpdateProjectModal from '../CreateUpdateProjectModal';
-import Divider from '@/components/Divider';
 
 const DateParagraph: React.FC<{ label: string; isoDate: string }> = ({
     label,

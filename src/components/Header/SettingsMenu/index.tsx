@@ -1,7 +1,8 @@
 'use client';
-import React from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Menu from '@mui/material/Menu';
+import React from 'react';
+
 import useSettingsMenu, { SettingsMenuProps } from './useSettingsMenu';
 
 export default function SettingsMenu(props: SettingsMenuProps) {

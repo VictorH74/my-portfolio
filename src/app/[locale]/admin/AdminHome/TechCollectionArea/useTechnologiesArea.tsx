@@ -1,8 +1,9 @@
+import { db } from '@/configs/firebaseConfig';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { TechnologieType } from '@/types';
 import { doc, runTransaction, writeBatch } from 'firebase/firestore';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import React from 'react';
-import { db } from '@/configs/firebaseConfig';
+
 import { ReordableModal } from '../ReordableModal';
 
 export const getTechDocRef = (id: string) => doc(db, 'technologies', id);

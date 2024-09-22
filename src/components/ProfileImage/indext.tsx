@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import Skeleton from '@mui/material/Skeleton';
-import React from 'react';
-import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/configs/firebaseConfig';
+import Skeleton from '@mui/material/Skeleton';
+import { doc, getDoc } from 'firebase/firestore';
+import Image from 'next/image';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ProfileImageProps {

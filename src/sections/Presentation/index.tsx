@@ -1,13 +1,14 @@
 'use client';
+import Divider from '@/components/Divider';
+import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
 import { useTheme } from '@/hooks/UseTheme';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import React from 'react';
-import usePresentation from './usePresentation';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
-import Image from 'next/image';
 import Skeleton from '@mui/material/Skeleton';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import Divider from '@/components/Divider';
+import React from 'react';
+
+import usePresentation from './usePresentation';
 
 export default function Presentation() {
     const hook = usePresentation();

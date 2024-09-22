@@ -1,15 +1,15 @@
 'use client';
 import Header from '@/components/Header';
+import Providers from '@/components/Providers';
 import AboutMe from '@/sections/AboutMe';
+import ContactMe from '@/sections/ContactMe';
 import Contacts from '@/sections/Contacts';
 import Presentation from '@/sections/Presentation';
 import Projects from '@/sections/Projects';
 import Technologies from '@/sections/Technologies';
 import Aos from 'aos';
 import React from 'react';
-import ContactMe from '@/sections/ContactMe';
 import 'aos/dist/aos.css';
-import Providers from '@/components/Providers';
 import { twMerge } from 'tailwind-merge';
 
 export default function HomePage() {

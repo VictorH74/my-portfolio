@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import ModalContainer from '@/components/ModalContainer';
-import React from 'react';
+import { useTheme } from '@/hooks/UseTheme';
 import {
     DragDropContext,
     Droppable,
@@ -9,9 +9,9 @@ import {
     DraggingStyle,
     NotDraggingStyle,
 } from '@hello-pangea/dnd';
-import { twMerge } from 'tailwind-merge';
-import { useTheme } from '@/hooks/UseTheme';
 import CloseIcon from '@mui/icons-material/Close';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 // a little function to help us with reordering the result
 const reorder = (list: any[], startIndex: number, endIndex: number) => {

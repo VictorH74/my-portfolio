@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react';
-import Image, { ImageProps } from 'next/image';
-import { twMerge } from 'tailwind-merge';
-import Loading from '../Loading';
 import { useTheme } from '@/hooks/UseTheme';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Image, { ImageProps } from 'next/image';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
+
 import useSlider, { SliderProps } from './useSlider';
+import Loading from '../Loading';
 
 export default function Slider(props: SliderProps) {
     const { themeColor } = useTheme();

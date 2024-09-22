@@ -1,9 +1,9 @@
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import ReorderIcon from '@mui/icons-material/Reorder';
-import React from 'react';
 import { ReordableModal } from '@/app/[locale]/admin/AdminHome/ReordableModal';
 import { ScreenshotType } from '@/types';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import ReorderIcon from '@mui/icons-material/Reorder';
 import Image from 'next/image';
+import React from 'react';
 
 interface ProjectScreenshotListActionsProps {
     projectScreenshotUrls: string[];

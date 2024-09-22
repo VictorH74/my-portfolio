@@ -1,8 +1,8 @@
 'use client';
-import React from 'react';
-import { useTheme } from '@/hooks/UseTheme';
 import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
+import React from 'react';
 
 export default function useProjectCard(project: ProjectType) {
     const { technologyArray, empty } = useGlobalTechnologies();

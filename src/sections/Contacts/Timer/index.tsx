@@ -1,6 +1,7 @@
 import React from 'react';
-import useTimer from './useTimer';
 import { twMerge } from 'tailwind-merge';
+
+import useTimer from './useTimer';
 
 export default function Timer() {
     const hook = useTimer();

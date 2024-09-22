@@ -1,10 +1,11 @@
 import ModalContainer from '@/components/ModalContainer';
+import { BRAZIL_PHONE_PATTERN } from '@/utils/constants';
+import CloseIcon from '@mui/icons-material/Close';
+
 import useUpdateContactModal, {
     inputType,
     UpdateContactModalProps,
 } from './useUpdateContactModal';
-import { BRAZIL_PHONE_PATTERN } from '@/utils/constants';
-import CloseIcon from '@mui/icons-material/Close';
 
 export default function UpdateContactModal(props: UpdateContactModalProps) {
     const hook = useUpdateContactModal(props);

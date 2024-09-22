@@ -1,17 +1,18 @@
 'use client';
-import React from 'react';
-import Image from 'next/image';
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveIcon from '@mui/icons-material/Remove';
-import GradeIcon from '@mui/icons-material/Grade';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { IconButton } from '@/components/IconButton';
+import TechnologyLiItem from '@/components/TechnologyLiItem';
+import EditIcon from '@mui/icons-material/Edit';
+import GradeIcon from '@mui/icons-material/Grade';
+import RemoveIcon from '@mui/icons-material/Remove';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import Skeleton from '@mui/material/Skeleton';
+import Image from 'next/image';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import useTechnologiesArea from './useTechnologiesArea';
 import CollectionActions from '../CollectionActions';
 import { ReordableModal } from '../ReordableModal';
-import Skeleton from '@mui/material/Skeleton';
-import TechnologyLiItem from '@/components/TechnologyLiItem';
-import useTechnologiesArea from './useTechnologiesArea';
-import { twMerge } from 'tailwind-merge';
 
 const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
 

@@ -1,13 +1,13 @@
 'use client';
 import Loading from '@/components/Loading';
-import React from 'react';
-import ListView from './views/ListView';
-import CarouselView from './views/Carousel';
-import ViewListIcon from '@mui/icons-material/ViewList';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
-
+import ViewListIcon from '@mui/icons-material/ViewList';
 import { useTranslations } from 'next-intl';
+import React from 'react';
+
 import useProjects from './useProjects';
+import CarouselView from './views/Carousel';
+import ListView from './views/ListView';
 
 const viewBtnClass = 'text-custom-gray-light dark:text-[#a1a1aa]';
 const viewBtnActiveClass = 'text-[#303030] dark:text-[#ececec]';
