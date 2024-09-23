@@ -62,7 +62,7 @@ export default function EditImageModal(props: EditImageModalProps) {
 
                     {/* CROP BOX */}
                     <div
-                        className="h-full aspect-square mx-auto absolute top-0 border pointer-events-none"
+                        className="h-full rounded-fulld aspect-square mx-auto absolute top-0 border pointer-events-none"
                         ref={hook.cropBoxRef}
                     ></div>
                 </div>
@@ -96,7 +96,7 @@ export default function EditImageModal(props: EditImageModalProps) {
                         src={hook.previewImgSrc}
                         width={200}
                         height={200}
-                        className="select-none max-w-[200px] max-h-[200px] size-fit pointer-events-none fixed bottom-3 left-3 rounded-md shadow-md"
+                        className="select-none max-w-[200px] max-h-[200px] size-fit pointer-events-none fixed bottom-3 left-3 rounded-md shadow-md bg-[var(--theme-color)]"
                         loading="lazy"
                     />
                 )}

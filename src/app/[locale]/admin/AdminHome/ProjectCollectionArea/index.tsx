@@ -46,7 +46,7 @@ export default function ProjectCollectionArea() {
                     reorderFunc={() => setOnReorderProject(true)}
                 />
 
-                <div className="py-3 w-auto flex flex-row overflow-x-auto gap-4 justify-centers">
+                <ul className="py-3 w-auto flex flex-row overflow-x-auto gap-4 justify-centers">
                     {projects.length > 0 ? (
                         projects.map((p) => (
                             <AdminProjectCard key={p.id} {...p} />
@@ -54,7 +54,7 @@ export default function ProjectCollectionArea() {
                     ) : (
                         <CardSkeletonCollection amount={5} />
                     )}
-                </div>
+                </ul>
 
                 <form action="">
                     <input placeholder="" type="text" />

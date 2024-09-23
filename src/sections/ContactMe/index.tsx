@@ -6,7 +6,9 @@ import { Noto_Sans } from 'next/font/google';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
+import DoneIcon from '@mui/icons-material/Done';
 import { fields } from './data';
 import useContactMe, { Fields } from './useContactMe';
 
@@ -87,18 +89,13 @@ export default function ContactMe() {
                     )}
                 </button>
 
-                <div
-                    className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 duration-150 text-center max-sm:col-span-2 backdrop-blur-md"
-                    onClick={hook.selectContent}
-                >
-                    +55 (86) 99470-2018
-                </div>
-                <div
-                    className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150 max-sm:col-span-2 backdrop-blur-md"
-                    onClick={hook.selectContent}
-                >
-                    victorh.almeida7@gmail.com
-                </div>
+                <CopyableContentBtn
+                    content="+55 (86) 99470-2018"
+                    formatContent={(prevContent) => {
+                        return prevContent.replace(/\D/g, '');
+                    }}
+                />
+                <CopyableContentBtn content="victorh.almeida7@gmail.com" />
             </form>
             {[
                 {
@@ -133,3 +130,48 @@ export default function ContactMe() {
         </section>
     );
 }
+
+interface CopyableContentBtnProps {
+    content: string;
+    formatContent?: (content: string) => string;
+}
+
+const CopyableContentBtn: React.FC<CopyableContentBtnProps> = ({
+    content,
+    formatContent,
+}) => {
+    const [copySuccess, setCopySuccess] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!copySuccess) return;
+        setTimeout(() => setCopySuccess(false), 2000);
+    }, [copySuccess]);
+
+    const copyToClipboard = () => {
+        navigator.clipboard
+            .writeText(formatContent ? formatContent(content) : content)
+            .then(() => {
+                setCopySuccess(true);
+            })
+            .catch(() => {
+                alert('Failed to copy text 🫤');
+            });
+    };
+
+    return (
+        <button
+            className="w-full cursor-pointer bg-custom-gray-dark p-2 rounded-md hover:brightness-110 text-center duration-150 max-sm:col-span-2 backdrop-blur-md flex flex-row items-center gap-4 justify-center"
+            type="button"
+            onClick={copyToClipboard}
+            disabled={copySuccess}
+        >
+            <p>{content}</p>
+
+            {copySuccess ? (
+                <DoneIcon className="text-green-300" />
+            ) : (
+                <ContentCopyIcon />
+            )}
+        </button>
+    );
+};

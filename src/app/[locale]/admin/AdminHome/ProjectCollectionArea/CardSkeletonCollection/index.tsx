@@ -12,7 +12,7 @@ export default function CardSkeletonCollection(
             {Array(props.amount)
                 .fill(undefined)
                 .map((_, i) => (
-                    <div
+                    <li
                         key={i}
                         className="relative w-[300px] h-96 shadow-lg bg-gray-200 dark:bg-[#3f3f3f] shrink-0 grow-0 rounded-md flex flex-col overflow-hidden"
                     >
@@ -29,7 +29,7 @@ export default function CardSkeletonCollection(
                             <Skeleton width="70%" />
                             <Skeleton width="70%" />
                         </div>
-                    </div>
+                    </li>
                 ))}
         </>
     );

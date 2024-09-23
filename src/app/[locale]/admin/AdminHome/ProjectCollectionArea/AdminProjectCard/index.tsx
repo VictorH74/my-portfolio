@@ -26,7 +26,7 @@ export default function AdminProjectCard(props: ProjectType) {
 
     return (
         <>
-            <div
+            <li
                 className="relative w-[300px] h-96 shadow-lg bg-white dark:bg-[#3f3f3f] shrink-0 grow-0 rounded-md flex flex-col overflow-hidden select-none"
                 onMouseOver={() => hook.setCardHover(true)}
                 onMouseLeave={() => hook.setCardHover(false)}
@@ -94,7 +94,7 @@ export default function AdminProjectCard(props: ProjectType) {
                     editFunc={hook.openEditModal}
                     removeFunc={hook.removeProject}
                 />
-            </div>
+            </li>
 
             {hook.onUpdateProject &&
                 createPortal(
