@@ -2,6 +2,7 @@
 import ModalContainer from '@/components/ModalContainer';
 import CloseIcon from '@mui/icons-material/Close';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
+
 // Import the styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
 
