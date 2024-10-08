@@ -136,17 +136,15 @@ export default function useCreateUpdateProjectModal(
                             `project-images/${finalFileName}`
                         );
                         try {
-                            const finalImg = await (
-                                await fetch('api/images', {
-                                    body: img,
-                                    method: 'POST',
-                                })
-                            ).arrayBuffer();
-                            const snap = await uploadBytes(
-                                storageRef,
-                                finalImg,
-                                { contentType: 'image/webp' }
-                            );
+                            // const finalImg = await (
+                            //     await fetch('api/images', {
+                            //         body: img,
+                            //         method: 'POST',
+                            //     })
+                            // ).arrayBuffer();
+                            const snap = await uploadBytes(storageRef, img, {
+                                contentType: 'image/webp',
+                            });
                             const url = await getDownloadURL(snap.ref);
                             updatedScreenshots[i] = {
                                 url,
