@@ -16,7 +16,7 @@ export default function Slider(props: SliderProps) {
 
     return (
         <div
-            className="relative"
+            className="relative h-full"
             onTouchStart={hook.handleTouchStart}
             onTouchMove={hook.handleTouchMove}
             onTouchEnd={hook.handleTouchEnd}
@@ -27,7 +27,7 @@ export default function Slider(props: SliderProps) {
         >
             <ul
                 ref={hook.sliderContainerRef}
-                className="flex w-full overflow-hidden group/container"
+                className="flex w-full overflow-hidden group/container h-full"
             >
                 {props.images.map((file, index) => {
                     return (
@@ -104,7 +104,7 @@ const SlideImage: React.FC<
         <div className="size-full relative select-none">
             <Image
                 {...props}
-                className="h-full w-auto"
+                className="h-full w-auto object-contain"
                 onLoad={() => setLoadingImg(false)}
                 loading="lazy"
             />

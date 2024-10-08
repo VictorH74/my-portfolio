@@ -42,14 +42,14 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
                 </div>
             )}
             <div
-                className={`relative flex flex-col flex-wrap justify-between my-0 lg:mx-[7%] ${
+                className={`relative flex flex-col flex-wrap justify-between my-0 lg:mx-[7%] items-center ${
                     oddScreen1024 ? 'lg:flex-row-reverse' : 'lg:flex-row'
                 }`}
                 data-aos="flip-up"
                 data-aos-duration="600"
                 data-aos-once="true"
             >
-                <div className="relative overflow-hidden lg:w-1/2 rounded-xl w-full shadow-xl">
+                <div className="relative overflow-hidden lg:w-1/2 rounded-xl w-full h-fit  shadow-xl">
                     <Slider images={project.screenshots} />
                 </div>
 
