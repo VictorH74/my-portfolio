@@ -16,6 +16,8 @@ export default function useProjects() {
     const [view, setView] = React.useState(2);
     const containerRef = React.useRef(null);
     const [projects, setProjects] = React.useState<ProjectType[]>([]);
+    const [isLoadingMoreProjects, setIsLoadingMoreProjects] =
+        React.useState(false);
 
     const { isLoading } = useQuery('projects', {
         queryFn: async () => {
@@ -25,10 +27,12 @@ export default function useProjects() {
     });
 
     const fetchMoreProjects = React.useCallback(async () => {
+        setIsLoadingMoreProjects(true);
         const retrievedProjects = await getProjectSnapshotsByQuery(
             startAfter(2)
         );
         setProjects((prev) => [...prev, ...retrievedProjects]);
+        setIsLoadingMoreProjects(false);
     }, []);
 
     const getProjectSnapshotsByQuery = async (
@@ -51,5 +55,6 @@ export default function useProjects() {
         isLoading,
         fetchMoreProjects,
         setView,
+        isLoadingMoreProjects,
     };
 }

@@ -1,3 +1,4 @@
+import Loading from '@/components/Loading';
 import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
 import React from 'react';
@@ -10,6 +11,7 @@ interface Props {
     showMoreOnText: string;
     showMoreOffText: string;
     fetchMoreProjectsFunc(): Promise<void>;
+    isLoadingMoreProjects: boolean;
 }
 
 export default function ListView(props: Props) {
@@ -48,8 +50,17 @@ export default function ListView(props: Props) {
                     }
                     setShowMore(!showMore);
                 }}
+                disabled={props.isLoadingMoreProjects}
             >
-                {showMore ? props.showMoreOnText : props.showMoreOffText}
+                {props.isLoadingMoreProjects ? (
+                    <div className="p-1">
+                        <Loading color="#cccccc" />
+                    </div>
+                ) : showMore ? (
+                    props.showMoreOnText
+                ) : (
+                    props.showMoreOffText
+                )}
             </button>
         </>
     );

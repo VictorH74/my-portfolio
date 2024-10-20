@@ -62,6 +62,7 @@ export default function Projects() {
                             showMoreOnText={t('show_more_on')}
                             showMoreOffText={t('show_more_off')}
                             fetchMoreProjectsFunc={hook.fetchMoreProjects}
+                            isLoadingMoreProjects={hook.isLoadingMoreProjects}
                         />
                     )}
                 </>

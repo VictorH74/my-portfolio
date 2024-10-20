@@ -5,6 +5,7 @@ interface TechnologyLiItemProps extends LiHTMLAttributes<HTMLLIElement> {}
 
 export default function TechnologyLiItem({
     className,
+    children,
     ...rest
 }: TechnologyLiItemProps) {
     return (
@@ -14,6 +15,8 @@ export default function TechnologyLiItem({
                 className
             )}
             {...rest}
-        />
+        >
+            {children}
+        </li>
     );
 }

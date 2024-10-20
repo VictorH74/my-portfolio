@@ -1,5 +1,7 @@
 import ModalContainer from '@/components/ModalContainer';
+import TechnologyLiItem from '@/components/TechnologyLiItem';
 import CloseIcon from '@mui/icons-material/Close';
+import Image from 'next/image';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -19,6 +21,22 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                         <CloseIcon />
                     </button>
                 </div>
+                {hook.validUrl && (
+                    <div className="w-full">
+                        <TechnologyLiItem className="mx-auto border-d2 rounded-md shadow-2xl">
+                            <Image
+                                loading="lazy"
+                                placeholder="empty"
+                                height={50}
+                                width={50}
+                                className="h-2/5 w-auto"
+                                src={hook.urlValue}
+                                alt="icon"
+                            />
+                        </TechnologyLiItem>
+                    </div>
+                )}
+
                 <form
                     className=" mt-5 animate-scale"
                     onSubmit={hook.saveUpdateTech}

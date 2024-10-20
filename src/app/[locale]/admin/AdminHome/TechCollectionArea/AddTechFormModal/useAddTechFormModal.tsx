@@ -26,6 +26,16 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const [nameValue, setNameValue] = React.useState('');
     const [isHidden, setIsHidden] = React.useState(false);
     const [isMain, setIsMain] = React.useState(false);
+    const [idFieldModified, setIdFieldModified] = React.useState(false);
+
+    const validUrl = React.useMemo(() => {
+        try {
+            new URL(urlValue);
+            return true;
+        } catch {
+            return false;
+        }
+    }, [urlValue]);
 
     React.useEffect(() => {
         if (!props.selectedTech) return;
@@ -99,6 +109,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         }
 
         resetFields();
+        props.onClose();
         setSubmittingForm(false);
     };
 
@@ -121,17 +132,29 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
                 className: 'grid',
                 pattern: '[a-z]*',
                 value: idValue,
-                onChange: (e) => setIdValue(e.currentTarget.value),
+                disabled: !!indexValue,
+                onChange: (e) => {
+                    const currentV = e.currentTarget.value;
+                    setIdValue(currentV);
+                    if (!idFieldModified) setIdFieldModified(true);
+                    else if (!currentV) setIdFieldModified(false);
+                },
             },
             {
                 placeholder: 'NAME',
                 name: 'iconName',
                 className: 'grid',
                 value: nameValue,
-                onChange: (e) => setNameValue(e.currentTarget.value),
+                onChange: (e) => {
+                    const value = e.currentTarget.value;
+                    setNameValue(value);
+                    if (!indexValue && !idFieldModified) {
+                        setIdValue(value.toLowerCase().replaceAll(' ', '_'));
+                    }
+                },
             },
         ],
-        [urlValue, idValue, nameValue]
+        [urlValue, idValue, nameValue, idFieldModified, indexValue]
     );
 
     const checkboxGenerationData = React.useMemo<CustomCheckboxProps[]>(
@@ -187,6 +210,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         fieldGenerationData,
         buttonGenerationData,
         saveUpdateTech,
+        validUrl,
         urlValue,
         setUrlValue,
         idValue,
