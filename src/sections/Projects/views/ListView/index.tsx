@@ -1,9 +1,7 @@
-import { Loading } from '@/components/Loading';
-import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
 import React from 'react';
-import { twMerge } from 'tailwind-merge';
 
+import { LoadMoreBtn } from './LoadMoreBtn';
 import { ProjectCard } from './ProjectCard';
 
 interface Props {
@@ -16,7 +14,6 @@ interface Props {
 
 export const ListView = (props: Props) => {
     const [showMore, setShowMore] = React.useState(false);
-    const { themeColor } = useTheme();
     return (
         <>
             <div className="flex flex-col md:gap-20 gap-7">
@@ -26,42 +23,17 @@ export const ListView = (props: Props) => {
                         <ProjectCard key={i} project={project} index={i} />
                     ))}
             </div>
-            <button
-                name="show more or less projects button"
-                onMouseOver={(e) => {
-                    const { style } = e.currentTarget;
-                    style.color = 'white';
-                    style.backgroundColor = themeColor.color;
-                }}
-                onMouseLeave={(e) => {
-                    const { style } = e.currentTarget;
-                    style.color = themeColor.color;
-                    style.backgroundColor = 'transparent';
-                }}
-                className={twMerge(
-                    'uppercase px-4 py-3 inline-block mt-12 relative overflow-hidden border-2 text-md dark:font-medium rounded-md duration-150 font-[inherit] font-semibold border-[var(--theme-color)]'
-                )}
-                style={{
-                    color: themeColor.color,
-                }}
+            <LoadMoreBtn
+                isLoadingMoreProjects={props.isLoadingMoreProjects}
                 onClick={async () => {
                     if (!showMore && !(props.projectArray.length > 3)) {
                         await props.fetchMoreProjectsFunc();
                     }
                     setShowMore(!showMore);
                 }}
-                disabled={props.isLoadingMoreProjects}
             >
-                {props.isLoadingMoreProjects ? (
-                    <div className="p-1">
-                        <Loading color="#cccccc" />
-                    </div>
-                ) : showMore ? (
-                    props.showMoreOnText
-                ) : (
-                    props.showMoreOffText
-                )}
-            </button>
+                {showMore ? props.showMoreOnText : props.showMoreOffText}
+            </LoadMoreBtn>
         </>
     );
 };

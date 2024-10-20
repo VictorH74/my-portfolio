@@ -77,8 +77,8 @@ export const Presentation = () => {
                                     <Skeleton
                                         key={i}
                                         variant="circular"
-                                        width={45}
-                                        height={45}
+                                        width={35}
+                                        height={35}
                                         sx={{
                                             backgroundColor: '#4e4e4e',
                                         }}
@@ -100,8 +100,8 @@ export const Presentation = () => {
                                         src={t.src}
                                         alt="technology icon"
                                         key={t.name}
-                                        width={45}
-                                        height={45}
+                                        width={35}
+                                        height={35}
                                     />
                                 ))
                         )}
