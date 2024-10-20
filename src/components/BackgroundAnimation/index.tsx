@@ -1,6 +1,6 @@
-import useBackgroundAnimation from './useBackgroundAnimation';
+import { useBackgroundAnimation } from './useBackgroundAnimation';
 
-export const BackgroundAnimation = () => {
+const BackgroundAnimation = () => {
     const hook = useBackgroundAnimation();
 
     return (
@@ -10,3 +10,5 @@ export const BackgroundAnimation = () => {
         </div>
     );
 };
+
+export default BackgroundAnimation;

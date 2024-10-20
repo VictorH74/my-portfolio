@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useHamburger from './useHamburger';
+import { useHamburger } from './useHamburger';
 import { navlinkArray } from '../useHeader';
 
 interface Props {

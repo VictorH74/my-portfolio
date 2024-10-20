@@ -1,5 +1,5 @@
-import TextArea from '@/components/TextArea';
-import useAi from '@/hooks/useAi';
+import { TextArea } from '@/components/TextArea';
+import { useAi } from '@/hooks/useAi';
 import { LangType } from '@/types';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';

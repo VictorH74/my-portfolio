@@ -3,7 +3,7 @@ import { Header } from '@/components/Header';
 import Providers from '@/components/Providers';
 import { AboutMe } from '@/sections/AboutMe';
 import { ContactMe } from '@/sections/ContactMe';
-import { Contacts } from '@/sections/Contacts';
+import { Footer } from '@/sections/Footer';
 import { Presentation } from '@/sections/Presentation';
 import { Projects } from '@/sections/Projects';
 import { Technologies } from '@/sections/Technologies';
@@ -41,7 +41,7 @@ export default function HomePage() {
                 <Technologies />
                 <Projects />
                 <ContactMe />
-                <Contacts />
+                <Footer />
             </main>
             {/* {size[0] <= 1100 && <SwitchThemeColorBtn vertical />} */}
         </Providers>

@@ -1,5 +1,5 @@
-import ModalContainer from '@/components/ModalContainer';
-import TechnologyLiItem from '@/components/TechnologyLiItem';
+import { ModalContainer } from '@/components/ModalContainer';
+import { TechnologyLiItem } from '@/components/TechnologyLiItem';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import React from 'react';

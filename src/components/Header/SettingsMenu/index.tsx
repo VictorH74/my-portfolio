@@ -3,7 +3,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Menu from '@mui/material/Menu';
 import React from 'react';
 
-import useSettingsMenu, { SettingsMenuProps } from './useSettingsMenu';
+import { useSettingsMenu, SettingsMenuProps } from './useSettingsMenu';
 
 export default function SettingsMenu(props: SettingsMenuProps) {
     const hook = useSettingsMenu(props);

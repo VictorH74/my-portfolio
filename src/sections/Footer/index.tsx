@@ -5,10 +5,10 @@ import { useWindowSize } from '@/hooks/UseWindowsSize';
 import { useTranslations } from 'next-intl';
 
 import { Timer } from './Timer';
-import { useContacts } from './useContacts';
+import { useFooter } from './useContacts';
 
-export const Contacts = () => {
-    const hook = useContacts();
+export const Footer = () => {
+    const hook = useFooter();
     const t = useTranslations('Contacts_Section');
     const [w] = useWindowSize();
 
@@ -16,10 +16,7 @@ export const Contacts = () => {
         <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl backdrop-blur-md">
             <section className="home-section min-h-[auto]" id="contacts">
                 {w > 768 && <Timer />}
-
-                <div className="mt-4">
-                    <ContactList center />
-                </div>
+                <ContactList center />
             </section>
             <Divider className="my-0 mb-3" />
             <footer className="mt-4">

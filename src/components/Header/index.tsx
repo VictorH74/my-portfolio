@@ -15,7 +15,7 @@ import NavListItem from './NavListItem';
 import SettingsMenu from './SettingsMenu';
 import SwitchBgAnimation from './SwitchBgAnimation';
 import useHeader, { HeaderProps, navlinkArray } from './useHeader';
-import SwitchThemeColorBtn from '../SwitchThemeColorBtn';
+import { SwitchThemeColorBtn } from '../SwitchThemeColorBtn';
 
 const BackgroundAnimation = React.lazy(
     () => import('@/components/BackgroundAnimation')

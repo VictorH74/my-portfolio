@@ -1,7 +1,7 @@
 'use client';
 import { Divider } from '@/components/Divider';
-import ModalContainer from '@/components/ModalContainer';
-import TextArea from '@/components/TextArea';
+import { ModalContainer } from '@/components/ModalContainer';
+import { TextArea } from '@/components/TextArea';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';

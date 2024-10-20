@@ -4,7 +4,7 @@ import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
 import React from 'react';
 
-export default function useProjectCard(project: ProjectType) {
+export const useProjectCard = (project: ProjectType) => {
     const { technologyArray, empty } = useGlobalTechnologies();
     const [video, setShowVideo] = React.useState(false);
 
@@ -34,4 +34,4 @@ export default function useProjectCard(project: ProjectType) {
         hiddenVideo,
         setLoadingImg,
     };
-}
+};

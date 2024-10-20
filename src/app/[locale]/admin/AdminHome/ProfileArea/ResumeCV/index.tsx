@@ -5,7 +5,7 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import Image from 'next/image';
 import React from 'react';
 
-import PdfViewer from './PdfViewer';
+import { PdfViewer } from './PdfViewer';
 
 export const ResumeCV = () => {
     const [resumeBlob, setResumeBlob] = React.useState<Blob | undefined>();

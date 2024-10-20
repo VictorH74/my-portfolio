@@ -1,4 +1,4 @@
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import { ProjectType } from '@/types';
 import { Trie } from '@/utils/trie';
 import React from 'react';

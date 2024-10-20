@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import useProjectCard from './useProjectCard';
+import { useProjectCard } from './useProjectCard';
 
 interface Props {
     index: number;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import ModalContainer from '@/components/ModalContainer';
+import { ModalContainer } from '@/components/ModalContainer';
 import { useTheme } from '@/hooks/UseTheme';
 import {
     DragDropContext,

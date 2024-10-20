@@ -6,9 +6,9 @@ export interface EditImageModalProps {
     cancelFunc(): void;
 }
 
-const DIRECTIONS = ['left', 'top'] as const;
+type DirectionsType = 'left' | 'top';
 
-type CropAreaType = Record<(typeof DIRECTIONS)[number], number>;
+type CropAreaType = Record<DirectionsType, number>;
 
 type StylePropType = {
     styleProp: string;

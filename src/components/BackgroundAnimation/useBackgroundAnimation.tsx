@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useTheme } from '@/hooks/UseTheme';
-import useWindowSize from '@/hooks/UseWindowsSize';
+import { useWindowSize } from '@/hooks/UseWindowsSize';
 import React from 'react';
 
 import { Hexagon } from './classes';

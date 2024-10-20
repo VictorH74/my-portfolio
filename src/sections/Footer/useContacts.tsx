@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const useContacts = () => {
+export const useFooter = () => {
     const endOfPageRef = React.useRef(null);
 
     return {

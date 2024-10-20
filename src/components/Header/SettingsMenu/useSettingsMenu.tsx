@@ -4,7 +4,7 @@ export interface SettingsMenuProps extends React.PropsWithChildren {
     onClose(): void;
 }
 
-export default function useSettingsMenu(props: SettingsMenuProps) {
+export const useSettingsMenu = (props: SettingsMenuProps) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,4 +21,4 @@ export default function useSettingsMenu(props: SettingsMenuProps) {
         handleClick,
         handleClose,
     };
-}
+};

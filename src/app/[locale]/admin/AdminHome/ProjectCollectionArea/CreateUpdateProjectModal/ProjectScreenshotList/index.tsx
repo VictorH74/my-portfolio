@@ -1,5 +1,5 @@
 import { IconButton } from '@/components/IconButton';
-import SelectFileIconButton from '@/components/SelectFileIconButton';
+import { SelectFileIconButton } from '@/components/SelectFileIconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Image from 'next/image';
 import React from 'react';
