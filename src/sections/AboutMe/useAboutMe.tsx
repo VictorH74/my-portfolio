@@ -3,7 +3,7 @@ import { getMetadata, getStorage, ref } from 'firebase/storage';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-export default function useAboutMe() {
+export const useAboutMe = () => {
     const [isClient, setIsClient] = React.useState(false);
 
     React.useEffect(() => {
@@ -35,4 +35,4 @@ export default function useAboutMe() {
         pdfMetadata,
         isLoading,
     };
-}
+};

@@ -14,9 +14,9 @@ interface ProjectScreenshotListActionsProps {
     projectScreenshots: (File | ScreenshotType)[];
 }
 
-export default function ProjectScreenshotListActions(
+export const ProjectScreenshotListActions = (
     props: ProjectScreenshotListActionsProps
-) {
+) => {
     const [onReorderScreenshots, setOnReorderScreenshots] =
         React.useState(false);
 
@@ -75,4 +75,4 @@ export default function ProjectScreenshotListActions(
             )}
         </div>
     );
-}
+};

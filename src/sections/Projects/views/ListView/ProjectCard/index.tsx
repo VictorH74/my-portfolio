@@ -1,5 +1,5 @@
 'use client';
-import Slider from '@/components/Slider';
+import { Slider } from '@/components/Slider';
 import { ProjectType } from '@/types';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
@@ -18,7 +18,10 @@ interface Props {
 const randomVideoUrl =
     'https://player.vimeo.com/video/723658039?h=57b6d0ac88&color=ffffff&byline=0&portrait=0';
 
-const ProjectCard: React.FC<Props> = ({ index, project }) => {
+export const ProjectCard: React.FC<Props> = React.memo(function ProjectCard({
+    index,
+    project,
+}) {
     const hook = useProjectCard(project);
     const t = useTranslations('project_card');
 
@@ -147,7 +150,7 @@ const ProjectCard: React.FC<Props> = ({ index, project }) => {
             </div>
         </div>
     );
-};
+});
 
 const Link: React.FC<{
     children: React.ReactNode[];
@@ -167,5 +170,3 @@ const Link: React.FC<{
         </p>
     </a>
 );
-
-export default React.memo(ProjectCard);

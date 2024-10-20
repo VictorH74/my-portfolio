@@ -1,13 +1,13 @@
 'use client';
-import TechnologyLiItem from '@/components/TechnologyLiItem';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { TechnologyLiItem } from '@/components/TechnologyLiItem';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import { Noto_Sans } from 'next/font/google';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
 
-export default function Technologies() {
+export const Technologies = () => {
     const { technologyArray, empty: emptyTechArray } = useGlobalTechnologies();
     const t = useTranslations('Technologies_Section');
 
@@ -58,4 +58,4 @@ export default function Technologies() {
             </ul>
         </section>
     );
-}
+};

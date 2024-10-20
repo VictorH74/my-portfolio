@@ -1,15 +1,15 @@
-import Loading from '@/components/Loading';
-import ProfileImage from '@/components/ProfileImage/indext';
-import SelectFileIconButton from '@/components/SelectFileIconButton';
+import { Loading } from '@/components/Loading';
+import { ProfileImage } from '@/components/ProfileImage/indext';
+import { SelectFileIconButton } from '@/components/SelectFileIconButton';
 import { db } from '@/configs/firebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import EditImageModal from './EditImageModal';
+import { EditImageModal } from './EditImageModal';
 
-export default function ProfileImageContainer() {
+export const ProfileImageContainer = () => {
     const [submitting, setSubmitting] = React.useState(false);
     const [currentImgSrc, setCurrentImgSrc] = React.useState<string | null>(
         null
@@ -91,4 +91,4 @@ export default function ProfileImageContainer() {
             )}
         </div>
     );
-}
+};

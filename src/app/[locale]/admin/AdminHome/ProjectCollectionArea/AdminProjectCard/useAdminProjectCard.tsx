@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
-import useAdminProjects from '@/hooks/useAdminProjects';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { useAdminProjects } from '@/hooks/useAdminProjects';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import { ProjectType } from '@/types';
 import { doc, runTransaction } from 'firebase/firestore';
 import { deleteObject, getStorage, ref } from 'firebase/storage';
 import React from 'react';
 
-export default function useAdminProjectCard(props: ProjectType) {
+export const useAdminProjectCard = (props: ProjectType) => {
     const [cardHover, setCardHover] = React.useState(false);
     const [onUpdateProject, setOnUpdateProject] = React.useState(false);
     const [techSrcList, setTechSrcList] = React.useState<string[]>([]);
@@ -91,4 +91,4 @@ export default function useAdminProjectCard(props: ProjectType) {
         openEditModal,
         removeProject,
     };
-}
+};

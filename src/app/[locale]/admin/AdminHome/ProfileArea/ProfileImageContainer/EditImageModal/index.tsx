@@ -1,5 +1,5 @@
-import Divider from '@/components/Divider';
-import ModalContainer from '@/components/ModalContainer';
+import { Divider } from '@/components/Divider';
+import { ModalContainer } from '@/components/ModalContainer';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -7,9 +7,9 @@ import Slider from '@mui/material/Slider';
 import Image from 'next/image';
 import React from 'react';
 
-import useEditImageModal, { EditImageModalProps } from './useEditImageModal';
+import { useEditImageModal, EditImageModalProps } from './useEditImageModal';
 
-export default function EditImageModal(props: EditImageModalProps) {
+export const EditImageModal = (props: EditImageModalProps) => {
     const hook = useEditImageModal(props);
 
     return (
@@ -103,4 +103,4 @@ export default function EditImageModal(props: EditImageModalProps) {
             </div>
         </ModalContainer>
     );
-}
+};

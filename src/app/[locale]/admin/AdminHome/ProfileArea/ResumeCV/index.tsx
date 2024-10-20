@@ -7,7 +7,7 @@ import React from 'react';
 
 import PdfViewer from './PdfViewer';
 
-export default function ResumeCV() {
+export const ResumeCV = () => {
     const [resumeBlob, setResumeBlob] = React.useState<Blob | undefined>();
     const [showPdfViewer, setShowPdfViewer] = React.useState(false);
     const [loadingResume, setLoadingResume] = React.useState(true);
@@ -112,4 +112,4 @@ export default function ResumeCV() {
             )}
         </>
     );
-}
+};

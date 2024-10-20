@@ -1,12 +1,12 @@
 'use client';
-import AdminProjectsProvider from '@/contexts/AdminProjectsContext';
+import { AdminProjectsProvider } from '@/contexts/AdminProjectsContext';
 import React from 'react';
 
-import ProfileArea from './ProfileArea';
-import ProjectCollectionArea from './ProjectCollectionArea';
-import TechCollectionArea from './TechCollectionArea';
+import { ProfileArea } from './ProfileArea';
+import { ProjectCollectionArea } from './ProjectCollectionArea';
+import { TechCollectionArea } from './TechCollectionArea';
 
-export default function AdminHome() {
+export const AdminHome = () => {
     return (
         <AdminProjectsProvider>
             <main className="w-full mx-auto px-2 max-w-[1400px] py-6 space-y-6">
@@ -24,4 +24,4 @@ export default function AdminHome() {
             </main>
         </AdminProjectsProvider>
     );
-}
+};

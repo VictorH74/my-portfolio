@@ -8,7 +8,7 @@ interface AdminProjectWarningsProps {
     projects: ProjectType[];
 }
 
-export default function AdminProjectWarnings(props: AdminProjectWarningsProps) {
+export const AdminProjectWarnings = (props: AdminProjectWarningsProps) => {
     return (
         <ul className="mb-2 grid grid-cols-3 max-lg:grid-cols-1 gap-2">
             {(() => {
@@ -51,4 +51,4 @@ export default function AdminProjectWarnings(props: AdminProjectWarningsProps) {
             })()}
         </ul>
     );
-}
+};

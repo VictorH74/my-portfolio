@@ -8,9 +8,9 @@ interface ProjectDescriptionFieldListProps {
     onFieldChange(_lang: LangType, _value: string): void;
 }
 
-export default function ProjectDescriptionFieldList(
+export const ProjectDescriptionFieldList = (
     props: ProjectDescriptionFieldListProps
-) {
+) => {
     return LANGUAGES.map((lang) => (
         <ProjectDescriptionField
             key={lang}
@@ -19,4 +19,4 @@ export default function ProjectDescriptionFieldList(
             value={props.projectDescription?.[lang] ?? ''}
         />
     ));
-}
+};

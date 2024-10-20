@@ -3,11 +3,12 @@ import Slider from '@mui/material/Slider';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useSwitchThemeColorBtn, {
+import {
+    useSwitchThemeColorBtn,
     SwitchThemeColorBtnProps,
 } from './useSwitchThemeColorBtn';
 
-export default function SwitchThemeColorBtn(props: SwitchThemeColorBtnProps) {
+export const SwitchThemeColorBtn = (props: SwitchThemeColorBtnProps) => {
     const hook = useSwitchThemeColorBtn(props);
 
     return (
@@ -35,4 +36,4 @@ export default function SwitchThemeColorBtn(props: SwitchThemeColorBtnProps) {
             </Box>
         </div>
     );
-}
+};

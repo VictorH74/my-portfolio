@@ -15,7 +15,7 @@ type StylePropType = {
     value: number | string;
 };
 
-export default function useEditImageModal(props: EditImageModalProps) {
+export const useEditImageModal = (props: EditImageModalProps) => {
     const cropAreaRef = useRef<HTMLDivElement>(null);
     const imgRef = useRef<HTMLImageElement>(null);
     const cropBoxRef = useRef<HTMLDivElement>(null);
@@ -265,4 +265,4 @@ export default function useEditImageModal(props: EditImageModalProps) {
         handleSave,
         setup,
     };
-}
+};

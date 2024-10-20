@@ -8,7 +8,7 @@ interface Props {
     projectArray: ProjectType[];
 }
 
-export default function CarouselView(props: Props) {
+export const CarouselView = (props: Props) => {
     return (
         <Carousel slide className="max-w-5xl m-auto">
             {props.projectArray.map((p, i) => (
@@ -18,4 +18,4 @@ export default function CarouselView(props: Props) {
             ))}
         </Carousel>
     );
-}
+};

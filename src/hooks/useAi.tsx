@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useAi() {
+export const useAi = () => {
     const [done, setDone] = React.useState(true);
     const [responseText, setResponseText] = React.useState('');
     const [reader, setReader] =
@@ -60,4 +60,4 @@ export default function useAi() {
         generateContentStream,
         resetResponseText,
     };
-}
+};

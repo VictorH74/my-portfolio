@@ -1,13 +1,13 @@
 'use client';
-import ContactList from '@/components/ContactList';
-import Divider from '@/components/Divider';
-import useWindowSize from '@/hooks/UseWindowsSize';
+import { ContactList } from '@/components/ContactList';
+import { Divider } from '@/components/Divider';
+import { useWindowSize } from '@/hooks/UseWindowsSize';
 import { useTranslations } from 'next-intl';
 
-import Timer from './Timer';
-import useContacts from './useContacts';
+import { Timer } from './Timer';
+import { useContacts } from './useContacts';
 
-export default function Contacts() {
+export const Contacts = () => {
     const hook = useContacts();
     const t = useTranslations('Contacts_Section');
     const [w] = useWindowSize();
@@ -31,4 +31,4 @@ export default function Contacts() {
             <div ref={hook.endOfPageRef} />
         </div>
     );
-}
+};

@@ -1,5 +1,5 @@
 'use client';
-import Divider from '@/components/Divider';
+import { Divider } from '@/components/Divider';
 import { ProjectType } from '@/types';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
@@ -8,9 +8,9 @@ import Image from 'next/image';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import ProjectCardHover from './ProjectCardHover';
-import useAdminProjectCard from './useAdminProjectCard';
-import CreateUpdateProjectModal from '../CreateUpdateProjectModal';
+import { ProjectCardHover } from './ProjectCardHover';
+import { useAdminProjectCard } from './useAdminProjectCard';
+import { CreateUpdateProjectModal } from '../CreateUpdateProjectModal';
 
 const DateParagraph: React.FC<{ label: string; isoDate: string }> = ({
     label,
@@ -21,7 +21,7 @@ const DateParagraph: React.FC<{ label: string; isoDate: string }> = ({
     </p>
 );
 
-export default function AdminProjectCard(props: ProjectType) {
+export const AdminProjectCard = (props: ProjectType) => {
     const hook = useAdminProjectCard(props);
 
     return (
@@ -106,4 +106,4 @@ export default function AdminProjectCard(props: ProjectType) {
                 )}
         </>
     );
-}
+};

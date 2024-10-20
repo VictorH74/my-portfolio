@@ -6,9 +6,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 
-import UpdateContactModal from './UpdateContactModal';
+import { UpdateContactModal } from './UpdateContactModal';
 
-export default function Contacts() {
+export const Contacts = () => {
     const [toUpdateContact, setToUpdateContact] = React.useState<
         [keyof ProfileContactsType, string] | null
     >(null);
@@ -101,4 +101,4 @@ export default function Contacts() {
             )}
         </ul>
     );
-}
+};

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { db } from '@/configs/firebaseConfig';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import {
     CreateUpdateProjectType,
     LangType,
@@ -34,9 +34,9 @@ export interface CreateUpdateProjectModalProps {
     onClose(): void;
 }
 
-export default function useCreateUpdateProjectModal(
+export const useCreateUpdateProjectModal = (
     props: CreateUpdateProjectModalProps
-) {
+) => {
     const [project, setProject] = React.useState<CreateUpdateProjectType>({
         description: { en: '', 'pt-br': '' },
         screenshots: [],
@@ -352,4 +352,4 @@ export default function useCreateUpdateProjectModal(
         reorderScreenshots,
         removeTechByName,
     };
-}
+};

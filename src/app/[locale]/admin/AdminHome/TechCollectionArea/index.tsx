@@ -1,6 +1,6 @@
 'use client';
 import { IconButton } from '@/components/IconButton';
-import TechnologyLiItem from '@/components/TechnologyLiItem';
+import { TechnologyLiItem } from '@/components/TechnologyLiItem';
 import EditIcon from '@mui/icons-material/Edit';
 import GradeIcon from '@mui/icons-material/Grade';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -10,14 +10,14 @@ import Image from 'next/image';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useTechnologiesArea from './useTechnologiesArea';
-import CollectionActions from '../CollectionActions';
+import { useTechCollectionArea } from './useTechnologiesArea';
+import { CollectionActions } from '../CollectionActions';
 import { ReordableModal } from '../ReordableModal';
 
 const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
 
-export default function TechnologiesArea() {
-    const hook = useTechnologiesArea();
+export const TechCollectionArea = () => {
+    const hook = useTechCollectionArea();
 
     return (
         <section>
@@ -157,4 +157,4 @@ export default function TechnologiesArea() {
             )}
         </section>
     );
-}
+};

@@ -9,7 +9,7 @@ interface ProjectCardHoverProps {
     removeFunc(): void;
 }
 
-export default function ProjectCardHover(props: ProjectCardHoverProps) {
+export const ProjectCardHover = (props: ProjectCardHoverProps) => {
     return (
         <div
             className={twMerge(
@@ -31,4 +31,4 @@ export default function ProjectCardHover(props: ProjectCardHoverProps) {
             </div>
         </div>
     );
-}
+};

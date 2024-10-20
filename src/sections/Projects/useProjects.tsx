@@ -12,7 +12,7 @@ import {
 import React from 'react';
 import { useQuery } from 'react-query';
 
-export default function useProjects() {
+export const useProjects = () => {
     const [view, setView] = React.useState(2);
     const containerRef = React.useRef(null);
     const [projects, setProjects] = React.useState<ProjectType[]>([]);
@@ -57,4 +57,4 @@ export default function useProjects() {
         setView,
         isLoadingMoreProjects,
     };
-}
+};

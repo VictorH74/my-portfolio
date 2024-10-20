@@ -6,10 +6,10 @@ import Image, { ImageProps } from 'next/image';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import useSlider, { SliderProps } from './useSlider';
-import Loading from '../Loading';
+import { useSlider, SliderProps } from './useSlider';
+import { Loading } from '../Loading';
 
-export default function Slider(props: SliderProps) {
+export const Slider = (props: SliderProps) => {
     const { themeColor } = useTheme();
 
     const hook = useSlider(props);
@@ -93,7 +93,7 @@ export default function Slider(props: SliderProps) {
             </ul>
         </div>
     );
-}
+};
 
 const SlideImage: React.FC<
     Omit<ImageProps, 'className' | 'onLoad' | 'loading'>

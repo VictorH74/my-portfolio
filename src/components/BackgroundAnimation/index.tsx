@@ -1,6 +1,6 @@
 import useBackgroundAnimation from './useBackgroundAnimation';
 
-export default function BackgroundAnimation() {
+export const BackgroundAnimation = () => {
     const hook = useBackgroundAnimation();
 
     return (
@@ -9,4 +9,4 @@ export default function BackgroundAnimation() {
             <canvas ref={hook.canvasRef} className="size-full"></canvas>
         </div>
     );
-}
+};

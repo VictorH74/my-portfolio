@@ -21,7 +21,7 @@ export interface UpdateContactModalProps {
     onClose(): void;
 }
 
-export default function useUpdateContactModal(props: UpdateContactModalProps) {
+export const useUpdateContactModal = (props: UpdateContactModalProps) => {
     const [inputValue, setInputValue] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -63,4 +63,4 @@ export default function useUpdateContactModal(props: UpdateContactModalProps) {
         Icon,
         handleSubmit,
     };
-}
+};

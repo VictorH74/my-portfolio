@@ -1,6 +1,6 @@
 'use client';
-import Divider from '@/components/Divider';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { Divider } from '@/components/Divider';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import { useTheme } from '@/hooks/UseTheme';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import Skeleton from '@mui/material/Skeleton';
@@ -8,9 +8,9 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import usePresentation from './usePresentation';
+import { usePresentation } from './usePresentation';
 
-export default function Presentation() {
+export const Presentation = () => {
     const hook = usePresentation();
     const t = useTranslations('Presentation_Section');
     const { themeColor } = useTheme();
@@ -124,4 +124,4 @@ export default function Presentation() {
             </button>
         </section>
     );
-}
+};

@@ -13,11 +13,11 @@ export const adminProjectsCtx = React.createContext<AdminProjectsProps | null>(
     null
 );
 
-export default function AdminProjectsProvider({
+export const AdminProjectsProvider = ({
     children,
 }: {
     children: React.ReactElement;
-}) {
+}) => {
     const [projects, setProjects] = React.useState<ProjectType[]>([]);
 
     React.useEffect(() => {
@@ -45,4 +45,4 @@ export default function AdminProjectsProvider({
             {children}
         </adminProjectsCtx.Provider>
     );
-}
+};

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import useWindowSize from '@/hooks/UseWindowsSize';
+import { useWindowSize } from '@/hooks/UseWindowsSize';
 import React from 'react';
 
 import { WapperDimensionsType } from './NavItemWapper';

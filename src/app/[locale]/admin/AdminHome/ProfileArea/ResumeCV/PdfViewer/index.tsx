@@ -1,5 +1,5 @@
 // Import the main component
-import ModalContainer from '@/components/ModalContainer';
+import { ModalContainer } from '@/components/ModalContainer';
 import CloseIcon from '@mui/icons-material/Close';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
 
@@ -11,7 +11,7 @@ interface PdfViewerProps {
     onClose(): void;
 }
 
-export default function PdfViewer(props: PdfViewerProps) {
+export const PdfViewer = (props: PdfViewerProps) => {
     return (
         <ModalContainer className="block">
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
@@ -27,4 +27,4 @@ export default function PdfViewer(props: PdfViewerProps) {
             </Worker>
         </ModalContainer>
     );
-}
+};

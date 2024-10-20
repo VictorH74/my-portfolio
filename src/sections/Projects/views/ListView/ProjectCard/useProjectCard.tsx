@@ -1,5 +1,5 @@
 'use client';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
 import React from 'react';

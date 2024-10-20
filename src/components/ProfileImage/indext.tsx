@@ -10,7 +10,7 @@ interface ProfileImageProps {
     currentImgSrc?: string | null;
 }
 
-export default function ProfileImage(props: ProfileImageProps) {
+export const ProfileImage = (props: ProfileImageProps) => {
     const [currentImgSrc, setCurrentImgSrc] = React.useState<string | null>(
         null
     );
@@ -61,4 +61,4 @@ export default function ProfileImage(props: ProfileImageProps) {
             alt="me"
         />
     );
-}
+};

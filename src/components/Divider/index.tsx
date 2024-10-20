@@ -4,7 +4,7 @@ interface DiviserProps {
     className?: string;
 }
 
-export default function Divider(props: DiviserProps) {
+export const Divider = (props: DiviserProps) => {
     return (
         <div
             className={twMerge(
@@ -13,4 +13,4 @@ export default function Divider(props: DiviserProps) {
             )}
         />
     );
-}
+};

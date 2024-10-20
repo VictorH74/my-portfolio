@@ -1,7 +1,7 @@
 import { TechnologiesCtx } from '@/contexts/TechnologiesContext';
 import { use } from 'react';
 
-const useGlobalTechnologies = () => {
+export const useGlobalTechnologies = () => {
     const ctx = use(TechnologiesCtx);
     if (!ctx)
         throw new Error(
@@ -9,5 +9,3 @@ const useGlobalTechnologies = () => {
         );
     return ctx;
 };
-
-export default useGlobalTechnologies;

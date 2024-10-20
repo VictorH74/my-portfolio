@@ -1,5 +1,5 @@
 import { db } from '@/configs/firebaseConfig';
-import useGlobalTechnologies from '@/hooks/useGlobalTechnologies';
+import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
 import { TechnologieType } from '@/types';
 import { doc, runTransaction, writeBatch } from 'firebase/firestore';
 import React from 'react';
@@ -8,7 +8,7 @@ import { ReordableModal } from '../ReordableModal';
 
 export const getTechDocRef = (id: string) => doc(db, 'technologies', id);
 
-export default function useTechnologiesArea() {
+export const useTechCollectionArea = () => {
     const [selectedTech, setSelectedTech] =
         React.useState<TechnologieType | null>(null);
 
@@ -118,4 +118,4 @@ export default function useTechnologiesArea() {
         setShowAddTechForm,
         setShowReorderModal,
     };
-}
+};

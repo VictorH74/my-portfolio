@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-export default function useTimer() {
+export const useTimer = () => {
     const [time, setTime] = React.useState(0);
     const t = useTranslations('contacts_section_timer');
     const [reachedBottom, setReachedBottom] = React.useState(false);
@@ -62,4 +62,4 @@ export default function useTimer() {
         reachedBottom,
         t,
     };
-}
+};

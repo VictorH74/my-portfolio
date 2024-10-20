@@ -6,7 +6,7 @@ interface LoadingProps {
     height?: number;
 }
 
-const Loading = (props: LoadingProps) => {
+export const Loading = (props: LoadingProps) => {
     const { themeColor } = useTheme();
 
     return (
@@ -30,5 +30,3 @@ const Loading = (props: LoadingProps) => {
         </div>
     );
 };
-
-export default Loading;

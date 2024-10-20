@@ -3,9 +3,9 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
 
-import useModalContainer from './useModalContainer';
+import { useModalContainer } from './useModalContainer';
 
-const ModalContainer: React.FC<{
+export const ModalContainer: React.FC<{
     children: React.ReactElement;
     className?: string;
 }> = ({ children, className }) => {
@@ -23,5 +23,3 @@ const ModalContainer: React.FC<{
         document.body
     );
 };
-
-export default ModalContainer;

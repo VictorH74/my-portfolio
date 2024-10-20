@@ -2,7 +2,7 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
-import usePopOver from './usePopOver';
+import { usePopOver } from './usePopOver';
 
 const PopOver: React.FC<{ children: JSX.Element; label: string }> = ({
     children,

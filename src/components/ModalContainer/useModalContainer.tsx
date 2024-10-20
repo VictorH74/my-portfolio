@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useModalContainer() {
+export const useModalContainer = () => {
     React.useEffect(() => {
         const paddingRight =
             window.innerWidth - document.documentElement.clientWidth;
@@ -11,4 +11,4 @@ export default function useModalContainer() {
             document.body.style.paddingRight = '';
         };
     }, []);
-}
+};

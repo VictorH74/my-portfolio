@@ -25,7 +25,7 @@ const fieldsGenerationData: UrlFieldData[] = [
     { urlProp: 'videoUrl', label: 'Video Demo URL' },
 ];
 
-export default function ProjectUrlFields(props: ProjectUrlFieldsProps) {
+export const ProjectUrlFields = (props: ProjectUrlFieldsProps) => {
     return fieldsGenerationData.map((field) => (
         <div key={field.urlProp}>
             <label htmlFor={field.urlProp}>{field.label}:</label>
@@ -41,4 +41,4 @@ export default function ProjectUrlFields(props: ProjectUrlFieldsProps) {
             />
         </div>
     ));
-}
+};

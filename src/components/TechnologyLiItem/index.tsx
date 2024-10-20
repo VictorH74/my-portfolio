@@ -3,11 +3,11 @@ import { twMerge } from 'tailwind-merge';
 
 interface TechnologyLiItemProps extends LiHTMLAttributes<HTMLLIElement> {}
 
-export default function TechnologyLiItem({
+export const TechnologyLiItem = ({
     className,
     children,
     ...rest
-}: TechnologyLiItemProps) {
+}: TechnologyLiItemProps) => {
     return (
         <li
             className={twMerge(
@@ -19,4 +19,4 @@ export default function TechnologyLiItem({
             {children}
         </li>
     );
-}
+};

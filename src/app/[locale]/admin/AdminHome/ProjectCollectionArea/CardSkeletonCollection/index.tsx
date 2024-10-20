@@ -4,9 +4,7 @@ interface CardSkeletonCollectionProps {
     amount: number;
 }
 
-export default function CardSkeletonCollection(
-    props: CardSkeletonCollectionProps
-) {
+export const CardSkeletonCollection = (props: CardSkeletonCollectionProps) => {
     return (
         <>
             {Array(props.amount)
@@ -33,4 +31,4 @@ export default function CardSkeletonCollection(
                 ))}
         </>
     );
-}
+};

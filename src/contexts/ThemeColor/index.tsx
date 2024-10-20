@@ -13,7 +13,7 @@ export const ThemeContext = React.createContext<AppContextInterface>({
     setThemeColor: () => {},
 });
 
-export default function ThemeProvider({ children }: React.PropsWithChildren) {
+export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
     const [themeColor, setThemeColorState] = React.useState<ThemeColorType>(
         THEME_COLORS[1]
     );
@@ -102,4 +102,4 @@ export default function ThemeProvider({ children }: React.PropsWithChildren) {
             {children}
         </ThemeContext.Provider>
     );
-}
+};

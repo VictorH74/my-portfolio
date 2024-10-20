@@ -1,18 +1,18 @@
 'use client';
-import Loading from '@/components/Loading';
+import { Loading } from '@/components/Loading';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import useProjects from './useProjects';
-import CarouselView from './views/Carousel';
-import ListView from './views/ListView';
+import { useProjects } from './useProjects';
+import { CarouselView } from './views/Carousel';
+import { ListView } from './views/ListView';
 
 const viewBtnClass = 'text-custom-gray-light dark:text-[#a1a1aa]';
 const viewBtnActiveClass = 'text-[#303030] dark:text-[#ececec]';
 
-export default function Projects() {
+export const Projects = () => {
     const hook = useProjects();
 
     const t = useTranslations('Projects_Section');
@@ -73,4 +73,4 @@ export default function Projects() {
             )}
         </section>
     );
-}
+};

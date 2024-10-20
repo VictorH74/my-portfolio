@@ -1,18 +1,18 @@
 'use client';
-import Divider from '@/components/Divider';
-import ProfileImage from '@/components/ProfileImage/indext';
+import { Divider } from '@/components/Divider';
+import { ProfileImage } from '@/components/ProfileImage/indext';
 import { downloadResume } from '@/utils/resume';
 import { Noto_Sans } from 'next/font/google';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { DownloadResumeBtn } from './styles';
-import useAboutMe from './useAboutMe';
+import { useAboutMe } from './useAboutMe';
 
 const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
 const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
 
-const AboutMe = () => {
+export const AboutMe = () => {
     const t = useTranslations('AboutMe_Section');
     const hook = useAboutMe();
 
@@ -107,5 +107,3 @@ const AboutMe = () => {
         </section>
     );
 };
-
-export default AboutMe;

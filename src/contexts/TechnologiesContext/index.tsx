@@ -15,9 +15,7 @@ interface CtxValue {
 
 export const TechnologiesCtx = React.createContext<CtxValue | null>(null);
 
-export default function TechnologiesProvider({
-    children,
-}: React.PropsWithChildren) {
+export const TechnologiesProvider = ({ children }: React.PropsWithChildren) => {
     const { isLoading } = useQuery({
         queryKey: ['techs'],
         queryFn: () => getTechnologies(),
@@ -66,4 +64,4 @@ export default function TechnologiesProvider({
             {children}
         </TechnologiesCtx.Provider>
     );
-}
+};

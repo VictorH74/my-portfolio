@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function usePopOver() {
+export const usePopOver = () => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -19,4 +19,4 @@ export default function usePopOver() {
         handlePopoverClose,
         anchorEl,
     };
-}
+};

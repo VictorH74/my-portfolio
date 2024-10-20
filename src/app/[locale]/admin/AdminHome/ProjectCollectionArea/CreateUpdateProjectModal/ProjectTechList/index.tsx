@@ -3,7 +3,7 @@ interface ProjectTechListProps {
     onRemoveTechItem(_techName: string): void;
 }
 
-export default function ProjectTechList(props: ProjectTechListProps) {
+export const ProjectTechList = (props: ProjectTechListProps) => {
     return (
         props.techArray.length > 0 && (
             <ul className="flex flex-wrap gap-2 mb-1">
@@ -20,4 +20,4 @@ export default function ProjectTechList(props: ProjectTechListProps) {
             </ul>
         )
     );
-}
+};

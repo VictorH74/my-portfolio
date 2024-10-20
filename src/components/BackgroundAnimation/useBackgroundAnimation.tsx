@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Hexagon } from './classes';
 
-export default function useBackgroundAnimation() {
+export const useBackgroundAnimation = () => {
     const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
     const centerRef = React.useRef<HTMLSpanElement | null>(null);
     const debouncedFunction = React.useRef<ReturnType<
@@ -82,4 +82,4 @@ export default function useBackgroundAnimation() {
         centerRef,
         canvasRef,
     };
-}
+};

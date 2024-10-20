@@ -1,18 +1,18 @@
 'use client';
-import Divider from '@/components/Divider';
+import { Divider } from '@/components/Divider';
 import { db } from '@/configs/firebaseConfig';
-import useAdminProjects from '@/hooks/useAdminProjects';
+import { useAdminProjects } from '@/hooks/useAdminProjects';
 import { doc, writeBatch } from 'firebase/firestore';
 import React from 'react';
 
-import AdminProjectCard from './AdminProjectCard';
-import CardSkeletonCollection from './CardSkeletonCollection';
-import CreateUpdateProjectModal from './CreateUpdateProjectModal';
-import AdminProjectWarnings from './ProjectWarnings';
-import CollectionActions from '../CollectionActions';
+import { AdminProjectCard } from './AdminProjectCard';
+import { CardSkeletonCollection } from './CardSkeletonCollection';
+import { CreateUpdateProjectModal } from './CreateUpdateProjectModal';
+import { AdminProjectWarnings } from './ProjectWarnings';
+import { CollectionActions } from '../CollectionActions';
 import { ReordableModal } from '../ReordableModal';
 
-export default function ProjectCollectionArea() {
+export const ProjectCollectionArea = () => {
     const [onCreateProject, setOnCreateProject] = React.useState(false);
     const [onReorderProject, setOnReorderProject] = React.useState(false);
     const { projects } = useAdminProjects();
@@ -85,4 +85,4 @@ export default function ProjectCollectionArea() {
             )}
         </>
     );
-}
+};

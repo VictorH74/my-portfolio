@@ -12,9 +12,7 @@ interface ProjectScreenshotListProps {
     removeScreenshotFunc(_screenshotIndex: number): () => void;
 }
 
-export default function ProjectScreenshotList(
-    props: ProjectScreenshotListProps
-) {
+export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
     return (
         props.projectScreenshotUrls.length > 0 && (
             <div className="flex gap-2 overflow-auto">
@@ -53,4 +51,4 @@ export default function ProjectScreenshotList(
             </div>
         )
     );
-}
+};

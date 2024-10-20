@@ -13,7 +13,7 @@ import React from 'react';
 
 import SubmitButton from './SubmitButton';
 
-export default function AdminLoginPage() {
+export const AdminLoginPage = () => {
     const router = useRouter();
     const [errorMsg, setErrorMsg] = React.useState<string | undefined>();
 
@@ -85,4 +85,4 @@ export default function AdminLoginPage() {
             </main>
         </div>
     );
-}
+};

@@ -10,7 +10,7 @@ type PositionType = {
     y: number;
 };
 
-export default function useSlider(props: SliderProps) {
+export const useSlider = (props: SliderProps) => {
     const sliderContainerRef = React.useRef<HTMLUListElement>(null);
 
     const [currentFileIndex, setCurrentFileIndex] = React.useState<number>(0);
@@ -112,4 +112,4 @@ export default function useSlider(props: SliderProps) {
         handleMouseMove,
         handleMouseUp,
     };
-}
+};

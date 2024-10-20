@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Contacts from './Contacts';
-import ProfileImageContainer from './ProfileImageContainer';
-import ResumeCV from './ResumeCV';
+import { Contacts } from './Contacts';
+import { ProfileImageContainer } from './ProfileImageContainer';
+import { ResumeCV } from './ResumeCV';
 import { headingClassName } from '../CollectionActions';
 
-export default function ProfileArea() {
+export const ProfileArea = () => {
     return (
         <section>
             <h1 className={headingClassName}>Profile</h1>
@@ -20,4 +20,4 @@ export default function ProfileArea() {
             </div>
         </section>
     );
-}
+};

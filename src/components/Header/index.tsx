@@ -28,7 +28,7 @@ const raleway = Raleway({
     weight: '300',
 });
 
-const Header: React.FC<HeaderProps> = (props) => {
+export const Header: React.FC<HeaderProps> = React.memo(function Header(props) {
     const t = useTranslations('Header');
     const navLabelT = useTranslations('nav_link_label');
 
@@ -215,6 +215,4 @@ const Header: React.FC<HeaderProps> = (props) => {
             </header>
         </>
     );
-};
-
-export default React.memo(Header);
+});

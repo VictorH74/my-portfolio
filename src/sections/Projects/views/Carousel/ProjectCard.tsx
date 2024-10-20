@@ -1,4 +1,4 @@
-import Loading from '@/components/Loading';
+import { Loading } from '@/components/Loading';
 import { ProjectType } from '@/types';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Image from 'next/image';
@@ -6,10 +6,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
 
-export default function ProjectCard(props: {
-    project: ProjectType;
-    index: number;
-}) {
+export const ProjectCard = (props: { project: ProjectType; index: number }) => {
     const [video, setShowVideo] = React.useState(false);
 
     const [loadingImg] = React.useState(true);
@@ -96,4 +93,4 @@ export default function ProjectCard(props: {
             </Carousel.Caption>
         </>
     );
-}
+};

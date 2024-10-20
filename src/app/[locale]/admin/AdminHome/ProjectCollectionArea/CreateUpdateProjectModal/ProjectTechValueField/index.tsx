@@ -5,9 +5,7 @@ import useProjectTechValueField, {
     ProjectTechValueFieldProps,
 } from './useProjectTechValueField';
 
-export default function ProjectTechValueField(
-    props: ProjectTechValueFieldProps
-) {
+export const ProjectTechValueField = (props: ProjectTechValueFieldProps) => {
     const hook = useProjectTechValueField(props);
 
     return (
@@ -58,4 +56,4 @@ export default function ProjectTechValueField(
             />
         </div>
     );
-}
+};

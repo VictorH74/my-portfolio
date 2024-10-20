@@ -9,7 +9,7 @@ interface Props {
     center?: boolean;
 }
 
-export default React.memo(function ContactList(props: Props) {
+export const ContactList = React.memo(function ContactList(props: Props) {
     return (
         <ul
             className={twMerge(

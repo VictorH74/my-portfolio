@@ -10,11 +10,11 @@ interface TextAreaProps
     value: string;
 }
 
-export default function TextArea({
+export const TextArea = ({
     className,
     onChange,
     ...textAreaAttrs
-}: TextAreaProps) {
+}: TextAreaProps) => {
     const ref = React.useRef<HTMLTextAreaElement>(null);
 
     React.useEffect(() => {
@@ -39,4 +39,4 @@ export default function TextArea({
             {...textAreaAttrs}
         />
     );
-}
+};

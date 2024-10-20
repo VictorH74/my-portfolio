@@ -8,9 +8,7 @@ export interface SwitchThemeColorBtnProps {
     vertical?: boolean;
 }
 
-export default function useSwitchThemeColorBtn(
-    props: SwitchThemeColorBtnProps
-) {
+export const useSwitchThemeColorBtn = (props: SwitchThemeColorBtnProps) => {
     const { themeColor, setThemeColor } = useTheme();
     const [sliderValue, setSliderValue] = React.useState(0);
 
@@ -36,4 +34,4 @@ export default function useSwitchThemeColorBtn(
         handleChange,
         lightTheme,
     };
-}
+};

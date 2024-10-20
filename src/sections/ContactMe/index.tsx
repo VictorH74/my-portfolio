@@ -1,16 +1,16 @@
 'use client';
-import Loading from '@/components/Loading';
+import { Loading } from '@/components/Loading';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import DoneIcon from '@mui/icons-material/Done';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { Noto_Sans } from 'next/font/google';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-import DoneIcon from '@mui/icons-material/Done';
 import { fields } from './data';
-import useContactMe, { Fields } from './useContactMe';
+import { useContactMe, Fields } from './useContactMe';
 
 const notoSans = Noto_Sans({ subsets: ['latin'], weight: '400' });
 const inputClassName = `${notoSans.className} bg-custom-gray-dark p-4 rounded-md outline-none focus:brightness-90 dark:focus:brightness-150 focus::shadow-lg secondary-font-color duration-200 placeholder:text-custom-gray-light dark:placeholder:text-custom-zinc-light w-full backdrop-blur-md`;
@@ -22,7 +22,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function ContactMe() {
+export const ContactMe = () => {
     const hook = useContactMe();
     const t = useTranslations('ContactMe_Section');
     const tErrorMsg = useTranslations('contactMe_error_message');
@@ -129,7 +129,7 @@ export default function ContactMe() {
             ))}
         </section>
     );
-}
+};
 
 interface CopyableContentBtnProps {
     content: string;

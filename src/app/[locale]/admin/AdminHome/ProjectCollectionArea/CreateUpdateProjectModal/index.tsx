@@ -1,25 +1,26 @@
 'use client';
-import Divider from '@/components/Divider';
+import { Divider } from '@/components/Divider';
 import ModalContainer from '@/components/ModalContainer';
 import TextArea from '@/components/TextArea';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import ProjectDescriptionFieldList from './ProjectDescriptionFieldList';
-import ProjectScreenshotList from './ProjectScreenshotList';
-import ProjectScreenshotListActions from './ProjectScreenshotListActions';
-import ProjectTechList from './ProjectTechList';
-import ProjectTechValueField from './ProjectTechValueField';
-import ProjectUrlFields from './ProjectUrlFields';
-import useCreateUpdateModal, {
+import { ProjectDescriptionFieldList } from './ProjectDescriptionFieldList';
+import { ProjectScreenshotList } from './ProjectScreenshotList';
+import { ProjectScreenshotListActions } from './ProjectScreenshotListActions';
+import { ProjectTechList } from './ProjectTechList';
+import { ProjectTechValueField } from './ProjectTechValueField';
+import { ProjectUrlFields } from './ProjectUrlFields';
+import {
+    useCreateUpdateProjectModal,
     CreateUpdateProjectModalProps,
 } from './useCreateUpdateProjectModal';
 
-export default function CreateUpdateProjectModal(
+export const CreateUpdateProjectModal = (
     props: CreateUpdateProjectModalProps
-) {
-    const hook = useCreateUpdateModal(props);
+) => {
+    const hook = useCreateUpdateProjectModal(props);
 
     return (
         <>
@@ -135,4 +136,4 @@ export default function CreateUpdateProjectModal(
             </ModalContainer>
         </>
     );
-}
+};

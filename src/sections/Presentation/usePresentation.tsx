@@ -1,7 +1,7 @@
-import useWindowSize from '@/hooks/UseWindowsSize';
+import { useWindowSize } from '@/hooks/UseWindowsSize';
 import React, { useRef } from 'react';
 
-export default function usePresentation() {
+export const usePresentation = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const timeOutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
     const [svgTextWidth, setSvgTextWidth] = React.useState('');
@@ -67,4 +67,4 @@ export default function usePresentation() {
         svgTextYPos,
         svgTextXPos,
     };
-}
+};

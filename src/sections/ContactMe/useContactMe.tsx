@@ -16,7 +16,7 @@ export type FormValues = {
     message: string;
 };
 
-export default function useContactMe() {
+export const useContactMe = () => {
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = React.useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false);
     const [submitting, setSubmitting] = React.useState(false);
@@ -79,4 +79,4 @@ export default function useContactMe() {
         themeColor,
         selectContent,
     };
-}
+};

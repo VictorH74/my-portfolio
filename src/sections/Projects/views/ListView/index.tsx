@@ -1,10 +1,10 @@
-import Loading from '@/components/Loading';
+import { Loading } from '@/components/Loading';
 import { useTheme } from '@/hooks/UseTheme';
 import { ProjectType } from '@/types';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import ProjectCard from './ProjectCard';
+import { ProjectCard } from './ProjectCard';
 
 interface Props {
     projectArray: ProjectType[];
@@ -14,7 +14,7 @@ interface Props {
     isLoadingMoreProjects: boolean;
 }
 
-export default function ListView(props: Props) {
+export const ListView = (props: Props) => {
     const [showMore, setShowMore] = React.useState(false);
     const { themeColor } = useTheme();
     return (
@@ -64,4 +64,4 @@ export default function ListView(props: Props) {
             </button>
         </>
     );
-}
+};

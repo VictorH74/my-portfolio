@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useHamburger() {
+export const useHamburger = () => {
     const [show, setShow] = React.useState(false);
     // const liItemRef = React.useRef(null);
 
@@ -12,4 +12,4 @@ export default function useHamburger() {
         toggle,
         show,
     };
-}
+};
