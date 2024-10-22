@@ -1,7 +1,7 @@
 import { IconButton } from '@/components/IconButton';
 import { ProfileContactsType } from '@/types';
-import { BRAZIL_PHONE_PATTERN, contactIcon } from '@/utils/constants';
-import { getContacts } from '@/utils/functions';
+import { contactIcon } from '@/utils/constants';
+import { formatContactNumber, getContacts } from '@/utils/functions';
 import EditIcon from '@mui/icons-material/Edit';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
@@ -29,17 +29,6 @@ export const Contacts = () => {
             setToUpdateContact([key, value]);
         };
 
-    const formatNumber = (number: string) => {
-        if (new RegExp(BRAZIL_PHONE_PATTERN).test(number)) {
-            const country_code = number.slice(0, 2);
-            const ddd = number.slice(2, 4);
-            const part_1 = number.slice(4, 9);
-            const part_2 = number.slice(9);
-            return `+${country_code} (${ddd}) ${part_1}-${part_2}`;
-        }
-        return number;
-    };
-
     return (
         <ul className="flex flex-col border border-custom-gray-light dark:border-gray-400 divide-y divide-custom-gray-light dark:divide-gray-400 rounded-md">
             {!!contacts
@@ -53,7 +42,9 @@ export const Contacts = () => {
                           >
                               <Icon sx={{ width: 35, height: 35 }} />
                               <p className="truncate grow">
-                                  {key == 'phone' ? formatNumber(value) : value}
+                                  {key == 'phone'
+                                      ? formatContactNumber(value)
+                                      : value}
                               </p>
                               <IconButton
                                   Icon={EditIcon}

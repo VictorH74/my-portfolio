@@ -1,5 +1,6 @@
 import { ProfileContactsType } from '@/types';
 import { contactIcon } from '@/utils/constants';
+import { formatContactNumber } from '@/utils/functions';
 import Link from 'next/link';
 import React from 'react';
 
@@ -24,7 +25,17 @@ interface ContactListContentProps {
     promise: Promise<ProfileContactsType | undefined>;
 }
 
-export default function ContactListContent(props: ContactListContentProps) {
+const contactItemDisplay: Record<
+    keyof ProfileContactsType,
+    (_: string) => string
+> = {
+    email: (email: string) => email,
+    github_url: (_: string) => 'VictorH74',
+    linkedin_url: (_: string) => 'Victor Almeida',
+    phone: (num: string) => formatContactNumber(num),
+};
+
+export const ContactListContent = (props: ContactListContentProps) => {
     const contacts = React.use(props.promise);
 
     if (!contacts)
@@ -44,7 +55,7 @@ export default function ContactListContent(props: ContactListContentProps) {
                     <li key={key}>
                         <Link
                             target="_blank"
-                            className="hover:brightness-125 duration-200 animate-contacts-bounce"
+                            className="hover:brightness-125 duration-200 animate-contacts-bounce flex flex-row gap-2 py-2 px-4 w-full bg-custom-gray-dark rounded-full justify-center items-center text-sm"
                             style={{ animationDelay: i + '00ms' }}
                             href={contactHref[key](value)}
                             aria-label={contactArialLabel[key]}
@@ -52,13 +63,14 @@ export default function ContactListContent(props: ContactListContentProps) {
                             <ContactIcon
                                 className="text-custom-white"
                                 sx={{
-                                    fontSize: 35,
+                                    fontSize: 25,
                                 }}
                             />
+                            {contactItemDisplay[key](value)}
                         </Link>
                     </li>
                 );
             })}
         </>
     );
-}
+};

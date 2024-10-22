@@ -3,7 +3,7 @@ import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import ContactListContent from './ContactListContent';
+import { ContactListContent } from './ContactListContent';
 
 interface Props {
     center?: boolean;
@@ -13,7 +13,7 @@ export const ContactList = React.memo(function ContactList(props: Props) {
     return (
         <ul
             className={twMerge(
-                'flex flex-row gap-5',
+                'flex flex-row gap-5 max-[800px]:flex-col',
                 props.center && 'justify-center'
             )}
         >
