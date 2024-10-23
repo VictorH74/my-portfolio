@@ -1,11 +1,10 @@
 'use client';
 import { TechnologyLiItem } from '@/components/TechnologyLiItem';
 import { useGlobalTechnologies } from '@/hooks/useGlobalTechnologies';
-import { Noto_Sans } from 'next/font/google';
+import { poppins400 } from '@/utils/fonts';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-
-const notoSans = Noto_Sans({ weight: '400', subsets: ['latin'] });
+import { twMerge } from 'tailwind-merge';
 
 export const Technologies = () => {
     const { technologyArray, empty: emptyTechArray } = useGlobalTechnologies();
@@ -16,7 +15,7 @@ export const Technologies = () => {
             id="technologies"
             className="home-section pt-24 text-center section px-0"
         >
-            <h1 className={`section-title mb-12 ${notoSans.className}`}>
+            <h1 className={`section-title mb-12 ${poppins400.className}`}>
                 {t('title')}
             </h1>
             <ul className="flex flex-wrap justify-center gap-3">
@@ -45,7 +44,10 @@ export const Technologies = () => {
                                     />
                                     <div className="tech-name ">
                                         <p
-                                            className="primary-font-color"
+                                            className={twMerge(
+                                                'primary-font-color',
+                                                poppins400.className
+                                            )}
                                             translate="no"
                                         >
                                             {icon.name}

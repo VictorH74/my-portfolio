@@ -1,16 +1,14 @@
 'use client';
 import { Divider } from '@/components/Divider';
 import { ProfileImage } from '@/components/ProfileImage/indext';
+import { poppins300, poppins400 } from '@/utils/fonts';
 import { downloadResume } from '@/utils/resume';
-import { Noto_Sans } from 'next/font/google';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { DownloadResumeBtn } from './styles';
 import { useAboutMe } from './useAboutMe';
-
-const notoSans400 = Noto_Sans({ weight: '400', subsets: ['latin'] });
-const notoSans300 = Noto_Sans({ weight: '300', subsets: ['latin'] });
 
 export const AboutMe = () => {
     const t = useTranslations('AboutMe_Section');
@@ -22,13 +20,11 @@ export const AboutMe = () => {
         '(prefers-color-scheme: light)'
     ).matches;
 
-    const paragraphFont = lightTheme ? notoSans400 : notoSans300;
+    const paragraphFont = lightTheme ? poppins400 : poppins300;
 
     return (
         <section id="about-me" className="home-section pt-24">
-            <h1
-                className={`section-title mb-12 ${notoSans400.className} max-md:text-center`}
-            >
+            <h1 className={`section-title mb-12 max-md:text-center`}>
                 {t('title')}
             </h1>
             <div className="flex flex-col lg:flex-row">
@@ -74,7 +70,7 @@ export const AboutMe = () => {
                             : hook.formatSizeToKB(hook.pdfMetadata?.size || 0) +
                               'KB'
                     }`}
-                    className="bg-[var(--theme-color)]"
+                    className={twMerge('bg-[var(--theme-color)]')}
                 >
                     <div className="button-wrapper">
                         <div className="text text-base">

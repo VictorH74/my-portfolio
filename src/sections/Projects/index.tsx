@@ -4,6 +4,7 @@ import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { useProjects } from './useProjects';
 import { CarouselView } from './views/Carousel';
@@ -26,7 +27,9 @@ export const Projects = () => {
             {!hook.isLoading && hook.projects ? (
                 <>
                     <div className="mb-12 relative">
-                        <h1 className="section-title">{t('title')}</h1>
+                        <h1 className={twMerge('section-title')}>
+                            {t('title')}
+                        </h1>
                         {process.env.NODE_ENV === 'development' && (
                             <div className="absolute right-5 inset-y-0 px-2 flex gap-2">
                                 <button onClick={() => hook.setView(1)}>

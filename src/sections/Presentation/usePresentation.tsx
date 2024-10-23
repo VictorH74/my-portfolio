@@ -15,17 +15,17 @@ export const usePresentation = () => {
             setSvgTextWidth('830px');
             setSvgTextHeight('40px');
             setSvgTextYPos(20);
-            setSvgTextXPos(30);
-        } else if (width > 640) {
+            setSvgTextXPos(7);
+        } else if (width > 700) {
             setSvgTextWidth('625px');
             setSvgTextHeight('30px');
             setSvgTextYPos(15);
-            setSvgTextXPos(25);
+            setSvgTextXPos(8);
         } else {
             setSvgTextWidth('350px');
             setSvgTextHeight('25px');
-            setSvgTextYPos(8);
-            setSvgTextXPos(30);
+            setSvgTextYPos(7);
+            setSvgTextXPos(23);
         }
     }, [width]);
 

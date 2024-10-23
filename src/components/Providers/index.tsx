@@ -1,8 +1,11 @@
 'use client';
 import { TechnologiesProvider } from '@/contexts/TechnologiesContext';
 import { ThemeProvider } from '@/contexts/ThemeColor';
+import { Poppins } from 'next/font/google';
 import { PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+const inter = Poppins({ weight: '500', subsets: ['latin'] });
 
 const queryClient = new QueryClient();
 
@@ -23,6 +26,11 @@ export default function Providers(props: PropsWithChildren) {
 
     return (
         <QueryClientProvider client={queryClient}>
+            <style jsx global>{`
+                html {
+                    font-family: ${inter.style.fontFamily};
+                }
+            `}</style>
             <TechnologiesProvider>
                 <ThemeProvider>{props.children}</ThemeProvider>
             </TechnologiesProvider>

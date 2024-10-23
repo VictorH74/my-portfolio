@@ -7,6 +7,7 @@ import { Footer } from '@/sections/Footer';
 import { Presentation } from '@/sections/Presentation';
 import { Projects } from '@/sections/Projects';
 import { Technologies } from '@/sections/Technologies';
+import { poppins400 } from '@/utils/fonts';
 import Aos from 'aos';
 import React from 'react';
 import 'aos/dist/aos.css';
@@ -33,7 +34,8 @@ export default function HomePage() {
             <main
                 className={twMerge(
                     'scroll-smooth blue-scrollbar relative duration-300',
-                    initialLoading && 'opacity-0'
+                    initialLoading && 'opacity-0',
+                    poppins400.className
                 )}
             >
                 <Presentation />

@@ -34,12 +34,12 @@ export const Presentation = () => {
                                 onClick={(e) =>
                                     hook.rotateElementText(e.currentTarget)
                                 }
-                                className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-widest text-[var(--theme-color)]"
+                                className="text-4xl min-[700px]:text-7xl lg:text-8xl font-bold tracking-widest text-[var(--theme-color)]"
                             >
                                 {name}
                             </h1>
 
-                            <div className="grid place-items-center">
+                            <div className="grid place-items-center overflow-visible">
                                 <svg
                                     width={hook.svgTextWidth}
                                     height={hook.svgTextHeight}
