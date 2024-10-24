@@ -23,8 +23,8 @@ export const PresentationBgImage = () => {
             const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
             const svgElement = svgDoc.documentElement;
 
-            const opacity50ColoredElsIndex = [0, 13, 5];
-            const opacity70ColoredElsIndex = [4, 6, 8];
+            const opacity50ColoredElsIndex = [0, 5];
+            const opacity70ColoredElsIndex = [4, 6, 10];
             const coloredElsIndex = [1, 2];
 
             for (let i = 0; i < svgElement.children.length; i++) {
