@@ -20,7 +20,6 @@ export interface HeaderProps {
 }
 
 const useHeader = (props: HeaderProps) => {
-    const [showBgAnimation, setShowBgAnimation] = React.useState(false);
     const [scrollUp, setScrollUp] = React.useState(true);
     const [showWrapper, setShowWrapper] = React.useState(false);
     const [wrappedLI, setWrappedLI] = React.useState('');
@@ -112,8 +111,6 @@ const useHeader = (props: HeaderProps) => {
         wrappedLI,
         handleMouseOver,
         downloadResumeBtnRef,
-        showBgAnimation,
-        setShowBgAnimation,
         isClient,
         logoRef,
         shadowLogoRef,

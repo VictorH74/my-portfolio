@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { PresentationBgImage } from './PresentationBgImage';
 import { usePresentation } from './usePresentation';
 
 export const Presentation = () => {
@@ -19,9 +20,10 @@ export const Presentation = () => {
 
     return (
         <section
-            className={`home-section h-[100vh] relative select-none`}
+            className={`h-[100vh] relative select-none`}
             ref={hook.sectionRef}
         >
+            <PresentationBgImage />
             <div className="h-full grid place-items-center -translate-y-5">
                 <div className="text-center">
                     <h2 className="sm:text-2xl primary-font-color font-semibold tracking-widest">

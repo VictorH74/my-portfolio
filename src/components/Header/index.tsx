@@ -1,25 +1,17 @@
 'use client';
-import { useTheme } from '@/hooks/UseTheme';
 import { downloadResume } from '@/utils/resume';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { Raleway } from 'next/font/google';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { createPortal } from 'react-dom';
 import { twMerge } from 'tailwind-merge';
 
 import Hamburger from './Hamburger';
 import NavItemWapper from './NavItemWapper';
 import NavListItem from './NavListItem';
 import SettingsMenu from './SettingsMenu';
-import SwitchBgAnimation from './SwitchBgAnimation';
 import useHeader, { HeaderProps, navlinkArray } from './useHeader';
 import { SwitchThemeColorBtn } from '../SwitchThemeColorBtn';
-
-const BackgroundAnimation = React.lazy(
-    () => import('@/components/BackgroundAnimation')
-);
 
 const raleway = Raleway({
     subsets: ['latin'],
@@ -33,7 +25,6 @@ export const Header: React.FC<HeaderProps> = React.memo(function Header(props) {
     const navLabelT = useTranslations('nav_link_label');
 
     const hook = useHeader(props);
-    const { themeColor } = useTheme();
 
     if (!hook.isClient) return null;
 
@@ -157,35 +148,6 @@ export const Header: React.FC<HeaderProps> = React.memo(function Header(props) {
                                             }
                                         >
                                             <MenuItem disableTouchRipple>
-                                                <label className="flex flex-col">
-                                                    {t('show_bg_animation')}
-                                                    <FormControlLabel
-                                                        control={
-                                                            <SwitchBgAnimation
-                                                                themeColor={
-                                                                    themeColor.color
-                                                                }
-                                                                sx={{ m: 1 }}
-                                                                defaultChecked
-                                                                onChange={(
-                                                                    e
-                                                                ) => {
-                                                                    hook.setShowBgAnimation(
-                                                                        e
-                                                                            .currentTarget
-                                                                            .checked
-                                                                    );
-                                                                }}
-                                                                checked={
-                                                                    hook.showBgAnimation
-                                                                }
-                                                            />
-                                                        }
-                                                        label=""
-                                                    />
-                                                </label>
-                                            </MenuItem>
-                                            <MenuItem disableTouchRipple>
                                                 <div className="flex flex-col">
                                                     {t('switch_theme_color')}
                                                     <SwitchThemeColorBtn />
@@ -204,14 +166,6 @@ export const Header: React.FC<HeaderProps> = React.memo(function Header(props) {
                         />
                     )}
                 </div>
-
-                {hook.showBgAnimation &&
-                    createPortal(
-                        <React.Suspense fallback={<></>}>
-                            <BackgroundAnimation />
-                        </React.Suspense>,
-                        document.getElementById('bg-animation') || document.body
-                    )}
             </header>
         </>
     );

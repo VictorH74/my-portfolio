@@ -14,9 +14,11 @@ export const Footer = () => {
 
     return (
         <div className="bg-[#00000035] text-center pb-10 m-0 mt-10 rounded-tl-3xl rounded-tr-3xl backdrop-blur-md">
-            <section className="home-section min-h-[auto]" id="contacts">
-                {w > 768 && <Timer />}
-                <ContactList center />
+            <section className="min-h-[auto]" id="contacts">
+                <div className="section-inner">
+                    {w > 768 && <Timer />}
+                    <ContactList center />
+                </div>
             </section>
             <Divider className="my-0 mb-3" />
             <footer className="mt-4">

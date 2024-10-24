@@ -30,6 +30,7 @@ export default function HomePage() {
                     initialLoading && 'opacity-0'
                 )}
             />
+
             <Header isLoading={initialLoading} />
             <main
                 className={twMerge(
@@ -45,7 +46,6 @@ export default function HomePage() {
                 <ContactMe />
                 <Footer />
             </main>
-            {/* {size[0] <= 1100 && <SwitchThemeColorBtn vertical />} */}
         </Providers>
     );
 }

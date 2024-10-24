@@ -85,7 +85,7 @@ button {
     user-select: none;
 }
 
-.home-section,
+.section-inner,
 header {
     @apply max-w-[1300px] m-auto p-5;
 }
