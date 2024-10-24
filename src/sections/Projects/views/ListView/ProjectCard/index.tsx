@@ -68,7 +68,7 @@ export const ProjectCard: React.FC<Props> = React.memo(function ProjectCard({
                     >
                         {project.title}
                     </h1>
-                    <h2 className="mb-4 text-sm min-[700px]:text-base primary-font-color">
+                    <h2 className="my-2 text-sm min-[700px]:text-base primary-font-color">
                         {project.description[
                             t(
                                 'description_lang_prop'
@@ -80,7 +80,7 @@ export const ProjectCard: React.FC<Props> = React.memo(function ProjectCard({
                         <>
                             <button
                                 onClick={hook.showVideo}
-                                className="relative text-[var(--theme-color)]"
+                                className="relative text-[var(--theme-color)] text-sm"
                             >
                                 <p className="inline-block text-sm min-[700px]:text-lg">
                                     {t('play_video_demo_text')}

@@ -2,6 +2,7 @@
 import { Divider } from '@/components/Divider';
 import { ProfileImage } from '@/components/ProfileImage/indext';
 import { poppins300, poppins400 } from '@/utils/fonts';
+import { isDarkMode } from '@/utils/functions';
 import { downloadResume } from '@/utils/resume';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -16,11 +17,9 @@ export const AboutMe = () => {
 
     if (!hook.isClient) return null;
 
-    const lightTheme = window.matchMedia(
-        '(prefers-color-scheme: light)'
-    ).matches;
+    const darkTheme = isDarkMode();
 
-    const paragraphFont = lightTheme ? poppins400 : poppins300;
+    const paragraphFont = darkTheme ? poppins300 : poppins400;
 
     return (
         <section id="about-me" className="pt-24">

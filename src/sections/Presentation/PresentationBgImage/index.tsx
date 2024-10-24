@@ -1,5 +1,6 @@
 'use client';
 import { useTheme } from '@/hooks/UseTheme';
+import { isDarkMode } from '@/utils/functions';
 import Image from 'next/image';
 import React from 'react';
 
@@ -23,7 +24,7 @@ export const PresentationBgImage = () => {
             const svgElement = svgDoc.documentElement;
 
             const opacity50ColoredElsIndex = [0, 13, 5];
-            const opacity70ColoredElsIndex = [4, 6, 8, 10];
+            const opacity70ColoredElsIndex = [4, 6, 8];
             const coloredElsIndex = [1, 2];
 
             for (let i = 0; i < svgElement.children.length; i++) {
@@ -38,7 +39,7 @@ export const PresentationBgImage = () => {
                     el.setAttribute('fill', themeColor.color);
                     el.setAttribute('fill-opacity', '0.40');
                 } else {
-                    el.setAttribute('fill', '#fff');
+                    el.setAttribute('fill', isDarkMode() ? '#fff' : '#000');
                     el.setAttribute('fill-opacity', '0.07');
                 }
             }

@@ -1,5 +1,6 @@
 import { useTheme } from '@/hooks/UseTheme';
 import { THEME_COLORS } from '@/utils/constants';
+import { isDarkMode } from '@/utils/functions';
 import React from 'react';
 
 const colors = THEME_COLORS;
@@ -23,9 +24,7 @@ export const useSwitchThemeColorBtn = (props: SwitchThemeColorBtnProps) => {
         });
     }, [themeColor]);
 
-    const lightTheme = window.matchMedia(
-        '(prefers-color-scheme: light)'
-    ).matches;
+    const lightTheme = !isDarkMode();
 
     return {
         themeColor,

@@ -26,3 +26,10 @@ export const formatContactNumber = (number: string) => {
     }
     return number;
 };
+
+export const isDarkMode = () => {
+    return (
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+    );
+};

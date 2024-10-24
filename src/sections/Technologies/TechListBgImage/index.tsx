@@ -1,5 +1,6 @@
 'use client';
 import { useTheme } from '@/hooks/UseTheme';
+import { isDarkMode } from '@/utils/functions';
 import Image from 'next/image';
 import React from 'react';
 
@@ -22,9 +23,9 @@ export const TechListBgImage = () => {
             const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
             const svgElement = svgDoc.documentElement;
 
-            const opacity50ColoredElsIndex = [6, 7];
-            const opacity70ColoredElsIndex = [0, 4, 10];
-            const coloredElsIndex = [1, 5, 3];
+            const opacity50ColoredElsIndex = [0, 7, 10];
+            const opacity70ColoredElsIndex = [2, 4];
+            const coloredElsIndex = [1, 5];
 
             for (let i = 0; i < svgElement.children.length; i++) {
                 const el = svgElement.children[i];
@@ -38,7 +39,7 @@ export const TechListBgImage = () => {
                     el.setAttribute('fill', themeColor.color);
                     el.setAttribute('fill-opacity', '0.40');
                 } else if (i != 11) {
-                    el.setAttribute('fill', '#fff');
+                    el.setAttribute('fill', isDarkMode() ? '#fff' : '#000');
                     el.setAttribute('fill-opacity', '0.07');
                 }
             }
@@ -61,7 +62,7 @@ export const TechListBgImage = () => {
                 height={10}
                 src={svgImg}
                 alt="Background image"
-                className="h-[123%] w-auto absolute inset-0 object-cover mx-auto top-[55%]"
+                className="h-[123%] w-auto absolute inset-0 object-cover mx-auto top-[34rem]"
                 loading="lazy"
             />
         </div>
