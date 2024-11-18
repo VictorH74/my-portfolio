@@ -31,7 +31,7 @@ const contactItemDisplay: Record<
 > = {
     email: (email: string) => email,
     github_url: (_: string) => 'VictorH74',
-    linkedin_url: (_: string) => 'Victor Almeida',
+    linkedin_url: (_: string) => 'Victor Leal',
     phone: (num: string) => formatContactNumber(num),
 };
 

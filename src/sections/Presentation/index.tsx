@@ -60,7 +60,7 @@ export const Presentation = () => {
                                 </svg>
                             </div>
                         </>
-                    ))('Victor Almeida')}
+                    ))('Victor Leal')}
 
                     <h2 className="sm:text-2xl primary-font-color mb-4 font-semibold tracking-widest">
                         {t('text_3')}
