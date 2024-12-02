@@ -2,7 +2,7 @@
 
 import { getBlob, getStorage, ref } from 'firebase/storage';
 
-export const resumeFileName = 'VICTOR HUGO ALMEIDA.pdf';
+export const resumeFileName = 'VICTOR HUGO LEAL.pdf';
 
 export const getResume = async () => {
     const storage = getStorage();
