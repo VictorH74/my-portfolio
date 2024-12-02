@@ -6,20 +6,22 @@ export const resumeFileName = 'VICTOR HUGO LEAL.pdf';
 
 export const getResume = async () => {
     const storage = getStorage();
-    return getBlob(ref(storage, 'my-cv/' + resumeFileName));
+    try {
+        return getBlob(ref(storage, 'my-cv/' + resumeFileName));
+    } catch (err) {
+        console.error(err);
+        return undefined;
+    }
 };
 
 export const downloadResume = async () => {
-    try {
-        const blob = await getResume();
+    const blob = await getResume();
 
-        const fileURL = window.URL.createObjectURL(blob);
-        let alink = document.createElement('a');
-        alink.href = fileURL;
-        alink.download = resumeFileName;
-        alink.click();
-    } catch (e) {
-        alert('Erro ao baixar currículo');
-        console.error(e);
-    }
+    if (!blob) return alert('Erro ao baixar currículo');
+
+    const fileURL = window.URL.createObjectURL(blob);
+    let alink = document.createElement('a');
+    alink.href = fileURL;
+    alink.download = resumeFileName;
+    alink.click();
 };

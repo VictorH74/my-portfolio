@@ -19,9 +19,14 @@ export const ResumeCV = () => {
 
     React.useEffect(() => {
         (async () => {
-            const blob = await getResume();
-            setResumeBlob(blob);
-            setLoadingResume(false);
+            try {
+                const blob = await getResume();
+                setResumeBlob(blob);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoadingResume(false);
+            }
         })();
     }, []);
 
@@ -55,8 +60,6 @@ export const ResumeCV = () => {
         });
     };
 
-    if (!loadingResume && !resumeBlob) return <p>undefined resume blob</p>;
-
     return (
         <>
             <div className="rounded-md bg-white dark:bg-[#3f3f3f] max-w-[500px] max-md:max-w-full p-2 flex items-center gap-2 relative">
@@ -69,22 +72,29 @@ export const ResumeCV = () => {
                 />
                 {loadingResume ? (
                     <p className="font-semibold">Loading...</p>
-                ) : !resumeBlob ? (
-                    <p>undefined resume blob</p>
                 ) : (
                     <>
                         <div className="flex flex-col grow">
-                            <p>{resumeFileName}</p>
-                            <div className="text-sm text-gray-400 font-semibold">
-                                PDF{' '}
-                                <div className="size-1 bg-gray-400 inline-block rounded-full m-[2px]" />{' '}
-                                {Math.round(resumeBlob!.size / 1024)}KB
-                            </div>
+                            {!!resumeBlob ? (
+                                <>
+                                    <p>{resumeFileName}</p>
+                                    <div className="text-sm text-gray-400 font-semibold">
+                                        PDF{' '}
+                                        <div className="size-1 bg-gray-400 inline-block rounded-full m-[2px]" />{' '}
+                                        {Math.round(resumeBlob!.size / 1024)}KB
+                                    </div>
+                                </>
+                            ) : (
+                                <p>Undefined</p>
+                            )}
                         </div>
                         <div className="space-x-1">
-                            <button onClick={handleShowPdfViewer}>
-                                <VisibilityIcon sx={{ fontSize: 30 }} />
-                            </button>
+                            {!!resumeBlob && (
+                                <button onClick={handleShowPdfViewer}>
+                                    <VisibilityIcon sx={{ fontSize: 30 }} />
+                                </button>
+                            )}
+
                             <label
                                 className="cursor-pointer"
                                 htmlFor="load-pdf"
