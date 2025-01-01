@@ -1,64 +1,14 @@
-import { getResume, resumeFileName } from '@/utils/resume';
+import { resumeFileName } from '@/utils/resume';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import Image from 'next/image';
 import React from 'react';
 
 import { PdfViewer } from './PdfViewer';
+import { useResumeCV } from './useResumeCV';
 
 export const ResumeCV = () => {
-    const [resumeBlob, setResumeBlob] = React.useState<Blob | undefined>();
-    const [showPdfViewer, setShowPdfViewer] = React.useState(false);
-    const [loadingResume, setLoadingResume] = React.useState(true);
-
-    const resumeUrl = React.useMemo(() => {
-        if (!resumeBlob) return undefined;
-        return window.URL.createObjectURL(resumeBlob);
-    }, [resumeBlob]);
-
-    React.useEffect(() => {
-        (async () => {
-            try {
-                const blob = await getResume();
-                setResumeBlob(blob);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoadingResume(false);
-            }
-        })();
-    }, []);
-
-    const handleShowPdfViewer = () => {
-        setShowPdfViewer(true);
-    };
-
-    const handleClosePdfViewer = () => {
-        setShowPdfViewer(false);
-    };
-
-    const handleSelectChange = async (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setLoadingResume(true);
-        const fileInput = e.target;
-        const files = fileInput.files;
-
-        if (!files) return;
-
-        const file = files[0];
-
-        const storage = getStorage();
-        const storageRef = ref(storage, 'my-cv/' + resumeFileName);
-
-        const blob = new Blob([file], { type: file.type });
-
-        uploadBytes(storageRef, blob).then(() => {
-            setResumeBlob(blob);
-            setLoadingResume(false);
-        });
-    };
+    const hook = useResumeCV();
 
     return (
         <>
@@ -70,18 +20,21 @@ export const ResumeCV = () => {
                     height={0}
                     className="size-fit"
                 />
-                {loadingResume ? (
+                {hook.loadingResume ? (
                     <p className="font-semibold">Loading...</p>
                 ) : (
                     <>
                         <div className="flex flex-col grow">
-                            {!!resumeBlob ? (
+                            {!!hook.resumeBlob ? (
                                 <>
                                     <p>{resumeFileName}</p>
                                     <div className="text-sm text-gray-400 font-semibold">
                                         PDF{' '}
                                         <div className="size-1 bg-gray-400 inline-block rounded-full m-[2px]" />{' '}
-                                        {Math.round(resumeBlob!.size / 1024)}KB
+                                        {Math.round(
+                                            hook.resumeBlob!.size / 1024
+                                        )}
+                                        KB
                                     </div>
                                 </>
                             ) : (
@@ -89,8 +42,8 @@ export const ResumeCV = () => {
                             )}
                         </div>
                         <div className="space-x-1">
-                            {!!resumeBlob && (
-                                <button onClick={handleShowPdfViewer}>
+                            {!!hook.resumeBlob && (
+                                <button onClick={hook.handleShowPdfViewer}>
                                     <VisibilityIcon sx={{ fontSize: 30 }} />
                                 </button>
                             )}
@@ -111,13 +64,13 @@ export const ResumeCV = () => {
                 id="load-pdf"
                 accept=".pdf"
                 className="absolute pointer-events-none opacity-0 size-0"
-                onChange={handleSelectChange}
+                onChange={hook.handleSelectChange}
             />
 
-            {showPdfViewer && (
+            {hook.showPdfViewer && (
                 <PdfViewer
-                    onClose={handleClosePdfViewer}
-                    fileUrl={resumeUrl!}
+                    onClose={hook.handleClosePdfViewer}
+                    fileUrl={hook.resumeUrl!}
                 />
             )}
         </>

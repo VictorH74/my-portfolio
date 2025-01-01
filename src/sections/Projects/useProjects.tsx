@@ -21,7 +21,7 @@ export const useProjects = () => {
 
     const { isLoading } = useQuery('projects', {
         queryFn: async () => {
-            setProjects(await getProjectSnapshotsByQuery(limit(3)));
+            setProjects(await getProjectSnapshotsByQuery(limit(5)));
         },
         refetchOnWindowFocus: false,
     });
@@ -29,7 +29,7 @@ export const useProjects = () => {
     const fetchMoreProjects = React.useCallback(async () => {
         setIsLoadingMoreProjects(true);
         const retrievedProjects = await getProjectSnapshotsByQuery(
-            startAfter(2)
+            startAfter(4)
         );
         setProjects((prev) => [...prev, ...retrievedProjects]);
         setIsLoadingMoreProjects(false);
