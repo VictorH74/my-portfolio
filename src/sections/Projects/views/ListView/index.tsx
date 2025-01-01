@@ -18,7 +18,7 @@ export const ListView = (props: Props) => {
         <>
             <div className="flex flex-col md:gap-20 gap-7">
                 {props.projectArray
-                    .filter((_, i) => i < 3 || showMore)
+                    .filter((_, i) => i < 5 || showMore)
                     .map((project, i) => (
                         <ProjectCard key={i} project={project} index={i} />
                     ))}
@@ -26,7 +26,7 @@ export const ListView = (props: Props) => {
             <LoadMoreBtn
                 isLoadingMoreProjects={props.isLoadingMoreProjects}
                 onClick={async () => {
-                    if (!showMore && !(props.projectArray.length > 3)) {
+                    if (!showMore && !(props.projectArray.length > 5)) {
                         await props.fetchMoreProjectsFunc();
                     }
                     setShowMore(!showMore);
