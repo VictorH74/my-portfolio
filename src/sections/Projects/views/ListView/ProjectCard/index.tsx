@@ -57,6 +57,10 @@ export const ProjectCard: React.FC<Props> = React.memo(function ProjectCard({
                 </div>
 
                 <div
+                    data-aos={`fade-${odd ? 'right' : 'left'}`}
+                    data-aos-delay="300"
+                    data-aos-duration="600"
+                    data-aos-once="true"
                     className={`w-full py-4 ${
                         oddScreen1024 ? 'text-end' : 'text-start'
                     } lg:w-[47%] lg:py-5 lg:px-7 px-2`}
