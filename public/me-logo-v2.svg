@@ -1,0 +1,23 @@
+<svg width="309" height="264" viewBox="0 0 309 264" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0H69L46 19H19V214.719L240.5 19H182L46 143V116L174.805 0H299L158 124L0 264V0Z" fill="url(#paint0_linear_435_18)"/>
+<path d="M108 195.833L127 177V264H108V195.833Z" fill="#D2D2D3"/>
+<path d="M108 264L127 245H157V264H108Z" fill="#D2D2D3"/>
+<path d="M231 88H250V153H231V88Z" fill="#D2D2D3"/>
+<path d="M176 264H157V177H176V264Z" fill="#D2D2D3"/>
+<path d="M176 264H157V177H176V264Z" fill="#D2D2D3"/>
+<path d="M176 196L176 177H250L231 196H176Z" fill="#D2D2D3"/>
+<path d="M176 196L176 177H250L231 196H176Z" fill="#D2D2D3"/>
+<path d="M157 153L177 134H231V153H157Z" fill="#D2D2D3"/>
+<path d="M157 153L177 134H231V153H157Z" fill="#D2D2D3"/>
+<path d="M299 25.0001L299 44.0001L231 106L231 87L299 25.0001Z" fill="#D2D2D3"/>
+<path d="M299 25.0001L299 44.0001L231 106L231 87L299 25.0001Z" fill="#D2D2D3"/>
+<path d="M231 264L250 245H280V264H231Z" fill="#D2D2D3"/>
+<path d="M280 44L299 25V264H280V44Z" fill="#D2D2D3"/>
+<defs>
+<linearGradient id="paint0_linear_435_18" x1="290" y1="128" x2="0" y2="128" gradientUnits="userSpaceOnUse">
+<stop offset="0.09" stop-color="#0084F0"/>
+<stop offset="0.78" stop-color="#14EAFB"/>
+<stop offset="0.9999" stop-color="#28E78E"/>
+</linearGradient>
+</defs>
+</svg>
