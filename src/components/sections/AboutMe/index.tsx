@@ -44,7 +44,10 @@ export const AboutMe = () => {
                 </div>
                 <div className="flex flex-row gap-10 items-center mt-7">
                     <div className="w-full h-[3px] bg-[#2e2e2e]" />
-                    <button className="w-fit shrink-0 px-8 py-5 rounded-full uppercase bg-[#2e2e2e] text-white font-medium">
+                    <button
+                        data-aos="zoom-in"
+                        className="w-fit shrink-0 px-8 py-5 rounded-full uppercase bg-[#2e2e2e] text-white font-medium"
+                    >
                         Download Resume
                     </button>
                     <div className="w-full h-[3px] bg-[#2e2e2e]" />

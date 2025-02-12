@@ -13,6 +13,14 @@ export const ProjectList = () => {
                     <ProjectItem key={projectData.id} {...projectData} />
                 ))}
             </ul>
+            <div className="w-full grid place-items-center mt-10">
+                <button
+                    data-aos="zoom-in"
+                    className="w-fit shrink-0 px-14 py-5 rounded-full uppercase bg-[#2e2e2e] text-white font-medium hover:shadow-lg hover:shadow-[#7e7e7e] duration-300"
+                >
+                    Show More
+                </button>
+            </div>
         </section>
     );
 };
