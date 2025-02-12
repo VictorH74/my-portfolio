@@ -5,7 +5,7 @@ import { AboutMe } from '@/components/sections/AboutMe';
 import { Presentation } from '@/components/sections/Presentation';
 import { ProjectList } from '@/components/sections/ProjectList';
 import { Technologies } from '@/components/sections/Technologies';
-import Aos from 'aos';
+// import Aos from 'aos';
 import { poppins400 } from '@/utils/fonts';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
