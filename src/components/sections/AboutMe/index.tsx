@@ -2,7 +2,10 @@ import { twMerge } from 'tailwind-merge';
 
 export const AboutMe = () => {
     return (
-        <section id="about-me" className="grid place-items-center mb-52">
+        <section
+            id="about-me"
+            className="grid place-items-center py-52 relative bg-white"
+        >
             <div className="max-w-default">
                 <div className="flex gap-5 justify-center items-center">
                     <div className="size-[380px] aspect-square bg-[#2e2e2e] rounded-2xl"></div>

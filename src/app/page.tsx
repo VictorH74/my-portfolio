@@ -11,7 +11,7 @@ export default function Home() {
     return (
         <div className={twMerge('min-h-screen', poppins400.className)}>
             <Navbar />
-            <main className="overflow-x-hidden">
+            <main>
                 <Presentation />
                 <AboutMe />
                 <Technologies />

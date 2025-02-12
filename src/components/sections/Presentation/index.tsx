@@ -2,7 +2,7 @@ export const Presentation = () => {
     return (
         <section
             id="presentation"
-            className="w-screen h-[calc(100vh-100px)] bg-custom-black grid place-items-center mb-52"
+            className="w-full h-[calc(100vh-100px)] bg-custom-black grid place-items-center sticky top-0 -z-10 overflow-hidden"
         >
             <div className="text-white grid gap-7 font-semibold">
                 <h2 className="text-7xl"> Hello!</h2>
