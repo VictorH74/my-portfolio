@@ -1,10 +1,10 @@
 // 'use client';
 import { Footer } from '@/components/Footer';
-import { Navbar } from '@/components/Navbar';
+import { Header } from '@/components/Header';
 import { AboutMe } from '@/components/sections/AboutMe';
 import { Presentation } from '@/components/sections/Presentation';
 import { ProjectList } from '@/components/sections/ProjectList';
-import { Technologies } from '@/components/sections/Technologies';
+import { TechnologyList } from '@/components/sections/TechnologyList';
 // import Aos from 'aos';
 import { poppins400 } from '@/utils/fonts';
 import React from 'react';
@@ -17,11 +17,11 @@ export default function Home() {
 
     return (
         <div className={twMerge('min-h-screen', poppins400.className)}>
-            <Navbar />
+            <Header />
             <main>
                 <Presentation />
                 <AboutMe />
-                <Technologies />
+                <TechnologyList />
                 <ProjectList />
                 <Footer />
             </main>

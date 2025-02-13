@@ -1,0 +1,32 @@
+{
+    "Header": {
+        "nav_link_label": {
+            "#": "Welcome",
+            "#about-me": "About Me",
+            "#technologies": "Technologies",
+            "#projects": "Projects",
+            "#contacts": "Contacts"
+        }
+    },
+    "HeroSection": {
+        "hello": "Hello!",
+        "i_am": "I' am ",
+        "a": "A Jr Web Developer with"
+    },
+    "AboutMeSection": {
+        "career": "Junior Web Developer",
+        "paragraph_1": "I started my journey in 2020 when I joined the Computer Science course in college. However, due to the pandemic and other factors, I made the decision to interrupt my studies, after completing the 5th period. The academic experience provided a solid foundation in software development, something that became fundamental to my self-taught journey.",
+        "paragraph_2": "Programming has become a real hobby. Good Part of my free time is dedicated to reading Articles and documentation about the latest Technologies. I firmly believe that this Constant dedication will propel me towards the success in the future.",
+        "paragraph_3": "I stay motivated and am always open to learn new technologies or acquire the knowledge and experience required for my professional growth. I'm always willingness to face challenges and embrace Learning opportunities",
+        "download_resume_btn": "Download Resume"
+    },
+    "TechnologyListSection": {
+        "section_title": "My Technologies"
+    },
+    "ProjectListSection": {
+        "section_title": "See My Projects!",
+        "show_more_btn": "Show More",
+        "show_less_btn": "Show Less",
+        "technology_list_title": "Used Technologies"
+    }
+}
