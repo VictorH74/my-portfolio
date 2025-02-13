@@ -1,6 +1,9 @@
+import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 
 export const AboutMe = () => {
+    const t = useTranslations('AboutMeSection');
+
     return (
         <section
             id="about-me"
@@ -11,34 +14,11 @@ export const AboutMe = () => {
                     <div className="size-[380px] aspect-square bg-[#2e2e2e] rounded-2xl"></div>
                     <div className="overflow-auto w-fit text-[#444444] font-medium">
                         <h2 className="text-4xl">Victor Leal</h2>
-                        <h3 className="text-2xl">Junior Web Developer</h3>
+                        <h3 className="text-2xl">{t('career')}</h3>
                         <div className={twMerge('space-y-2 mt-3')}>
-                            <p>
-                                Iniciei minha jornada em 2020 quando ingressei
-                                no curso de Ciência da Computação na faculdade.
-                                No entanto, devido à pandemia e outros fatores,
-                                tomei a decisão de interromper meus estudos,
-                                após concluir o 5º período. A experiência
-                                acadêmica proporcionou uma sólida base em
-                                desenvolvimento de software, algo que se tornou
-                                fundamental para minha jornada autodidata.
-                            </p>
-                            <p>
-                                A programação se tornou um verdadeiro hobby. Boa
-                                parte do meu tempo livre é dedicada à leitura de
-                                artigos e documentações sobre as mais recentes
-                                tecnologias. Acredito firmemente que essa
-                                dedicação constante me impulsionará para o
-                                sucesso no futuro.
-                            </p>
-                            <p>
-                                Me mantenho motivado e estou sempre aberto a
-                                aprender novas tecnologias ou adquirir o
-                                conhecimento e experiência necessária para meu
-                                crescimento profissional. Estou sempre a
-                                disposição para enfrentar desafios e abraçar
-                                oportunidades de aprendizado
-                            </p>
+                            <p>{t('paragraph_1')}</p>
+                            <p>{t('paragraph_2')}</p>
+                            <p>{t('paragraph_3')}</p>
                         </div>
                     </div>
                 </div>
@@ -48,7 +28,7 @@ export const AboutMe = () => {
                         data-aos="zoom-in"
                         className="w-fit shrink-0 px-8 py-5 rounded-full uppercase bg-[#2e2e2e] text-white font-medium"
                     >
-                        Download Resume
+                        {t('download_resume_btn')}
                     </button>
                     <div className="w-full h-[3px] bg-[#2e2e2e]" />
                 </div>

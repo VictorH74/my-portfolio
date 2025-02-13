@@ -1,9 +1,12 @@
 import { ProjectType } from '@/types';
 import { PROJECT_GRADIENT_COLORS } from '@/utils/constants';
 import { getProjectGradient } from '@/utils/function';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export const ProjectItem: React.FC<ProjectType> = (project) => {
+export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
+    project
+) => {
     const isOddIndex = project.index % 2 === 0;
 
     return (
@@ -33,6 +36,7 @@ export const ProjectItem: React.FC<ProjectType> = (project) => {
                         {project.title}
                     </h1>
                     <p className="max-w-[35rem]">{project.description.en}</p>
+                    {project.children}
                 </div>
                 <p className="text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium">
                     {project.title[0]}

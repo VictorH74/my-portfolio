@@ -33,7 +33,8 @@ export const Footer = () => {
                     </li>
                 </ul>
                 <p className="text-sm font-semibold">
-                    &copy; {new Date().getFullYear()} Victor Leal
+                    &copy; {new Date().getFullYear()} created with 🤍 by Victor
+                    Leal
                 </p>
             </div>
         </footer>

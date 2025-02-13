@@ -7,6 +7,10 @@ export type TechnologType = {
     src: string;
     hidden?: boolean;
     isMain?: boolean;
+    color?: {
+        background: string;
+        heading: string;
+    };
 };
 
 export type ProjectType = {
