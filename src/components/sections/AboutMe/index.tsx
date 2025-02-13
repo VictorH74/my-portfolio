@@ -26,6 +26,8 @@ export const AboutMe = () => {
                     <div className="w-full h-[3px] bg-[#2e2e2e]" />
                     <button
                         data-aos="zoom-in"
+                        data-aos-duration="500"
+                        data-aos-once="true"
                         className="w-fit shrink-0 px-8 py-5 rounded-full uppercase bg-[#2e2e2e] text-white font-medium"
                     >
                         {t('download_resume_btn')}

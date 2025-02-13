@@ -1,12 +1,10 @@
 {
     "Header": {
-        "nav_link_label": {
-            "#": "Boas-vindas",
-            "#about-me": "Sobre mim",
-            "#technologies": "Tecnologias",
-            "#projects": "Projetos",
-            "#contacts": "Contatos"
-        }
+        "nav_link_label_#welcome": "Boas-vindas",
+        "nav_link_label_#about-me": "Sobre mim",
+        "nav_link_label_#technologies": "Tecnologias",
+        "nav_link_label_#projects": "Projetos",
+        "nav_link_label_#contacts": "Contatos"
     },
     "HeroSection": {
         "hello": "Olá!",
@@ -27,7 +25,8 @@
         "section_title": "Veja Meus Projetos!",
         "show_more_btn": "Mostrar Mais",
         "show_less_btn": "Mostrar Menos",
-        "technology_list_title": "Tecnologias Usadas"
+        "technology_list_title": "Tecnologias Usadas",
+        "project_description_lang": "pt-br"
     },
     "Footer": {
         "last_paragraph_part_1": "criado com",

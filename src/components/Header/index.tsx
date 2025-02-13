@@ -1,4 +1,4 @@
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -26,7 +26,7 @@ const anchorLinks = [
 ];
 
 export const Header = () => {
-    // const t = useTranslations('Header');
+    const t = useTranslations('Header');
 
     return (
         <div className="w-full fixed top-0 py-5 shadow-lg text-center z-20 bg-custom-black">
@@ -38,19 +38,21 @@ export const Header = () => {
                     height={50}
                 />
                 <nav>
-                    <ul className="text-[#a7b3c5] font-extrabold flex gap-6 duration-500">
+                    <ul className="text-[#a7b3c5] font-extrabold flex gap-3 duration-500">
                         {anchorLinks.map((anchor) => (
                             <li
                                 key={anchor.href}
-                                className="overflow-hidden h-[1.7rem] relative"
+                                className="overflow-hidden h-[3rem] relative"
                             >
                                 <Link
                                     href={anchor.href}
-                                    className="grid hover:-translate-y-1/2 duration-500"
+                                    className="grid hover:-translate-y-1/2 duration-500 p-3 space-y-5"
                                 >
-                                    <span>{anchor.label}</span>
+                                    <span>
+                                        {t('nav_link_label_' + anchor.href)}
+                                    </span>
                                     <span className="text-white">
-                                        {anchor.label}
+                                        {t('nav_link_label_' + anchor.href)}
                                     </span>
                                 </Link>
                             </li>

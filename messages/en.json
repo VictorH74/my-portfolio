@@ -1,12 +1,10 @@
 {
     "Header": {
-        "nav_link_label": {
-            "#": "Welcome",
-            "#about-me": "About Me",
-            "#technologies": "Technologies",
-            "#projects": "Projects",
-            "#contacts": "Contacts"
-        }
+        "nav_link_label_#welcome": "Welcome",
+        "nav_link_label_#about-me": "About Me",
+        "nav_link_label_#technologies": "Technologies",
+        "nav_link_label_#projects": "Projects",
+        "nav_link_label_#contacts": "Contacts"
     },
     "HeroSection": {
         "hello": "Hello!",
@@ -27,7 +25,8 @@
         "section_title": "See My Projects!",
         "show_more_btn": "Show More",
         "show_less_btn": "Show Less",
-        "technology_list_title": "Used Technologies"
+        "technology_list_title": "Used Technologies",
+        "project_description_lang": "en"
     },
     "Footer": {
         "last_paragraph_part_1": "created with",

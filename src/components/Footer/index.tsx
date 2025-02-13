@@ -15,8 +15,14 @@ export const Footer = () => {
 
     return (
         <footer className="bg-custom-black p-28  text-center">
-            <div className="mx-auto size-fit grid place-items-center gap-7 text-[#D2D2D3]">
-                <Image width={85} height={85} src="me-logo-v2.svg" alt="logo" />
+            <div className="mx-auto size-fit grid place-items-center gap-11 text-[#D2D2D3]">
+                <Image
+                    data-aos="zoom-in"
+                    width={85}
+                    height={85}
+                    src="me-logo-v2.svg"
+                    alt="logo"
+                />
                 <ul className="flex flex-row gap-9">
                     <li>
                         <MuiIcon Icon={EmailIcon} />
