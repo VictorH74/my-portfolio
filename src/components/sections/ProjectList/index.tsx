@@ -46,7 +46,6 @@ export const ProjectList = () => {
             const retrievedProjects = await getProjectSnapshotsByQuery(
                 startAfter(3)
             );
-            console.log(retrievedProjects);
             setProjectList((prev) => [...prev, ...retrievedProjects]);
             setIsLoadingMoreProjects(false);
         }
@@ -72,7 +71,6 @@ export const ProjectList = () => {
             tempProjects.push({ ...doc.data(), id: doc.id } as ProjectType)
         );
 
-        console.log(tempProjects);
         return tempProjects;
     };
 

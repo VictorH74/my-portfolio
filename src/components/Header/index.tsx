@@ -29,7 +29,7 @@ export const Header = () => {
     // const t = useTranslations('Header');
 
     return (
-        <div className="w-full fixed top-0 py-5 shadow-lg text-center z-10 bg-custom-black">
+        <div className="w-full fixed top-0 py-5 shadow-lg text-center z-20 bg-custom-black">
             <div className="max-w-default w-full py-4 px-10 mx-auto justify-between flex items-center">
                 <Image
                     src="/me-logo-v2.svg"

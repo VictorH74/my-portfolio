@@ -28,5 +28,9 @@
         "show_more_btn": "Mostrar Mais",
         "show_less_btn": "Mostrar Menos",
         "technology_list_title": "Tecnologias Usadas"
+    },
+    "Footer": {
+        "last_paragraph_part_1": "criado com",
+        "last_paragraph_part_2": "por Victor Leal"
     }
 }
