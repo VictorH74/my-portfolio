@@ -51,13 +51,17 @@ export const Presentation = () => {
                     ) : (
                         technologyList
                             .filter((icon) => icon.isMain)
-                            .map((icon) => (
+                            .map((icon, i) => (
                                 <Image
                                     key={icon.id}
                                     height={60}
                                     width={60}
                                     alt={icon.name + ' icon'}
                                     src={icon.src}
+                                    className="animate-bounce"
+                                    style={{
+                                        animationDelay: i * 100 + 'ms',
+                                    }}
                                 />
                             ))
                     )}
@@ -76,6 +80,6 @@ const Fallback = () =>
                 height={60}
                 width={60}
                 variant="circular"
-                sx={{ backgroundColor: '#ececec' }}
+                sx={{ backgroundColor: '#ececec24' }}
             />
         ));

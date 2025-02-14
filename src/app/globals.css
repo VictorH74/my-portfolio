@@ -109,30 +109,6 @@ article {
     height: 100vh;
 }
 
-h1 span {
-    font-size: 0.5em;
-    display: block;
-    text-align: center;
-    font-variant: small-caps;
-}
-
-h1::after {
-    content: '™';
-    position: absolute;
-    top: 0;
-    left: 100%;
-    font-size: 0.75em;
-}
-
-:is(.title-wrap, .content-wrap) {
-    line-height: 1.5;
-    mask: linear-gradient(
-        transparent,
-        white 10px calc(100% - 10px),
-        transparent
-    );
-}
-
 @supports (animation-timeline: scroll()) {
     article {
         animation: journey both linear;
@@ -158,6 +134,10 @@ h1::after {
         --end: 1;
     }
 
+    .project-content {
+        animation: fade-in both linear;
+    }
+
     @keyframes journey {
         0% {
             translate: var(--origin);
@@ -167,6 +147,21 @@ h1::after {
         }
         100% {
             translate: var(--destination);
+        }
+    }
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+            translate: var(--content-origin);
+        }
+        40% {
+            opacity: 1;
+            translate: 0 0;
+        }
+        100% {
+            opacity: 1;
+            translate: 0 0;
         }
     }
 }

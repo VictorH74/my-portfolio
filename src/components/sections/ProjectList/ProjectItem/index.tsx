@@ -30,7 +30,7 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
             }}
         >
             <div
-                className=" size-full grid place-items-center"
+                className="size-full grid place-items-center overflow-hidden"
                 style={{
                     background:
                         PROJECT_GRADIENT_COLORS[
@@ -38,7 +38,7 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
                         ],
                 }}
             >
-                <div className="relative overflow-hidden rounded-xl w-4/5 aspect-video  shadow-xl">
+                <div className="relative overflow-hidden rounded-xl w-4/5 aspect-video  shadow-xl slide-container">
                     <Slider images={project.screenshots} />
                 </div>
             </div>
@@ -48,6 +48,21 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
                         'z-10 w-4/5 grid gap-4 max-w-[35rem] project-content',
                         isOddIndex ? 'place-items-start' : 'place-items-end'
                     )}
+                    style={
+                        {
+                            animationTimeline:
+                                project.index < 2
+                                    ? '--scroller-2'
+                                    : '--scroller-' + (project.index + 1),
+                            '--content-origin': isOddIndex
+                                ? '-100% 0'
+                                : '100% 0',
+                            animationRange:
+                                project.index == 0
+                                    ? 'entry -180% entry 20%'
+                                    : 'entry 50% entry 150%',
+                        } as React.CSSProperties
+                    }
                 >
                     <h1 className="text-4xl font-medium w-full">
                         {project.title}

@@ -9,6 +9,13 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { SvgIconTypeMap } from '@mui/material';
 import { useTranslations } from 'next-intl';
 
+const contactData = [
+    { Icon: EmailIcon, label: 'victorh.almeida7@gmail.com' },
+    { Icon: GitHubIcon, label: 'VictorH74' },
+    { Icon: LinkedInIcon, label: 'Victor Leal' },
+    { Icon: WhatsAppIcon, label: '(86) 9 9470-2018' },
+];
+
 // TODO: fetch contacts from firebase backend and make dinamic
 export const Footer = () => {
     const t = useTranslations('Footer');
@@ -24,22 +31,18 @@ export const Footer = () => {
                     alt="logo"
                 />
                 <ul className="flex flex-row gap-9">
-                    <li>
-                        <MuiIcon Icon={EmailIcon} />
-                        victorh.almeida7@gmail.com
-                    </li>
-                    <li>
-                        <MuiIcon Icon={GitHubIcon} />
-                        VictorH74
-                    </li>
-                    <li>
-                        <MuiIcon Icon={LinkedInIcon} />
-                        Victor Leal
-                    </li>
-                    <li>
-                        <MuiIcon Icon={WhatsAppIcon} />
-                        (86) 9 9470-2018
-                    </li>
+                    {contactData.map((obj, i) => (
+                        <li
+                            key={obj.label}
+                            className="animate-bounce flex items-center"
+                            style={{
+                                animationDelay: i * 100 + 'ms',
+                            }}
+                        >
+                            <MuiIcon Icon={obj.Icon} />
+                            <p className="max-[1100px]:hidden">{obj.label}</p>
+                        </li>
+                    ))}
                 </ul>
                 <div className="text-sm font-semibold flex gap-2">
                     <p>

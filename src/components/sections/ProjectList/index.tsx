@@ -1,79 +1,16 @@
 'use client';
-import { ProjectType, TechnologType } from '@/types';
+
 import React from 'react';
 import { ProjectItem } from './ProjectItem';
 import { useTranslations } from 'next-intl';
-import { useQuery } from '@tanstack/react-query';
-import {
-    collection,
-    getDocs,
-    limit,
-    orderBy,
-    query,
-    QueryConstraint,
-    startAfter,
-} from 'firebase/firestore';
-import { db } from '@/configs/firebaseConfig';
-import { useTechnologyList } from '@/hooks/useTechnologyList';
+
 import Image from 'next/image';
+import { useProjectList } from './useProjectList';
 
 // TODO: fix error - show less project not working
 export const ProjectList = () => {
     const t = useTranslations('ProjectListSection');
-    const [projectList, setProjectList] = React.useState<ProjectType[]>([]);
-    const [isLoadingMoreProjects, setIsLoadingMoreProjects] =
-        React.useState(false);
-    const [showingMore, setShowingMore] = React.useState(false);
-    const { isEmpty, technologyList } = useTechnologyList();
-
-    const { isLoading } = useQuery({
-        queryKey: ['project-list'],
-        queryFn: () => getInitialProjects(),
-        refetchOnWindowFocus: false,
-    });
-
-    const iconMap = React.useMemo(() => {
-        if (isEmpty) return undefined;
-        const map: Record<TechnologType['name'], TechnologType> = {};
-        technologyList.map((icon) => {
-            map[icon.id] = icon;
-        });
-        return map;
-    }, [isEmpty, technologyList]);
-
-    const getMoreProjects = React.useCallback(async () => {
-        if (projectList.length === 4) {
-            setIsLoadingMoreProjects(true);
-            const retrievedProjects = await getProjectSnapshotsByQuery(
-                startAfter(3)
-            );
-            setProjectList((prev) => [...prev, ...retrievedProjects]);
-            setIsLoadingMoreProjects(false);
-        }
-
-        setShowingMore(true);
-    }, [projectList]);
-
-    const getInitialProjects = async () => {
-        const initialProjectList = await getProjectSnapshotsByQuery(limit(4));
-        setProjectList(initialProjectList);
-
-        return null;
-    };
-
-    const getProjectSnapshotsByQuery = async (
-        ...queryConstraints: QueryConstraint[]
-    ) => {
-        const collectionRef = collection(db, 'projects');
-        const q = query(collectionRef, orderBy('index'), ...queryConstraints);
-        const snapshot = await getDocs(q);
-        const tempProjects: ProjectType[] = [];
-        snapshot.docs.forEach((doc) =>
-            tempProjects.push({ ...doc.data(), id: doc.id } as ProjectType)
-        );
-
-        return tempProjects;
-    };
+    const hook = useProjectList();
 
     return (
         <section id="projects" className="pb-52 bg-white z-30">
@@ -84,7 +21,7 @@ export const ProjectList = () => {
             <div
                 className="scroll-animation-container"
                 style={{
-                    timelineScope: Array(projectList.length)
+                    timelineScope: Array(hook.projectList.length)
                         .fill(null)
                         .map((_, i) => '--scroller-' + (i + 1))
                         .join(', '),
@@ -97,9 +34,9 @@ export const ProjectList = () => {
                             viewTimelineName: '--scroller-1',
                         }}
                     >
-                        {projectList.map((projectData) => (
+                        {hook.projectList.map((projectData) => (
                             <ProjectItem key={projectData.id} {...projectData}>
-                                {!!iconMap && (
+                                {!!hook.iconMap && (
                                     <div className="w-full max-w-[35rem] space-y-2">
                                         <h3 className="text-2xl font-medium">
                                             {t('technology_list_title')}:
@@ -108,7 +45,9 @@ export const ProjectList = () => {
                                             {projectData.technologies.map(
                                                 (techIconStr) => {
                                                     const techIcon =
-                                                        iconMap[techIconStr];
+                                                        hook.iconMap![
+                                                            techIconStr
+                                                        ];
                                                     return (
                                                         <li key={techIcon.id}>
                                                             <Image
@@ -134,8 +73,8 @@ export const ProjectList = () => {
                     </div>
                 </div>
 
-                {projectList.length &&
-                    Array(projectList.length - 1)
+                {hook.projectList.length &&
+                    Array(hook.projectList.length - 1)
                         .fill(null)
                         .map((_, i) => (
                             <div
@@ -151,13 +90,15 @@ export const ProjectList = () => {
                     <button
                         className="w-fit shrink-0 px-14 py-5  uppercase bg-[#2e2e2e] text-white font-medium hover:shadow-lg hover:shadow-[#969696] duration-300"
                         onClick={
-                            showingMore
-                                ? () => setShowingMore(false)
-                                : getMoreProjects
+                            hook.showingMore
+                                ? () => hook.setShowingMore(false)
+                                : hook.getMoreProjects
                         }
-                        disabled={isLoadingMoreProjects || isLoading}
+                        disabled={hook.isLoadingMoreProjects || hook.isLoading}
                     >
-                        {showingMore ? t('show_less_btn') : t('show_more_btn')}
+                        {hook.showingMore
+                            ? t('show_less_btn')
+                            : t('show_more_btn')}
                     </button>
                 </div>
             </div>
