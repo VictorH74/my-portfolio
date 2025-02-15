@@ -26,7 +26,10 @@
         "show_more_btn": "Show More",
         "show_less_btn": "Show Less",
         "technology_list_title": "Used Technologies",
-        "project_description_lang": "en"
+        "project_description_lang": "en",
+        "project_demo_url": "Go To Demo",
+        "project_video_url": "Play Video",
+        "project_repo_url": "Go To Repository"
     },
     "Footer": {
         "last_paragraph_part_1": "created with",

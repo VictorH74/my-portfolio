@@ -11,7 +11,7 @@ export const Presentation = () => {
     return (
         <section
             id="presentation"
-            className="w-full h-[calc(100vh-100px)] bg-custom-black grid place-items-center sticky top-0 -z-10 overflow-hidden"
+            className="w-full h-[calc(100vh-100px)]x h-screen bg-custom-black grid place-items-center sticky top-0 -z-10 overflow-hidden"
         >
             <div className="text-white grid gap-7 font-semibold">
                 <h2
@@ -45,7 +45,7 @@ export const Presentation = () => {
                 >
                     {t('a')}
                 </h2>
-                <div className="flex gap-7 ml-2">
+                <div className="flex gap-7 ml-2 pt-3">
                     {isLoading ? (
                         <Fallback />
                     ) : (

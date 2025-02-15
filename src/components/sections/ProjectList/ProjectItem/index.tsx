@@ -83,7 +83,7 @@ export const ProjectItem: React.FC<
                                 href={props.project.deployUrl}
                                 className="w-full flex gap-3 items-center font-medium"
                             >
-                                Demo Url
+                                {t('project_demo_url')}
                                 <LinkIcon />
                             </Link>
                         )}
@@ -92,7 +92,7 @@ export const ProjectItem: React.FC<
                                 href={props.project.repositoryUrl}
                                 className="w-full flex gap-3 items-center font-medium"
                             >
-                                Repository Url
+                                {t('project_repo_url')}
                                 <GitHubIcon />
                             </Link>
                         )}

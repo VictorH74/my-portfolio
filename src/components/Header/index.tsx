@@ -1,6 +1,8 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useHeader } from './useHeader';
+import { twMerge } from 'tailwind-merge';
 
 const anchorLinks = [
     {
@@ -27,9 +29,17 @@ const anchorLinks = [
 
 export const Header = () => {
     const t = useTranslations('Header');
+    const hook = useHeader();
 
     return (
-        <div className="w-full fixed top-0 py-5 shadow-lg text-center z-20 bg-custom-black">
+        <div
+            ref={hook.headerRef}
+            className={twMerge(
+                'w-full fixed py-5 shadow-lg text-center z-20 duration-300',
+                hook.showHeader ? 'top-0' : '-top-full',
+                hook.isInHeroSection ? 'bg-transparent' : 'bg-custom-black'
+            )}
+        >
             <div className="max-w-default w-full py-4 px-10 mx-auto justify-between flex items-center">
                 <Image
                     src="/me-logo-v2.svg"

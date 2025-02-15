@@ -27,7 +27,7 @@ export const ProjectList = () => {
                         .join(', '),
                 }}
             >
-                <div className="content min-h-screen sticky top-0  mb-28">
+                <div className="content min-h-screen sticky top-0  mb-16">
                     <div
                         className="scroller--1 scroller"
                         style={{
@@ -90,9 +90,9 @@ export const ProjectList = () => {
                             ></div>
                         ))}
 
-                <div className="w-full grid place-items-center mt-10">
+                <div className="w-full grid place-items-center  bg-[#2e2e2e]">
                     <button
-                        className="w-fit shrink-0 px-14 py-5  uppercase bg-[#2e2e2e] text-white font-medium hover:shadow-lg hover:shadow-[#969696] duration-300"
+                        className="w-fit px-14 py-5  uppercase bg-[#2e2e2e] text-white font-medium hover:shadow-lg hover:shadow-[#969696] duration-300"
                         onClick={
                             hook.showingMore
                                 ? () => hook.setShowingMore(false)

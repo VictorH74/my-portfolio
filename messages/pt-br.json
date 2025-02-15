@@ -9,7 +9,7 @@
     "HeroSection": {
         "hello": "Olá!",
         "i_am": "Eu sou ",
-        "a": "Um Desenvolvedor Web Jr com"
+        "a": "Um Dev. Web Jr. com"
     },
     "AboutMeSection": {
         "career": "Desenvolvedor Web Junior",
@@ -26,7 +26,10 @@
         "show_more_btn": "Mostrar Mais",
         "show_less_btn": "Mostrar Menos",
         "technology_list_title": "Tecnologias Usadas",
-        "project_description_lang": "pt-br"
+        "project_description_lang": "pt-br",
+        "project_demo_url": "Acessar Demo",
+        "project_video_url": "Reproduzir Vídeo",
+        "project_repo_url": "Acessar Repositório"
     },
     "Footer": {
         "last_paragraph_part_1": "criado com",
