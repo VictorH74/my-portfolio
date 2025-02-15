@@ -11,7 +11,10 @@ export const AboutMe = () => {
         >
             <div className="max-w-default">
                 <div className="flex gap-5 justify-center items-center">
-                    <div className="size-[380px] aspect-square bg-[#2e2e2e] rounded-2xl"></div>
+                    <div className="size-fit relative pb-3 pr-3">
+                        <div className="size-[380px] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%]"></div>
+                        <div className="aspect-square rounded-2xl absolute top-0 left-0 size-[380px] bg-[#2e2e2e]"></div>
+                    </div>
                     <div className="overflow-auto w-fit text-[#444444] font-medium">
                         <h2 className="text-4xl">Victor Leal</h2>
                         <h3 className="text-2xl">{t('career')}</h3>

@@ -10,10 +10,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 // import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 
-export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
-    project
-) => {
-    const isOddIndex = project.index % 2 === 0;
+export const ProjectItem: React.FC<
+    React.PropsWithChildren & { index: number; project: ProjectType }
+> = (props) => {
+    const isOddIndex = props.index % 2 === 0;
     const t = useTranslations('ProjectListSection');
 
     return (
@@ -24,9 +24,9 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
             )}
             style={{
                 animationTimeline:
-                    project.index < 2
+                    props.index < 2
                         ? '--scroller-2'
-                        : '--scroller-' + (project.index + 1),
+                        : '--scroller-' + (props.index + 1),
             }}
         >
             <div
@@ -34,12 +34,12 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
                 style={{
                     background:
                         PROJECT_GRADIENT_COLORS[
-                            getProjectGradient(project.index)
+                            getProjectGradient(props.index)
                         ],
                 }}
             >
                 <div className="relative overflow-hidden rounded-xl w-4/5 aspect-video  shadow-xl slide-container">
-                    <Slider images={project.screenshots} />
+                    <Slider images={props.project.screenshots} />
                 </div>
             </div>
             <div className="w-full relative overflow-hidden grid place-items-center">
@@ -51,45 +51,45 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
                     style={
                         {
                             animationTimeline:
-                                project.index < 2
+                                props.index < 2
                                     ? '--scroller-2'
-                                    : '--scroller-' + (project.index + 1),
+                                    : '--scroller-' + (props.index + 1),
                             '--content-origin': isOddIndex
                                 ? '-100% 0'
                                 : '100% 0',
                             animationRange:
-                                project.index == 0
+                                props.index === 0
                                     ? 'entry -180% entry 20%'
                                     : 'entry 50% entry 150%',
                         } as React.CSSProperties
                     }
                 >
                     <h1 className="text-4xl font-medium w-full">
-                        {project.title}
+                        {props.project.title}
                     </h1>
                     <p className="">
                         {
-                            project.description[
+                            props.project.description[
                                 t(
                                     'project_description_lang'
-                                ) as keyof typeof project.description
+                                ) as keyof typeof props.project.description
                             ]
                         }
                     </p>
 
                     <div className="contents">
-                        {project.deployUrl && (
+                        {props.project.deployUrl && (
                             <Link
-                                href={project.deployUrl}
+                                href={props.project.deployUrl}
                                 className="w-full flex gap-3 items-center font-medium"
                             >
                                 Demo Url
                                 <LinkIcon />
                             </Link>
                         )}
-                        {project.repositoryUrl && (
+                        {props.project.repositoryUrl && (
                             <Link
-                                href={project.repositoryUrl}
+                                href={props.project.repositoryUrl}
                                 className="w-full flex gap-3 items-center font-medium"
                             >
                                 Repository Url
@@ -98,10 +98,10 @@ export const ProjectItem: React.FC<ProjectType & React.PropsWithChildren> = (
                         )}
                     </div>
 
-                    {project.children}
+                    {props.children}
                 </div>
                 <p className="text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium">
-                    {project.title[0]}
+                    {props.project.title[0]}
                 </p>
             </div>
         </article>

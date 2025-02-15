@@ -27,7 +27,7 @@ export const Slider = (props: SliderProps) => {
             >
                 {props.images.map((file, index) => {
                     return (
-                        <li key={index} className="w-full flex-shrink-0">
+                        <li key={index} className="w-full shrink-0">
                             <SlideImage
                                 width={780}
                                 height={300}
@@ -39,7 +39,7 @@ export const Slider = (props: SliderProps) => {
                 })}
                 {props.images.length > 1 && (
                     <span className="absolute bottom-0 py-2 inset-x-0 flex justify-center">
-                        <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/50 duration-200 group-hover/container:opacity-100 opacity-0 max-lg:hidden" />
+                        <div className="absolute inset-0 z-0 bg-linear-to-t from-black/50 duration-200 group-hover/container:opacity-100 opacity-0 max-lg:hidden" />
                         {props.images.map((_, i) => (
                             <button
                                 key={i}

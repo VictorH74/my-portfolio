@@ -34,8 +34,12 @@ export const ProjectList = () => {
                             viewTimelineName: '--scroller-1',
                         }}
                     >
-                        {hook.projectList.map((projectData) => (
-                            <ProjectItem key={projectData.id} {...projectData}>
+                        {hook.projectList.map((projectData, i) => (
+                            <ProjectItem
+                                key={projectData.id}
+                                index={i}
+                                project={projectData}
+                            >
                                 {!!hook.iconMap && (
                                     <div className="w-full max-w-[35rem] space-y-2">
                                         <h3 className="text-2xl font-medium">
