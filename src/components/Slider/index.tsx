@@ -29,8 +29,8 @@ export const Slider = (props: SliderProps) => {
                     return (
                         <li key={index} className="w-full shrink-0">
                             <SlideImage
-                                width={780}
-                                height={300}
+                                width={1200}
+                                height={675}
                                 src={file.url}
                                 alt={file.name}
                             />

@@ -35,9 +35,11 @@ export const Header = () => {
         <div
             ref={hook.headerRef}
             className={twMerge(
-                'w-full fixed py-5 shadow-lg text-center z-20 duration-300',
+                'w-full fixed py-5 text-center z-20 duration-300',
                 hook.showHeader ? 'top-0' : '-top-full',
-                hook.isInHeroSection ? 'bg-transparent' : 'bg-custom-black'
+                hook.isInHeroSection
+                    ? 'bg-transparent'
+                    : 'bg-custom-black shadow-lg'
             )}
         >
             <div className="max-w-default w-full py-4 px-10 mx-auto justify-between flex items-center">

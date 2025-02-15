@@ -3,6 +3,11 @@ import { useTechnologyList } from '@/hooks/useTechnologyList';
 import Skeleton from '@mui/material/Skeleton';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { Orbitron } from 'next/font/google';
+import { twMerge } from 'tailwind-merge';
+
+const sectionFont = Orbitron({ weight: '400', subsets: ['latin'] });
+const iconSize = 50;
 
 export const Presentation = () => {
     const t = useTranslations('HeroSection');
@@ -11,7 +16,10 @@ export const Presentation = () => {
     return (
         <section
             id="presentation"
-            className="w-full h-[calc(100vh-100px)]x h-screen bg-custom-black grid place-items-center sticky top-0 -z-10 overflow-hidden"
+            className={twMerge(
+                'w-full h-[calc(100vh-4rem)] bg-custom-black grid place-items-center sticky top-0 -z-10 overflow-hidden',
+                sectionFont.className
+            )}
         >
             <div className="text-white grid gap-7 font-semibold">
                 <h2
@@ -33,7 +41,7 @@ export const Presentation = () => {
                     {' '}
                     {t('i_am')}
                     <span className="text-transparent bg-clip-text bg-linear-to-r from-[#00FC69] via-[#4EFFFF] via-57% to-[#2382FF]">
-                        Victor Hugo Leal
+                        Victor Leal
                     </span>{' '}
                 </h1>
                 <h2
@@ -54,8 +62,8 @@ export const Presentation = () => {
                             .map((icon, i) => (
                                 <Image
                                     key={icon.id}
-                                    height={60}
-                                    width={60}
+                                    height={iconSize}
+                                    width={iconSize}
                                     alt={icon.name + ' icon'}
                                     src={icon.src}
                                     className="animate-bounce"
@@ -77,8 +85,8 @@ const Fallback = () =>
         .map((_, i) => (
             <Skeleton
                 key={i}
-                height={60}
-                width={60}
+                height={iconSize}
+                width={iconSize}
                 variant="circular"
                 sx={{ backgroundColor: '#ececec24' }}
             />
