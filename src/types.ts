@@ -1,4 +1,6 @@
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { LANGUAGES } from './utils/server-constants';
+import { SvgIconTypeMap } from '@mui/material';
 
 export type TechnologType = {
     index: number;
@@ -30,6 +32,19 @@ export type ProjectType = {
 export type ScreenshotType = {
     name: string;
     url: string;
+};
+
+export type MuiIconType = OverridableComponent<
+    SvgIconTypeMap<object, 'svg'>
+> & {
+    muiName: string;
+};
+
+export type ProfileContactsType = {
+    email: string;
+    github_url: string;
+    linkedin_url: string;
+    phone: string;
 };
 
 export type LangType = (typeof LANGUAGES)[number];

@@ -1,7 +1,7 @@
 import { Slider } from '@/components/Slider';
 import { ProjectType } from '@/types';
 import { PROJECT_GRADIENT_COLORS } from '@/utils/constants';
-import { getProjectGradient } from '@/utils/function';
+import { getProjectGradient } from '@/utils/functions';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React from 'react';

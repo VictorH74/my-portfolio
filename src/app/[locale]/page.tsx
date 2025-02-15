@@ -11,6 +11,8 @@ import { poppins400 } from '@/utils/fonts';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
+// TODO: change all PX unit measure to REM
+
 export default function Home() {
     React.useEffect(() => {
         Aos.init();
