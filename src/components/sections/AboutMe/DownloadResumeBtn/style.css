@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+.download-resume-btn {
+    --height: 3.5rem;
+    --tooltip-height: 2.2rem;
+    --tooltip-width: 8.1rem;
+    --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 3px);
+    height: var(--height);
+
+    &::before {
+        @apply absolute content-[attr(data-tooltip)] w-[var(--tooltip-width)] h-[var(--tooltip-height)] text-sm text-center text-white rounded-md leading-[var(--tooltip-height)] bg-[var(--color-secondary-black)];
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) + 10px
+        );
+        left: calc(50% - var(--tooltip-width) / 2);
+    }
+
+    &::after {
+        @apply absolute content-[''] size-0 border-10 border-transparent;
+        border-top-color: var(--color-secondary-black);
+        left: calc(50% - 10px);
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 10px
+        );
+    }
+
+    &::after,
+    &::before {
+        @apply opacity-0 invisible transition-all duration-500;
+    }
+
+    .button-wrapper,
+    .text,
+    .icon {
+        @apply overflow-hidden absolute size-full left-0 text-white;
+    }
+
+    .text,
+    .icon {
+        @apply transition-[top] duration-500;
+    }
+
+    &:hover .text {
+        top: -100%;
+    }
+
+    &:hover .icon {
+        top: 0;
+    }
+
+    &:hover:before,
+    &:hover:after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:hover:after {
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 20px
+        );
+    }
+
+    &:hover:before {
+        bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+    }
+}

@@ -12,10 +12,12 @@
         "a": "Um Desenvolvedor Web Jr. com"
     },
     "AboutMeSection": {
+        "profile_image_load_error": "erro ao tentar carregar imagem!",
         "career": "Desenvolvedor Web Junior",
         "paragraph_1": "Iniciei minha jornada em 2020 quando ingressei no curso de Ciência da Computação na faculdade. No entanto, devido à pandemia e outros fatores, tomei a decisão de interromper meus estudos, após concluir o 5º período. A experiência acadêmica proporcionou uma sólida base em desenvolvimento de software, algo que se tornou fundamental para minha jornada autodidata.",
         "paragraph_2": "A programação se tornou um verdadeiro hobby. Boa parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
         "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir o conhecimento e experiência necessária para meu crescimento profissional. Estou sempre a disposição para enfrentar desafios e abraçar oportunidades de aprendizado",
+        "resume_size": "Tamanho",
         "download_resume_btn": "Baixar Currículo"
     },
     "TechnologyListSection": {
@@ -34,6 +36,10 @@
     "Footer": {
         "last_paragraph_part_1": "criado com",
         "last_paragraph_part_2": "por Victor Leal",
+        "contact_me_title": "Fale Comigo",
+        "contact_me_subtitle": "Vamos construir algo incrível juntos!",
+        "contact_me_paragraph_1": "Tem uma ideia ou precisa de um desenvolvedor para seu projeto?",
+        "contact_me_paragraph_2": "Envie uma mensagem e vamos conversar!",
         "contact_me_name_field_placeholder": "Seu nome",
         "contact_me_email_field_placeholder": "Seu E-mail",
         "contact_me_msg_field_placeholder": "Digite sua mensagem",
