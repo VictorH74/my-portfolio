@@ -8,7 +8,7 @@
     },
     "HeroSection": {
         "hello": "Hello!",
-        "i_am": "I' am ",
+        "i_am": "I'm ",
         "a": "A Jr Web Developer with"
     },
     "AboutMeSection": {
@@ -33,6 +33,15 @@
     },
     "Footer": {
         "last_paragraph_part_1": "created with",
-        "last_paragraph_part_2": "by Victor Leal"
+        "last_paragraph_part_2": "by Victor Leal",
+        "contact_me_name_field_placeholder": "Your name",
+        "contact_me_email_field_placeholder": "Your Email",
+        "contact_me_msg_field_placeholder": "Type your message",
+        "contact_me_msg_submit_btn": "Submit",
+        "success_snackbar_text": "Email sent!",
+        "error_snackbar_text": "There was an error sending email",
+        "error_message_name": "Name field is required",
+        "error_message_email": "Email field is required",
+        "error_message_message": "Message field is required"
     }
 }

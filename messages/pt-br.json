@@ -9,7 +9,7 @@
     "HeroSection": {
         "hello": "Olá!",
         "i_am": "Eu sou ",
-        "a": "Um Dev. Web Jr. com"
+        "a": "Um Desenvolvedor Web Jr. com"
     },
     "AboutMeSection": {
         "career": "Desenvolvedor Web Junior",
@@ -33,6 +33,15 @@
     },
     "Footer": {
         "last_paragraph_part_1": "criado com",
-        "last_paragraph_part_2": "por Victor Leal"
+        "last_paragraph_part_2": "por Victor Leal",
+        "contact_me_name_field_placeholder": "Seu nome",
+        "contact_me_email_field_placeholder": "Seu E-mail",
+        "contact_me_msg_field_placeholder": "Digite sua mensagem",
+        "contact_me_msg_submit_btn": "Enviar",
+        "success_snackbar_text": "E-mail enviado!",
+        "error_snackbar_text": "Houve algum erro ao enviar a mensagem",
+        "error_message_name": "Campo de nome obrigatório",
+        "error_message_email": "Campo de e-mail obrigatório",
+        "error_message_message": "Campo de mensagem obrigatório"
     }
 }

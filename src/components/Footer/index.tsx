@@ -3,14 +3,16 @@ import Image from 'next/image';
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { ContactList } from './ContactList';
+import { ContactMe } from './ContactMe';
 
-// TODO: fetch contacts from firebase backend and make dinamic
 export const Footer = () => {
     const t = useTranslations('Footer');
 
     return (
-        <footer className="bg-custom-black p-28  text-center">
-            <div className="mx-auto size-fit grid place-items-center gap-11 text-[#D2D2D3]">
+        <footer className="bg-primary-black p-28  text-center max-h-fit">
+            <div className="max-w-default w-full mx-auto size-fit grid place-items-center gap-11 text-[#D2D2D3]">
+                <ContactMe />
+
                 <Image
                     data-aos="zoom-in"
                     width={85}
@@ -18,6 +20,9 @@ export const Footer = () => {
                     src="me-logo-v2.svg"
                     alt="logo"
                 />
+
+                <hr className="w-full h-[3px] bg-white" />
+
                 <ContactList />
                 <div className="text-sm font-semibold flex gap-2">
                     <p>
