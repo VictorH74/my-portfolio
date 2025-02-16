@@ -49,7 +49,7 @@ export const Header = () => {
                     width={50}
                     height={50}
                 />
-                <nav>
+                <nav className="max-lg:hidden">
                     <ul className="text-[#a7b3c5] font-extrabold flex gap-3 duration-500">
                         {anchorLinks.map((anchor) => (
                             <li
@@ -71,6 +71,7 @@ export const Header = () => {
                         ))}
                     </ul>
                 </nav>
+                <button className="min-lg:hidden">Hamburger</button>
             </div>
         </div>
     );

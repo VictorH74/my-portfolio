@@ -38,8 +38,8 @@ export const ContactMe = () => {
         <section className="w-full" id="contacts">
             <h2 className="text-3xl font-semibold">{t('contact_me_title')}</h2>
 
-            <div className=" h-[40rem] bg-primary-black shadow-[0_4px_40px_#00000075]  flex my-20">
-                <div className="size-full bg-white flex flex-col p-20 text-dark-font gap-6 justify-center">
+            <div className="max-lg:px-6 max-lg:py-20 min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_4px_40px_#00000075] my-20 space-y-10">
+                <div className="max-lg:hidden max-xl:p-6 size-full bg-white flex flex-col p-20 text-dark-font gap-6 justify-center">
                     <h3 className="text-2xl font-semibold text-start">
                         {t('contact_me_subtitle')}
                     </h3>
@@ -58,8 +58,19 @@ export const ContactMe = () => {
                         />
                     </div>
                 </div>
+
+                <div className="min-lg:hidden space-y-2">
+                    <h3 className="text-2xl font-semibold text-start">
+                        {t('contact_me_subtitle')}
+                    </h3>
+                    <p className="font-medium text-start">
+                        {t('contact_me_paragraph_1')} <br />{' '}
+                        {t('contact_me_paragraph_2')}
+                    </p>
+                </div>
+
                 <form
-                    className="boder-2 border-orange-300 size-full flex flex-col p-20 justify-center gap-6"
+                    className="max-lg:p-0 max-xl:p-6 p-20 size-full flex flex-col justify-center gap-2"
                     onSubmit={hook.onSubmit}
                 >
                     {inputData.map((obj) => (
@@ -106,13 +117,25 @@ export const ContactMe = () => {
                     </div>
 
                     <button
-                        className="focus:brightness-110 duration-300 rounded-md w-full p-3 bg-white text-dark-font font-semibold cursor-pointer"
+                        className="focus:brightness-110 duration-300 rounded-md w-full py-3 bg-white text-dark-font font-semibold cursor-pointer"
                         type="submit"
                         disabled={hook.submitting}
                     >
                         {t('contact_me_msg_submit_btn')}
                     </button>
                 </form>
+
+                <hr className="min-lg:hidden h-[3px] bg-secondary-black w-full" />
+
+                <div className="min-lg:hidden space-y-3">
+                    <CopyableContentBtn content="victorh.almeida7@gmail.com" />
+                    <CopyableContentBtn
+                        content="+55 (86) 99470-2018"
+                        formatContent={(prevContent) => {
+                            return prevContent.replace(/\D/g, '');
+                        }}
+                    />
+                </div>
             </div>
 
             {[

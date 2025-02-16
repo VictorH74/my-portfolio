@@ -50,7 +50,7 @@ export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
                               }
                     }
                 >
-                    {techIcon.name}
+                    <p className="max-sm:text-sm">{techIcon.name}</p>
                 </div>
             </div>
         </div>

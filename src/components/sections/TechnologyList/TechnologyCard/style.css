@@ -1,4 +1,20 @@
+@media screen {
+}
+
 .cube-container {
+    --cubeSize: 10.6rem;
+    --cubefinalZPos: 5.3rem;
+
+    @media (width < 48rem /* 768px */) {
+        --cubeSize: 8.7rem;
+        --cubefinalZPos: 4.35rem;
+    }
+
+    @media (width < 40rem) {
+        --cubeSize: 6.8rem;
+        --cubefinalZPos: 3.4rem;
+    }
+
     @apply size-[var(--cubeSize)];
     perspective: 1000px;
 }

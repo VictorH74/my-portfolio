@@ -1,3 +1,11 @@
+@media (prefers-reduced-motion) {
+    .project-content,
+    .item-test {
+        translate: 0 0;
+        opacity: 1;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .project-content,
     .item-test {

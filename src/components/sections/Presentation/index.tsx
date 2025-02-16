@@ -26,7 +26,7 @@ export const Presentation = () => {
                     data-aos="fade-up"
                     data-aos-once="true"
                     data-aos-duration="1000"
-                    className="text-7xl"
+                    className="max-sm:text-3xl max-xl:text-5xl text-7xl"
                 >
                     {' '}
                     {t('hello')}
@@ -36,11 +36,11 @@ export const Presentation = () => {
                     data-aos-once="true"
                     data-aos-delay="200"
                     data-aos-duration="1000"
-                    className="text-8xl"
+                    className="max-sm:text-4xl max-xl:text-6xl text-8xl"
                 >
                     {' '}
                     {t('i_am')}
-                    <span className="text-transparent bg-clip-text bg-linear-to-r from-[#00FC69] via-[#4EFFFF] via-57% to-[#2382FF]">
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-[#00FC69] via-[#4EFFFF] via-57% to-[#1e2022]">
                         Victor Leal
                     </span>{' '}
                 </h1>
@@ -49,7 +49,7 @@ export const Presentation = () => {
                     data-aos-once="true"
                     data-aos-delay="400"
                     data-aos-duration="1000"
-                    className="text-7xl"
+                    className="max-sm:text-3xl max-xl:text-5xl text-7xl"
                 >
                     {t('a')}
                 </h2>
@@ -66,7 +66,7 @@ export const Presentation = () => {
                                     width={iconSize}
                                     alt={icon.name + ' icon'}
                                     src={icon.src}
-                                    className="animate-bounce"
+                                    className="motion-safe:animate-bounce max-sm:size-10 size-14"
                                     style={{
                                         animationDelay: i * 100 + 'ms',
                                     }}

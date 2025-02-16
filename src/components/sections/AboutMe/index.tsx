@@ -11,11 +11,11 @@ export const AboutMe = () => {
             id="about-me"
             className="grid place-items-center py-52 relative bg-white"
         >
-            <div className="max-w-default">
-                <div className="flex gap-5 justify-center items-center">
-                    <div className="size-fit relative pb-3 pr-3">
-                        <div className="size-[380px] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%]"></div>
-                        <div className="aspect-square rounded-2xl absolute top-0 left-0 size-[380px] bg-secondary-black">
+            <div className="max-lg:px-4 max-w-default">
+                <div className="flex max-lg:flex-col gap-5 justify-center items-center">
+                    <div className="max-lg:w-full min-lg:pb-3 min-lg:pr-3 size-fit relative">
+                        <div className="max-lg:hidden size-[380px] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%]"></div>
+                        <div className="max-lg:w-full max-w-[500px] max-lg:m-auto min-lg:absolute min-lg:top-0 min-lg:left-0 min-lg:size-[380px] aspect-square rounded-2xl bg-secondary-black">
                             <ProfileImage />
                         </div>
                     </div>
