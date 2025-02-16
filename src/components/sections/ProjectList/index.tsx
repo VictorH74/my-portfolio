@@ -7,19 +7,17 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useProjectList } from './useProjectList';
 
-// TODO: fix error - show less project not working
 export const ProjectList = () => {
     const t = useTranslations('ProjectListSection');
     const hook = useProjectList();
 
     return (
-        <section id="projects" className="pb-52 bg-white z-30">
-            <h2 className="text-[#444444] text-3xl font-semibold text-center mb-20 uppercase">
+        <section id="projects" className="bg-white z-30">
+            <h2 className="text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
                 {t('section_title')}
             </h2>
 
             <div
-                className="scroll-animation-container"
                 style={{
                     timelineScope: Array(hook.projectList.length)
                         .fill(null)
@@ -27,14 +25,17 @@ export const ProjectList = () => {
                         .join(', '),
                 }}
             >
-                <div className="content min-h-screen sticky top-0  mb-16">
+                <div className="content min-h-screen sticky top-0  mb-28">
                     <div
                         className="scroller--1 scroller"
                         style={{
                             viewTimelineName: '--scroller-1',
                         }}
                     >
-                        {hook.projectList.map((projectData, i) => (
+                        {(hook.showingMore
+                            ? hook.projectList
+                            : hook.projectList.slice(0, 4)
+                        ).map((projectData, i) => (
                             <ProjectItem
                                 key={projectData.id}
                                 index={i}
@@ -78,7 +79,12 @@ export const ProjectList = () => {
                 </div>
 
                 {hook.projectList.length &&
-                    Array(hook.projectList.length - 1)
+                    Array(
+                        (hook.showingMore
+                            ? hook.projectList
+                            : hook.projectList.slice(0, 4)
+                        ).length - 1
+                    )
                         .fill(null)
                         .map((_, i) => (
                             <div
@@ -90,21 +96,17 @@ export const ProjectList = () => {
                             ></div>
                         ))}
 
-                <div className="w-full grid place-items-center  bg-[#2e2e2e]">
-                    <button
-                        className="w-fit px-14 py-5  uppercase bg-[#2e2e2e] text-white font-medium hover:shadow-lg hover:shadow-[#969696] duration-300"
-                        onClick={
-                            hook.showingMore
-                                ? () => hook.setShowingMore(false)
-                                : hook.getMoreProjects
-                        }
-                        disabled={hook.isLoadingMoreProjects || hook.isLoading}
-                    >
-                        {hook.showingMore
-                            ? t('show_less_btn')
-                            : t('show_more_btn')}
-                    </button>
-                </div>
+                <button
+                    className="h-28 w-full  uppercase bg-secondary-black text-white font-medium hover:brightness-125 duration-300 hover:cursor-pointer"
+                    onClick={
+                        hook.showingMore
+                            ? () => hook.setShowingMore(false)
+                            : hook.getMoreProjects
+                    }
+                    disabled={hook.isLoadingMoreProjects || hook.isLoading}
+                >
+                    {hook.showingMore ? t('show_less_btn') : t('show_more_btn')}
+                </button>
             </div>
         </section>
     );

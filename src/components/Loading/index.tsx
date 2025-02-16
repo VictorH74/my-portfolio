@@ -4,24 +4,24 @@ const defaultContainerBaseWidth = 150;
 const defaultParticleSize = (defaultContainerBaseWidth / 3) * 1.07;
 
 const particleSideClassName = {
-    0: 'bg-[#00FC69] top-0 left-1/2 -translate-x-1/2',
-    1: 'bg-[#2382FF] bottom-0 left-0',
-    2: 'bg-[#4EFFFF] bottom-0 right-0',
+    0: 'bg-[#00FC69]',
+    1: 'bg-[#2382FF]',
+    2: 'bg-[#4EFFFF]',
 };
 
 export const Loading = () => {
     return (
-        <div
+        <ul
             style={{
                 width: defaultContainerBaseWidth,
                 height: (Math.sqrt(3) / 2) * defaultContainerBaseWidth,
             }}
-            className="relative"
+            className="relative loading"
         >
             {Array(3)
                 .fill(null)
                 .map((_, i) => (
-                    <div
+                    <li
                         key={i}
                         style={{
                             width: defaultParticleSize,
@@ -34,6 +34,6 @@ export const Loading = () => {
                         )}
                     />
                 ))}
-        </div>
+        </ul>
     );
 };

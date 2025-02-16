@@ -6,6 +6,7 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { useSlider, SliderProps } from './useSlider';
+import { Loading } from '../Loading';
 
 export const Slider = (props: SliderProps) => {
     const hook = useSlider(props);
@@ -107,7 +108,7 @@ const SlideImage: React.FC<
                     loadingImg ? 'opacity-100' : 'opacity-0'
                 }`}
             >
-                {/* <Loading /> */}
+                <Loading />
             </div>
         </div>
     );

@@ -20,7 +20,7 @@ export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
             )}
         >
             <div className="cube">
-                <div className="bg-[#2e2e2e] shadow-lg shrink-0 text-white front">
+                <div className="bg-secondary-black shadow-lg shrink-0 text-white front">
                     <Image
                         loading="lazy"
                         placeholder="empty"

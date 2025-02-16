@@ -39,7 +39,7 @@ export const Header = () => {
                 hook.showHeader ? 'top-0' : '-top-full',
                 hook.isInHeroSection
                     ? 'bg-transparent'
-                    : 'bg-custom-black shadow-lg'
+                    : 'bg-primary-black shadow-lg'
             )}
         >
             <div className="max-w-default w-full py-4 px-10 mx-auto justify-between flex items-center">

@@ -19,7 +19,7 @@ export const ProjectItem: React.FC<
     return (
         <article
             className={twMerge(
-                'absolute inset-0 h-full flex text-[#444444] bg-white',
+                'absolute inset-0 h-full flex text-dark-font bg-white',
                 isOddIndex ? 'flex-row' : 'flex-row-reverse'
             )}
             style={{

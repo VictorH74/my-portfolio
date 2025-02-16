@@ -1,8 +1,4 @@
-import { MuiIconType, ProfileContactsType } from '@/types';
-import EmailIcon from '@mui/icons-material/Email';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+'use client';
 
 export const PROJECT_GRADIENT_COLORS = [
     'linear-gradient(135deg, rgba(67,148,255,1) 30%, rgba(107,206,255,1) 90%)',
@@ -14,29 +10,22 @@ export const PROJECT_GRADIENT_COLORS = [
     'linear-gradient(135deg, rgba(173,154,255,1) 30%, rgba(13,78,242,1) 90%)',
 ];
 
-export const contactIcon: Record<keyof ProfileContactsType, MuiIconType> = {
-    email: EmailIcon,
-    github_url: GitHubIcon,
-    linkedin_url: LinkedInIcon,
-    phone: WhatsAppIcon,
-};
-
 export const BRAZIL_PHONE_PATTERN = '\\d{13}';
 
-// export const EMAILJS_SERVICE_ID =
-//     process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ||
-//     (() => {
-//         throw new Error('EMAILJS_SERVICE_ID not defined');
-//     })();
+export const EMAILJS_SERVICE_ID =
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ||
+    (() => {
+        throw new Error('EMAILJS_SERVICE_ID not defined');
+    })();
 
-// export const EMAILJS_TEMPLATE_ID =
-//     process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ||
-//     (() => {
-//         throw new Error('EMAILJS_TEMPLATE_ID not defined');
-//     })();
+export const EMAILJS_TEMPLATE_ID =
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ||
+    (() => {
+        throw new Error('EMAILJS_TEMPLATE_ID not defined');
+    })();
 
-// export const EMAILJS_PUBLIC_KEY =
-//     process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ||
-//     (() => {
-//         throw new Error('EMAILJS_PUBLIC_KEY not defined');
-//     })();
+export const EMAILJS_PUBLIC_KEY =
+    process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ||
+    (() => {
+        throw new Error('EMAILJS_PUBLIC_KEY not defined');
+    })();
