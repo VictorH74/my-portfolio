@@ -17,93 +17,76 @@ export const ProjectItem: React.FC<
     const t = useTranslations('ProjectListSection');
 
     return (
-        <article
-            className={twMerge(
-                'absolute inset-0 h-full flex text-dark-font bg-white',
-                isOddIndex ? 'flex-row' : 'flex-row-reverse'
-            )}
-            style={{
-                animationTimeline:
-                    props.index < 2
-                        ? '--scroller-2'
-                        : '--scroller-' + (props.index + 1),
-            }}
-        >
-            <div
-                className="size-full grid place-items-center overflow-hidden"
-                style={{
-                    background:
-                        PROJECT_GRADIENT_COLORS[
-                            getProjectGradient(props.index)
-                        ],
-                }}
+        <li className="h-screen sticky top-0">
+            <article
+                className={twMerge(
+                    'size-full flex text-dark-font bg-white',
+                    isOddIndex ? 'flex-row' : 'flex-row-reverse'
+                )}
             >
-                <div className="relative overflow-hidden rounded-xl w-4/5 aspect-video  shadow-xl slide-container">
-                    <Slider images={props.project.screenshots} />
-                </div>
-            </div>
-            <div className="w-full relative overflow-hidden grid place-items-center">
                 <div
-                    className={twMerge(
-                        'z-10 w-4/5 grid gap-4 max-w-[35rem] project-content',
-                        isOddIndex ? 'place-items-start' : 'place-items-end'
-                    )}
-                    style={
-                        {
-                            animationTimeline:
-                                props.index < 2
-                                    ? '--scroller-2'
-                                    : '--scroller-' + (props.index + 1),
-                            '--content-origin': isOddIndex
-                                ? '-100% 0'
-                                : '100% 0',
-                            animationRange:
-                                props.index === 0
-                                    ? 'entry -180% entry 20%'
-                                    : 'entry 50% entry 150%',
-                        } as React.CSSProperties
-                    }
+                    className="size-full grid place-items-center overflow-hidden z-20"
+                    style={{
+                        background:
+                            PROJECT_GRADIENT_COLORS[
+                                getProjectGradient(props.index)
+                            ],
+                    }}
                 >
-                    <h1 className="text-4xl font-medium w-full">
-                        {props.project.title}
-                    </h1>
-                    <p className="">
-                        {
-                            props.project.description[
-                                t(
-                                    'project_description_lang'
-                                ) as keyof typeof props.project.description
-                            ]
-                        }
-                    </p>
-
-                    <div className="contents">
-                        {props.project.deployUrl && (
-                            <Link
-                                href={props.project.deployUrl}
-                                className="w-full flex gap-3 items-center font-medium"
-                            >
-                                {t('project_demo_url')}
-                                <LinkIcon />
-                            </Link>
-                        )}
-                        {props.project.repositoryUrl && (
-                            <Link
-                                href={props.project.repositoryUrl}
-                                className="w-full flex gap-3 items-center font-medium"
-                            >
-                                {t('project_repo_url')}
-                                <GitHubIcon />
-                            </Link>
-                        )}
+                    <div className="relative overflow-hidden rounded-xl w-4/5 aspect-video  shadow-xl slide-container">
+                        <Slider images={props.project.screenshots} />
                     </div>
-
-                    {props.children}
                 </div>
-                <p className="text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium">
-                    {props.project.title[0]}
-                </p>
-            </div>
-        </article>
+                <div className="w-full relative overflow-hiddens grid place-items-center">
+                    <div
+                        className={twMerge(
+                            'z-10 w-4/5 grid gap-4 max-w-[35rem] opacity-0 project-content',
+                            isOddIndex
+                                ? 'place-items-start -translate-x-full'
+                                : 'place-items-end translate-x-full'
+                        )}
+                    >
+                        <h1 className="text-4xl font-medium w-full">
+                            {props.project.title}
+                        </h1>
+                        <p className="">
+                            {
+                                props.project.description[
+                                    t(
+                                        'project_description_lang'
+                                    ) as keyof typeof props.project.description
+                                ]
+                            }
+                        </p>
+
+                        <div className="contents">
+                            {props.project.deployUrl && (
+                                <Link
+                                    href={props.project.deployUrl}
+                                    className="w-full flex gap-3 items-center font-medium"
+                                >
+                                    {t('project_demo_url')}
+                                    <LinkIcon />
+                                </Link>
+                            )}
+                            {props.project.repositoryUrl && (
+                                <Link
+                                    href={props.project.repositoryUrl}
+                                    className="w-full flex gap-3 items-center font-medium"
+                                >
+                                    {t('project_repo_url')}
+                                    <GitHubIcon />
+                                </Link>
+                            )}
+                        </div>
+
+                        {props.children}
+                    </div>
+                    <p className="text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium pointer-events-none">
+                        {props.project.title[0]}
+                    </p>
+                </div>
+            </article>
+        </li>
     );
 };

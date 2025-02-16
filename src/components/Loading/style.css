@@ -1,0 +1,60 @@
+.loading li {
+    animation: loading-journey 2s infinite linear;
+}
+.loading li:nth-of-type(1) {
+    --top-origin: 0;
+    --top-via-1: 100%;
+    --top-via-2: 100%;
+
+    --left-origin: 50%;
+    --left-via-1: 0;
+    --left-via-2: 100%;
+
+    --translation-origin: -50% 0;
+    --translation-via-1: 0 -100%;
+    --translation-via-2: -100% -100%;
+}
+.loading li:nth-of-type(2) {
+    --top-origin: 100%;
+    --top-via-1: 100%;
+    --top-via-2: 0;
+
+    --left-origin: 0;
+    --left-via-1: 100%;
+    --left-via-2: 50%;
+
+    --translation-origin: 0 -100%;
+    --translation-via-1: -100% -100%;
+    --translation-via-2: -50% 0;
+}
+.loading li:nth-of-type(3) {
+    --top-origin: 100%;
+    --top-via-1: 0;
+    --top-via-2: 100%;
+
+    --left-origin: 100%;
+    --left-via-1: 50%;
+    --left-via-2: 0;
+
+    --translation-origin: -100% -100%;
+    --translation-via-1: -50% 0;
+    --translation-via-2: 0 -100%;
+}
+@keyframes loading-journey {
+    0%,
+    100% {
+        top: var(--top-origin);
+        left: var(--left-origin);
+        translate: var(--translation-origin);
+    }
+    33% {
+        top: var(--top-via-1);
+        left: var(--left-via-1);
+        translate: var(--translation-via-1);
+    }
+    66% {
+        top: var(--top-via-2);
+        left: var(--left-via-2);
+        translate: var(--translation-via-2);
+    }
+}

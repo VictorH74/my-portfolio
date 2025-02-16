@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { FormValues, useContactMe } from './useContactMe';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
+import { CopyableContentBtn } from './CopyableContentBtn';
 
 const formFieldClassName =
     'bg-secondary-black p-3 outline-none focus:brightness-110 duration-300 rounded-md w-full';
@@ -35,25 +36,26 @@ export const ContactMe = () => {
 
     return (
         <section className="w-full" id="contacts">
-            <h2 className="text-3xl font-semibold">Contact Me</h2>
+            <h2 className="text-3xl font-semibold">{t('contact_me_title')}</h2>
 
             <div className=" h-[40rem] bg-primary-black shadow-[0_4px_40px_#00000075]  flex my-20">
                 <div className="size-full bg-white flex flex-col p-20 text-dark-font gap-6 justify-center">
-                    <h3 className="text-2xl font-semibold">
-                        Quer ajuda em algum projeto?
+                    <h3 className="text-2xl font-semibold text-start">
+                        {t('contact_me_subtitle')}
                     </h3>
-                    <p className="font-medium">
-                        Me envie uma mensagem que te respondo assim que
-                        possivel!
+                    <p className="font-medium text-start">
+                        {t('contact_me_paragraph_1')} <br />{' '}
+                        {t('contact_me_paragraph_2')}
                     </p>
                     <hr className="h-[3px] bg-secondary-black w-full" />
                     <div className="grid gap-2">
-                        <div className="py-4 w-full bg-secondary-black rounded-md text-white">
-                            victorh.almeida7@gmail.com
-                        </div>
-                        <div className="py-4 w-full bg-secondary-black rounded-md text-white">
-                            (86) 9 9470-2018
-                        </div>
+                        <CopyableContentBtn content="victorh.almeida7@gmail.com" />
+                        <CopyableContentBtn
+                            content="+55 (86) 99470-2018"
+                            formatContent={(prevContent) => {
+                                return prevContent.replace(/\D/g, '');
+                            }}
+                        />
                     </div>
                 </div>
                 <form

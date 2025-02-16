@@ -1,0 +1,64 @@
+.cube-container {
+    @apply size-[var(--cubeSize)];
+    perspective: 1000px;
+}
+
+.cube {
+    @apply size-full relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s;
+}
+
+/* rotate to right */
+.cube-side-rotation-1:hover .cube {
+    transform: rotateY(-90deg) translateZ(var(--cubefinalZPos)) scale(1);
+}
+
+/* rotate to left */
+.cube-side-rotation-2:hover .cube {
+    transform: rotateY(90deg) translateZ(var(--cubefinalZPos)) scale(1);
+}
+
+/* rotate to top */
+.cube-side-rotation-3:hover .cube {
+    transform: rotateX(-90deg) translateZ(var(--cubefinalZPos)) scale(1);
+}
+
+/* rotate to bottom */
+.cube-side-rotation-4:hover .cube {
+    transform: rotateX(90deg) translateZ(var(--cubefinalZPos)) scale(1);
+}
+
+.front,
+.right,
+.left,
+.top,
+.bottom {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.right {
+    transform: rotateY(90deg) translateX(50%)
+        translateZ(calc(var(--cubeSize) / 2));
+}
+
+.left {
+    transform: rotateY(-90deg) translateX(-50%)
+        translateZ(calc(var(--cubeSize) / 2));
+}
+
+.top {
+    transform: rotateX(90deg) translateY(-50%)
+        translateZ(calc(var(--cubeSize) / 2));
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateY(50%)
+        translateZ(calc(var(--cubeSize) / 2));
+}

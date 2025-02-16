@@ -1,0 +1,14 @@
+@media (prefers-reduced-motion: no-preference) {
+    .project-content,
+    .item-test {
+        animation: fade-in linear forwards;
+        animation-timeline: view();
+        animation-range: entry;
+    }
+    @keyframes fade-in {
+        to {
+            translate: 0 0;
+            opacity: 1;
+        }
+    }
+}

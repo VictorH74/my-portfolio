@@ -17,7 +17,7 @@ export const Presentation = () => {
         <section
             id="presentation"
             className={twMerge(
-                'w-full h-[calc(100vh-4rem)] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden',
+                'w-full h-[calc(100vh-4rem)] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden bg-[url(/hero-bg.svg)]',
                 sectionFont.className
             )}
         >

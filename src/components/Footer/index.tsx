@@ -24,6 +24,7 @@ export const Footer = () => {
                 <hr className="w-full h-[3px] bg-white" />
 
                 <ContactList />
+
                 <div className="text-sm font-semibold flex gap-2">
                     <p>
                         &copy; {t('last_paragraph_part_1')}{' '}

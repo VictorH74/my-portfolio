@@ -1,7 +1,9 @@
 import { twMerge } from 'tailwind-merge';
+import './style.css';
+import React from 'react';
 
 const defaultContainerBaseWidth = 150;
-const defaultParticleSize = (defaultContainerBaseWidth / 3) * 1.07;
+// const defaultParticleSize = (defaultContainerBaseWidth / 3) * 1.07;
 
 const particleSideClassName = {
     0: 'bg-[#00FC69]',
@@ -9,14 +11,18 @@ const particleSideClassName = {
     2: 'bg-[#4EFFFF]',
 };
 
-export const Loading = () => {
+export const Loading: React.FC<{ size?: number }> = ({
+    size = defaultContainerBaseWidth,
+}) => {
+    const particleSize = (size / 3) * 1.07;
+
     return (
         <ul
             style={{
-                width: defaultContainerBaseWidth,
-                height: (Math.sqrt(3) / 2) * defaultContainerBaseWidth,
+                width: size,
+                height: (Math.sqrt(3) / 2) * size,
             }}
-            className="relative loading"
+            className="relative loading m-auto"
         >
             {Array(3)
                 .fill(null)
@@ -24,7 +30,7 @@ export const Loading = () => {
                     <li
                         key={i}
                         style={{
-                            width: defaultParticleSize,
+                            width: particleSize,
                         }}
                         className={twMerge(
                             'aspect-square rounded-full absolute',

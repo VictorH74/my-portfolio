@@ -82,14 +82,7 @@ export const ContactList = () => {
                 console.log(contacts);
 
                 return (
-                    <li
-                        key={key}
-                        className="animate-bounce"
-                        style={{
-                            animationDelay: i + '00ms',
-                            animationDuration: '1s',
-                        }}
-                    >
+                    <li key={key}>
                         <Link
                             target="_blank"
                             className="flex items-center gap-2"
