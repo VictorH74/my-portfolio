@@ -8,32 +8,41 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
+import { useWindowResize } from '@/hooks/useWindowResize';
 // import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+
+const aosPackProps: Record<string, string> = {
+    'data-aos': 'zoom-in',
+    'data-aos-delay': '300',
+    'data-aos-duration': '600',
+    'data-aos-once': 'true',
+};
 
 export const ProjectItem: React.FC<
     React.PropsWithChildren & { index: number; project: ProjectType }
 > = (props) => {
     const isOddIndex = props.index % 2 === 0;
     const t = useTranslations('ProjectListSection');
+    const [windowWidth] = useWindowResize();
 
     return (
-        <li className="h-screen sticky top-0">
+        <li className="max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0">
             <article
                 className={twMerge(
-                    'size-full flex text-dark-font bg-white',
+                    'max-lg:flex-col max-lg:gap-5 size-full flex text-dark-font bg-white',
                     isOddIndex ? 'flex-row' : 'flex-row-reverse'
                 )}
             >
                 <div
-                    className="size-full grid place-items-center overflow-hidden z-20"
-                    style={{
-                        background:
+                    className={twMerge(
+                        'max-lg:rounded-xl max-lg:shadow-[0_0.5rem_1rem_#00000055] size-full grid place-items-center overflow-hidden z-20',
+                        windowWidth > 1024 &&
                             PROJECT_GRADIENT_COLORS[
                                 getProjectGradient(props.index)
-                            ],
-                    }}
+                            ]
+                    )}
                 >
-                    <div className="relative overflow-hidden rounded-xl w-4/5 aspect-video  shadow-xl slide-container">
+                    <div className="min-lg:w-4/5 min-lg:overflow-hidden min-lg:rounded-xl relative  aspect-video  shadow-xl slide-container">
                         <Slider images={props.project.screenshots} />
                     </div>
                 </div>
@@ -45,8 +54,9 @@ export const ProjectItem: React.FC<
                                 ? 'place-items-start -translate-x-full'
                                 : 'place-items-end translate-x-full'
                         )}
+                        {...(windowWidth < 1024 ? aosPackProps : {})}
                     >
-                        <h1 className="text-4xl font-medium w-full">
+                        <h1 className="text-3xl font-medium w-full">
                             {props.project.title}
                         </h1>
                         <p className="">
@@ -82,7 +92,7 @@ export const ProjectItem: React.FC<
 
                         {props.children}
                     </div>
-                    <p className="text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium pointer-events-none">
+                    <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium pointer-events-none">
                         {props.project.title[0]}
                     </p>
                 </div>

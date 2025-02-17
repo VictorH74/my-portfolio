@@ -39,10 +39,6 @@ export const useHeader = () => {
             signal: controller.signal,
         });
 
-        // window.addEventListener('resize', handleResize, {
-        //     signal: controller.signal,
-        // });
-
         return () => {
             controller.abort();
         };
@@ -71,10 +67,6 @@ export const useHeader = () => {
         )
             setIsInHeroSection(false);
     };
-
-    // const handleResize = () => {
-    //     console.log(window.innerWidth);
-    // };
 
     return {
         showHeader,

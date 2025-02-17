@@ -79,8 +79,6 @@ export const ContactList = () => {
                 const key = k as keyof ProfileContactsType;
                 const ContactIcon = contactIcon[key];
 
-                console.log(contacts);
-
                 return (
                     <li key={key}>
                         <Link

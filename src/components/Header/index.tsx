@@ -13,7 +13,7 @@ export const Header = () => {
         <div
             ref={hook.headerRef}
             className={twMerge(
-                'w-full fixed py-10 min-[75rem]:py-4 min-[121rem]:py-10 text-center z-20 duration-300',
+                'w-full fixed py-10 min-[75rem]:py-4 min-[121rem]:py-10 text-center z-50 duration-300',
                 hook.showHeader ? 'top-0' : '-top-full',
                 hook.isInHeroSection
                     ? 'bg-primary-black/55 backdrop-blur-md'

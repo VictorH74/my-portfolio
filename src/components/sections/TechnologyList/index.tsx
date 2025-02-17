@@ -11,7 +11,7 @@ export const TechnologyList = () => {
     return (
         <section
             id="technologies"
-            className="grid place-items-center pb-52 bg-white max-sm:text-sm"
+            className="grid place-items-center pb-52 bg-white max-sm:text-sm px-3"
         >
             <div className="max-w-default">
                 <h2 className="text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
@@ -23,7 +23,7 @@ export const TechnologyList = () => {
                         <Loading />
                     </div>
                 ) : (
-                    <div className="flex justify-center gap-6 flex-wrap">
+                    <div className="max-sm:gap-2 flex justify-center gap-6 flex-wrap">
                         {technologyList.map((techIcon) => {
                             return (
                                 <TechnologyCard
