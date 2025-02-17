@@ -17,7 +17,7 @@ export const Presentation = () => {
         <section
             id="presentation"
             className={twMerge(
-                'w-full h-[95vh] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden max-[768px]:bg-[url(/background-small.webp)] max-[1440px]:bg-[url(/background-medium.webp)] max-[1441px]:bg-[url(/background-large.webp)] min-[1441px]:bg-[url(/background-larger.webp)]',
+                'max-[768px]:bg-[url(/background-small.webp)] max-[1440px]:bg-[url(/background-medium.webp)] max-[1921]:bg-[url(/background-large.webp)] min-[1441px]:bg-[url(/background-larger.webp)] px-3 w-full h-[95vh] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden bg-cover',
                 sectionFont.className
             )}
         >
@@ -26,7 +26,7 @@ export const Presentation = () => {
                     data-aos="fade-up"
                     data-aos-once="true"
                     data-aos-duration="1000"
-                    className="max-sm:text-3xl min-[87.5rem]:text-7xl text-5xl"
+                    className="max-sm:text-xl max-md:text-3xl min-[87.5rem]:text-7xl text-5xl"
                 >
                     {' '}
                     {t('hello')}
@@ -36,7 +36,7 @@ export const Presentation = () => {
                     data-aos-once="true"
                     data-aos-delay="200"
                     data-aos-duration="1000"
-                    className="max-sm:text-4xl min-[87.5rem]:text-8xl text-6xl"
+                    className="max-sm:text-3xl max-md:text-4xl min-[87.5rem]:text-8xl text-6xl"
                 >
                     {' '}
                     {t('i_am')}
@@ -49,7 +49,7 @@ export const Presentation = () => {
                     data-aos-once="true"
                     data-aos-delay="400"
                     data-aos-duration="1000"
-                    className="max-sm:text-3xl min-[87.5rem]:text-7xl text-5xl"
+                    className="max-sm:text-xl max-md:text-3xl min-[87.5rem]:text-7xl text-5xl"
                 >
                     {t('a')}
                 </h2>
@@ -66,7 +66,7 @@ export const Presentation = () => {
                                     width={iconSize}
                                     alt={icon.name + ' icon'}
                                     src={icon.src}
-                                    className="motion-safe:animate-bounce max-sm:size-10 size-12 min-[87.5rem]:size-14"
+                                    className="motion-safe:animate-bounce max-md:size-10 size-12 min-[87.5rem]:size-14 max-sm:size-8"
                                     style={{
                                         animationDelay: i * 100 + 'ms',
                                     }}

@@ -11,10 +11,10 @@ export const TechnologyList = () => {
     return (
         <section
             id="technologies"
-            className="grid place-items-center pb-52 bg-white max-sm:text-sm px-3"
+            className="max-md:pb-20 grid place-items-center pb-52 bg-white max-sm:text-sm px-3"
         >
             <div className="max-w-default">
-                <h2 className="text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
+                <h2 className="max-md:mb-10 text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
                     {t('section_title')}
                 </h2>
 

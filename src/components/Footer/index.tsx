@@ -9,7 +9,7 @@ export const Footer = () => {
     const t = useTranslations('Footer');
 
     return (
-        <footer className="bg-primary-black py-28 px-4  text-center max-h-fit">
+        <footer className="max-md:py-16 bg-primary-black py-28 px-4  text-center max-h-fit">
             <div className="max-w-default w-full mx-auto size-fit grid place-items-center gap-11 text-[#D2D2D3]">
                 <ContactMe />
 
