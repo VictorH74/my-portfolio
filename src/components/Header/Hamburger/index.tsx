@@ -1,13 +1,11 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { useHamburger } from './useHamburger';
+import { bgColors, useHamburger } from './useHamburger';
 import { twMerge } from 'tailwind-merge';
 import { createPortal } from 'react-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { anchorLinks } from '../useHeader';
 import Link from 'next/link';
-
-const bgColors = ['bg-[#00FC69]', 'bg-[#4EFFFF]', 'bg-[#2382FF]'];
 
 export const Hamburger = () => {
     const t = useTranslations('Header');
@@ -42,7 +40,7 @@ export const Hamburger = () => {
                             <div
                                 key={bgColor}
                                 className={twMerge(
-                                    'absolute inset-0 left-full animate-fade-right',
+                                    'absolute inset-0 left-full animate-fade-right-in animation-el',
                                     bgColor
                                 )}
                                 style={{
@@ -51,13 +49,16 @@ export const Hamburger = () => {
                             ></div>
                         ))}
                         <div
-                            className="bg-white absolute inset-0 animate-fade-right left-full"
+                            className="bg-white absolute inset-0 animate-fade-right-in left-full animation-el"
                             style={{
                                 animationDelay: bgColors.length * 70 + 'ms',
                             }}
                         >
-                            <div className="w-full p-5 flex flex-row-reverse">
-                                <button onClick={hook.hide}>
+                            <div className="w-full flex flex-row-reverse">
+                                <button
+                                    onClick={hook.hide}
+                                    className="-translate-x-1/2 translate-y-1/2"
+                                >
                                     <CloseIcon
                                         sx={{
                                             fontSize: 60,
@@ -65,9 +66,9 @@ export const Hamburger = () => {
                                     />
                                 </button>
                             </div>
-                            <nav className="size-full grid place-items-center">
+                            <nav className="w-full h-[80vh] grid place-items-center">
                                 <ul className="flex flex-col gap-2 w-full h-fit">
-                                    {anchorLinks.map((anchor) => (
+                                    {anchorLinks.map((anchor, i) => (
                                         <li
                                             key={anchor.href}
                                             className="contents"
@@ -82,6 +83,9 @@ export const Hamburger = () => {
                                                         anchor.href
                                                 )}
                                             </Link>
+                                            {i < anchorLinks.length - 1 && (
+                                                <hr className="w-[3.125rem] h-[0.125rem] m-auto bg-dark-font" />
+                                            )}
                                         </li>
                                     ))}
                                 </ul>

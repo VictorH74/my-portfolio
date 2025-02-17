@@ -10,8 +10,8 @@
     }
 
     @media (width < 40rem) {
-        --cubeSize: 6.8rem;
-        --cubefinalZPos: 3.4rem;
+        --cubeSize: 5rem;
+        --cubefinalZPos: 2.5rem;
     }
 
     @apply size-[var(--cubeSize)];

@@ -30,9 +30,9 @@ export const AboutMe = () => {
                     </div>
                 </div>
                 <div className="flex flex-row gap-10 items-center mt-7">
-                    <div className="w-full h-[0.188rem] bg-secondary-black" />
+                    <hr className="w-full h-[0.188rem] bg-secondary-black" />
                     <DownloadResumeBtn />
-                    <div className="w-full h-[0.188rem] bg-secondary-black" />
+                    <hr className="w-full h-[0.188rem] bg-secondary-black" />
                 </div>
             </div>
         </section>

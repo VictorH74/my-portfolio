@@ -23,16 +23,18 @@ export const TechnologyList = () => {
                         <Loading />
                     </div>
                 ) : (
-                    <div className="max-sm:gap-2 flex justify-center gap-6 flex-wrap">
-                        {technologyList.map((techIcon) => {
-                            return (
-                                <TechnologyCard
-                                    key={techIcon.id}
-                                    {...techIcon}
-                                />
-                            );
-                        })}
-                    </div>
+                    <ul className="max-sm:gap-2 flex justify-center gap-4 flex-wrap">
+                        {technologyList
+                            .filter((techIcon) => !techIcon.hidden)
+                            .map((techIcon) => {
+                                return (
+                                    <TechnologyCard
+                                        key={techIcon.id}
+                                        {...techIcon}
+                                    />
+                                );
+                            })}
+                    </ul>
                 )}
             </div>
         </section>

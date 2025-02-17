@@ -14,7 +14,7 @@ export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
     const randomNumber = Math.ceil(Math.random() * 4);
 
     return (
-        <div
+        <li
             className={twMerge(
                 'cube-container',
                 'cube-side-rotation-' + randomNumber
@@ -55,6 +55,6 @@ export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
                     </p>
                 </div>
             </div>
-        </div>
+        </li>
     );
 };

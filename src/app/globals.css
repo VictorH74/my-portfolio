@@ -9,13 +9,23 @@
 
     --container-default: var(--maxScreenWidth);
 
-    --animate-fade-right: fade-right 300ms ease-out forwards;
-    @keyframes fade-right {
+    --animate-fade-right-in: fade-right-in 300ms ease-out forwards;
+    @keyframes fade-right-in {
         from {
             left: 100%;
         }
         to {
             left: 0;
+        }
+    }
+
+    --animate-fade-right-out: fade-right-out 300ms ease-out forwards;
+    @keyframes fade-right-out {
+        from {
+            left: 0;
+        }
+        to {
+            left: 100%;
         }
     }
 }
@@ -41,7 +51,7 @@
 :root {
     --background: #ffffff;
     --foreground: #171717;
-    --maxScreenWidth: 65rem;
+    --maxScreenWidth: 75rem;
 }
 
 * {
