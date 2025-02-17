@@ -3,12 +3,12 @@ import { ProjectType } from '@/types';
 import { PROJECT_GRADIENT_COLORS } from '@/utils/constants';
 import { getProjectGradient } from '@/utils/functions';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import { useWindowResize } from '@/hooks/useWindowResize';
+import { ProjectItemLink } from './ProjectItemLink';
 // import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 
 const aosPackProps: Record<string, string> = {
@@ -49,10 +49,10 @@ export const ProjectItem: React.FC<
                 <div className="w-full relative overflow-hiddens grid place-items-center">
                     <div
                         className={twMerge(
-                            'z-10 w-4/5 grid gap-4 max-w-[35rem] opacity-0 project-content',
+                            'z-10 w-full grid gap-4 max-w-[35rem] opacity-0 project-content',
                             isOddIndex
-                                ? 'place-items-start -translate-x-full'
-                                : 'place-items-end translate-x-full'
+                                ? '-translate-x-full'
+                                : 'translate-x-full'
                         )}
                         {...(windowWidth < 1024 ? aosPackProps : {})}
                     >
@@ -69,32 +69,30 @@ export const ProjectItem: React.FC<
                             }
                         </p>
 
-                        <div className="contents">
+                        <div className="">
                             {props.project.deployUrl && (
-                                <Link
-                                    href={props.project.deployUrl}
-                                    className="w-full flex gap-3 items-center font-medium"
-                                >
+                                <ProjectItemLink href={props.project.deployUrl}>
                                     {t('project_demo_url')}
                                     <LinkIcon />
-                                </Link>
+                                </ProjectItemLink>
                             )}
                             {props.project.repositoryUrl && (
-                                <Link
+                                <ProjectItemLink
                                     href={props.project.repositoryUrl}
-                                    className="w-full flex gap-3 items-center font-medium"
                                 >
                                     {t('project_repo_url')}
                                     <GitHubIcon />
-                                </Link>
+                                </ProjectItemLink>
                             )}
                         </div>
 
                         {props.children}
                     </div>
-                    <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute left-1/2 -translate-x-1/2 m-0 p-0 uppercase text-white text-shadow font-medium pointer-events-none">
-                        {props.project.title[0]}
-                    </p>
+                    <div className="absolute inset-0 overflow-hidden">
+                        <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute top-1/2 left-1/2 -translate-1/2 m-0 p-0 uppercase text-white text-shadow pointer-events-none">
+                            {props.project.title[0]}
+                        </p>
+                    </div>
                 </div>
             </article>
         </li>

@@ -47,7 +47,10 @@ export const useHeader = () => {
     const handleScroll = () => {
         const currentScrollTop = window.scrollY;
 
-        if (currentScrollTop < prevScrollTop && !showHeader)
+        if (
+            (currentScrollTop < prevScrollTop && !showHeader) ||
+            currentScrollTop >= document.body.scrollHeight - window.innerHeight
+        )
             setShowHeader(true);
         else if (currentScrollTop > prevScrollTop && showHeader)
             setShowHeader(false);
