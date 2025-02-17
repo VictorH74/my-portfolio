@@ -1,8 +1,17 @@
 'use client';
 import React from 'react';
 
+const getwindowSize = (): WindowSizeType => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    return [w, h];
+};
+
+type WindowSizeType = [number, number];
+
 export const useWindowResize = () => {
-    const [size, setSize] = React.useState<[number, number]>([0, 0]);
+    const [size, setSize] = React.useState<WindowSizeType>(getwindowSize());
 
     React.useEffect(() => {
         const controler = new AbortController();
@@ -10,16 +19,13 @@ export const useWindowResize = () => {
         window.addEventListener(
             'resize',
             () => {
-                const w = window.innerWidth;
-                const h = window.innerHeight;
-
-                setSize([w, h]);
+                setSize(getwindowSize());
             },
             { signal: controler.signal }
         );
 
         return () => controler.abort();
-    });
+    }, []);
 
     return size;
 };
