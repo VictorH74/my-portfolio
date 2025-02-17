@@ -1,15 +1,14 @@
 import React from 'react';
 
 export const useHamburger = () => {
-    const [show, setShow] = React.useState(false);
-    // const liItemRef = React.useRef(null);
+    const [visibleHumburgerNav, setVisibleHumburgerNav] = React.useState(false);
 
-    const toggle = React.useCallback(() => {
-        setShow((prev) => !prev);
-    }, []);
+    const show = () => setVisibleHumburgerNav(true);
+    const hide = () => setVisibleHumburgerNav(false);
 
     return {
-        toggle,
         show,
+        hide,
+        visibleHumburgerNav,
     };
 };

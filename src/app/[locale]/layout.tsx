@@ -28,6 +28,7 @@ export default async function RootLayout({
                 <NextIntlClientProvider messages={messages}>
                     <Providers>{children}</Providers>
                 </NextIntlClientProvider>
+                <div id="portal-destination"></div>
             </body>
         </html>
     );
