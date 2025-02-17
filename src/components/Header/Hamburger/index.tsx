@@ -1,9 +1,9 @@
-import { useTranslations } from 'next-intl';
+// import { useTranslations } from 'next-intl';
 import { useHamburger } from './useHamburger';
 import { twMerge } from 'tailwind-merge';
 
 export const Hamburger = () => {
-    const t = useTranslations('Header');
+    // const t = useTranslations('Header');
 
     const hook = useHamburger();
 
