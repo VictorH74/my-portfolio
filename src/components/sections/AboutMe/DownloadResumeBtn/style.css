@@ -4,13 +4,13 @@
     --height: 3.5rem;
     --tooltip-height: 2.2rem;
     --tooltip-width: 8.1rem;
-    --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 3px);
+    --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 0.188rem);
     height: var(--height);
 
     &::before {
         @apply absolute content-[attr(data-tooltip)] w-[var(--tooltip-width)] h-[var(--tooltip-height)] text-sm text-center text-white rounded-md leading-[var(--tooltip-height)] bg-[var(--color-secondary-black)];
         bottom: calc(
-            var(--height) + var(--gap-between-tooltip-to-button) + 10px
+            var(--height) + var(--gap-between-tooltip-to-button) + 0.625rem
         );
         left: calc(50% - var(--tooltip-width) / 2);
     }
@@ -18,9 +18,9 @@
     &::after {
         @apply absolute content-[''] size-0 border-10 border-transparent;
         border-top-color: var(--color-secondary-black);
-        left: calc(50% - 10px);
+        left: calc(50% - 0.625rem);
         bottom: calc(
-            var(--height) + var(--gap-between-tooltip-to-button) - 10px
+            var(--height) + var(--gap-between-tooltip-to-button) - 0.625rem
         );
     }
 
@@ -56,7 +56,7 @@
 
     &:hover:after {
         bottom: calc(
-            var(--height) + var(--gap-between-tooltip-to-button) - 20px
+            var(--height) + var(--gap-between-tooltip-to-button) - 1.25rem
         );
     }
 

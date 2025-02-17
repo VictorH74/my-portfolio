@@ -5,7 +5,7 @@
     --cubeSize: 10.6rem;
     --cubefinalZPos: 5.3rem;
 
-    @media (width < 48rem /* 768px */) {
+    @media (width < 48rem) {
         --cubeSize: 8.7rem;
         --cubefinalZPos: 4.35rem;
     }
@@ -16,7 +16,7 @@
     }
 
     @apply size-[var(--cubeSize)];
-    perspective: 1000px;
+    perspective: 62.5rem;
 }
 
 .cube {

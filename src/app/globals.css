@@ -31,7 +31,7 @@
 :root {
     --background: #ffffff;
     --foreground: #171717;
-    --maxScreenWidth: 1200px;
+    --maxScreenWidth: 65rem;
 }
 
 html {
@@ -45,5 +45,5 @@ body {
 }
 
 .text-shadow {
-    text-shadow: 15px 15px 40px #dadada;
+    text-shadow: 1rem 1rem 2.5rem #dadada;
 }

@@ -21,7 +21,7 @@ export const Footer = () => {
                     alt="logo"
                 />
 
-                <hr className="w-full h-[3px] bg-white" />
+                <hr className="w-full h-[0.188] bg-white" />
 
                 <ContactList />
 
@@ -33,7 +33,7 @@ export const Footer = () => {
                     </p>
 
                     <div className="grid place-items-center">
-                        <div className="size-[6px] bg-[#D2D2D3] rounded-full" />
+                        <div className="size-[0.375rem] bg-[#D2D2D3] rounded-full" />
                     </div>
                     <p>2025</p>
                 </div>

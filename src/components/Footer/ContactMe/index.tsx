@@ -38,7 +38,7 @@ export const ContactMe = () => {
         <section className="w-full" id="contacts">
             <h2 className="text-3xl font-semibold">{t('contact_me_title')}</h2>
 
-            <div className="max-lg:px-6 max-lg:py-20 min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_4px_40px_#00000075] my-20 space-y-10">
+            <div className="max-lg:px-6 max-lg:py-20 min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_0.25rem_2.5rem_#00000075] my-20 space-y-10">
                 <div className="max-lg:hidden max-xl:p-6 size-full bg-white flex flex-col p-20 text-dark-font gap-6 justify-center">
                     <h3 className="text-2xl font-semibold text-start">
                         {t('contact_me_subtitle')}
@@ -47,7 +47,7 @@ export const ContactMe = () => {
                         {t('contact_me_paragraph_1')} <br />{' '}
                         {t('contact_me_paragraph_2')}
                     </p>
-                    <hr className="h-[3px] bg-secondary-black w-full" />
+                    <hr className="h-[0.188rem] bg-secondary-black w-full" />
                     <div className="grid gap-2">
                         <CopyableContentBtn content="victorh.almeida7@gmail.com" />
                         <CopyableContentBtn
@@ -125,7 +125,7 @@ export const ContactMe = () => {
                     </button>
                 </form>
 
-                <hr className="min-lg:hidden h-[3px] bg-secondary-black w-full" />
+                <hr className="min-lg:hidden h-[0.188rem] bg-secondary-black w-full" />
 
                 <div className="min-lg:hidden space-y-3">
                     <CopyableContentBtn content="victorh.almeida7@gmail.com" />

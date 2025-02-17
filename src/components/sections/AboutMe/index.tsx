@@ -14,8 +14,8 @@ export const AboutMe = () => {
             <div className="max-lg:px-4 max-w-default">
                 <div className="flex max-lg:flex-col gap-5 justify-center items-center">
                     <div className="max-lg:w-full min-lg:pb-3 min-lg:pr-3 size-fit relative">
-                        <div className="max-lg:hidden size-[380px] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%]"></div>
-                        <div className="max-lg:w-full max-w-[500px] max-lg:m-auto min-lg:absolute min-lg:top-0 min-lg:left-0 min-lg:size-[380px] aspect-square rounded-2xl bg-secondary-black">
+                        <div className="max-lg:hidden size-[23.75rem] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%]"></div>
+                        <div className="max-lg:w-full max-w-[31.25rem] max-lg:m-auto min-lg:absolute min-lg:top-0 min-lg:left-0 min-lg:size-[23.75rem] aspect-square rounded-2xl bg-secondary-black">
                             <ProfileImage />
                         </div>
                     </div>
@@ -30,17 +30,9 @@ export const AboutMe = () => {
                     </div>
                 </div>
                 <div className="flex flex-row gap-10 items-center mt-7">
-                    <div className="w-full h-[3px] bg-secondary-black" />
+                    <div className="w-full h-[0.188rem] bg-secondary-black" />
                     <DownloadResumeBtn />
-                    {/* <button
-                        data-aos="zoom-in"
-                        data-aos-duration="500"
-                        data-aos-once="true"
-                        className="w-fit shrink-0 px-8 py-5 rounded-full uppercase bg-secondary-black text-white font-medium"
-                    >
-                        {t('download_resume_btn')}
-                    </button> */}
-                    <div className="w-full h-[3px] bg-secondary-black" />
+                    <div className="w-full h-[0.188rem] bg-secondary-black" />
                 </div>
             </div>
         </section>

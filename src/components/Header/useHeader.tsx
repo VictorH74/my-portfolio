@@ -1,5 +1,28 @@
 import React from 'react';
 
+export const anchorLinks = [
+    {
+        href: '#welcome',
+        label: 'Welcome',
+    },
+    {
+        href: '#about-me',
+        label: 'About Me',
+    },
+    {
+        href: '#technologies',
+        label: 'Technologies',
+    },
+    {
+        href: '#projects',
+        label: 'Projects',
+    },
+    {
+        href: '#contacts',
+        label: 'Contacts',
+    },
+];
+
 export const useHeader = () => {
     const [prevScrollTop, setPrevScrollTop] = React.useState(0);
     const [showHeader, setShowHeader] = React.useState(true);
@@ -15,6 +38,10 @@ export const useHeader = () => {
         document.addEventListener('scroll', handleScroll, {
             signal: controller.signal,
         });
+
+        // window.addEventListener('resize', handleResize, {
+        //     signal: controller.signal,
+        // });
 
         return () => {
             controller.abort();
@@ -44,6 +71,10 @@ export const useHeader = () => {
         )
             setIsInHeroSection(false);
     };
+
+    // const handleResize = () => {
+    //     console.log(window.innerWidth);
+    // };
 
     return {
         showHeader,

@@ -95,7 +95,7 @@ export const ContactList = () => {
                                     fontSize: 25,
                                 }}
                             />
-                            <p className="max-[1100px]:hidden">
+                            <p className="max-[68.75rem]:hidden">
                                 {contactItemDisplay[key](value)}
                             </p>
                         </Link>

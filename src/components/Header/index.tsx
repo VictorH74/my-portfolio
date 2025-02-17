@@ -1,31 +1,9 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useHeader } from './useHeader';
+import { anchorLinks, useHeader } from './useHeader';
 import { twMerge } from 'tailwind-merge';
-
-const anchorLinks = [
-    {
-        href: '#welcome',
-        label: 'Welcome',
-    },
-    {
-        href: '#about-me',
-        label: 'About Me',
-    },
-    {
-        href: '#technologies',
-        label: 'Technologies',
-    },
-    {
-        href: '#projects',
-        label: 'Projects',
-    },
-    {
-        href: '#contacts',
-        label: 'Contacts',
-    },
-];
+import { Hamburger } from './Hamburger';
 
 export const Header = () => {
     const t = useTranslations('Header');
@@ -35,14 +13,14 @@ export const Header = () => {
         <div
             ref={hook.headerRef}
             className={twMerge(
-                'w-full fixed py-5 text-center z-20 duration-300',
+                'w-full fixed py-10 min-[75rem]:py-4 min-[121rem]:py-10 text-center z-20 duration-300',
                 hook.showHeader ? 'top-0' : '-top-full',
                 hook.isInHeroSection
-                    ? 'bg-transparent'
+                    ? 'bg-primary-black/55 backdrop-blur-md'
                     : 'bg-primary-black shadow-lg'
             )}
         >
-            <div className="max-w-default w-full py-4 px-10 mx-auto justify-between flex items-center">
+            <div className="max-w-default w-full px-10 mx-auto justify-between flex items-center">
                 <Image
                     src="/me-logo-v2.svg"
                     alt="logo"
@@ -71,7 +49,7 @@ export const Header = () => {
                         ))}
                     </ul>
                 </nav>
-                <button className="min-lg:hidden">Hamburger</button>
+                <Hamburger />
             </div>
         </div>
     );
