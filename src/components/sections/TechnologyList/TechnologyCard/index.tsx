@@ -27,7 +27,7 @@ export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
                         placeholder="empty"
                         height={50}
                         width={50}
-                        className="h-2/5 w-auto"
+                        className="h-2/5 w-auto pointer-events-none select-none"
                         src={techIcon.src}
                         alt="icon"
                     />
@@ -50,7 +50,9 @@ export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
                               }
                     }
                 >
-                    <p className="max-sm:text-sm">{techIcon.name}</p>
+                    <p className="select-none text-center font-medium">
+                        {techIcon.name}
+                    </p>
                 </div>
             </div>
         </div>

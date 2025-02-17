@@ -8,6 +8,16 @@
     --color-dark-font: #444444;
 
     --container-default: var(--maxScreenWidth);
+
+    --animate-fade-right: fade-right 300ms ease-out forwards;
+    @keyframes fade-right {
+        from {
+            left: 100%;
+        }
+        to {
+            left: 0;
+        }
+    }
 }
 
 /*
@@ -32,6 +42,10 @@
     --background: #ffffff;
     --foreground: #171717;
     --maxScreenWidth: 65rem;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 html {

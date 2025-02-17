@@ -17,7 +17,7 @@ export const ProjectList = () => {
     return (
         <section
             id="projects"
-            className="max-md:pb-20 bg-white z-30 max-lg:pb-52"
+            className="max-md:pb-20 bg-white z-30 max-lg:pb-52 max-lg:overflow-hidden"
         >
             <h2 className="max-md:mb-10 text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
                 {t('section_title')}
@@ -64,7 +64,7 @@ export const ProjectList = () => {
                 ))}
             </ul>
             <button
-                className="max-lg:px-16 max-lg:rounded-md max-lg:ml-[50%] max-lg:-translate-x-1/2 max-md:w-full min-lg:h-28 min-lg:w-full h-20 uppercase bg-secondary-black text-white font-medium hover:brightness-125 duration-300 hover:cursor-pointer overflow-hidden relative"
+                className="max-lg:px-16 max-lg:rounded-md max-lg:ml-[50%] max-lg:-translate-x-1/2 max-md:w-full min-lg:h-28 min-lg:w-full h-20 uppercase bg-secondary-black text-white hover:brightness-125 duration-300 hover:cursor-pointer overflow-hidden relative"
                 onClick={
                     hook.showingMore
                         ? () => hook.setShowingMore(false)
@@ -74,6 +74,7 @@ export const ProjectList = () => {
             >
                 <p
                     className={twMerge(
+                        'font-semibold',
                         (hook.isLoadingMoreProjects || hook.isLoading) &&
                             'opacity-0'
                     )}

@@ -6,6 +6,7 @@ import { FormValues, useContactMe } from './useContactMe';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
 import { CopyableContentBtn } from './CopyableContentBtn';
+import { Loading } from '@/components/Loading';
 
 const formFieldClassName =
     'bg-secondary-black p-3 outline-none focus:brightness-110 duration-300 rounded-md w-full';
@@ -38,7 +39,7 @@ export const ContactMe = () => {
         <section className="w-full" id="contacts">
             <h2 className="text-3xl font-semibold">{t('contact_me_title')}</h2>
 
-            <div className="max-md:my-10 max-lg:px-6 max-lg:py-20 min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_0.25rem_2.5rem_#00000075] my-20 space-y-10">
+            <div className="max-md:my-10 max-lg:px-6 max-lg:py-20 max-lg:relative min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_0.25rem_2.5rem_#00000075] my-20 space-y-10">
                 <div className="max-lg:hidden max-xl:p-6 size-full bg-white flex flex-col p-20 text-dark-font gap-6 justify-center">
                     <h3 className="text-2xl font-semibold text-start">
                         {t('contact_me_subtitle')}
@@ -70,9 +71,19 @@ export const ContactMe = () => {
                 </div>
 
                 <form
-                    className="max-lg:p-0 max-xl:p-6 p-20 size-full flex flex-col justify-center gap-2"
+                    className="max-lg:p-0 max-xl:p-6 min-lg:relative p-20 size-full flex flex-col justify-center gap-2"
                     onSubmit={hook.onSubmit}
                 >
+                    <div
+                        className={twMerge(
+                            'absolute inset-0 bg-black/40 backdrop-blur-sm grid place-items-center duration-300',
+                            hook.submitting
+                                ? 'opacity-100 pointer-events-auto'
+                                : 'opacity-0 pointer-events-none'
+                        )}
+                    >
+                        <Loading size={60} />
+                    </div>
                     {inputData.map((obj) => (
                         <div key={obj.placeholder} className="space-y-1">
                             <input
@@ -127,7 +138,7 @@ export const ContactMe = () => {
 
                 <hr className="min-lg:hidden h-[0.188rem] bg-secondary-black w-full" />
 
-                <div className="min-lg:hidden space-y-3">
+                <div className="min-lg:hidden space-y-3 -z-10">
                     <CopyableContentBtn content="victorh.almeida7@gmail.com" />
                     <CopyableContentBtn
                         content="+55 (86) 99470-2018"

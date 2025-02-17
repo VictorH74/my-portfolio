@@ -1,9 +1,9 @@
 'use client';
-import Image from 'next/image';
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { ContactList } from './ContactList';
 import { ContactMe } from './ContactMe';
+import { FooterLogo } from './FooterLogo';
 
 export const Footer = () => {
     const t = useTranslations('Footer');
@@ -13,13 +13,7 @@ export const Footer = () => {
             <div className="max-w-default w-full mx-auto size-fit grid place-items-center gap-11 text-[#D2D2D3]">
                 <ContactMe />
 
-                <Image
-                    data-aos="zoom-in"
-                    width={85}
-                    height={85}
-                    src="me-logo-v2.svg"
-                    alt="logo"
-                />
+                <FooterLogo />
 
                 <hr className="w-full h-[0.188] bg-white" />
 
