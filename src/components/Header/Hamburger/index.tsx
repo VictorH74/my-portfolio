@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import { bgColors, useHamburger } from './useHamburger';
+import { bgColors, delayFactor, useHamburger } from './useHamburger';
 import { twMerge } from 'tailwind-merge';
 import { createPortal } from 'react-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -44,20 +44,24 @@ export const Hamburger = () => {
                                     bgColor
                                 )}
                                 style={{
-                                    animationDelay: i * 70 + 'ms',
+                                    animationDelay: i * delayFactor + 'ms',
                                 }}
                             ></div>
                         ))}
                         <div
                             className="bg-white absolute inset-0 animate-fade-right-in left-full animation-el"
                             style={{
-                                animationDelay: bgColors.length * 70 + 'ms',
+                                animationDelay:
+                                    bgColors.length * delayFactor + 'ms',
                             }}
                         >
                             <div className="w-full flex flex-row-reverse">
                                 <button
                                     onClick={hook.hide}
-                                    className="-translate-x-1/2 translate-y-1/2"
+                                    className={twMerge(
+                                        '-translate-x-1/2 translate-y-1/2 duration-300'
+                                    )}
+                                    ref={hook.closeNavBtnRef}
                                 >
                                     <CloseIcon
                                         sx={{

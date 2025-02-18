@@ -49,7 +49,7 @@ export const ProjectItem: React.FC<
                 <div className="w-full relative overflow-hiddens grid place-items-center">
                     <div
                         className={twMerge(
-                            'z-10 w-full grid gap-4 max-w-[35rem] opacity-0 project-content',
+                            'z-10 w-full grid gap-4 p-4 max-w-[35rem] opacity-0 project-content',
                             isOddIndex
                                 ? '-translate-x-full'
                                 : 'translate-x-full'
