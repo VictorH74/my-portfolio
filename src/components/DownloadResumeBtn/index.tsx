@@ -2,9 +2,16 @@ import { useTranslations } from 'next-intl';
 import './style.css';
 import { useDownloadResumeBtn } from './useDownloadResumeBtn';
 import { downloadResume } from '@/utils/resume';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
-export const DownloadResumeBtn = () => {
-    const t = useTranslations('AboutMeSection');
+interface Props {
+    tooltipDirection?: 'top' | 'bottom';
+    className?: string;
+}
+
+export const DownloadResumeBtn: React.FC<Props> = (props) => {
+    const t = useTranslations('DownloadResumeBtn');
     const hook = useDownloadResumeBtn();
 
     return (
@@ -17,11 +24,15 @@ export const DownloadResumeBtn = () => {
                     ? 'Loading...'
                     : hook.formatSizeToKB(hook.pdfMetadata?.size || 0) + 'KB'
             }`}
-            className="download-resume-btn bg-secondary-black shrink-0 px-8 rounded-md uppercase text-white font-medium relative cursor-pointer w-[13rem]"
+            data-tooltip-direction={props.tooltipDirection || 'top'}
+            className={twMerge(
+                'download-resume-btn bg-secondary-black shrink-0 px-8 rounded-md text-white relative cursor-pointer w-[13rem]',
+                props.className
+            )}
         >
             <div className="button-wrapper">
-                <div className="text top-0 text-base flex items-center justify-center">
-                    {t('download_resume_btn')}
+                <div className="text top-0 flex items-center justify-center">
+                    {t('label')}
                 </div>
                 <span className="icon text-white top-full flex items-center justify-center">
                     <svg

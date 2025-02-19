@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+
+.download-resume-btn {
+    --height: 3.5rem;
+    --tooltip-height: 2.2rem;
+    --tooltip-width: 8.1rem;
+    --gap-between-tooltip-to-button: calc(var(--tooltip-height) + 0.188rem);
+    height: var(--height);
+
+    &::after,
+    &::before {
+        @apply opacity-0 invisible transition-all duration-500;
+    }
+    &:hover:before,
+    &:hover:after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &::before {
+        @apply absolute content-[attr(data-tooltip)] w-[var(--tooltip-width)] h-[var(--tooltip-height)] text-sm text-center text-white rounded-md leading-[var(--tooltip-height)] bg-[var(--color-secondary-black)];
+        left: calc(50% - var(--tooltip-width) / 2);
+        text-transform: none;
+    }
+
+    /* BEFORE -> top direction */
+    &[data-tooltip-direction='top']::before {
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) + 0.625rem
+        );
+    }
+    &[data-tooltip-direction='top']:hover:before {
+        bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+    }
+
+    /* BEFORE -> bottom direction */
+    &[data-tooltip-direction='bottom']::before {
+        top: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) + 0.625rem
+        );
+        box-shadow: 0 4px 8px #0000008a;
+    }
+    &[data-tooltip-direction='bottom']:hover:before {
+        top: calc(var(--height) + var(--gap-between-tooltip-to-button));
+    }
+
+    &::after {
+        @apply absolute content-[''] size-0 border-10 border-transparent;
+        border-top-color: var(--color-secondary-black);
+        left: calc(50% - 0.625rem);
+    }
+
+    /* AFTER -> top direction */
+    &[data-tooltip-direction='top']::after {
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 0.625rem
+        );
+    }
+    &[data-tooltip-direction='top']:hover:after {
+        bottom: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 1.25rem
+        );
+    }
+
+    /* AFTER -> bottom direction */
+    &[data-tooltip-direction='bottom']::after {
+        @apply rotate-180;
+        top: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 0.625rem
+        );
+    }
+    &[data-tooltip-direction='bottom']:hover:after {
+        top: calc(
+            var(--height) + var(--gap-between-tooltip-to-button) - 1.25rem
+        );
+    }
+
+    .button-wrapper,
+    .text,
+    .icon {
+        @apply overflow-hidden absolute size-full left-0 text-white;
+    }
+
+    .text,
+    .icon {
+        @apply transition-[top] duration-500;
+    }
+
+    &:hover .text {
+        top: -100%;
+    }
+
+    &:hover .icon {
+        top: 0;
+    }
+}

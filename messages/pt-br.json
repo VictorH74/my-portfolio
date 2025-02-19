@@ -4,7 +4,7 @@
         "nav_link_label_#about-me": "Sobre mim",
         "nav_link_label_#technologies": "Tecnologias",
         "nav_link_label_#projects": "Projetos",
-        "nav_link_label_#contacts": "Contatos"
+        "nav_link_label_#contact-me": "Fale Comigo"
     },
     "HeroSection": {
         "hello": "Olá!",
@@ -16,9 +16,7 @@
         "career": "Desenvolvedor Web Junior",
         "paragraph_1": "Iniciei minha jornada em 2020 quando ingressei no curso de Ciência da Computação na faculdade. No entanto, devido à pandemia e outros fatores, tomei a decisão de interromper meus estudos, após concluir o 5º período. A experiência acadêmica proporcionou uma sólida base em desenvolvimento de software, algo que se tornou fundamental para minha jornada autodidata.",
         "paragraph_2": "A programação se tornou um verdadeiro hobby. Boa parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
-        "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir o conhecimento e experiência necessária para meu crescimento profissional. Estou sempre a disposição para enfrentar desafios e abraçar oportunidades de aprendizado",
-        "resume_size": "Tamanho",
-        "download_resume_btn": "Baixar Currículo"
+        "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir o conhecimento e experiência necessária para meu crescimento profissional. Estou sempre a disposição para enfrentar desafios e abraçar oportunidades de aprendizado"
     },
     "TechnologyListSection": {
         "section_title": "Minhas Tecnologias"
@@ -41,7 +39,7 @@
         "contact_me_paragraph_1": "Tem uma ideia ou precisa de um desenvolvedor para seu projeto?",
         "contact_me_paragraph_2": "Envie uma mensagem e vamos conversar!",
         "contact_me_name_field_placeholder": "Seu nome",
-        "contact_me_email_field_placeholder": "Seu E-mail",
+        "contact_me_email_field_placeholder": "Seu e-mail",
         "contact_me_msg_field_placeholder": "Digite sua mensagem",
         "contact_me_msg_submit_btn": "Enviar",
         "success_snackbar_text": "E-mail enviado!",
@@ -49,5 +47,9 @@
         "error_message_name": "Campo de nome obrigatório",
         "error_message_email": "Campo de e-mail obrigatório",
         "error_message_message": "Campo de mensagem obrigatório"
+    },
+    "DownloadResumeBtn": {
+        "label": "Baixar Currículo",
+        "resume_size": "Tamanho"
     }
 }

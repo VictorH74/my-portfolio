@@ -36,7 +36,7 @@ export const ContactMe = () => {
     ];
 
     return (
-        <section className="w-full" id="contacts">
+        <section className="w-full" id="contact-me">
             <h2 className="text-3xl font-semibold">{t('contact_me_title')}</h2>
 
             <div className="max-md:my-10 max-lg:px-6 max-lg:py-20 max-lg:relative min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_0.25rem_2.5rem_#00000075] my-20 space-y-10">
