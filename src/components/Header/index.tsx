@@ -1,9 +1,10 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
-import { anchorLinks, useHeader } from './useHeader';
+import { anchorLinkHref, useHeader } from './useHeader';
 import { twMerge } from 'tailwind-merge';
 import { Hamburger } from './Hamburger';
+import { DownloadResumeBtn } from '../DownloadResumeBtn';
 
 export const Header = () => {
     const t = useTranslations('Header');
@@ -13,7 +14,7 @@ export const Header = () => {
         <div
             ref={hook.headerRef}
             className={twMerge(
-                'w-full fixed py-6 min-md:py-10 min-[75rem]:py-4 min-[121rem]:py-10 text-center z-50 duration-300',
+                'w-full fixed h-[6rem] py-6x min-md:py-10x min-[75rem]:py-4x min-[121rem]:py-10x text-center z-50 duration-300 grid place-items-center capitalize',
                 hook.showHeader ? 'top-0' : '-top-full',
                 hook.isInHeroSection
                     ? 'bg-primary-black/55 backdrop-blur-md'
@@ -28,25 +29,26 @@ export const Header = () => {
                     height={50}
                 />
                 <nav className="max-lg:hidden">
-                    <ul className="text-[#a7b3c5] font-extrabold flex gap-3 duration-500">
-                        {anchorLinks.map((anchor) => (
+                    <ul className="text-[#a7b3c5] font-medium flex gap-3 duration-500 items-center">
+                        {anchorLinkHref.map((href) => (
                             <li
-                                key={anchor.href}
+                                key={href}
                                 className="overflow-hidden h-[3rem] relative"
                             >
                                 <Link
-                                    href={anchor.href}
+                                    href={href}
                                     className="grid hover:-translate-y-1/2 duration-500 p-3 space-y-5"
                                 >
-                                    <span>
-                                        {t('nav_link_label_' + anchor.href)}
-                                    </span>
+                                    <span>{t('nav_link_label_' + href)}</span>
                                     <span className="text-white">
-                                        {t('nav_link_label_' + anchor.href)}
+                                        {t('nav_link_label_' + href)}
                                     </span>
                                 </Link>
                             </li>
                         ))}
+                        <li>
+                            <DownloadResumeBtn tooltipDirection="bottom" />
+                        </li>
                     </ul>
                 </nav>
                 <Hamburger />

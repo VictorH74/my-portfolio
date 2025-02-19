@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 import { ProfileImage } from './ProfileImage';
-import { DownloadResumeBtn } from './DownloadResumeBtn';
+import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 
 export const AboutMe = () => {
     const t = useTranslations('AboutMeSection');
@@ -31,7 +31,7 @@ export const AboutMe = () => {
                 </div>
                 <div className="flex flex-row gap-10 items-center mt-7">
                     <hr className="w-full h-[0.188rem] bg-secondary-black" />
-                    <DownloadResumeBtn />
+                    <DownloadResumeBtn className="uppercase" />
                     <hr className="w-full h-[0.188rem] bg-secondary-black" />
                 </div>
             </div>

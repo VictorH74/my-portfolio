@@ -4,8 +4,9 @@ import { bgColors, delayFactor, useHamburger } from './useHamburger';
 import { twMerge } from 'tailwind-merge';
 import { createPortal } from 'react-dom';
 import CloseIcon from '@mui/icons-material/Close';
-import { anchorLinks } from '../useHeader';
+import { anchorLinkHref } from '../useHeader';
 import Link from 'next/link';
+import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 
 export const Hamburger = () => {
     const t = useTranslations('Header');
@@ -71,27 +72,25 @@ export const Hamburger = () => {
                                 </button>
                             </div>
                             <nav className="w-full h-[80vh] grid place-items-center">
-                                <ul className="flex flex-col gap-2 w-full h-fit">
-                                    {anchorLinks.map((anchor, i) => (
-                                        <li
-                                            key={anchor.href}
-                                            className="contents"
-                                        >
+                                <ul className="flex flex-col gap-2 w-full h-fit text-2xl">
+                                    {anchorLinkHref.map((href) => (
+                                        <li key={href} className="contents">
                                             <Link
-                                                href={anchor.href}
-                                                className="p-5 font-bold text-dark-font text-3xl  w-full text-center"
+                                                href={href}
+                                                className="p-5 font-bold text-dark-font  w-full text-center"
                                                 onClick={hook.hide}
                                             >
-                                                {t(
-                                                    'nav_link_label_' +
-                                                        anchor.href
-                                                )}
+                                                {t('nav_link_label_' + href)}
                                             </Link>
-                                            {i < anchorLinks.length - 1 && (
-                                                <hr className="w-[3.125rem] h-[0.125rem] m-auto bg-dark-font" />
-                                            )}
+                                            <hr className="w-[3.125rem] h-[0.125rem] m-auto bg-dark-font" />
                                         </li>
                                     ))}
+                                    <li className="my-5">
+                                        <DownloadResumeBtn
+                                            tooltipDirection="bottom"
+                                            className="w-full text-2xl rounded-none"
+                                        />
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

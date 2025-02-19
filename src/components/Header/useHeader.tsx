@@ -1,26 +1,11 @@
 import React from 'react';
 
-export const anchorLinks = [
-    {
-        href: '#welcome',
-        label: 'Welcome',
-    },
-    {
-        href: '#about-me',
-        label: 'About Me',
-    },
-    {
-        href: '#technologies',
-        label: 'Technologies',
-    },
-    {
-        href: '#projects',
-        label: 'Projects',
-    },
-    {
-        href: '#contacts',
-        label: 'Contacts',
-    },
+export const anchorLinkHref = [
+    '#welcome',
+    '#about-me',
+    '#technologies',
+    '#projects',
+    '#contact-me',
 ];
 
 export const useHeader = () => {
