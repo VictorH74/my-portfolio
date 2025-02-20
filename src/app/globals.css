@@ -8,26 +8,6 @@
     --color-dark-font: #444444;
 
     --container-default: var(--maxScreenWidth);
-
-    --animate-fade-right-in: fade-right-in 500ms ease-out forwards;
-    @keyframes fade-right-in {
-        from {
-            left: 100%;
-        }
-        to {
-            left: 0;
-        }
-    }
-
-    --animate-fade-right-out: fade-right-out 500ms ease-in forwards;
-    @keyframes fade-right-out {
-        from {
-            left: 0;
-        }
-        to {
-            left: 100%;
-        }
-    }
 }
 
 /*

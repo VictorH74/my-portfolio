@@ -87,6 +87,7 @@ const Fallback = () =>
                 key={i}
                 height={iconSize}
                 width={iconSize}
+                className="max-md:size-10 size-12 min-[87.5rem]:size-14 max-sm:size-8"
                 variant="circular"
                 sx={{ backgroundColor: '#ececec24' }}
             />

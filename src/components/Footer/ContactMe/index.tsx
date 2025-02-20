@@ -76,13 +76,11 @@ export const ContactMe = () => {
                 >
                     <div
                         className={twMerge(
-                            'absolute inset-0 bg-black/40 backdrop-blur-sm grid place-items-center duration-300',
-                            hook.submitting
-                                ? 'opacity-100 pointer-events-auto'
-                                : 'opacity-0 pointer-events-none'
+                            'absolute inset-0 bg-black/40 backdrop-blur-sm place-items-center duration-300',
+                            hook.submitting ? 'grid' : 'hidden'
                         )}
                     >
-                        <Loading size={60} />
+                        <Loading />
                     </div>
                     {inputData.map((obj) => (
                         <div key={obj.placeholder} className="space-y-1">

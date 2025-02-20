@@ -29,7 +29,7 @@ export const ProfileImage = () => {
     if (isLoading)
         return (
             <div className="size-full grid place-items-center">
-                <Loading size={100} />
+                <Loading />
             </div>
         );
 

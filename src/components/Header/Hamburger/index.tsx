@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { anchorLinkHref } from '../useHeader';
 import Link from 'next/link';
 import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
+import './style.css';
 
 export const Hamburger = () => {
     const t = useTranslations('Header');

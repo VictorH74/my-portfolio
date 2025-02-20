@@ -99,14 +99,15 @@ const SlideImage: React.FC<
         <div className="size-full relative select-none">
             <Image
                 {...props}
-                className="size-full object-cover"
+                className="size-full object-cover pointer-events-none"
                 onLoad={() => setLoadingImg(false)}
                 loading="lazy"
             />
             <div
-                className={`absolute object-cover inset-0 bg-transparent grid place-items-center ${
-                    loadingImg ? 'opacity-100' : 'opacity-0'
-                }`}
+                className={twMerge(
+                    'absolute object-cover inset-0 bg-transparent place-items-center',
+                    loadingImg ? 'grid' : 'hidden'
+                )}
             >
                 <Loading />
             </div>
