@@ -17,7 +17,7 @@ export const Presentation = () => {
         <section
             id="presentation"
             className={twMerge(
-                'max-[768px]:bg-[url(/bg-small.webp)] max-[1440px]:bg-[url(/bg-medium.webp)] max-[1921]:bg-[url(/bg-large.webp)] min-[1441px]:bg-[url(/bg-larger.webp)] px-3 w-full h-[95vh] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden bg-cover',
+                'max-[768px]:bg-[url(/bg-small.webp)] max-[1440px]:bg-center max-[1440px]:bg-[url(/bg-medium.webp)] max-[1921]:bg-[url(/bg-large.webp)] min-[1441px]:bg-[url(/bg-larger.webp)] px-3 w-full h-[95vh] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden bg-cover bg-center',
                 sectionFont.className
             )}
         >

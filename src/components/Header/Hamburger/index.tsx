@@ -19,7 +19,6 @@ export const Hamburger = () => {
                 className="cursor-pointer h-7 w-8 grid gap-[0.438rem]"
                 onClick={hook.show}
             >
-                {/* TODO: improve className */}
                 {Array(3)
                     .fill(undefined)
                     .map((_, i) => (
@@ -60,7 +59,7 @@ export const Hamburger = () => {
                                 <button
                                     onClick={hook.hide}
                                     className={twMerge(
-                                        '-translate-x-1/2 translate-y-1/2 duration-300'
+                                        '-translate-x-1/2 translate-y-1/2 duration-300 opacity-0'
                                     )}
                                     ref={hook.closeNavBtnRef}
                                 >
@@ -77,7 +76,7 @@ export const Hamburger = () => {
                                         <li key={href} className="contents">
                                             <Link
                                                 href={href}
-                                                className="p-5 font-bold text-dark-font  w-full text-center"
+                                                className="p-5 font-bold text-dark-font  w-full text-center truncate"
                                                 onClick={hook.hide}
                                             >
                                                 {t('nav_link_label_' + href)}

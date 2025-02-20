@@ -9,7 +9,9 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import { useWindowResize } from '@/hooks/useWindowResize';
 import { ProjectItemLink } from './ProjectItemLink';
-// import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import { useProjectItem } from './useProjectItem';
+import { createPortal } from 'react-dom';
 
 const aosPackProps: Record<string, string> = {
     'data-aos': 'zoom-in',
@@ -18,12 +20,16 @@ const aosPackProps: Record<string, string> = {
     'data-aos-once': 'true',
 };
 
+const randomVideoUrl =
+    'https://player.vimeo.com/video/723658039?h=57b6d0ac88&color=ffffff&byline=0&portrait=0';
+
 export const ProjectItem: React.FC<
     React.PropsWithChildren & { index: number; project: ProjectType }
 > = (props) => {
     const isOddIndex = props.index % 2 === 0;
     const t = useTranslations('ProjectListSection');
     const [windowWidth] = useWindowResize();
+    const hook = useProjectItem();
 
     return (
         <li className="max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0">
@@ -70,6 +76,15 @@ export const ProjectItem: React.FC<
                         </p>
 
                         <div className="">
+                            {props.project.videoUrl && (
+                                <button
+                                    className="w-full flex gap-3 items-center font-medium p-2 cursor-pointer"
+                                    onClick={hook.showVideo}
+                                >
+                                    {t('project_video_url')}
+                                    <PlayCircleFilledIcon />
+                                </button>
+                            )}
                             {props.project.deployUrl && (
                                 <ProjectItemLink href={props.project.deployUrl}>
                                     {t('project_demo_url')}
@@ -95,6 +110,29 @@ export const ProjectItem: React.FC<
                     </div>
                 </div>
             </article>
+
+            {hook.videoVisibility &&
+                createPortal(
+                    <div
+                        className="grid place-items-center fixed inset-0 bg-[#00000070] z-[9999]"
+                        onClick={hook.hiddenVideo}
+                    >
+                        <div
+                            data-tip-content={t('project_video_container_tip')}
+                            className="size-fit relative after:absolute after:top-[calc(100%+2rem)] after:left-[50%] after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-white after:text-xl after:font-medium after:p-[0.5rem_1rem]"
+                        >
+                            <iframe
+                                className="w-[1000px] aspect-video bg-transparent max-lg:w-full"
+                                title="project video"
+                                src={props.project.videoUrl || randomVideoUrl}
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowFullScreen
+                            />
+                        </div>
+                    </div>,
+                    document.getElementById('portal-destination') ||
+                        document.body
+                )}
         </li>
     );
 };

@@ -8,6 +8,13 @@ export const useHamburger = () => {
     const [visibleHumburgerNav, setVisibleHumburgerNav] = React.useState(false);
     const closeNavBtnRef = React.useRef<HTMLButtonElement>(null);
 
+    React.useEffect(() => {
+        if (!closeNavBtnRef.current) return;
+        setTimeout(() => {
+            closeNavBtnRef.current!.style.opacity = '100%';
+        }, 500);
+    });
+
     const show = () => setVisibleHumburgerNav(true);
     const hide = () => {
         closeNavBtnRef.current!.style.opacity = '0';
