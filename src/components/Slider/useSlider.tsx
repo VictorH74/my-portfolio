@@ -30,17 +30,17 @@ export const useSlider = (props: SliderProps) => {
     const changeCurrentFileIndex = (index: number) =>
         setCurrentFileIndex(index);
 
-    const previousSlide = React.useCallback(() => {
+    const previousSlide = () => {
         if (currentFileIndex == 0)
             return setCurrentFileIndex(props.images.length - 1);
         setCurrentFileIndex((prev) => prev - 1);
-    }, [currentFileIndex, props.images.length]);
+    };
 
-    const nextSlide = React.useCallback(() => {
+    const nextSlide = () => {
         if (currentFileIndex + 1 >= props.images.length)
             return setCurrentFileIndex(0);
         setCurrentFileIndex((prev) => prev + 1);
-    }, [currentFileIndex, props.images]);
+    };
 
     const handleTouchStart = (e: React.TouchEvent) => {
         const { clientX, clientY } = e.touches[0];

@@ -35,7 +35,7 @@ export const useProjectList = () => {
         return map;
     }, [isEmpty, technologyList]);
 
-    const getMoreProjects = React.useCallback(async () => {
+    const getMoreProjects = async () => {
         if (projectList.length === 4) {
             setIsLoadingMoreProjects(true);
             const retrievedProjects = await getProjectSnapshotsByQuery(
@@ -46,7 +46,7 @@ export const useProjectList = () => {
         }
 
         setShowingMore(true);
-    }, [projectList]);
+    };
 
     const getInitialProjects = async () => {
         const initialProjectList = await getProjectSnapshotsByQuery(limit(4));

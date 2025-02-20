@@ -99,7 +99,7 @@ const SlideImage: React.FC<
         <div className="size-full relative select-none">
             <Image
                 {...props}
-                className="h-full w-auto object-contain"
+                className="size-full object-cover"
                 onLoad={() => setLoadingImg(false)}
                 loading="lazy"
             />

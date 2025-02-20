@@ -121,7 +121,7 @@ export const ProjectItem: React.FC<
                     >
                         <div
                             data-tip-content={t('project_video_container_tip')}
-                            className="size-fit relative w-[1000px] bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-white max-sm:after:text-base after:text-xl after:font-semibold after:text-nowrap after:p-[0.5rem_1rem]"
+                            className="size-fit relative w-[62.5rem] max-[62.5rem]:w-full bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-white max-sm:after:text-base after:text-xl after:font-semibold after:text-nowrap after:p-[0.5rem_1rem]"
                         >
                             <iframe
                                 className="bg-transparent size-full"
