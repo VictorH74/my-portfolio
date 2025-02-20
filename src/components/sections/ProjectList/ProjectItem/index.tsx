@@ -12,6 +12,7 @@ import { ProjectItemLink } from './ProjectItemLink';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { useProjectItem } from './useProjectItem';
 import { createPortal } from 'react-dom';
+import { Loading } from '@/components/Loading';
 
 const aosPackProps: Record<string, string> = {
     'data-aos': 'zoom-in',
@@ -114,20 +115,27 @@ export const ProjectItem: React.FC<
             {hook.videoVisibility &&
                 createPortal(
                     <div
-                        className="grid place-items-center fixed inset-0 bg-[#00000070] z-[9999]"
+                        ref={hook.videoContainerRef}
+                        className="grid place-items-center fixed inset-0 bg-[#00000070] z-[9999] duration-300"
                         onClick={hook.hiddenVideo}
                     >
                         <div
                             data-tip-content={t('project_video_container_tip')}
-                            className="size-fit relative after:absolute after:top-[calc(100%+2rem)] after:left-[50%] after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-white after:text-xl after:font-medium after:p-[0.5rem_1rem]"
+                            className="size-fit relative w-[1000px] bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-white max-sm:after:text-base after:text-xl after:font-semibold after:text-nowrap after:p-[0.5rem_1rem]"
                         >
                             <iframe
-                                className="w-[1000px] aspect-video bg-transparent max-lg:w-full"
+                                className="bg-transparent size-full"
                                 title="project video"
                                 src={props.project.videoUrl || randomVideoUrl}
                                 allow="autoplay; fullscreen; picture-in-picture"
                                 allowFullScreen
+                                onLoad={() => hook.setVideoIsLoading(false)}
                             />
+                            {hook.videoIsLoading && (
+                                <div className="w-fit absolute top-1/2 left-1/2 -translate-1/2">
+                                    <Loading size={70} />
+                                </div>
+                            )}
                         </div>
                     </div>,
                     document.getElementById('portal-destination') ||
