@@ -33,7 +33,7 @@ export const ProjectItem: React.FC<
     const hook = useProjectItem();
 
     return (
-        <li className="max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0">
+        <li className="max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0 shadow-[0_-10px_30px_#00000030]">
             <article
                 className={twMerge(
                     'max-lg:flex-col max-lg:gap-5 size-full flex text-dark-font bg-background',

@@ -14,7 +14,7 @@ export const AboutMe = () => {
             <div className="max-lg:px-4 max-w-default">
                 <div className="flex max-lg:flex-col gap-5 justify-center items-center">
                     <div className="max-lg:w-full min-lg:pb-3 min-lg:pr-3 size-fit relative">
-                        <div className="max-lg:hidden size-[23.75rem] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%]"></div>
+                        <div className="max-lg:hidden size-[23.75rem] aspect-square rounded-2xl translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%] brightness-90"></div>
                         <div className="max-lg:w-full max-w-[31.25rem] max-lg:m-auto min-lg:absolute min-lg:top-0 min-lg:left-0 min-lg:size-[23.75rem] aspect-square rounded-2xl bg-secondary-black">
                             <ProfileImage />
                         </div>
