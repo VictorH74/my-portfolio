@@ -6,23 +6,25 @@ export const anchorLinkHref = [
     '#technologies',
     '#projects',
     '#contact-me',
-];
+] as const;
+
+function isMobilePortrait() {
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    return isMobile && window.matchMedia('(orientation: portrait)').matches;
+}
 
 export const useHeader = () => {
     const [prevScrollTop, setPrevScrollTop] = React.useState(0);
     const [showHeader, setShowHeader] = React.useState(true);
     const [isInHeroSection, setIsInHeroSection] = React.useState(true);
+    React.useState<string>('#welcome');
 
     const headerRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (!headerRef.current) return;
 
-        const controller = new AbortController();
-
-        document.addEventListener('scroll', handleScroll, {
-            signal: controller.signal,
-        });
+        const controller = handleScroll();
 
         return () => {
             controller.abort();
@@ -30,6 +32,22 @@ export const useHeader = () => {
     });
 
     const handleScroll = () => {
+        const controller = new AbortController();
+
+        if (!isMobilePortrait()) {
+            document.addEventListener('scroll', computeHeaderVisivility, {
+                signal: controller.signal,
+            });
+        }
+
+        document.addEventListener('scroll', computeHeaderBackground, {
+            signal: controller.signal,
+        });
+
+        return controller;
+    };
+
+    const computeHeaderVisivility = () => {
         const currentScrollTop = window.scrollY;
 
         if (
@@ -41,6 +59,10 @@ export const useHeader = () => {
             setShowHeader(false);
 
         setPrevScrollTop(currentScrollTop);
+    };
+
+    const computeHeaderBackground = () => {
+        const currentScrollTop = window.scrollY;
 
         const headerHeight = headerRef.current!.getBoundingClientRect().height;
 

@@ -37,7 +37,9 @@ export const Header = () => {
                             >
                                 <Link
                                     href={href}
-                                    className="grid hover:-translate-y-1/2 duration-500 p-3 space-y-5"
+                                    className={twMerge(
+                                        'grid hover:-translate-y-1/2 duration-500 p-3 space-y-5'
+                                    )}
                                 >
                                     <span>{t('nav_link_label_' + href)}</span>
                                     <span className="text-white">
