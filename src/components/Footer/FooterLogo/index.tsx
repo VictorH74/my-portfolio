@@ -15,7 +15,7 @@ export const FooterLogo = () => {
 
     return (
         <button
-            className="cursor-pointer relative after:absolute after:content-['Top'] after:bg-white after:top-1/2 after:left-full after:-translate-1/2 after:opacity-0 after:size-fit after:px-4 after:py-2 after:rounded-xl after:shadow-md hover:after:opacity-100 hover:after:translate-x-1/3 after:-scale-50 hover:after:scale-100 after:duration-300 after:text-dark-font after:font-semibold"
+            className="cursor-pointer relative after:absolute after:content-['Top'] after:bg-background after:top-1/2 after:left-full after:-translate-1/2 after:opacity-0 after:size-fit after:px-4 after:py-2 after:rounded-xl after:shadow-md hover:after:opacity-100 hover:after:translate-x-1/3 after:-scale-50 hover:after:scale-100 after:duration-300 after:text-dark-font after:font-semibold"
             onClick={goToTop}
         >
             <Image

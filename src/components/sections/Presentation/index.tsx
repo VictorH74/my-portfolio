@@ -21,7 +21,7 @@ export const Presentation = () => {
                 sectionFont.className
             )}
         >
-            <div className="text-white grid gap-7 font-semibold">
+            <div className="text-background grid gap-7 font-semibold">
                 <h2
                     data-aos="fade-up"
                     data-aos-once="true"

@@ -15,7 +15,7 @@ export const Footer = () => {
 
                 <FooterLogo />
 
-                <hr className="w-full h-[0.188] bg-white" />
+                <hr className="w-full h-[0.188] bg-background" />
 
                 <ContactList />
 

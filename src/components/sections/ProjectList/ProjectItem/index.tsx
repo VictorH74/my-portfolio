@@ -36,7 +36,7 @@ export const ProjectItem: React.FC<
         <li className="max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0">
             <article
                 className={twMerge(
-                    'max-lg:flex-col max-lg:gap-5 size-full flex text-dark-font bg-white',
+                    'max-lg:flex-col max-lg:gap-5 size-full flex text-dark-font bg-background',
                     isOddIndex ? 'flex-row' : 'flex-row-reverse'
                 )}
             >
@@ -105,7 +105,7 @@ export const ProjectItem: React.FC<
                         {props.children}
                     </div>
                     <div className="absolute inset-0 overflow-hidden">
-                        <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute top-1/2 left-1/2 -translate-1/2 m-0 p-0 uppercase text-white text-shadow pointer-events-none">
+                        <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute top-1/2 left-1/2 -translate-1/2 m-0 p-0 uppercase text-background text-shadow pointer-events-none">
                             {props.project.title[0]}
                         </p>
                     </div>
@@ -123,7 +123,7 @@ export const ProjectItem: React.FC<
                             data-tip-content={t('project_video_container_tip')}
                             data-aos="zoom-in"
                             data-aos-duration="200"
-                            className="size-fit relative w-[62.5rem] max-[62.5rem]:w-full bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-white max-sm:after:text-base after:text-xl after:font-medium after:text-nowrap after:p-[0.5rem_1rem]"
+                            className="size-fit relative w-[62.5rem] max-[62.5rem]:w-full bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-background max-sm:after:text-base after:text-xl after:font-medium after:text-nowrap after:p-[0.5rem_1rem]"
                         >
                             <iframe
                                 className="bg-transparent size-full"

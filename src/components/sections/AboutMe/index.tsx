@@ -9,7 +9,7 @@ export const AboutMe = () => {
     return (
         <section
             id="about-me"
-            className="max-md:py-20 grid place-items-center py-52 relative bg-white"
+            className="max-md:py-20 grid place-items-center py-52 relative bg-background"
         >
             <div className="max-lg:px-4 max-w-default">
                 <div className="flex max-lg:flex-col gap-5 justify-center items-center">

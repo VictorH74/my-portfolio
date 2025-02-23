@@ -32,7 +32,7 @@ export const CopyableContentBtn: React.FC<CopyableContentBtnProps> = ({
 
     return (
         <button
-            className="py-4 w-full bg-secondary-black rounded-md text-white shadow-[0.25rem_0.25rem_0.5rem_#00000050] cursor-pointer bg-custom-gray-dark p-2 hover:brightness-110 text-center duration-150 max-sm:col-span-2 backdrop-blur-md flex flex-row items-center gap-4 justify-center"
+            className="py-4 w-full bg-secondary-black rounded-md text-background shadow-[0.25rem_0.25rem_0.5rem_#00000050] cursor-pointer bg-custom-gray-dark p-2 hover:brightness-150 text-center duration-150 max-sm:col-span-2 backdrop-blur-md flex flex-row items-center gap-4 justify-center"
             type="button"
             onClick={copyToClipboard}
             disabled={copySuccess}

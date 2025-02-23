@@ -88,7 +88,7 @@ export const ContactList = () => {
                             aria-label={contactArialLabel[key]}
                         >
                             <ContactIcon
-                                className="text-custom-white"
+                                className="text-background"
                                 sx={{
                                     fontSize: 25,
                                 }}

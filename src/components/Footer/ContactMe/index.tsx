@@ -40,7 +40,7 @@ export const ContactMe = () => {
             <h2 className="text-3xl font-semibold">{t('contact_me_title')}</h2>
 
             <div className="max-md:my-10 max-lg:px-6 max-lg:py-20 max-lg:relative min-lg:flex min-lg:h-[40rem] bg-primary-black shadow-[0_0.25rem_2.5rem_#00000075] my-20 space-y-10">
-                <div className="max-lg:hidden max-xl:p-6 size-full bg-white flex flex-col p-20 text-dark-font gap-6 justify-center">
+                <div className="max-lg:hidden max-xl:p-6 size-full bg-background flex flex-col p-20 text-dark-font gap-6 justify-center">
                     <h3 className="text-2xl font-semibold text-start">
                         {t('contact_me_subtitle')}
                     </h3>
@@ -88,6 +88,7 @@ export const ContactMe = () => {
                                 placeholder={obj.placeholder}
                                 className={twMerge('', formFieldClassName)}
                                 type={obj.type}
+                                maxLength={50}
                                 {...hook.register(
                                     obj.name as keyof FormValues,
                                     {
@@ -126,7 +127,7 @@ export const ContactMe = () => {
                     </div>
 
                     <button
-                        className="focus:brightness-110 duration-300 rounded-md w-full py-3 bg-white text-dark-font font-semibold cursor-pointer"
+                        className="focus:brightness-110 duration-300 rounded-md w-full py-3 bg-background text-dark-font font-semibold cursor-pointer"
                         type="submit"
                         disabled={hook.submitting}
                     >

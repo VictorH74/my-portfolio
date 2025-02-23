@@ -26,7 +26,7 @@ export const Hamburger = () => {
                         <span
                             key={i}
                             className={twMerge(
-                                'h-[0.188rem] w-full rounded-xl bg-white',
+                                'h-[0.188rem] w-full rounded-xl bg-background',
                                 [0, 2].includes(i)
                                     ? "origin-left duration-300'"
                                     : 'duration-150'
@@ -50,7 +50,7 @@ export const Hamburger = () => {
                             ></div>
                         ))}
                         <div
-                            className="bg-white absolute inset-0 animate-fade-right-in left-full animation-el"
+                            className="bg-background absolute inset-0 animate-fade-right-in left-full animation-el"
                             style={{
                                 animationDelay:
                                     bgColors.length * delayFactor + 'ms',
@@ -88,7 +88,7 @@ export const Hamburger = () => {
                                     <li className="my-5">
                                         <DownloadResumeBtn
                                             tooltipDirection="bottom"
-                                            className="w-full text-2xl rounded-none"
+                                            className="w-full text-2xl rounded-none truncate"
                                         />
                                     </li>
                                 </ul>
