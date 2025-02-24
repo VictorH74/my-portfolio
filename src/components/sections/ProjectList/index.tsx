@@ -17,7 +17,7 @@ export const ProjectList = () => {
     return (
         <section
             id="projects"
-            className="max-md:pb-5 bg-background z-30 max-lg:pb-52 max-lg:overflow-hidden"
+            className="max-md:pt-[2.5rem] max-md:pb-5 bg-background z-30 pt-[6.5rem] max-lg:pb-52 max-lg:overflow-hidden"
         >
             <h2 className="max-md:mb-10 text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
                 {t('section_title')}

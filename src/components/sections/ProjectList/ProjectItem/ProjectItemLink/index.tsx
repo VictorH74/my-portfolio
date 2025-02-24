@@ -8,6 +8,7 @@ export const ProjectItemLink: React.FC<
         <Link
             href={props.href}
             className="w-full flex gap-3 items-center font-medium p-2"
+            target="_blank"
         >
             {props.children}
         </Link>
