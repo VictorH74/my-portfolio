@@ -52,7 +52,7 @@ export const Slider = (props: SliderProps) => {
                                     className={twMerge(
                                         'size-3 rounded-full duration-200 group-hover/btn:scale-150 bg-[#d6d6d6]',
                                         hook.currentFileIndex == i &&
-                                            'bg-orange-500'
+                                            'bg-[#2382FF]'
                                     )}
                                 />
                             </button>
@@ -78,7 +78,7 @@ export const Slider = (props: SliderProps) => {
                             key={btn.label}
                             onClick={btn.onClick}
                             className={twMerge(
-                                'absolute inset-y-0 p-4 opacity-0 max-lg:opacity-100 group-hover/container:opacity-100 duration-200 lg:hover:scale-150 text-orange-500',
+                                'absolute inset-y-0 p-4 opacity-0 max-lg:opacity-100 group-hover/container:opacity-100 duration-200 lg:hover:scale-150 text-[#2382FF]',
                                 btn.className
                             )}
                         >

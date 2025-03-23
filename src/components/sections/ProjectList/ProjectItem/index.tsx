@@ -36,7 +36,7 @@ export const ProjectItem: React.FC<
         <li
             className={twMerge(
                 'max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0',
-                props.index != 0 && 'shadow-[0_-10px_30px_#00000030]'
+                props.index != 0 && 'lg:shadow-[0_-10px_30px_#00000030]'
             )}
         >
             <article
