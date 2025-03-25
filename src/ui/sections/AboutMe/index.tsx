@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
-import { ProfileImage } from './ProfileImage';
+import { ProfileImage } from '../../../components/ProfileImage';
 import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 
 export const AboutMe = () => {

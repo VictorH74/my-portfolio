@@ -1,4 +1,4 @@
-import { TechnologType } from '@/types';
+import { TechnologyType } from '@/types';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import './style.css';
@@ -10,7 +10,7 @@ const cubeSide = {
     4: 'bottom',
 };
 
-export const TechnologyCard: React.FC<TechnologType> = (techIcon) => {
+export const TechnologyCard: React.FC<TechnologyType> = (techIcon) => {
     const randomNumber = Math.ceil(Math.random() * 4);
 
     return (

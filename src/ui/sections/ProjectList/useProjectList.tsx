@@ -1,4 +1,4 @@
-import { ProjectType, TechnologType } from '@/types';
+import { ProjectType, TechnologyType } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import {
     collection,
@@ -28,7 +28,7 @@ export const useProjectList = () => {
 
     const iconMap = React.useMemo(() => {
         if (isEmpty) return undefined;
-        const map: Record<TechnologType['name'], TechnologType> = {};
+        const map: Record<TechnologyType['name'], TechnologyType> = {};
         technologyList.map((icon) => {
             map[icon.id] = icon;
         });

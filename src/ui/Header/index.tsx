@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { anchorLinkHref, useHeader } from './useHeader';
 import { twMerge } from 'tailwind-merge';
 import { Hamburger } from './Hamburger';
-import { DownloadResumeBtn } from '../DownloadResumeBtn';
+import { DownloadResumeBtn } from '../../components/DownloadResumeBtn';
 
 export const Header = () => {
     const t = useTranslations('Header');
