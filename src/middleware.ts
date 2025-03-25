@@ -13,5 +13,5 @@ export default async function middleware(req: NextRequest) {
 
 export const config = {
     // Match only internationalized pathnames
-    matcher: ['/', '/(pt-br|en)/:path*'],
+    matcher: ['/', '/(pt-br|en)/:path*', '/admin/:path*'],
 };
