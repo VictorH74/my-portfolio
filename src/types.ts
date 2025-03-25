@@ -2,7 +2,7 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { LANGUAGES } from './utils/server-constants';
 import { SvgIconTypeMap } from '@mui/material';
 
-export type TechnologType = {
+export type TechnologyType = {
     index: number;
     id: string;
     name: string;
@@ -29,6 +29,10 @@ export type ProjectType = {
     updatedAt?: string; // ISO String Date
 };
 
+export type CreateUpdateProjectType = Omit<ProjectType, 'id' | 'index'> & {
+    id?: string;
+};
+
 export type ScreenshotType = {
     name: string;
     url: string;
@@ -48,3 +52,5 @@ export type ProfileContactsType = {
 };
 
 export type LangType = (typeof LANGUAGES)[number];
+
+export type BtnAttrType = React.ButtonHTMLAttributes<HTMLButtonElement>;

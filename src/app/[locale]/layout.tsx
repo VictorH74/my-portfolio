@@ -24,7 +24,7 @@ export default async function RootLayout({
 
     return (
         <html lang="en">
-            <body>
+            <body className="scroll-smooth">
                 <NextIntlClientProvider messages={messages}>
                     <Providers>{children}</Providers>
                 </NextIntlClientProvider>

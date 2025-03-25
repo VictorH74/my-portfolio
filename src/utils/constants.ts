@@ -1,5 +1,11 @@
 'use client';
 
+import { MuiIconType, ProfileContactsType } from '@/types';
+import EmailIcon from '@mui/icons-material/Email';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
 export const PROJECT_GRADIENT_COLORS = [
     'bg-linear-[135deg,rgba(67,148,255,1)_30%,rgba(107,206,255,1)_90%]',
     'bg-linear-[45deg,rgba(154,255,208,1)_30%,rgba(20,165,157,1)_90%]',
@@ -29,3 +35,10 @@ export const EMAILJS_PUBLIC_KEY =
     (() => {
         throw new Error('EMAILJS_PUBLIC_KEY not defined');
     })();
+
+export const contactIcon: Record<keyof ProfileContactsType, MuiIconType> = {
+    email: EmailIcon,
+    github_url: GitHubIcon,
+    linkedin_url: LinkedInIcon,
+    phone: WhatsAppIcon,
+};

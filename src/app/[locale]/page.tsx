@@ -1,10 +1,10 @@
 'use client';
-import { Footer } from '@/components/Footer';
-import { Header } from '@/components/Header';
-import { AboutMe } from '@/components/sections/AboutMe';
-import { Presentation } from '@/components/sections/Presentation';
-import { ProjectList } from '@/components/sections/ProjectList';
-import { TechnologyList } from '@/components/sections/TechnologyList';
+import { Footer } from '@/ui/Footer';
+import { Header } from '@/ui/Header';
+import { AboutMe } from '@/ui/sections/AboutMe';
+import { Presentation } from '@/ui/sections/Presentation';
+import { ProjectList } from '@/ui/sections/ProjectList';
+import { TechnologyList } from '@/ui/sections/TechnologyList';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { poppins400 } from '@/utils/fonts';

@@ -1,12 +1,13 @@
 'use client';
 import { db } from '@/configs/firebaseConfig';
-import { TechnologType } from '@/types';
+import { TechnologyType } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import React from 'react';
 
 type TechnologyListCtxType = {
-    technologyList: TechnologType[];
+    technologyList: TechnologyType[];
+    setTechnologyList: React.Dispatch<React.SetStateAction<TechnologyType[]>>;
     isLoading: boolean;
     isEmpty: boolean;
     isError: boolean;
@@ -18,9 +19,9 @@ export const TechnologyListCtx =
 export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
     children,
 }) => {
-    const [technologyList, setTechnologyList] = React.useState<TechnologType[]>(
-        []
-    );
+    const [technologyList, setTechnologyList] = React.useState<
+        TechnologyType[]
+    >([]);
     const [isEmpty, setIsEmpty] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
 
@@ -38,9 +39,9 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
             );
             const querySnapshot = await getDocs(q);
 
-            const tempArray: TechnologType[] = [];
+            const tempArray: TechnologyType[] = [];
             querySnapshot.docs.forEach((doc) => {
-                tempArray.push(doc.data() as TechnologType);
+                tempArray.push(doc.data() as TechnologyType);
             });
 
             setTechnologyList(tempArray);
@@ -58,7 +59,13 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
 
     return (
         <TechnologyListCtx.Provider
-            value={{ technologyList, isLoading, isEmpty, isError }}
+            value={{
+                technologyList,
+                isLoading,
+                isEmpty,
+                isError,
+                setTechnologyList,
+            }}
         >
             {children}
         </TechnologyListCtx.Provider>
