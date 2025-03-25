@@ -114,11 +114,16 @@ export function ReordableModal(props: ReordableModalProps) {
     };
 
     return (
-        <ModalContainer>
+        <ModalContainer onClose={props.onClose}>
             <div className="w-full max-w-[1000px] h-fit animate-scale">
                 <div className="text-right py-2">
                     <button onClick={props.onClose}>
-                        <CloseIcon />
+                        <CloseIcon
+                            sx={{
+                                color: 'white',
+                                fontSize: 40,
+                            }}
+                        />
                     </button>
                 </div>
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -149,7 +154,7 @@ export function ReordableModal(props: ReordableModalProps) {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                                 style={getItemStyle(
-                                                    '#f121f8',
+                                                    '#2382FF',
                                                     snapshot.isDragging,
                                                     provided.draggableProps
                                                         .style
@@ -168,7 +173,8 @@ export function ReordableModal(props: ReordableModalProps) {
                 <button
                     className={twMerge(
                         'w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200 bg-[#737373]',
-                        itemsHasChanged && 'bg-[var(--theme-color)]'
+                        itemsHasChanged &&
+                            'bg-[#2382FF] text-white cursor-pointer'
                     )}
                     disabled={isLoading || !itemsHasChanged}
                     onClick={handleSubmit}

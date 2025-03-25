@@ -12,10 +12,10 @@ export const UpdateContactModal = (props: UpdateContactModalProps) => {
     const hook = useUpdateContactModal(props);
 
     return (
-        <ModalContainer>
+        <ModalContainer onClose={props.onClose}>
             <form
                 onSubmit={hook.handleSubmit}
-                className="w-full max-w-[500px] bg-gray-200 dark:bg-[#3f3f3f] rounded-md px-2 pb-3 animate-scale"
+                className="w-full max-w-[500px] bg-gray-200 rounded-md px-2 pb-3 animate-scale"
             >
                 <div className="text-right py-2">
                     <button
@@ -36,7 +36,7 @@ export const UpdateContactModal = (props: UpdateContactModalProps) => {
                             title: 'Must be only digits',
                         })}
                         name="contact-value"
-                        className="w-full p-2 border-2 border-custom-white rounded-md ml-2"
+                        className="w-full p-2 border-2 border-custom-white rounded-md ml-2 bg-gray-300"
                         defaultValue={props.contactValue}
                         onChange={(e) =>
                             hook.setInputValue(e.currentTarget.value)
@@ -47,7 +47,7 @@ export const UpdateContactModal = (props: UpdateContactModalProps) => {
 
                 <button
                     disabled={hook.isLoading}
-                    className="p-2 bg-[var(--theme-color)] w-full mt-2 rounded-md"
+                    className="p-2 bg-[#2382FF] text-white w-full mt-2 rounded-md"
                 >
                     {hook.isLoading ? 'Updating...' : 'Update'}
                 </button>

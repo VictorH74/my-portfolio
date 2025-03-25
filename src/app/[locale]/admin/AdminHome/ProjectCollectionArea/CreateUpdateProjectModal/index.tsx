@@ -132,7 +132,7 @@ export const CreateUpdateProjectModal = (
                             <button
                                 disabled={hook.isSubmitting}
                                 type="submit"
-                                className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4 bg-gray-500 text-white"
+                                className="hover:brightness-105 duration-250 font-semibold p-2 rounded-md mt-4 bg-[#2382FF] text-white"
                             >
                                 {props.project
                                     ? hook.isSubmitting

@@ -13,7 +13,6 @@ import React from 'react';
 import SubmitButton from './SubmitBtn';
 import Image from 'next/image';
 
-// TODO: fix: fallback path from '<root>/admin' to <root>/[locale]/admin'
 export default function AdminLoginPage() {
     const router = useRouter();
     const [errorMsg, setErrorMsg] = React.useState<string | undefined>();
@@ -52,15 +51,12 @@ export default function AdminLoginPage() {
         <div className="w-screen h-screen grid place-items-center max-[1440px]:bg-[url(/bg-medium.webp)] max-[1921]:bg-[url(/bg-large.webp)] min-[1441px]:bg-[url(/bg-larger.webp)] bg-cover bg-center">
             <main className="shadow-xl bg-gray-100 w-full max-w-[400px] px-4 py-10 rounded-lg">
                 <Image
-                    className="m-auto"
+                    className="m-auto mb-8"
                     src="/me-logo-v2.svg"
                     alt="logo"
                     width={110}
                     height={110}
                 />
-                <h2 className="text-center mb-3 font-semibold text-xl text-gray-500 mt-2">
-                    Sign in as admin
-                </h2>
                 <form action={signin} className="flex flex-col gap-2">
                     {[
                         {

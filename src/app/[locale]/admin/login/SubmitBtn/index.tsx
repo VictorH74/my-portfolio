@@ -12,7 +12,7 @@ export default function SubmitButton(props: SubmitButtonProps) {
     return (
         <button
             onClick={props.onClick}
-            className="p-2 rounded-md font-semibold hover:scale-[101%] hover:shadow-md duration-200 bg-gray-400 text-white"
+            className="p-2 rounded-md font-semibold hover:scale-[101%] hover:shadow-md duration-200 bg-[#2382FF] text-white"
             type="submit"
             disabled={pending}
         >
