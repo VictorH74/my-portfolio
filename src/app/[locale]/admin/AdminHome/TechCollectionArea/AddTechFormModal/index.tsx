@@ -22,16 +22,32 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                 </div>
                 {hook.validUrl && (
                     <div className="w-fit m-auto">
-                        <div>
-                            <Image
-                                loading="lazy"
-                                placeholder="empty"
-                                height={50}
-                                width={50}
-                                className="h-[8.1rem] w-auto"
-                                src={hook.urlValue}
-                                alt="icon"
-                            />
+                        <div className="flex gap-3">
+                            <div className="bg-zinc-700 p-2">
+                                <Image
+                                    loading="lazy"
+                                    placeholder="empty"
+                                    height={50}
+                                    width={50}
+                                    className="h-[8.1rem] w-auto"
+                                    src={hook.urlValue}
+                                    alt="icon"
+                                />
+                            </div>
+
+                            <div
+                                className="p-2"
+                                style={{
+                                    backgroundColor:
+                                        hook.bgColorValue ||
+                                        'oklch(0.37 0.013 285.805)',
+                                    color: hook.headingColorValue || 'white',
+                                }}
+                            >
+                                <div className="h-[8.1rem] aspect-square grid place-items-center">
+                                    {hook.nameValue}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -47,10 +63,9 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                                     key={inputAttrs.name}
                                     {...inputAttrs}
                                     className={twMerge(
-                                        'border p-2 rounded-md bg-gray-300',
+                                        'rounded-md bg-gray-300',
                                         className
                                     )}
-                                    onFocus={(e) => e.target.select()}
                                     required
                                 />
                             )
@@ -67,7 +82,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                                 <button
                                     key={index}
                                     className={twMerge(
-                                        'p-2 rounded-md w-full bg-blue-300 cursor-pointer',
+                                        'p-2 rounded-md w-full cursor-pointer',
                                         className
                                     )}
                                     {...rest}

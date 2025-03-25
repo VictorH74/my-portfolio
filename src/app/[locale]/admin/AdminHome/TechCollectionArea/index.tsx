@@ -72,7 +72,7 @@ export const TechCollectionArea = () => {
                               className={twMerge(
                                   'relative rounded-md shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md',
                                   hook.selectedTech?.index == icon.index &&
-                                      'outline outline-[var(--theme-color)]'
+                                      'outline outline-gray-400'
                               )}
                           >
                               <div className="absolute inset-0 bg-black/50 duration-200 opacity-0 hover:opacity-100 flex gap-2 items-center justify-center">

@@ -17,11 +17,15 @@ export interface AddTechFormModalProps {
     onClose(): void;
 }
 
+// TODO: compare tech prop value to upload just changed values
+
 export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const [submittingForm, setSubmittingForm] = React.useState(false);
 
     const [indexValue, setIndexValue] = React.useState<number | undefined>();
     const [urlValue, setUrlValue] = React.useState('');
+    const [headingColorValue, setHeadingColorValue] = React.useState('');
+    const [bgColorValue, setBgColorValue] = React.useState('');
     const [idValue, setIdValue] = React.useState('');
     const [nameValue, setNameValue] = React.useState('');
     const [isHidden, setIsHidden] = React.useState(false);
@@ -45,6 +49,8 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             setUrlValue(tech.src);
             setIdValue(tech.id);
             setNameValue(tech.name);
+            setHeadingColorValue(tech.color?.heading || ``);
+            setBgColorValue(tech.color?.background || ``);
             setIsHidden(!!tech.hidden);
             setIsMain(!!tech.isMain);
         };
@@ -86,10 +92,17 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const saveUpdateTech = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmittingForm(true);
+
+        const color: TechnologyType['color'] = {
+            background: bgColorValue,
+            heading: headingColorValue,
+        };
+
         const techData: Omit<TechnologyType, 'index'> = {
             src: urlValue,
             id: idValue,
             name: nameValue,
+            color,
         };
 
         if (isHidden) techData.hidden = isHidden;
@@ -121,7 +134,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
                 placeholder: 'URL',
                 name: 'iconUrl',
                 type: 'url',
-                className: 'col-span-2',
+                className: 'col-span-2 p-2',
                 pattern: 'https?://.+',
                 value: urlValue,
                 onChange: (e) => setUrlValue(e.currentTarget.value),
@@ -129,7 +142,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             {
                 placeholder: 'ID',
                 name: 'iconId',
-                className: 'grid',
+                className: 'grid p-2',
                 pattern: '[a-z]*',
                 value: idValue,
                 disabled: !!indexValue,
@@ -143,7 +156,8 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             {
                 placeholder: 'NAME',
                 name: 'iconName',
-                className: 'grid',
+                className: 'grid p-2',
+                autoFocus: true,
                 value: nameValue,
                 onChange: (e) => {
                     const value = e.currentTarget.value;
@@ -153,8 +167,36 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
                     }
                 },
             },
+            {
+                name: 'backgroundColor',
+                className: 'grid w-full h-[30px]',
+                value: bgColorValue,
+                type: 'color',
+                onChange: (e) => {
+                    const value = e.currentTarget.value;
+                    setBgColorValue(value);
+                },
+            },
+            {
+                name: 'headingColor',
+                className: 'grid w-full h-[30px]',
+                value: headingColorValue,
+                type: 'color',
+                onChange: (e) => {
+                    const value = e.currentTarget.value;
+                    setHeadingColorValue(value);
+                },
+            },
         ],
-        [urlValue, idValue, nameValue, idFieldModified, indexValue]
+        [
+            urlValue,
+            idValue,
+            nameValue,
+            idFieldModified,
+            indexValue,
+            bgColorValue,
+            headingColorValue,
+        ]
     );
 
     const checkboxGenerationData = React.useMemo<CustomCheckboxProps[]>(
@@ -185,7 +227,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             {
                 type: 'button',
                 onClick: resetFields,
-                className: '',
+                className: 'bg-gray-400',
                 children: (
                     <>
                         Reset <RestartAltIcon />
@@ -193,7 +235,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
                 ),
             },
             {
-                className: '',
+                className: 'bg-[#2382FF] text-white',
                 disabled: submittingForm,
                 children: (
                     <>
@@ -212,6 +254,8 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         saveUpdateTech,
         validUrl,
         urlValue,
+        headingColorValue,
+        bgColorValue,
         setUrlValue,
         idValue,
         setIdValue,
