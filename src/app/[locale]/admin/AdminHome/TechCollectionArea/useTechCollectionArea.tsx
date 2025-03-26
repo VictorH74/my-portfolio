@@ -28,7 +28,7 @@ export const useTechCollectionArea = () => {
             )
         ) {
             const docRef = getTechDocRef(techId);
-            const collectionCountRef = doc(db, 'counts', 'projects');
+            const collectionCountRef = doc(db, 'counts', 'technologies');
             await runTransaction(db, async (transaction) => {
                 const collectionCount = await transaction.get(
                     collectionCountRef
