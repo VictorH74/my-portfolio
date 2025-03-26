@@ -100,7 +100,7 @@ export default function ProjectDescriptionField(
                     <GeminiAiButton
                         onClick={() => {
                             generateContentStream(
-                                'retorne o texto de forma aprimorada sem formatação de texto e entre 2 a 6 linhas: ' +
+                                'Rephrase the text, improving clarity and fluidity. The answer should be between 2 and 6 lines, without formatting and exactly in the language of the text: ' +
                                     props.value
                             );
                         }}

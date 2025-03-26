@@ -1,12 +1,12 @@
 import { ModalContainer } from '@/components/ModalContainer';
 import { BRAZIL_PHONE_PATTERN } from '@/utils/constants';
-import CloseIcon from '@mui/icons-material/Close';
 
 import {
     useUpdateContactModal,
     inputType,
     UpdateContactModalProps,
 } from './useUpdateContactModal';
+import { CloseButton } from '../../../components/CloseButton';
 
 export const UpdateContactModal = (props: UpdateContactModalProps) => {
     const hook = useUpdateContactModal(props);
@@ -18,13 +18,11 @@ export const UpdateContactModal = (props: UpdateContactModalProps) => {
                 className="w-full max-w-[500px] bg-gray-200 rounded-md px-2 pb-3 animate-scale"
             >
                 <div className="text-right py-2">
-                    <button
+                    <CloseButton
                         disabled={hook.isLoading}
                         onClick={props.onClose}
                         type="button"
-                    >
-                        <CloseIcon />
-                    </button>
+                    />
                 </div>
                 <input name="contact-key" defaultValue={props.contactKey} />
                 <div className="flex flex-row w-full">

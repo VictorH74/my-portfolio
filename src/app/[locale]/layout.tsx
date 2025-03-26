@@ -6,7 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 
 export const metadata: Metadata = {
     title: 'Victor Leal - Portfolio',
-    description: 'Victor Leal - Portfolio',
+    description: "Victor Leal's Personal Portfolio",
     icons: [
         {
             rel: 'icon',

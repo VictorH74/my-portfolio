@@ -1,20 +1,20 @@
 'use client';
 import { Divider } from '@/components/Divider';
 import { ModalContainer } from '@/components/ModalContainer';
-import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { ProjectDescriptionFieldList } from './ProjectDescriptionFieldList';
-import { ProjectScreenshotList } from './ProjectScreenshotList';
-import { ProjectScreenshotListActions } from './ProjectScreenshotListActions';
-import { ProjectTechList } from './ProjectTechList';
-import { ProjectTechValueField } from './ProjectTechValueField';
-import { ProjectUrlFields } from './ProjectUrlFields';
+import { ProjectDescriptionFieldList } from './components/ProjectDescriptionFieldList';
+import { ProjectScreenshotList } from './components/ProjectScreenshotList';
+import { ProjectScreenshotListActions } from './components/ProjectScreenshotListActions';
+import { ProjectTechList } from './components/ProjectTechList';
+import { ProjectTechValueField } from './components/ProjectTechValueField';
+import { ProjectUrlFields } from './components/ProjectUrlFields';
 import {
     useCreateUpdateProjectModal,
     CreateUpdateProjectModalProps,
 } from './useCreateUpdateProjectModal';
+import { CloseButton } from '../../components/CloseButton';
 
 export const CreateUpdateProjectModal = (
     props: CreateUpdateProjectModalProps
@@ -25,7 +25,7 @@ export const CreateUpdateProjectModal = (
         <>
             <ModalContainer onClose={props.onClose}>
                 <div
-                    className="bg-gray-200 w-full max-w-[1000px] rounded-md p-3 animate-scale"
+                    className="bg-gray-200 w-full max-w-[900px] rounded-md px-6 pb-8 pt-2 animate-scale"
                     onMouseDown={(e) => {
                         e.stopPropagation();
                     }}
@@ -34,9 +34,7 @@ export const CreateUpdateProjectModal = (
                     }}
                 >
                     <div className="text-right py-2">
-                        <button onClick={props.onClose}>
-                            <CloseIcon />
-                        </button>
+                        <CloseButton onClick={props.onClose} />
                     </div>
 
                     <form onSubmit={hook.handleSubmit}>

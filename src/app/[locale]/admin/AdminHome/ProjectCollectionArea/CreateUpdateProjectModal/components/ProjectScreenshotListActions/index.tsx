@@ -2,7 +2,7 @@ import { IconButton, iconButtonClassName } from '@/components/IconButton';
 import {
     OutputReordableItemType,
     ReordableModal,
-} from './../../../components/ReordableModal';
+} from '../../../../components/ReordableModal';
 import { ScreenshotType } from '@/types';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import ReorderIcon from '@mui/icons-material/Reorder';

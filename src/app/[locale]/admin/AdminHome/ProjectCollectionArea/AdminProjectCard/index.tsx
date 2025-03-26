@@ -27,7 +27,7 @@ export const AdminProjectCard = (props: ProjectType) => {
     return (
         <>
             <li
-                className="relative w-[300px] h-96 shadow-lg bg-gray-300 shrink-0 grow-0 rounded-md flex flex-col overflow-hidden select-none"
+                className="relative w-[300px] h-96 bg-gray-300 shrink-0 grow-0 rounded-md flex flex-col overflow-hidden select-none shadow-[0_3px_15px_#a7a7a7]"
                 onMouseOver={() => hook.setCardHover(true)}
                 onMouseLeave={() => hook.setCardHover(false)}
             >

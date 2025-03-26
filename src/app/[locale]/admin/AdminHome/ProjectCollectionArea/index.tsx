@@ -57,7 +57,7 @@ export const ProjectCollectionArea = () => {
                 <Divider />
 
                 <ul
-                    className="py-3 w-auto flex flex-row gap-4 justify-centers overflow-x-scroll scrollbar"
+                    className="p-4 w-auto flex flex-row gap-7 justify-centers overflow-x-scroll scrollbar"
                     {...events}
                     ref={horizontalScrollRef}
                 >

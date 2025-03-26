@@ -118,6 +118,17 @@ export const useCreateUpdateProjectModal = (
         return validatedData;
     };
 
+    // const formatScreenshot = async (img: File) => {
+    //     const finalImg = await (
+    //         await fetch('api/images', {
+    //             body: img,
+    //             method: 'POST',
+    //         })
+    //     ).arrayBuffer();
+
+    //     return finalImg;
+    // };
+
     const uploadScreenshots = async () => {
         const updatedScreenshots = [...projectScreenshots];
         const promises: Promise<void>[] = [];
@@ -136,12 +147,8 @@ export const useCreateUpdateProjectModal = (
                             `project-images/${finalFileName}`
                         );
                         try {
-                            // const finalImg = await (
-                            //     await fetch('api/images', {
-                            //         body: img,
-                            //         method: 'POST',
-                            //     })
-                            // ).arrayBuffer();
+                            // await formatScreenshot(img)
+
                             const snap = await uploadBytes(storageRef, img, {
                                 contentType: 'image/webp',
                             });

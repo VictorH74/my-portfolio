@@ -117,7 +117,10 @@ export function ReordableModal(props: ReordableModalProps) {
         <ModalContainer onClose={props.onClose}>
             <div className="w-full max-w-[1000px] h-fit animate-scale">
                 <div className="text-right py-2">
-                    <button onClick={props.onClose}>
+                    <button
+                        onClick={props.onClose}
+                        className="p-2 cursor-pointer"
+                    >
                         <CloseIcon
                             sx={{
                                 color: 'white',

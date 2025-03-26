@@ -1,5 +1,4 @@
 import { ModalContainer } from '@/components/ModalContainer';
-import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -8,6 +7,7 @@ import CustomCheckbox from './CustomCheckbox';
 import useAddTechFormModal, {
     AddTechFormModalProps,
 } from './useAddTechFormModal';
+import { CloseButton } from '../../components/CloseButton';
 
 export default function AddTechFormModal(props: AddTechFormModalProps) {
     const hook = useAddTechFormModal(props);
@@ -16,9 +16,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
         <ModalContainer onClose={props.onClose}>
             <div className="bg-gray-200 w-full max-w-[700px] rounded-md p-3 animate-scale">
                 <div className="text-right py-2">
-                    <button onClick={props.onClose} className="cursor-pointer">
-                        <CloseIcon />
-                    </button>
+                    <CloseButton onClick={props.onClose} />
                 </div>
                 {hook.validUrl && (
                     <div className="w-fit m-auto">
