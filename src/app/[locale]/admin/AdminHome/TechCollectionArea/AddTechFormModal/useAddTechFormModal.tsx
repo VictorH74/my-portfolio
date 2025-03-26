@@ -4,7 +4,7 @@ import GradeIcon from '@mui/icons-material/Grade';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { doc, runTransaction, setDoc } from 'firebase/firestore';
+import { doc, runTransaction, setDoc, updateDoc } from 'firebase/firestore';
 import React from 'react';
 
 import { CustomCheckboxProps } from './CustomCheckbox';
@@ -17,15 +17,13 @@ export interface AddTechFormModalProps {
     onClose(): void;
 }
 
-// TODO: compare tech prop value to upload just changed values
-
 export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const [submittingForm, setSubmittingForm] = React.useState(false);
 
     const [indexValue, setIndexValue] = React.useState<number | undefined>();
     const [urlValue, setUrlValue] = React.useState('');
-    const [headingColorValue, setHeadingColorValue] = React.useState('');
-    const [bgColorValue, setBgColorValue] = React.useState('');
+    const [headingColorValue, setHeadingColorValue] = React.useState('#FFFFFF');
+    const [bgColorValue, setBgColorValue] = React.useState('#3F3F47');
     const [idValue, setIdValue] = React.useState('');
     const [nameValue, setNameValue] = React.useState('');
     const [isHidden, setIsHidden] = React.useState(false);
@@ -49,8 +47,11 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             setUrlValue(tech.src);
             setIdValue(tech.id);
             setNameValue(tech.name);
-            setHeadingColorValue(tech.color?.heading || ``);
-            setBgColorValue(tech.color?.background || ``);
+            if (tech.color) {
+                setHeadingColorValue(tech.color.heading);
+                setBgColorValue(tech.color.background);
+            }
+
             setIsHidden(!!tech.hidden);
             setIsMain(!!tech.isMain);
         };
@@ -69,7 +70,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         if (!!props.selectedTech) props.resetFieldsCallback();
     }, [idValue, indexValue, isHidden, isMain, nameValue, props, urlValue]);
 
-    const saveTech = async (techData: Omit<TechnologyType, 'index'>) => {
+    const saveNewTech = async (techData: Omit<TechnologyType, 'index'>) => {
         const collectionSizeRef = doc(db, 'counts', 'technologies');
         await runTransaction(db, async (transaction) => {
             const collectionCount = await transaction.get(collectionSizeRef);
@@ -79,46 +80,73 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             }
 
             const collectionSize = collectionCount.data().total as number;
+
+            // save/update collection
             const docRef = getTechDocRef(techData.id);
             const newTech = { ...techData, index: collectionSize };
             await setDoc(docRef, newTech);
             props.setTechnologyArray((prev) => [...prev, newTech]);
+
+            // increment collection item total count
             transaction.update(collectionSizeRef, {
                 total: collectionSize + 1,
             });
         });
     };
 
-    const saveUpdateTech = async (e: React.FormEvent<HTMLFormElement>) => {
+    const updateExistingTech = async (techData: Partial<TechnologyType>) => {
+        const docRef = getTechDocRef(props.selectedTech!.id);
+        await updateDoc(docRef, techData);
+
+        props.setTechnologyArray((prev) =>
+            prev.map((t) => (t.index == indexValue ? { ...t, ...techData } : t))
+        );
+    };
+
+    const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmittingForm(true);
 
-        const color: TechnologyType['color'] = {
-            background: bgColorValue,
-            heading: headingColorValue,
-        };
-
-        const techData: Omit<TechnologyType, 'index'> = {
-            src: urlValue,
-            id: idValue,
-            name: nameValue,
-            color,
-        };
-
-        if (isHidden) techData.hidden = isHidden;
-        if (isMain) techData.isMain = isMain;
-
         if (indexValue) {
-            const docRef = getTechDocRef(techData.id);
-            await setDoc(docRef, { ...techData, index: indexValue });
+            const techData: Partial<TechnologyType> = {};
 
-            props.setTechnologyArray((prev) =>
-                prev.map((t) =>
-                    t.index == indexValue ? { ...t, ...techData } : t
-                )
-            );
+            const selectedTech = props.selectedTech!;
+
+            // compare tech object datas
+            if (selectedTech.src != urlValue) techData.src = urlValue;
+            if (selectedTech.name != nameValue) techData.name = nameValue;
+
+            if (
+                selectedTech.color!.background != bgColorValue ||
+                selectedTech.color!.heading != headingColorValue
+            )
+                techData.color = {
+                    background: bgColorValue,
+                    heading: headingColorValue,
+                };
+
+            if (selectedTech.hidden != isHidden) techData.hidden = isHidden;
+            if (selectedTech.isMain != isMain) techData.isMain = isMain;
+
+            // console.log('update tech: ', selectedTech.id, techData);
+            updateExistingTech(techData);
         } else {
-            saveTech(techData);
+            const color: TechnologyType['color'] = {
+                background: bgColorValue,
+                heading: headingColorValue,
+            };
+
+            const techData: Omit<TechnologyType, 'index'> = {
+                src: urlValue,
+                id: idValue,
+                name: nameValue,
+                hidden: isHidden,
+                isMain,
+                color,
+            };
+
+            // console.log('create tech: ', techData);
+            saveNewTech(techData);
         }
 
         resetFields();
@@ -163,7 +191,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
                     const value = e.currentTarget.value;
                     setNameValue(value);
                     if (!indexValue && !idFieldModified) {
-                        setIdValue(value.toLowerCase().replaceAll(' ', '_'));
+                        setIdValue(value.toLowerCase().replaceAll(' ', ''));
                     }
                 },
             },
@@ -251,7 +279,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         checkboxGenerationData,
         fieldGenerationData,
         buttonGenerationData,
-        saveUpdateTech,
+        submitForm,
         validUrl,
         urlValue,
         headingColorValue,

@@ -54,7 +54,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
 
                 <form
                     className=" mt-5 animate-scale"
-                    onSubmit={hook.saveUpdateTech}
+                    onSubmit={hook.submitForm}
                 >
                     <div className="grid grid-cols-2 gap-2 grow">
                         {hook.fieldGenerationData.map(
