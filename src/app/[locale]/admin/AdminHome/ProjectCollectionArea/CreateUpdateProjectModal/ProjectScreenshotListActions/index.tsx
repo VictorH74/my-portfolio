@@ -1,3 +1,4 @@
+import { IconButton, iconButtonClassName } from '@/components/IconButton';
 import {
     OutputReordableItemType,
     ReordableModal,
@@ -7,6 +8,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import Image from 'next/image';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface ProjectScreenshotListActionsProps {
     projectScreenshotUrls: string[];
@@ -22,11 +24,16 @@ export const ProjectScreenshotListActions = (
         React.useState(false);
 
     return (
-        <div className="flex flex-col justify-evenly px-2">
-            <div className="relative">
-                <label htmlFor="upload-img" className="px-6 cursor-pointer">
-                    <AddPhotoAlternateIcon sx={{ fontSize: 35 }} />
-                </label>
+        <div className="flex px-2 w-fit items-center justify-center gap-3 mb-4">
+            <h2 className="text-gray-600 text-xl">Screenshot list</h2>
+            <label
+                className={twMerge(
+                    'relative',
+                    iconButtonClassName,
+                    'rounded-md'
+                )}
+            >
+                <AddPhotoAlternateIcon sx={{ fontSize: 27 }} />
                 <input
                     onChange={props.onSelectChange}
                     className="absolute pointer-events-none opacity-0"
@@ -34,16 +41,15 @@ export const ProjectScreenshotListActions = (
                     type="file"
                     accept=".webp,.png,.jpg,.jpeg"
                     name=""
-                    id="upload-img"
                 />
-            </div>
+            </label>
             {props.projectScreenshotUrls.length > 1 && (
-                <button
+                <IconButton
+                    Icon={ReorderIcon}
                     onClick={() => setOnReorderScreenshots(true)}
                     type="button"
-                >
-                    <ReorderIcon sx={{ fontSize: 35 }} />
-                </button>
+                    className="rounded-md"
+                />
             )}
 
             {onReorderScreenshots && (

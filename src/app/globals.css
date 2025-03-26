@@ -46,6 +46,22 @@ body {
     color: var(--foreground);
     background: var(--background);
     font-family: Arial, Helvetica, sans-serif;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+        @apply bg-[#1e1e1e] w-2;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #dbdbdb;
+    }
+}
+
+.scrollbar {
+    &::-webkit-scrollbar {
+        @apply bg-[#dbdbdb] h-2;
+    }
+    &::-webkit-scrollbar-thumb {
+        @apply bg-gray-500;
+    }
 }
 
 .text-shadow {

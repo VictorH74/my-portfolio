@@ -17,8 +17,6 @@ import {
     ReordableModal,
 } from '../components/ReordableModal';
 
-// TODO: improve horizontal scroll styles
-
 export const ProjectCollectionArea = () => {
     const [onCreateProject, setOnCreateProject] = React.useState(false);
     const [onReorderProject, setOnReorderProject] = React.useState(false);
@@ -59,7 +57,7 @@ export const ProjectCollectionArea = () => {
                 <Divider />
 
                 <ul
-                    className="py-3 w-auto flex flex-row gap-4 justify-centers overflow-x-scroll"
+                    className="py-3 w-auto flex flex-row gap-4 justify-centers overflow-x-scroll scrollbar"
                     {...events}
                     ref={horizontalScrollRef}
                 >

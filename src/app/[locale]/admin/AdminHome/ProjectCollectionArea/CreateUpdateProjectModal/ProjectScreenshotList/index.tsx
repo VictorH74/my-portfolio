@@ -26,7 +26,7 @@ export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
     return (
         props.projectScreenshotUrls.length > 0 && (
             <div
-                className="flex gap-2 overflow-x-scroll"
+                className="flex gap-2 overflow-x-scroll scrollbar pb-3"
                 // {...events}
                 // ref={ProjectScreenshotListHorizontalScrollRef}
             >

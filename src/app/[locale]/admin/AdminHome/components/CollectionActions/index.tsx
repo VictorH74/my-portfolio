@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import ReorderIcon from '@mui/icons-material/Reorder';
 
-import Button from '../Button';
+import { IconButton } from '@/components/IconButton';
 
 interface CollectionActionsProps {
     collectionName: string;
@@ -15,12 +15,16 @@ export const CollectionActions = (props: CollectionActionsProps) => {
     return (
         <div className="flex gap-2 items-center mb-2">
             <h1 className={headingClassName}>{props.collectionName}</h1>
-            <Button onClick={props.addFunc}>
-                <AddIcon />
-            </Button>
-            <Button onClick={props.reorderFunc}>
-                <ReorderIcon />
-            </Button>
+            <IconButton
+                onClick={props.addFunc}
+                Icon={AddIcon}
+                className="rounded-md hover:scale-100"
+            />
+            <IconButton
+                onClick={props.reorderFunc}
+                Icon={ReorderIcon}
+                className="rounded-md hover:scale-100"
+            />
         </div>
     );
 };

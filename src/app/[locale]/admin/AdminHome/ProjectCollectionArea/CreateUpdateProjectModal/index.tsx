@@ -42,7 +42,7 @@ export const CreateUpdateProjectModal = (
                     <form onSubmit={hook.handleSubmit}>
                         <div
                             className={twMerge(
-                                'flex flex-row bg-black/20 py-2 min-h-[200px]',
+                                'py-2 min-h-[200px]',
                                 hook.projectScreenshots.length > 0
                                     ? ''
                                     : 'justify-center'
