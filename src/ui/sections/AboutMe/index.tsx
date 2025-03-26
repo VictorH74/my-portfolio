@@ -20,7 +20,7 @@ export const AboutMe = () => {
                         </div>
                     </div>
                     <div className="overflow-auto w-fit text-dark-font font-medium">
-                        <h2 className="text-4xl">Victor Leal</h2>
+                        <h2 className="text-4xl">Victor H. A. Leal</h2>
                         <h3 className="text-2xl">{t('career')}</h3>
                         <div className={twMerge('space-y-2 mt-3')}>
                             <p>{t('paragraph_1')}</p>

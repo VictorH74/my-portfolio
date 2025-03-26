@@ -7,11 +7,11 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Skeleton from '@mui/material/Skeleton';
 import Image from 'next/image';
 import React from 'react';
-import { twMerge } from 'tailwind-merge';
 
 import { useTechCollectionArea } from './useTechCollectionArea';
 import { CollectionActions } from '../components/CollectionActions';
 import { ReordableModal } from '../components/ReordableModal';
+import { AdminTechnologyCard } from './AdminTechnologyCard';
 
 const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
 
@@ -67,13 +67,13 @@ export const TechCollectionArea = () => {
                               </div>
                           ))
                     : hook.technologyList.map((icon) => (
-                          <li
+                          <AdminTechnologyCard
                               key={icon.id}
-                              className={twMerge(
-                                  'relative rounded-md shadow-xl flex flex-col items-center justify-center gap-2 max-sm:w-[100px] sm:w-[200px] sm:min-w-[200px] aspect-square select-none duration-200 backdrop-blur-md',
-                                  hook.selectedTech?.index == icon.index &&
-                                      'outline outline-gray-400'
-                              )}
+                              className={
+                                  hook.selectedTech?.index == icon.index
+                                      ? 'outline outline-gray-400'
+                                      : ''
+                              }
                           >
                               <div className="absolute inset-0 bg-black/50 duration-200 opacity-0 hover:opacity-100 flex gap-2 items-center justify-center">
                                   <IconButton
@@ -122,7 +122,7 @@ export const TechCollectionArea = () => {
                                       {icon.name}
                                   </p>
                               </div>
-                          </li>
+                          </AdminTechnologyCard>
                       ))}
             </ul>
 

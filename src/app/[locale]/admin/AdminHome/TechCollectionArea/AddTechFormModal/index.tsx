@@ -21,7 +21,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                 {hook.validUrl && (
                     <div className="w-fit m-auto">
                         <div className="flex gap-3">
-                            <div className="bg-zinc-700 p-2">
+                            <div className="p-2">
                                 <Image
                                     loading="lazy"
                                     placeholder="empty"

@@ -40,7 +40,7 @@ export const Presentation = () => {
                     {' '}
                     {t('i_am')}
                     <span className="text-transparent bg-clip-text bg-linear-to-r from-[#00FC69] via-[#4EFFFF] via-57% to-[#2382FF]">
-                        Victor Leal
+                        Victor H. A. Leal
                     </span>{' '}
                 </h1>
                 <h2
