@@ -35,7 +35,7 @@ export const Presentation = () => {
                     data-aos-once="true"
                     data-aos-delay="200"
                     data-aos-duration="1000"
-                    className="max-sm:text-3xl max-md:text-4xl min-[87.5rem]:text-8xl text-6xl"
+                    className="max-[21.8rem]:text-2xl max-sm:text-3xl max-md:text-4xl min-[87.5rem]:text-8xl text-6xl"
                 >
                     {' '}
                     {t('i_am')}

@@ -8,7 +8,7 @@ import { doc, runTransaction, setDoc, updateDoc } from 'firebase/firestore';
 import React from 'react';
 
 import { CustomCheckboxProps } from './CustomCheckbox';
-import { getTechDocRef } from '../useTechCollectionArea';
+import { getTechDocRef } from '../../useTechCollectionArea';
 
 export interface AddTechFormModalProps {
     selectedTech: TechnologyType | null;

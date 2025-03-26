@@ -19,6 +19,14 @@ export const useProjectItem = () => {
         }, 300);
     };
 
+    const computedUrl = (urlStr: string) => {
+        const url = new URL(urlStr);
+
+        if (!url.searchParams.has('muted')) url.searchParams.set('muted', '1');
+
+        return url.toString();
+    };
+
     return {
         videoContainerRef,
         videoVisibility,
@@ -27,5 +35,6 @@ export const useProjectItem = () => {
         hiddenVideo,
         videoIsLoading,
         setVideoIsLoading,
+        computedUrl,
     };
 };

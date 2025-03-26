@@ -11,9 +11,11 @@ import React from 'react';
 import { useTechCollectionArea } from './useTechCollectionArea';
 import { CollectionActions } from '../components/CollectionActions';
 import { ReordableModal } from '../components/ReordableModal';
-import { AdminTechnologyCard } from './AdminTechnologyCard';
+import { AdminTechnologyCard } from './components/AdminTechnologyCard';
 
-const AddTechFormModal = React.lazy(() => import('./AddTechFormModal'));
+const AddTechFormModal = React.lazy(
+    () => import('./components/AddTechFormModal')
+);
 
 export const TechCollectionArea = () => {
     const hook = useTechCollectionArea();

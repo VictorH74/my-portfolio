@@ -7,7 +7,7 @@ import CustomCheckbox from './CustomCheckbox';
 import useAddTechFormModal, {
     AddTechFormModalProps,
 } from './useAddTechFormModal';
-import { CloseButton } from '../../components/CloseButton';
+import { CloseButton } from '../../../components/CloseButton';
 
 export default function AddTechFormModal(props: AddTechFormModalProps) {
     const hook = useAddTechFormModal(props);

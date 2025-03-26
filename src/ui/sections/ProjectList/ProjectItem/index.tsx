@@ -133,7 +133,9 @@ export const ProjectItem: React.FC<
                             <iframe
                                 className="bg-transparent size-full"
                                 title="project video"
-                                src={props.project.videoUrl || randomVideoUrl}
+                                src={hook.computedUrl(
+                                    props.project.videoUrl || randomVideoUrl
+                                )}
                                 allow="autoplay; fullscreen; picture-in-picture"
                                 allowFullScreen
                                 onLoad={() => hook.setVideoIsLoading(false)}
