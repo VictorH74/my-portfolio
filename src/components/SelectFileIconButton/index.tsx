@@ -4,16 +4,15 @@ import { iconButtonClassName } from '../IconButton';
 
 interface SelectFileIconButtonProps {
     multiple?: boolean;
-    id: string;
     accept: string;
-    name?: string;
     onChange(_: FileList | null): void;
 }
 
 export const SelectFileIconButton = React.forwardRef<
     HTMLInputElement,
     SelectFileIconButtonProps
->(function SelectFileIconButton({ onChange, name, ...props }, ref) {
+>(function SelectFileIconButton({ onChange, ...props }, ref) {
+    const btnId = React.useId();
     const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileInput = e.target;
         const files = fileInput.files;
@@ -23,7 +22,7 @@ export const SelectFileIconButton = React.forwardRef<
 
     return (
         <div className={iconButtonClassName}>
-            <label htmlFor={props.id} className="cursor-pointer">
+            <label htmlFor={btnId} className="cursor-pointer">
                 <EditIcon
                     sx={{
                         fontSize: 27,
@@ -33,7 +32,7 @@ export const SelectFileIconButton = React.forwardRef<
             <input
                 ref={ref}
                 {...props}
-                name={name ?? props.id}
+                id={btnId}
                 onChange={handleSelectFile}
                 className="absolute pointer-events-none opacity-0 border-[3px] rounded-md"
                 type="file"

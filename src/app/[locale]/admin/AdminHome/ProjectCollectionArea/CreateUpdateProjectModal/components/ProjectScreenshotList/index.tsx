@@ -49,8 +49,6 @@ export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
                                         index
                                     )}
                                     accept=".webp,.png,.jpg,.jpeg"
-                                    name=""
-                                    id="upload-replace-img"
                                 />
 
                                 <IconButton

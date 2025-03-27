@@ -75,7 +75,6 @@ export const ProfileImageContainer = () => {
                 ) : (
                     <SelectFileIconButton
                         ref={selectFileRef}
-                        id="select-profile-img"
                         accept=".webp,.png,.jpg,.jpeg"
                         onChange={handleSelectImg}
                     />
