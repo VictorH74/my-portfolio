@@ -52,5 +52,9 @@
     "DownloadResumeBtn": {
         "label": "Download Resume",
         "resume_size": "Size"
+    },
+    "ViewResumeBtn": {
+        "label": "View Resume",
+        "resume_size": "Size"
     }
 }

@@ -24,7 +24,7 @@ export const ViewResumeBtn: React.FC<Props> = (props) => {
                         : hook.downloadAndViewResume
                 }
                 className={twMerge(
-                    'download-resume-btn bg-secondary-black shrink-0 px-8 rounded-md text-white relative cursor-pointer w-[13rem]',
+                    'view-resume-btn bg-secondary-black shrink-0 px-8 rounded-md text-white relative cursor-pointer w-[13rem]',
                     props.className
                 )}
             >

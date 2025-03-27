@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-.download-resume-btn {
+.view-resume-btn {
     --height: 3.5rem;
     --tooltip-height: 2.2rem;
     --tooltip-width: 8.1rem;

@@ -52,5 +52,9 @@
     "DownloadResumeBtn": {
         "label": "Baixar Currículo",
         "resume_size": "Tamanho"
+    },
+    "ViewResumeBtn": {
+        "label": "Visualizar Currículo",
+        "resume_size": "Tamanho"
     }
 }
