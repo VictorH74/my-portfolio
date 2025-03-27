@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { anchorLinkHref, useHeader } from './useHeader';
 import { twMerge } from 'tailwind-merge';
 import { Hamburger } from './Hamburger';
-import { DownloadResumeBtn } from '../../components/DownloadResumeBtn';
+import { ViewResumeBtn } from '@/components/ViewResumeBtn';
 
 export const Header = () => {
     const t = useTranslations('Header');
@@ -38,18 +38,18 @@ export const Header = () => {
                                 <Link
                                     href={href}
                                     className={twMerge(
-                                        'grid hover:-translate-y-1/2 duration-500 p-3 space-y-5'
+                                        'grid hover:-translate-y-[48%] duration-500 p-3 space-y-5'
                                     )}
                                 >
                                     <span>{t('nav_link_label_' + href)}</span>
-                                    <span className="text-white">
+                                    <span className="text-white font-semibold">
                                         {t('nav_link_label_' + href)}
                                     </span>
                                 </Link>
                             </li>
                         ))}
                         <li>
-                            <DownloadResumeBtn tooltipDirection="bottom" />
+                            <ViewResumeBtn />
                         </li>
                     </ul>
                 </nav>

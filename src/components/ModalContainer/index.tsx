@@ -16,7 +16,7 @@ export const ModalContainer: React.FC<{
         <div
             onClick={onClose}
             className={twMerge(
-                'fixed inset-0 bg-black/70 grid place-items-center overflow-auto',
+                'fixed inset-0 bg-black/70 grid place-items-center overflow-auto z-100',
                 className
             )}
         >

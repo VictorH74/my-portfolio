@@ -6,8 +6,8 @@ import { createPortal } from 'react-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { anchorLinkHref } from '../useHeader';
 import Link from 'next/link';
-import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 import './style.css';
+import { ViewResumeBtn } from '@/components/ViewResumeBtn';
 
 export const Hamburger = () => {
     const t = useTranslations('Header');
@@ -86,10 +86,7 @@ export const Hamburger = () => {
                                         </li>
                                     ))}
                                     <li className="my-5">
-                                        <DownloadResumeBtn
-                                            tooltipDirection="bottom"
-                                            className="w-full text-2xl rounded-none truncate"
-                                        />
+                                        <ViewResumeBtn className="w-full text-2xl rounded-none truncate" />
                                     </li>
                                 </ul>
                             </nav>
