@@ -24,24 +24,40 @@
     transition: transform 0.3s;
 }
 
+.front {
+    transition-duration: 200ms;
+}
+
 /* rotate to right */
 .cube-side-rotation-1:hover .cube {
-    transform: rotateY(-90deg) translateZ(var(--cubefinalZPos)) scale(1);
+    transform: rotateY(-90deg) translateZ(var(--cubefinalZPos));
+    & .front {
+        transform: translateX(-50%);
+    }
 }
 
 /* rotate to left */
 .cube-side-rotation-2:hover .cube {
-    transform: rotateY(90deg) translateZ(var(--cubefinalZPos)) scale(1);
+    transform: rotateY(90deg) translateZ(var(--cubefinalZPos));
+    & .front {
+        transform: translateX(50%);
+    }
 }
 
 /* rotate to top */
 .cube-side-rotation-3:hover .cube {
-    transform: rotateX(-90deg) translateZ(var(--cubefinalZPos)) scale(1);
+    transform: rotateX(-90deg) translateZ(var(--cubefinalZPos));
+    & .front {
+        transform: translateY(50%);
+    }
 }
 
 /* rotate to bottom */
 .cube-side-rotation-4:hover .cube {
-    transform: rotateX(90deg) translateZ(var(--cubefinalZPos)) scale(1);
+    transform: rotateX(90deg) translateZ(var(--cubefinalZPos));
+    & .front {
+        transform: translateY(-50%);
+    }
 }
 
 .front,
@@ -53,21 +69,17 @@
 }
 
 .right {
-    transform: rotateY(90deg) translateX(50%)
-        translateZ(calc(var(--cubeSize) / 2));
+    transform: rotateY(90deg) translateX(50%);
 }
 
 .left {
-    transform: rotateY(-90deg) translateX(-50%)
-        translateZ(calc(var(--cubeSize) / 2));
+    transform: rotateY(-90deg) translateX(-50%);
 }
 
 .top {
-    transform: rotateX(90deg) translateY(-50%)
-        translateZ(calc(var(--cubeSize) / 2));
+    transform: rotateX(90deg) translateY(-50%);
 }
 
 .bottom {
-    transform: rotateX(-90deg) translateY(50%)
-        translateZ(calc(var(--cubeSize) / 2));
+    transform: rotateX(-90deg) translateY(50%);
 }

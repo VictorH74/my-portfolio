@@ -33,6 +33,7 @@ export const TechnologyCard: React.FC<TechnologyType> = (techIcon) => {
                     />
                 </div>
 
+                {/* side */}
                 <div
                     className={twMerge(
                         'bg-[#6d6d6d]',
