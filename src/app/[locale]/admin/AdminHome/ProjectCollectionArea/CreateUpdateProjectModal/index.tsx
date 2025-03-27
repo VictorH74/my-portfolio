@@ -59,8 +59,10 @@ export const CreateUpdateProjectModal = (
                                 projectScreenshotUrls={
                                     hook.projectScreenshotUrls
                                 }
-                                replaceScreenshotFunc={hook.replaceScreenshot}
-                                removeScreenshotFunc={hook.removeScreenshot}
+                                makeReplaceScreenshot={
+                                    hook.makeReplaceScreenshot
+                                }
+                                makeRemoveScreenshot={hook.makeRemoveScreenshot}
                             />
                         </div>
 

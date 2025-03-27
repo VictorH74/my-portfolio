@@ -29,6 +29,12 @@ export const useAdminProjectCard = (props: ProjectType) => {
     //     }
     // }, [technologyArray, empty]);
 
+    const getLinkIconSx = (urlStr: string | undefined) => {
+        return {
+            color: urlStr ? '#1e1e1e' : '#999999',
+        };
+    };
+
     const openEditModal = () => setOnUpdateProject(true);
 
     const removeProject = async () => {
@@ -87,6 +93,7 @@ export const useAdminProjectCard = (props: ProjectType) => {
     return {
         cardHover,
         setCardHover,
+        getLinkIconSx,
         onUpdateProject,
         setOnUpdateProject,
         techSrcList,

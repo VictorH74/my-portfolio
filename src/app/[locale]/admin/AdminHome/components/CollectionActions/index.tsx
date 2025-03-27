@@ -10,6 +10,8 @@ interface CollectionActionsProps {
 }
 
 export const headingClassName = 'text-3xl mr-3 text-gray-700 font-medium';
+const iconBtnClassName =
+    'rounded-md hover:scale-100 bg-[#2382FF] text-white hover:scale-110';
 
 export const CollectionActions = (props: CollectionActionsProps) => {
     return (
@@ -18,12 +20,12 @@ export const CollectionActions = (props: CollectionActionsProps) => {
             <IconButton
                 onClick={props.addFunc}
                 Icon={AddIcon}
-                className="rounded-md hover:scale-100"
+                className={iconBtnClassName}
             />
             <IconButton
                 onClick={props.reorderFunc}
                 Icon={ReorderIcon}
-                className="rounded-md hover:scale-100"
+                className={iconBtnClassName}
             />
         </div>
     );

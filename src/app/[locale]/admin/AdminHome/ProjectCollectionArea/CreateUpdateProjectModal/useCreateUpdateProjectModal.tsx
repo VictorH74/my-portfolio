@@ -192,15 +192,20 @@ export const useCreateUpdateProjectModal = (
             setProjectScreenshots((prev) => [...prev, ...Array.from(files)]);
     };
 
-    const replaceScreenshot =
+    const makeReplaceScreenshot =
         (screenshotIndex: number) => (files: FileList | null) => {
             if (files)
                 setProjectScreenshots((prev) =>
-                    prev.map((s, i) => (i == screenshotIndex ? files[0] : s))
+                    prev.map((s, i) => {
+                        if (i == screenshotIndex) {
+                            return files[0];
+                        }
+                        return s;
+                    })
                 );
         };
 
-    const removeScreenshot = (screenshotIndex: number) => () => {
+    const makeRemoveScreenshot = (screenshotIndex: number) => () => {
         const onRemoveScreenshot = projectScreenshots[screenshotIndex];
         if (!(onRemoveScreenshot instanceof File)) {
             setOnRemoveScreenshotNames((prev) => [
@@ -347,8 +352,8 @@ export const useCreateUpdateProjectModal = (
         handleSubmit,
         projectScreenshots,
         handleSelectChange,
-        replaceScreenshot,
-        removeScreenshot,
+        makeReplaceScreenshot,
+        makeRemoveScreenshot,
         updateProjectProps,
         updateDescription,
         project,

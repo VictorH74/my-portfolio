@@ -7,10 +7,10 @@ import React from 'react';
 
 interface ProjectScreenshotListProps {
     projectScreenshotUrls: string[];
-    replaceScreenshotFunc(
+    makeReplaceScreenshot(
         _screenshotIndex: number
     ): (_: FileList | null) => void;
-    removeScreenshotFunc(_screenshotIndex: number): () => void;
+    makeRemoveScreenshot(_screenshotIndex: number): () => void;
 }
 
 export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
@@ -45,7 +45,7 @@ export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
                         <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
                             <div className="flex gap-2 items-center justify-center">
                                 <SelectFileIconButton
-                                    onChange={props.replaceScreenshotFunc(
+                                    onChange={props.makeReplaceScreenshot(
                                         index
                                     )}
                                     accept=".webp,.png,.jpg,.jpeg"
@@ -53,7 +53,7 @@ export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
 
                                 <IconButton
                                     Icon={RemoveIcon}
-                                    onClick={props.removeScreenshotFunc(index)}
+                                    onClick={props.makeRemoveScreenshot(index)}
                                     type="button"
                                 />
                             </div>

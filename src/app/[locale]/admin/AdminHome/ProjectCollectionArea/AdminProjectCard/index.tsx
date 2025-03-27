@@ -17,7 +17,7 @@ const DateParagraph: React.FC<{ label: string; isoDate: string }> = ({
     isoDate,
 }) => (
     <p className="text-sm font-semibold">
-        {label} - {new Date(isoDate).toLocaleString()}{' '}
+        {label}: {new Date(isoDate).toLocaleString()}{' '}
     </p>
 );
 
@@ -36,7 +36,7 @@ export const AdminProjectCard = (props: ProjectType) => {
                         width={300}
                         height={113}
                         src={props.screenshots[0].url}
-                        className="rounded-b-md w-full object-cover"
+                        className="rounded-b-md w-full h-auto object-cover"
                         alt="project screenshot"
                     />
                     {props.screenshots.length > 1 && (
@@ -54,9 +54,13 @@ export const AdminProjectCard = (props: ProjectType) => {
                     <p className="truncate">{props.description.en}</p>
 
                     <div className="flex flex-row gap-2">
-                        {props.deployUrl && <LinkIcon />}
-                        {props.repositoryUrl && <GitHubIcon />}
-                        {props.videoUrl && <PlayCircleFilledIcon />}
+                        <LinkIcon sx={hook.getLinkIconSx(props.deployUrl)} />
+                        <GitHubIcon
+                            sx={hook.getLinkIconSx(props.repositoryUrl)}
+                        />
+                        <PlayCircleFilledIcon
+                            sx={hook.getLinkIconSx(props.videoUrl)}
+                        />
                     </div>
 
                     <Divider className="my-2 primary-bg-color" />
@@ -76,13 +80,13 @@ export const AdminProjectCard = (props: ProjectType) => {
                     <div>
                         {props.createdAt && (
                             <DateParagraph
-                                label="Created at"
+                                label="Created"
                                 isoDate={props.createdAt}
                             />
                         )}
                         {props.updatedAt && (
                             <DateParagraph
-                                label="Updated at"
+                                label="Updated"
                                 isoDate={props.updatedAt}
                             />
                         )}
