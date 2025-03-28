@@ -12,6 +12,7 @@ import { useTechCollectionArea } from './useTechCollectionArea';
 import { CollectionActions } from '../components/CollectionActions';
 import { ReordableModal } from '../components/ReordableModal';
 import { AdminTechnologyCard } from './components/AdminTechnologyCard';
+import { RemoveTechConfirmModal } from './components/RemoveTechConfirmModal';
 
 const AddTechFormModal = React.lazy(
     () => import('./components/AddTechFormModal')
@@ -80,15 +81,16 @@ export const TechCollectionArea = () => {
                               <div className="absolute inset-0 bg-black/50 duration-200 opacity-0 hover:opacity-100 flex gap-2 items-center justify-center">
                                   <IconButton
                                       Icon={EditIcon}
-                                      onClick={hook.makeSelectTech(icon)}
+                                      onClick={() =>
+                                          hook.selectOnSaveTech(icon)
+                                      }
                                       type="button"
                                   />
                                   <IconButton
                                       Icon={RemoveIcon}
-                                      onClick={hook.makeRemoveFunc(
-                                          icon.id,
-                                          icon.index
-                                      )}
+                                      onClick={() =>
+                                          hook.selectOnRemoveTech(icon)
+                                      }
                                       type="button"
                                       disabled={!!hook.selectedTech}
                                   />
@@ -155,6 +157,16 @@ export const TechCollectionArea = () => {
                         </div>
                     )}
                 </ReordableModal>
+            )}
+
+            {hook.selectedOnRemoveTech && (
+                <RemoveTechConfirmModal
+                    removeTech={hook.removeTech}
+                    onClose={() => {
+                        hook.setSelectedOnRemoveTech(null);
+                    }}
+                    selectedOnRemoveTech={hook.selectedOnRemoveTech}
+                />
             )}
         </section>
     );

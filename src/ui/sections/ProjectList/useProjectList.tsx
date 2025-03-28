@@ -1,4 +1,4 @@
-import { ProjectType, TechnologyType } from '@/types';
+import { ProjectType } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import {
     collection,
@@ -10,7 +10,6 @@ import {
     startAfter,
 } from 'firebase/firestore';
 import { db } from '@/configs/firebaseConfig';
-import { useTechnologyList } from '@/hooks/useTechnologyList';
 import React from 'react';
 
 export const useProjectList = () => {
@@ -18,22 +17,12 @@ export const useProjectList = () => {
     const [isLoadingMoreProjects, setIsLoadingMoreProjects] =
         React.useState(false);
     const [showingMore, setShowingMore] = React.useState(false);
-    const { isEmpty, technologyList } = useTechnologyList();
 
     const { isLoading } = useQuery({
         queryKey: ['project-list'],
         queryFn: () => getInitialProjects(),
         refetchOnWindowFocus: false,
     });
-
-    const iconMap = React.useMemo(() => {
-        if (isEmpty) return undefined;
-        const map: Record<TechnologyType['name'], TechnologyType> = {};
-        technologyList.map((icon) => {
-            map[icon.id] = icon;
-        });
-        return map;
-    }, [isEmpty, technologyList]);
 
     const getMoreProjects = async () => {
         if (projectList.length === 4) {
@@ -74,7 +63,6 @@ export const useProjectList = () => {
         isLoadingMoreProjects,
         showingMore,
         isLoading,
-        iconMap,
         getMoreProjects,
         setShowingMore,
     };

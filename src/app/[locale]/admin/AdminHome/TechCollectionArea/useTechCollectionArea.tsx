@@ -11,6 +11,8 @@ export const getTechDocRef = (id: string) => doc(db, 'technologies', id);
 export const useTechCollectionArea = () => {
     const [selectedTech, setSelectedTech] =
         React.useState<TechnologyType | null>(null);
+    const [selectedOnRemoveTech, setSelectedOnRemoveTech] =
+        React.useState<TechnologyType | null>(null);
 
     const [showAddTechForm, setShowAddTechForm] = React.useState(false);
     const [showReorderModal, setShowReorderModal] = React.useState(false);
@@ -21,14 +23,19 @@ export const useTechCollectionArea = () => {
         isLoading: isTechArrayLoading,
     } = useTechnologyList();
 
-    const removeTech = async (techId: string, techIndex: number) => {
-        if (
-            confirm(
-                'Are you sure you want to remove this technology from your collection?'
-            )
-        ) {
-            const docRef = getTechDocRef(techId);
-            const collectionCountRef = doc(db, 'counts', 'technologies');
+    const selectOnRemoveTech = (tech: TechnologyType) => {
+        setSelectedOnRemoveTech(tech);
+    };
+
+    const removeTech = async (cb?: () => Promise<void>) => {
+        if (!selectedOnRemoveTech) return;
+
+        const docRef = getTechDocRef(selectedOnRemoveTech.id);
+        const collectionCountRef = doc(db, 'counts', 'technologies');
+
+        try {
+            if (cb) await cb();
+
             await runTransaction(db, async (transaction) => {
                 const collectionCount = await transaction.get(
                     collectionCountRef
@@ -38,7 +45,7 @@ export const useTechCollectionArea = () => {
                 }
                 const total = (collectionCount.data().total as number) - 1;
                 for (
-                    let currentIndex = techIndex;
+                    let currentIndex = selectedOnRemoveTech.index;
                     currentIndex < total;
                     currentIndex++
                 ) {
@@ -53,17 +60,19 @@ export const useTechCollectionArea = () => {
                 transaction.delete(docRef);
                 transaction.update(collectionCountRef, { total });
             });
-            setTechnologyList((prev) => prev.filter((t) => t.id !== techId));
+        } catch (e) {
+            console.error(e);
         }
+
+        setTechnologyList((prev) =>
+            prev.filter((t) => t.id !== selectedOnRemoveTech.id)
+        );
     };
 
-    const makeSelectTech = (tech: TechnologyType) => () => {
+    const selectOnSaveTech = (tech: TechnologyType) => {
         setSelectedTech(tech);
         setShowAddTechForm(true);
     };
-
-    const makeRemoveFunc = (id: string, index: number) => () =>
-        removeTech(id, index);
 
     const toggleAddTechFormVisibillity = () =>
         setShowAddTechForm((prev) => !prev);
@@ -92,13 +101,16 @@ export const useTechCollectionArea = () => {
 
     return {
         selectedTech,
+        selectedOnRemoveTech,
         setTechnologyList,
+        setSelectedOnRemoveTech,
         showAddTechForm,
         showReorderModal,
         technologyList,
+        removeTech,
         isTechArrayLoading,
-        makeSelectTech,
-        makeRemoveFunc,
+        selectOnSaveTech,
+        selectOnRemoveTech,
         toggleAddTechFormVisibillity,
         toggleReorderModalVisibillity,
         reorderTechs,

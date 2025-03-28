@@ -42,4 +42,4 @@ next-env.d.ts
 
 #enviropment
 .env.local
-src/app/[locale]/test/
+src/app/test/

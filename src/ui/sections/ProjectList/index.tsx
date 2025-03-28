@@ -9,10 +9,13 @@ import Image from 'next/image';
 import { useProjectList } from './useProjectList';
 import { Loading } from '@/components/Loading';
 import { twMerge } from 'tailwind-merge';
+import { useTechnologyIconMap } from '@/hooks/useTechnologyIconMap';
+import Tooltip from '@mui/material/Tooltip';
 
 export const ProjectList = () => {
     const t = useTranslations('ProjectListSection');
     const hook = useProjectList();
+    const iconMap = useTechnologyIconMap();
 
     return (
         <section
@@ -32,29 +35,41 @@ export const ProjectList = () => {
                         index={i}
                         project={projectData}
                     >
-                        {!!hook.iconMap && (
+                        {!!iconMap && (
                             <div className="w-full max-w-[35rem] space-y-2">
                                 <h3 className="text-2xl font-medium">
                                     {t('technology_list_title')}:
                                 </h3>
-                                <ul className="flex gap-4">
+                                <ul className="flex gap-2">
                                     {projectData.technologies.map(
                                         (techIconStr) => {
                                             const techIcon =
-                                                hook.iconMap![techIconStr];
-                                            return (
-                                                <li key={techIcon.id}>
-                                                    <Image
-                                                        alt={
-                                                            techIcon.name +
-                                                            'icon'
-                                                        }
-                                                        src={techIcon.src}
-                                                        height={25}
-                                                        width={25}
-                                                    />
-                                                </li>
-                                            );
+                                                iconMap[techIconStr];
+
+                                            if (techIcon)
+                                                return (
+                                                    <li key={techIcon.id}>
+                                                        <Tooltip
+                                                            title={
+                                                                techIcon.name
+                                                            }
+                                                        >
+                                                            <div className="p-2 shadow-md rounded-md">
+                                                                <Image
+                                                                    alt={
+                                                                        techIcon.name +
+                                                                        'icon'
+                                                                    }
+                                                                    src={
+                                                                        techIcon.src
+                                                                    }
+                                                                    height={25}
+                                                                    width={25}
+                                                                />
+                                                            </div>
+                                                        </Tooltip>
+                                                    </li>
+                                                );
                                         }
                                     )}
                                 </ul>
