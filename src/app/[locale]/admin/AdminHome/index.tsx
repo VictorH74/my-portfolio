@@ -5,8 +5,13 @@ import React from 'react';
 import { ProfileArea } from './ProfileArea';
 import { ProjectCollectionArea } from './ProjectCollectionArea';
 import { TechCollectionArea } from './TechCollectionArea';
+import Aos from 'aos';
 
 export const AdminHome = () => {
+    React.useEffect(() => {
+        Aos.init();
+    }, []);
+
     return (
         <AdminProjectListProvider>
             <main className="w-full mx-auto px-2 max-w-[1400px] py-6 space-y-12 pb-14">

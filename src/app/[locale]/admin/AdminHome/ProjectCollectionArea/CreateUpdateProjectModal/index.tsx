@@ -25,7 +25,7 @@ export const CreateUpdateProjectModal = (
         <>
             <ModalContainer onClose={props.onClose}>
                 <div
-                    className="bg-gray-200 w-full max-w-[900px] rounded-md px-6 pb-8 pt-2 animate-scale"
+                    className="bg-gray-200 w-full max-w-[900px] rounded-md px-6 pb-8 pt-2"
                     onMouseDown={(e) => {
                         e.stopPropagation();
                     }}

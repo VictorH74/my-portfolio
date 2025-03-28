@@ -6,11 +6,15 @@ import { twMerge } from 'tailwind-merge';
 import { useModalContainer } from './useModalContainer';
 
 export const ModalContainer: React.FC<{
-    children: React.ReactElement;
+    children: React.ReactElement<HTMLElement>;
     className?: string;
     onClose?: () => void;
 }> = ({ children, className, onClose }) => {
     useModalContainer();
+
+    const childrenWithClassName = React.cloneElement(children, {
+        className: twMerge(children.props.className, 'animate-fade-in-scale'),
+    });
 
     return createPortal(
         <div
@@ -21,12 +25,12 @@ export const ModalContainer: React.FC<{
             )}
         >
             <div
-                className="size-auto contents"
+                className="contents"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
             >
-                {children}
+                {childrenWithClassName}
             </div>
         </div>,
         document.body

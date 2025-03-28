@@ -171,7 +171,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
                 placeholder: 'ID',
                 name: 'iconId',
                 className: 'grid p-2',
-                pattern: '[a-z]*',
+                pattern: '[a-z0-9]*',
                 value: idValue,
                 disabled: !!indexValue,
                 onChange: (e) => {

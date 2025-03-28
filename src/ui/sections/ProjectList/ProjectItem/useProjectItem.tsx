@@ -4,8 +4,6 @@ export const useProjectItem = () => {
     const [videoVisibility, setVideoVisibility] = React.useState(false);
     const [videoIsLoading, setVideoIsLoading] = React.useState(true);
 
-    const videoContainerRef = React.useRef<HTMLDivElement>(null);
-
     React.useEffect(() => {
         document.body.style.overflow = videoVisibility ? 'hidden' : 'auto';
     }, [videoVisibility]);
@@ -13,7 +11,6 @@ export const useProjectItem = () => {
     const showVideo = () => setVideoVisibility(true);
 
     const hiddenVideo = () => {
-        videoContainerRef.current!.style.opacity = '0';
         setTimeout(() => {
             setVideoVisibility(false);
         }, 300);
@@ -28,7 +25,6 @@ export const useProjectItem = () => {
     };
 
     return {
-        videoContainerRef,
         videoVisibility,
         setVideoVisibility,
         showVideo,

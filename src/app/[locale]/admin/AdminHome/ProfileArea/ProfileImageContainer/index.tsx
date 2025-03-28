@@ -62,7 +62,7 @@ export const ProfileImageContainer = () => {
     };
 
     return (
-        <div className="relative">
+        <div className="relative bg-secondary-black">
             <ProfileImage currentImgSrc={currentImgSrc} />
             <div
                 className={twMerge(

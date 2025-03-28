@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 // import { PdfViewer } from './PdfViewer';
 import { useResumeCV } from './useResumeCV';
+import { ModalContainer } from '@/components/ModalContainer';
 
 export const ResumeCV = () => {
     const hook = useResumeCV();
@@ -69,23 +70,22 @@ export const ResumeCV = () => {
             />
 
             {hook.showPdfViewer && (
-                <div
-                    className="fixed inset-0 grid place-items-center bg-black/25 z-100"
-                    onClick={hook.handleClosePdfViewer}
-                >
-                    <button
-                        className="absolute right-2 top-2 text-white"
-                        onClick={hook.handleClosePdfViewer}
-                    >
-                        {' '}
-                        <CloseIcon sx={{ fontSize: 40 }} />
-                    </button>
-                    <object
-                        data={hook.resumeUrl}
-                        width="1000"
-                        height="1000"
-                    ></object>
-                </div>
+                <ModalContainer onClose={hook.handleClosePdfViewer}>
+                    <div>
+                        <button
+                            className="absolute right-2 top-2 text-white"
+                            onClick={hook.handleClosePdfViewer}
+                        >
+                            {' '}
+                            <CloseIcon sx={{ fontSize: 40 }} />
+                        </button>
+                        <object
+                            data={hook.resumeUrl}
+                            width="1000"
+                            height="1000"
+                        ></object>
+                    </div>
+                </ModalContainer>
             )}
         </>
     );

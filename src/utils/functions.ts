@@ -32,3 +32,9 @@ export const formatContactNumber = (number: string) => {
     }
     return number;
 };
+
+export const formatText = (text: string): string => {
+    return text
+        .replace(/\*(.*?)\*/g, '<strong>$1</strong>') // Negrito
+        .replace(/_(.*?)_/g, '<em>$1</em>'); // Itálico
+};

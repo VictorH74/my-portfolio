@@ -14,7 +14,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
 
     return (
         <ModalContainer onClose={props.onClose}>
-            <div className="bg-gray-200 w-full max-w-[700px] rounded-md p-3 animate-scale">
+            <div className="bg-gray-200 w-full max-w-[700px] rounded-md p-3">
                 <div className="text-right py-2">
                     <CloseButton onClick={props.onClose} />
                 </div>

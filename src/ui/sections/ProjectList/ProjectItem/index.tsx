@@ -1,18 +1,18 @@
 import { Slider } from '@/components/Slider';
 import { ProjectType } from '@/types';
 import { PROJECT_GRADIENT_COLORS } from '@/utils/constants';
-import { getProjectGradient } from '@/utils/functions';
+import { formatText, getProjectGradient } from '@/utils/functions';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import { useWindowResize } from '@/hooks/useWindowResize';
-import { ProjectItemLink } from './ProjectItemLink';
+import { ProjectItemLink, urlActionClassName } from './ProjectItemLink';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import { useProjectItem } from './useProjectItem';
-import { createPortal } from 'react-dom';
 import { Loading } from '@/components/Loading';
+import { ModalContainer } from '@/components/ModalContainer';
 
 const aosPackProps: Record<string, string> = {
     'data-aos': 'zoom-in',
@@ -71,20 +71,23 @@ export const ProjectItem: React.FC<
                         <h1 className="text-3xl font-medium w-full">
                             {props.project.title}
                         </h1>
-                        <p className="">
-                            {
-                                props.project.description[
-                                    t(
-                                        'project_description_lang'
-                                    ) as keyof typeof props.project.description
-                                ]
-                            }
-                        </p>
+                        <p
+                            className=""
+                            dangerouslySetInnerHTML={{
+                                __html: formatText(
+                                    props.project.description[
+                                        t(
+                                            'project_description_lang'
+                                        ) as keyof typeof props.project.description
+                                    ] as string
+                                ),
+                            }}
+                        />
 
                         <div className="">
                             {props.project.videoUrl && (
                                 <button
-                                    className="w-full flex gap-3 items-center font-medium p-2 cursor-pointer"
+                                    className={urlActionClassName}
                                     onClick={hook.showVideo}
                                 >
                                     {t('project_video_url')}
@@ -117,39 +120,30 @@ export const ProjectItem: React.FC<
                 </div>
             </article>
 
-            {hook.videoVisibility &&
-                createPortal(
+            {hook.videoVisibility && (
+                <ModalContainer onClose={hook.hiddenVideo}>
                     <div
-                        ref={hook.videoContainerRef}
-                        className="grid place-items-center fixed inset-0 bg-[#00000070] z-[9999] duration-300"
-                        onClick={hook.hiddenVideo}
+                        data-tip-content={t('project_video_container_tip')}
+                        className="size-fit relative w-[62.5rem] max-[62.5rem]:w-full bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-background max-sm:after:text-base after:text-xl after:font-medium after:text-nowrap after:p-[0.5rem_1rem]"
                     >
-                        <div
-                            data-tip-content={t('project_video_container_tip')}
-                            data-aos="zoom-in"
-                            data-aos-duration="200"
-                            className="size-fit relative w-[62.5rem] max-[62.5rem]:w-full bg-secondary-black aspect-video after:absolute after:top-[calc(100%+2rem)] after:left-1/2 after:-translate-x-1/2 after:content-[attr(data-tip-content)] after:bg-secondary-black after:text-background max-sm:after:text-base after:text-xl after:font-medium after:text-nowrap after:p-[0.5rem_1rem]"
-                        >
-                            <iframe
-                                className="bg-transparent size-full"
-                                title="project video"
-                                src={hook.computedUrl(
-                                    props.project.videoUrl || randomVideoUrl
-                                )}
-                                allow="autoplay; fullscreen; picture-in-picture"
-                                allowFullScreen
-                                onLoad={() => hook.setVideoIsLoading(false)}
-                            />
-                            {hook.videoIsLoading && (
-                                <div className="w-fit absolute top-1/2 left-1/2 -translate-1/2">
-                                    <Loading />
-                                </div>
+                        <iframe
+                            className="bg-transparent size-full"
+                            title="project video"
+                            src={hook.computedUrl(
+                                props.project.videoUrl || randomVideoUrl
                             )}
-                        </div>
-                    </div>,
-                    document.getElementById('portal-destination') ||
-                        document.body
-                )}
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
+                            onLoad={() => hook.setVideoIsLoading(false)}
+                        />
+                        {hook.videoIsLoading && (
+                            <div className="w-fit absolute top-1/2 left-1/2 -translate-1/2">
+                                <Loading />
+                            </div>
+                        )}
+                    </div>
+                </ModalContainer>
+            )}
         </li>
     );
 };

@@ -3,7 +3,6 @@ import './style.css';
 import { useViewResumeBtn } from './useViewResumeBtn';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import CloseIcon from '@mui/icons-material/Close';
 import { ModalContainer } from '../ModalContainer';
 import Image from 'next/image';
 
@@ -44,20 +43,11 @@ export const ViewResumeBtn: React.FC<Props> = (props) => {
             </div>
             {!hook.isLoading && hook.showPdfViewer && hook.resumeUrl && (
                 <ModalContainer onClose={hook.handleClosePdfViewer}>
-                    <>
-                        <button
-                            className="absolute right-2 top-2 text-white"
-                            onClick={hook.handleClosePdfViewer}
-                        >
-                            {' '}
-                            <CloseIcon sx={{ fontSize: 40 }} />
-                        </button>
-                        <object
-                            data={hook.resumeUrl}
-                            className="w-full max-w-[62.5rem] h-[95%]"
-                            name="Victor Hugo Leal - Resume"
-                        ></object>
-                    </>
+                    <object
+                        data={hook.resumeUrl}
+                        className="w-full max-w-[62.5rem] h-[95%]"
+                        name="Victor Hugo Leal - Resume"
+                    />
                 </ModalContainer>
             )}
         </>
