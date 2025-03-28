@@ -28,8 +28,16 @@ export const AboutMe = () => {
                                     __html: formatText(t('paragraph_1')),
                                 }}
                             />
-                            <p>{t('paragraph_2')}</p>
-                            <p>{t('paragraph_3')}</p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: formatText(t('paragraph_2')),
+                                }}
+                            />
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: formatText(t('paragraph_3')),
+                                }}
+                            />
                         </div>
                     </div>
                 </div>

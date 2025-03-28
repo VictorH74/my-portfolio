@@ -1,3 +1,4 @@
+import { Loading } from '@/components/Loading';
 import { ModalContainer } from '@/components/ModalContainer';
 import { useAdminProjectList } from '@/hooks/useAdminProjectList';
 import { TechnologyType } from '@/types';
@@ -7,6 +8,7 @@ interface RemoveTechConfirmModalProps {
     selectedOnRemoveTech: TechnologyType;
     removeTech: (cb?: () => Promise<void>) => Promise<void>;
     onClose(): void;
+    removingTech: boolean;
 }
 
 export const RemoveTechConfirmModal: React.FC<RemoveTechConfirmModalProps> = (
@@ -43,7 +45,7 @@ export const RemoveTechConfirmModal: React.FC<RemoveTechConfirmModalProps> = (
 
     return (
         <ModalContainer onClose={props.onClose}>
-            <div className="bg-gray-200 w-full max-w-[500px] rounded-md p-8 animate-scale text-dark-font space-y-5">
+            <div className="bg-gray-200 w-full max-w-[500px] rounded-md p-8 animate-scale text-dark-font flex flex-col gap-5 relative">
                 <h2 className="text-2xl font-semibold">
                     Are you sure you want to remove this technology from your
                     collection?
@@ -81,6 +83,12 @@ export const RemoveTechConfirmModal: React.FC<RemoveTechConfirmModalProps> = (
                         Remove anyway
                     </button>
                 </div>
+
+                {props.removingTech && (
+                    <div className="absolute inset-0 bg-black/30 grid place-items-center">
+                        <Loading />
+                    </div>
+                )}
             </div>
         </ModalContainer>
     );

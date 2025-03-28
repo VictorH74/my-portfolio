@@ -17,6 +17,8 @@ export const useTechCollectionArea = () => {
     const [showAddTechForm, setShowAddTechForm] = React.useState(false);
     const [showReorderModal, setShowReorderModal] = React.useState(false);
 
+    const [removingTech, setRemovingTech] = React.useState(false);
+
     const {
         technologyList,
         setTechnologyList,
@@ -30,10 +32,12 @@ export const useTechCollectionArea = () => {
     const removeTech = async (cb?: () => Promise<void>) => {
         if (!selectedOnRemoveTech) return;
 
-        const docRef = getTechDocRef(selectedOnRemoveTech.id);
-        const collectionCountRef = doc(db, 'counts', 'technologies');
+        setRemovingTech(true);
 
         try {
+            const docRef = getTechDocRef(selectedOnRemoveTech.id);
+            const collectionCountRef = doc(db, 'counts', 'technologies');
+
             if (cb) await cb();
 
             await runTransaction(db, async (transaction) => {
@@ -60,13 +64,16 @@ export const useTechCollectionArea = () => {
                 transaction.delete(docRef);
                 transaction.update(collectionCountRef, { total });
             });
+
+            setTechnologyList((prev) =>
+                prev.filter((t) => t.id !== selectedOnRemoveTech.id)
+            );
         } catch (e) {
             console.error(e);
+        } finally {
+            setSelectedOnRemoveTech(null);
+            setRemovingTech(false);
         }
-
-        setTechnologyList((prev) =>
-            prev.filter((t) => t.id !== selectedOnRemoveTech.id)
-        );
     };
 
     const selectOnSaveTech = (tech: TechnologyType) => {
@@ -100,6 +107,7 @@ export const useTechCollectionArea = () => {
     };
 
     return {
+        removingTech,
         selectedTech,
         selectedOnRemoveTech,
         setTechnologyList,

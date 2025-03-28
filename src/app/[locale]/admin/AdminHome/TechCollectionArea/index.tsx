@@ -166,6 +166,7 @@ export const TechCollectionArea = () => {
                         hook.setSelectedOnRemoveTech(null);
                     }}
                     selectedOnRemoveTech={hook.selectedOnRemoveTech}
+                    removingTech={hook.removingTech}
                 />
             )}
         </section>
