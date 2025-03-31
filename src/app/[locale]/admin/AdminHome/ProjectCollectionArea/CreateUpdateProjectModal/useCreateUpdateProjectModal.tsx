@@ -63,7 +63,16 @@ export const useCreateUpdateProjectModal = (
     React.useEffect(() => {
         if (props.project) {
             setProjectScreenshots([...props.project.screenshots]);
-            setProject({ ...props.project });
+            setProject({
+                ...props.project,
+                description: {
+                    en: props.project.description.en!.replaceAll('<br>', '\n'),
+                    'pt-br': props.project.description['pt-br']!.replaceAll(
+                        '<br>',
+                        '\n'
+                    ),
+                },
+            });
         }
     }, [technologyList]);
 
@@ -76,6 +85,14 @@ export const useCreateUpdateProjectModal = (
             ...prev,
             description: { ...prevDesc, [lang]: value },
         }));
+    };
+
+    const isUpdatedDescription = (
+        oldDesc: ProjectType['description'],
+        newDesc: ProjectType['description']
+    ) => {
+        const toStr = (v: object) => Object.values(v).join('');
+        return toStr(oldDesc) !== toStr(newDesc);
     };
 
     // TODO: validate field data with react-form
@@ -97,12 +114,22 @@ export const useCreateUpdateProjectModal = (
                     ({
                         description: () => {
                             if (
-                                Object.values(projectRest.description).join(
-                                    ''
-                                ) !==
-                                Object.values(propProject.description).join('')
-                            )
-                                validatedData[currentKey] = currentValue;
+                                isUpdatedDescription(
+                                    projectRest.description,
+                                    propProject.description
+                                )
+                            ) {
+                                const value =
+                                    currentValue as ProjectType['description'];
+
+                                const formatDescription = (str: string) =>
+                                    str.replaceAll('\n', '<br>');
+
+                                validatedData['description'] = {
+                                    en: formatDescription(value.en!),
+                                    'pt-br': formatDescription(value['pt-br']!),
+                                };
+                            }
                         },
                         technologies: () => {
                             if (
@@ -117,17 +144,6 @@ export const useCreateUpdateProjectModal = (
 
         return validatedData;
     };
-
-    // const formatScreenshot = async (img: File) => {
-    //     const finalImg = await (
-    //         await fetch('api/images', {
-    //             body: img,
-    //             method: 'POST',
-    //         })
-    //     ).arrayBuffer();
-
-    //     return finalImg;
-    // };
 
     const uploadScreenshots = async () => {
         const updatedScreenshots = [...projectScreenshots];

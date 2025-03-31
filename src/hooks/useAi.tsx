@@ -19,7 +19,7 @@ export const useAi = () => {
         setDone(false);
         resetResponseText();
 
-        const response = await fetch('/api/ai', {
+        const response = await fetch('en/api/ai', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
