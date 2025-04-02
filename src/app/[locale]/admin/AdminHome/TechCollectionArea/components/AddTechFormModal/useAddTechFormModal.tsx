@@ -9,6 +9,7 @@ import React from 'react';
 
 import { CustomCheckboxProps } from './CustomCheckbox';
 import { getTechDocRef } from '../../useTechCollectionArea';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 export interface AddTechFormModalProps {
     selectedTech: TechnologyType | null;
@@ -20,6 +21,9 @@ export interface AddTechFormModalProps {
 export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const [submittingForm, setSubmittingForm] = React.useState(false);
 
+    const [iconFileValue, setIconFileValue] = React.useState<
+        File | undefined
+    >();
     const [indexValue, setIndexValue] = React.useState<number | undefined>();
     const [urlValue, setUrlValue] = React.useState('');
     const [headingColorValue, setHeadingColorValue] = React.useState('#FFFFFF');
@@ -29,15 +33,25 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const [isHidden, setIsHidden] = React.useState(false);
     const [isMain, setIsMain] = React.useState(false);
     const [idFieldModified, setIdFieldModified] = React.useState(false);
+    const [invalidUrl, setInvalidUrl] = React.useState(false);
 
-    const validUrl = React.useMemo(() => {
-        try {
-            new URL(urlValue);
-            return true;
-        } catch {
-            return false;
+    const iconUrl = React.useMemo(() => {
+        if (urlValue) {
+            try {
+                new URL(urlValue);
+                setInvalidUrl(false);
+                return urlValue;
+            } catch {
+                setInvalidUrl(true);
+            }
         }
-    }, [urlValue]);
+
+        if (iconFileValue) {
+            return URL.createObjectURL(iconFileValue);
+        }
+
+        return null;
+    }, [urlValue, iconFileValue]);
 
     React.useEffect(() => {
         if (!props.selectedTech) return;
@@ -94,6 +108,13 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         });
     };
 
+    const selectIconFile = (files: FileList | null) => {
+        if (!files) return;
+
+        console.log(files[0].type);
+        setIconFileValue(files[0]);
+    };
+
     const updateExistingTech = async (techData: Partial<TechnologyType>) => {
         const docRef = getTechDocRef(props.selectedTech!.id);
         await updateDoc(docRef, techData);
@@ -107,13 +128,42 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         e.preventDefault();
         setSubmittingForm(true);
 
+        if (!iconUrl) {
+            alert('Icon url required');
+            return;
+        }
+
+        let urlMandatory;
+
+        if (urlValue) urlMandatory = urlValue;
+        else if (iconFileValue) {
+            try {
+                const storage = getStorage();
+                const finalFileName = iconFileValue.name
+                    .split('.')
+                    .slice(0, -1)
+                    .join('.');
+                const storageRef = ref(storage, `tech-icons/${finalFileName}`);
+
+                const snap = await uploadBytes(storageRef, iconFileValue, {
+                    contentType: iconFileValue.type,
+                });
+                const createdImgUrl = await getDownloadURL(snap.ref);
+                urlMandatory = createdImgUrl;
+            } catch (err) {
+                alert('Error trying upload tech icon img');
+                console.error(err);
+                return;
+            }
+        }
+
         if (indexValue) {
             const techData: Partial<TechnologyType> = {};
 
             const selectedTech = props.selectedTech!;
 
             // compare tech object datas
-            if (selectedTech.src != urlValue) techData.src = urlValue;
+            if (selectedTech.src != urlMandatory) techData.src = urlMandatory;
             if (selectedTech.name != nameValue) techData.name = nameValue;
 
             if (
@@ -137,7 +187,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             };
 
             const techData: Omit<TechnologyType, 'index'> = {
-                src: urlValue,
+                src: urlMandatory!,
                 id: idValue,
                 name: nameValue,
                 hidden: isHidden,
@@ -160,8 +210,10 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         () => [
             {
                 placeholder: 'URL',
+                required: !iconFileValue,
                 name: 'iconUrl',
                 type: 'url',
+                disabled: !!iconFileValue,
                 className: 'col-span-2 p-2',
                 pattern: 'https?://.+',
                 value: urlValue,
@@ -169,6 +221,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
             {
                 placeholder: 'ID',
+                required: true,
                 name: 'iconId',
                 className: 'grid p-2',
                 pattern: '[a-z0-9]*',
@@ -183,6 +236,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
             {
                 placeholder: 'NAME',
+                required: true,
                 name: 'iconName',
                 className: 'grid p-2',
                 autoFocus: true,
@@ -197,6 +251,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
             {
                 name: 'backgroundColor',
+                required: true,
                 className: 'grid w-full h-[30px]',
                 value: bgColorValue,
                 type: 'color',
@@ -207,6 +262,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
             {
                 name: 'headingColor',
+                required: true,
                 className: 'grid w-full h-[30px]',
                 value: headingColorValue,
                 type: 'color',
@@ -217,13 +273,14 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
         ],
         [
+            iconFileValue,
             urlValue,
             idValue,
-            nameValue,
-            idFieldModified,
             indexValue,
+            nameValue,
             bgColorValue,
             headingColorValue,
+            idFieldModified,
         ]
     );
 
@@ -280,12 +337,16 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         fieldGenerationData,
         buttonGenerationData,
         submitForm,
-        validUrl,
+        iconUrl,
         urlValue,
+        invalidUrl,
         headingColorValue,
         bgColorValue,
+        iconFileValue,
+        setIconFileValue,
         setUrlValue,
         idValue,
+        selectIconFile,
         setIdValue,
         nameValue,
         setNameValue,

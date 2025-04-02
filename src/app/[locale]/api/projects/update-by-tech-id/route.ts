@@ -41,5 +41,5 @@ export async function PUT(req: Request) {
         updateQueryBatch(adminDb, query, techId, resolve).catch(reject);
     });
 
-    return new Response('success', { status: 204 });
+    return new Response('success');
 }

@@ -5,6 +5,7 @@ import React from 'react';
 
 import { OutputReordableItemType } from '../components/ReordableModal';
 import { useTechnologyList } from '@/hooks/useTechnologyList';
+import { deleteObject, getStorage, ref } from 'firebase/storage';
 
 export const getTechDocRef = (id: string) => doc(db, 'technologies', id);
 
@@ -64,6 +65,15 @@ export const useTechCollectionArea = () => {
                 transaction.delete(docRef);
                 transaction.update(collectionCountRef, { total });
             });
+
+            if (
+                new URL(selectedOnRemoveTech.src).hostname ==
+                'firebasestorage.googleapis.com'
+            ) {
+                const storage = getStorage();
+                const screenshotRef = ref(storage, selectedOnRemoveTech.src);
+                await deleteObject(screenshotRef);
+            }
 
             setTechnologyList((prev) =>
                 prev.filter((t) => t.id !== selectedOnRemoveTech.id)
