@@ -5,12 +5,15 @@ import { ProjectItem } from './ProjectItem';
 import { useTranslations } from 'next-intl';
 import './style.css';
 
-import Image from 'next/image';
 import { useProjectList } from './useProjectList';
 import { Loading } from '@/components/Loading';
 import { twMerge } from 'tailwind-merge';
 import { useTechnologyIconMap } from '@/hooks/useTechnologyIconMap';
-import Tooltip from '@mui/material/Tooltip';
+
+import { ProjectTechList } from './ProjectTechListContent';
+
+export const techItemImgWidth = 25;
+export const techListGap = 8;
 
 export const ProjectList = () => {
     const t = useTranslations('ProjectListSection');
@@ -40,39 +43,10 @@ export const ProjectList = () => {
                                 <h3 className="text-2xl font-medium">
                                     {t('technology_list_title')}:
                                 </h3>
-                                <ul className="flex gap-2">
-                                    {projectData.technologies.map(
-                                        (techIconStr) => {
-                                            const techIcon =
-                                                iconMap[techIconStr];
-
-                                            if (techIcon)
-                                                return (
-                                                    <li key={techIcon.id}>
-                                                        <Tooltip
-                                                            title={
-                                                                techIcon.name
-                                                            }
-                                                        >
-                                                            <div className="p-2 shadow-md rounded-md">
-                                                                <Image
-                                                                    alt={
-                                                                        techIcon.name +
-                                                                        'icon'
-                                                                    }
-                                                                    src={
-                                                                        techIcon.src
-                                                                    }
-                                                                    height={25}
-                                                                    width={25}
-                                                                />
-                                                            </div>
-                                                        </Tooltip>
-                                                    </li>
-                                                );
-                                        }
-                                    )}
-                                </ul>
+                                <ProjectTechList
+                                    iconMap={iconMap}
+                                    techList={projectData.technologies}
+                                />
                             </div>
                         )}
                     </ProjectItem>

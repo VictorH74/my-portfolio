@@ -10,6 +10,10 @@ const getwindowSize = (): WindowSizeType => {
 
 type WindowSizeType = [number, number];
 
+/**
+ *
+ * @returns [ width, height ]
+ */
 export const useWindowResize = () => {
     const [size, setSize] = React.useState<WindowSizeType>(getwindowSize());
 

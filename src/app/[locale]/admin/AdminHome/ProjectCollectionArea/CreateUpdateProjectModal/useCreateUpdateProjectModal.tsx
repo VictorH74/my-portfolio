@@ -322,8 +322,7 @@ export const useCreateUpdateProjectModal = (
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { screenshots: _screenshots, ...rest } = project;
+        const { screenshots: _, ...rest } = project;
         const propProject = props.project;
 
         try {
