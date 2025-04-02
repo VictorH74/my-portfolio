@@ -1,17 +1,25 @@
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { iconButtonClassName } from '../IconButton';
+import { MuiIconType } from '@/types';
+import { twMerge } from 'tailwind-merge';
 
 interface SelectFileIconButtonProps {
     multiple?: boolean;
-    accept: string;
+    accept?: string;
     onChange(_: FileList | null): void;
+    icon?: MuiIconType;
+    iconFontSize?: number;
+    className?: string;
 }
 
 export const SelectFileIconButton = React.forwardRef<
     HTMLInputElement,
     SelectFileIconButtonProps
->(function SelectFileIconButton({ onChange, ...props }, ref) {
+>(function SelectFileIconButton(
+    { onChange, icon, iconFontSize, className, ...props },
+    ref
+) {
     const btnId = React.useId();
     const handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileInput = e.target;
@@ -20,12 +28,17 @@ export const SelectFileIconButton = React.forwardRef<
         onChange(files);
     };
 
+    const Icon = icon || EditIcon;
+
     return (
-        <div className={iconButtonClassName}>
-            <label htmlFor={btnId} className="cursor-pointer">
-                <EditIcon
+        <div className={twMerge(iconButtonClassName, className)}>
+            <label
+                htmlFor={btnId}
+                className="cursor-pointer size-full grid place-items-center"
+            >
+                <Icon
                     sx={{
-                        fontSize: 27,
+                        fontSize: iconFontSize || 27,
                     }}
                 />
             </label>
