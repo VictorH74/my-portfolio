@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Orbitron } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
+import { Background } from './Background';
 
 const sectionFont = Orbitron({ weight: '400', subsets: ['latin'] });
 const iconSize = 50;
@@ -16,10 +17,12 @@ export const Presentation = () => {
     return (
         <section
             className={twMerge(
-                'max-[1440px]:bg-center max-[1440px]:bg-[url(/bg-medium.webp)] max-[1921]:bg-[url(/bg-large.webp)] min-[1441px]:bg-[url(/bg-larger.webp)] px-3 w-full h-[95vh] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden bg-cover bg-center',
+                'px-3 w-full h-[95vh] bg-primary-black grid place-items-center sticky top-0 -z-10 overflow-hidden',
                 sectionFont.className
             )}
         >
+            <Background />
+
             <div className="text-background grid gap-7 font-semibold">
                 <h2
                     data-aos="fade-up"
