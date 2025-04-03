@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Orbitron } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
-import { AnimatedBackground } from '@/components/Background';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 
 const sectionFont = Orbitron({ weight: '400', subsets: ['latin'] });
 const iconSize = 50;

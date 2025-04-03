@@ -1,3 +1,4 @@
+import { isMobilePortrait } from '@/utils/functions';
 import { useRef, useEffect, useState } from 'react';
 
 export const anchorLinkHref = [
@@ -7,13 +8,6 @@ export const anchorLinkHref = [
     '#projects',
     '#contact-me',
 ] as const;
-
-function isMobilePortrait() {
-    if (typeof navigator === 'undefined' || typeof window === 'undefined')
-        return false;
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    return isMobile && window.matchMedia('(orientation: portrait)').matches;
-}
 
 export const useHeader = () => {
     const [showHeader, setShowHeader] = useState(true);

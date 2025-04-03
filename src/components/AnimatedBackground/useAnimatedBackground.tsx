@@ -1,9 +1,8 @@
-'use client';
-import Image from 'next/image';
 import React from 'react';
 import { generateLightballs, Lightball } from './Lightball';
+import { isMobilePortrait } from '@/utils/functions';
 
-export const AnimatedBackground = () => {
+export const useAnimatedBackground = () => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const canvasCtxRef = React.useRef<CanvasRenderingContext2D>(null);
     const mousePosRef = React.useRef<{ x: number; y: number }>(null);
@@ -18,7 +17,6 @@ export const AnimatedBackground = () => {
         updateCanvas();
 
         window.addEventListener('mousemove', mouseMoveListener);
-
         window.addEventListener('resize', updateCanvas);
 
         update();
@@ -74,22 +72,14 @@ export const AnimatedBackground = () => {
             l.draw(canvasCtx);
         });
 
+        if (isMobilePortrait()) return;
+
         requestAnimationFrame(update);
     };
 
-    return (
-        <div className="absolute inset-0 grid place-items-center bg-[#141414]">
-            <canvas ref={canvasRef} className="bg-[#141414]" />
-            <Image
-                fill
-                className="absolute w-screen h-screen object-cover inset-0"
-                alt="background image"
-                src="/images/hero/bg.png"
-                loading="lazy"
-                onLoad={() => {
-                    setIsLoadImg(true);
-                }}
-            />
-        </div>
-    );
+    return {
+        canvasRef,
+        isLoadImg,
+        setIsLoadImg,
+    };
 };

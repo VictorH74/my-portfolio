@@ -38,3 +38,15 @@ export const formatText = (text: string): string => {
         .replace(/\*(.*?)\*/g, '<strong>$1</strong>') // Negrito
         .replace(/_(.*?)_/g, '<em>$1</em>'); // Itálico
 };
+
+export const isMobilePortrait = () => {
+    if (typeof navigator === 'undefined' || typeof window === 'undefined')
+        return false;
+
+    const isMobileDevice =
+        /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+            navigator.userAgent.toLowerCase()
+        );
+    const isSmallScreen = window.matchMedia('(max-width: 767px)').matches;
+    return isMobileDevice && isSmallScreen;
+};
