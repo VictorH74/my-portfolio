@@ -2,7 +2,7 @@
 import { Footer } from '@/ui/Footer';
 import { Header } from '@/ui/Header';
 import { AboutMe } from '@/ui/sections/AboutMe';
-import { Presentation } from '@/ui/sections/Presentation';
+import { Hero } from '@/ui/sections/Hero';
 import { ProjectList } from '@/ui/sections/ProjectList';
 import { TechnologyList } from '@/ui/sections/TechnologyList';
 import Aos from 'aos';
@@ -20,7 +20,7 @@ export default function Home() {
         <div className={twMerge('min-h-screen', poppins400.className)}>
             <Header />
             <main>
-                <Presentation />
+                <Hero />
                 <AboutMe />
                 <TechnologyList />
                 <ProjectList />

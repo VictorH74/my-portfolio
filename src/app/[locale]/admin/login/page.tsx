@@ -12,6 +12,7 @@ import nookies from 'nookies';
 import React from 'react';
 import SubmitButton from './SubmitBtn';
 import Image from 'next/image';
+import { AnimatedBackground } from '@/components/Background';
 
 export default function AdminLoginPage() {
     const router = useRouter();
@@ -48,8 +49,9 @@ export default function AdminLoginPage() {
     };
 
     return (
-        <div className="w-screen h-screen grid place-items-center max-[1440px]:bg-[url(/bg-medium.webp)] max-[1921]:bg-[url(/bg-large.webp)] min-[1441px]:bg-[url(/bg-larger.webp)] bg-cover bg-center">
-            <main className="shadow-xl bg-gray-100 w-full max-w-[400px] px-4 py-10 rounded-lg">
+        <div className="w-screen h-screen grid place-items-center  relative">
+            <AnimatedBackground />
+            <main className="shadow-xl bg-gray-100 w-full max-w-[400px] px-4 py-10 rounded-lg z-100">
                 <Image
                     className="m-auto mb-8"
                     src="/me-logo-v2.svg"

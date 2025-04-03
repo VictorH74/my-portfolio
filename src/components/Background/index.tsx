@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import { generateLightballs, Lightball } from './Lightball';
 
-export const Background = () => {
+export const AnimatedBackground = () => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const canvasCtxRef = React.useRef<CanvasRenderingContext2D>(null);
     const mousePosRef = React.useRef<{ x: number; y: number }>(null);
@@ -78,13 +78,13 @@ export const Background = () => {
     };
 
     return (
-        <div className="absolute inset-0 grid place-items-center">
+        <div className="absolute inset-0 grid place-items-center bg-[#141414]">
             <canvas ref={canvasRef} className="bg-[#141414]" />
             <Image
                 fill
                 className="absolute w-screen h-screen object-cover inset-0"
                 alt="background image"
-                src="/bg.png"
+                src="/images/hero/bg.png"
                 loading="lazy"
                 onLoad={() => {
                     setIsLoadImg(true);

@@ -21,7 +21,7 @@ export const AboutMe = () => {
                         </div>
                     </div>
                     <div className="overflow-auto w-fit text-dark-font font-medium">
-                        <h2 className="text-4xl">Victor H. A. Leal</h2>
+                        <h2 className="text-4xl">Victor H. Leal</h2>
                         <div className={twMerge('space-y-2 mt-3')}>
                             <p
                                 dangerouslySetInnerHTML={{

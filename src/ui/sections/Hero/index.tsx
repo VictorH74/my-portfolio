@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Orbitron } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
-import { Background } from './Background';
+import { AnimatedBackground } from '@/components/Background';
 
 const sectionFont = Orbitron({ weight: '400', subsets: ['latin'] });
 const iconSize = 50;
 
-export const Presentation = () => {
+export const Hero = () => {
     const t = useTranslations('HeroSection');
     const { technologyList, isLoading } = useTechnologyList();
 
@@ -21,7 +21,7 @@ export const Presentation = () => {
                 sectionFont.className
             )}
         >
-            <Background />
+            <AnimatedBackground />
 
             <div className="text-background grid gap-7 font-semibold">
                 <h2
@@ -43,7 +43,7 @@ export const Presentation = () => {
                     {' '}
                     {t('i_am')}
                     <span className="text-transparent bg-clip-text bg-linear-to-r from-[#00FC69] via-[#4EFFFF] via-57% to-[#2382FF]">
-                        Victor H. A. Leal
+                        Victor H. Leal
                     </span>{' '}
                 </h1>
                 <h2

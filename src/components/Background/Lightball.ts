@@ -85,8 +85,10 @@ export const generateLightballs = (
 ) => {
     const values_factor = screenWidth / 2560;
 
-    const ballSize = 300 * values_factor;
-    const ballConstraintAreaRadio = 85 * values_factor;
+    const adaptedValue = (v: number) => v * values_factor;
+
+    const ballSize = adaptedValue(300);
+    const ballConstraintAreaRadio = adaptedValue(85);
 
     const x_factor = (screenWidth / 2 - cWidth / 2) / 2;
     const y_factor = (screenHeight / 2 - cHeight / 2) / 2;
@@ -116,21 +118,21 @@ export const generateLightballs = (
         [
             ballSize,
             cWidth * 0.15,
-            cHeight * 0.94,
+            cHeight * 0.92,
             ballConstraintAreaRadio,
             '#4EFFFF',
         ],
         [
             ballSize,
             cWidth * 0.22,
-            cHeight * 0.65,
+            cHeight * 0.63,
             ballConstraintAreaRadio,
             '#4EFFFF',
         ],
         [
-            ballSize,
+            adaptedValue(350),
             cWidth * 0.45,
-            cHeight * -0.05,
+            cHeight * -0.01,
             ballConstraintAreaRadio,
             '#4EFFFF',
         ],
@@ -155,11 +157,11 @@ export const generateLightballs = (
             ballConstraintAreaRadio,
             '#4EFFFF',
         ],
-        [ballSize, cWidth * 0.93, cHeight * 0.67, 45, '#2382FF'],
+        [ballSize, cWidth * 0.92, cHeight * 0.673, 45, '#2382FF'],
         [
-            ballSize,
-            cWidth * 0.82,
-            cHeight * 0.94,
+            adaptedValue(400),
+            cWidth * 0.799,
+            cHeight * 0.96,
             ballConstraintAreaRadio,
             '#2382FF',
         ],
