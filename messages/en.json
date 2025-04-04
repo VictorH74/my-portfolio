@@ -33,6 +33,7 @@
         "project_video_container_tip": "Click outside the video to close"
     },
     "Footer": {
+        "admin_area_link_label": "Admin area",
         "last_paragraph_part_1": "created with",
         "last_paragraph_part_2": "by Victor Leal",
         "contact_me_title": "Contact Me",

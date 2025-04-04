@@ -25,12 +25,14 @@ export const Header = () => {
             )}
         >
             <div className="max-w-default w-full px-10 mx-auto justify-between flex items-center">
-                <Image
-                    src="/me-logo-v2.svg"
-                    alt="logo"
-                    width={50}
-                    height={50}
-                />
+                <Link href={'/admin'}>
+                    <Image
+                        src="/me-logo-v2.svg"
+                        alt="logo"
+                        width={50}
+                        height={50}
+                    />
+                </Link>
                 <nav className="max-lg:hidden">
                     <ul className="text-[#a7b3c5] font-medium flex gap-3 duration-500 items-center">
                         {anchorLinkHref.map((href) => (
