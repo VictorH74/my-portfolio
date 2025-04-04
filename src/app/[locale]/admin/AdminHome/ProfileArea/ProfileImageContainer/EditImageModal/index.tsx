@@ -41,7 +41,8 @@ export const EditImageModal = (props: EditImageModalProps) => {
                     <Image
                         ref={hook.imgRef}
                         src={props.imageSrc}
-                        fill
+                        width={0}
+                        height={0}
                         alt=""
                         style={
                             hook.imgSizeProp && {
@@ -53,6 +54,7 @@ export const EditImageModal = (props: EditImageModalProps) => {
                         className="object-contain select-none pointer-events-none absolute"
                     />
 
+                    {/* TODO: fix masks positions */}
                     <div
                         ref={hook.maskWestRef}
                         className="absolute pointer-events-none left-0 inset-y-0 bg-[#00000094]"
@@ -95,8 +97,9 @@ export const EditImageModal = (props: EditImageModalProps) => {
                 {hook.previewImgSrc && (
                     <Image
                         alt="preview image"
+                        width={200}
+                        height={200}
                         src={hook.previewImgSrc}
-                        fill
                         className="select-none max-w-[200px] max-h-[200px] size-fit pointer-events-none fixed bottom-3 left-3 rounded-md shadow-md bg-[var(--theme-color)]"
                         loading="lazy"
                     />

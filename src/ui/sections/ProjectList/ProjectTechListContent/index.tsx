@@ -35,7 +35,7 @@ export const ProjectTechList: React.FC<ProjectTechListProps> = (props) => {
                             <Tooltip title={techIcon.name}>
                                 <div className="p-2 shadow-md rounded-md">
                                     <Image
-                                        alt={techIcon.name + 'icon'}
+                                        alt={techIcon.name + ' icon'}
                                         src={techIcon.src}
                                         height={techItemImgWidth}
                                         width={techItemImgWidth}

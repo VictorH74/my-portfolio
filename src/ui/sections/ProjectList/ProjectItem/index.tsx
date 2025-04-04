@@ -113,7 +113,7 @@ export const ProjectItem: React.FC<
                         {props.children}
                     </div>
                     <div className="absolute inset-0 overflow-hidden">
-                        <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute top-1/2 left-1/2 -translate-1/2 m-0 p-0 uppercase text-background text-shadow pointer-events-none">
+                        <p className="max-lg:hidden text-[115vh] leading-[85vh] absolute top-1/2 left-1/2 -translate-1/2 m-0 p-0 uppercase text-background text-shadow pointer-events-none select-none">
                             {props.project.title[0]}
                         </p>
                     </div>

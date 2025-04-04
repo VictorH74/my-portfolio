@@ -93,6 +93,17 @@ export const generateLightballs = (
     const x_factor = (screenWidth / 2 - cWidth / 2) / 2;
     const y_factor = (screenHeight / 2 - cHeight / 2) / 2;
 
+    const getRelativeDirectionPos = (
+        directionPosition: number,
+        directionFactor: number,
+        canvasDimensionSize: number
+    ) => {
+        const canvasDimensionCenter = canvasDimensionSize / 2;
+
+        if (directionPosition < canvasDimensionCenter) directionFactor *= -1;
+        return directionPosition + directionFactor;
+    };
+
     const datas: LightballRequiredParams[] = [
         [
             ballSize,
@@ -175,8 +186,8 @@ export const generateLightballs = (
         toggleBool = !toggleBool;
         return new Lightball(
             size,
-            x > cWidth / 2 ? x + x_factor : x - x_factor,
-            y > cHeight / 2 ? y + y_factor : y - y_factor,
+            getRelativeDirectionPos(x, x_factor, cWidth),
+            getRelativeDirectionPos(y, y_factor, cHeight),
             constraint_area_radio,
             color,
             toggleBool
