@@ -26,7 +26,7 @@ export const ProjectTechList: React.FC<ProjectTechListProps> = (props) => {
                     return (
                         <li
                             key={techIcon.id}
-                            className="animate-fade-in-scale opacity-0"
+                            className="animate-fade-in-scale-forwards opacity-0"
                             style={{
                                 animationDelay:
                                     100 * itemAnimationDelayFactor + 'ms',
