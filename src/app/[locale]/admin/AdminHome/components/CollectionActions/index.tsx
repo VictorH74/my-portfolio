@@ -1,7 +1,8 @@
 import AddIcon from '@mui/icons-material/Add';
-import ReorderIcon from '@mui/icons-material/Reorder';
 
 import { IconButton } from '@/components/IconButton';
+import { ReorderListBtn } from '../ReorderListBtn';
+import { twMerge } from 'tailwind-merge';
 
 interface CollectionActionsProps {
     collectionName: string;
@@ -20,12 +21,11 @@ export const CollectionActions = (props: CollectionActionsProps) => {
             <IconButton
                 onClick={props.addFunc}
                 Icon={AddIcon}
-                className={iconBtnClassName}
+                className={twMerge(iconBtnClassName)}
             />
-            <IconButton
+            <ReorderListBtn
                 onClick={props.reorderFunc}
-                Icon={ReorderIcon}
-                className={iconBtnClassName}
+                className={twMerge(iconBtnClassName)}
             />
         </div>
     );

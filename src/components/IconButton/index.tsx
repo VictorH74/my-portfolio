@@ -6,8 +6,10 @@ interface IconButtonProps extends BtnAttrType {
     iconSize?: number;
 }
 
-export const iconButtonClassName =
-    'rounded-full p-1 hover:scale-110 duration-200 bg-gray-300 hover:bg-[#2382FF] hover:text-white';
+export const iconButtonClassName = 'rounded-full p-1 bg-gray-300 duration-200';
+
+export const iconButtonHoverClassName =
+    'hover:scale-110 hover:bg-[#2382FF] hover:text-white';
 
 export function IconButton({
     Icon,

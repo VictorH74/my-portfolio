@@ -2,7 +2,8 @@ import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
 import { ProfileImage } from '@/components/ProfileImage';
 import { ViewResumeBtn } from '@/components/ViewResumeBtn';
-import { formatText } from '@/utils/functions';
+import { formatText, isMobilePortrait } from '@/utils/functions';
+import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 
 export const AboutMe = () => {
     const t = useTranslations('AboutMeSection');
@@ -43,7 +44,12 @@ export const AboutMe = () => {
                 </div>
                 <div className="flex flex-row gap-10 items-center mt-7">
                     <hr className="w-full h-[0.188rem] bg-secondary-black" />
-                    <ViewResumeBtn className="uppercase" />
+                    {isMobilePortrait() ? (
+                        <DownloadResumeBtn className="uppercase" />
+                    ) : (
+                        <ViewResumeBtn className="uppercase" />
+                    )}
+
                     <hr className="w-full h-[0.188rem] bg-secondary-black" />
                 </div>
             </div>

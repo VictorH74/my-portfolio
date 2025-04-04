@@ -1,14 +1,17 @@
-import { IconButton, iconButtonClassName } from '@/components/IconButton';
+import {
+    iconButtonClassName,
+    iconButtonHoverClassName,
+} from '@/components/IconButton';
 import {
     OutputReordableItemType,
     ReordableModal,
 } from '../../../../components/ReordableModal';
 import { ScreenshotType } from '@/types';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import ReorderIcon from '@mui/icons-material/Reorder';
 import Image from 'next/image';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { ReorderListBtn } from '../../../../components/ReorderListBtn';
 
 interface ProjectScreenshotListActionsProps {
     projectScreenshotUrls: string[];
@@ -30,6 +33,7 @@ export const ProjectScreenshotListActions = (
                 className={twMerge(
                     'relative',
                     iconButtonClassName,
+                    iconButtonHoverClassName,
                     'rounded-md'
                 )}
             >
@@ -44,11 +48,9 @@ export const ProjectScreenshotListActions = (
                 />
             </label>
             {props.projectScreenshotUrls.length > 1 && (
-                <IconButton
-                    Icon={ReorderIcon}
+                <ReorderListBtn
                     onClick={() => setOnReorderScreenshots(true)}
-                    type="button"
-                    className="rounded-md"
+                    className={twMerge('rounded-md', iconButtonHoverClassName)}
                 />
             )}
 

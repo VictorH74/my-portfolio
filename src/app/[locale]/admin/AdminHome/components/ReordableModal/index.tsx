@@ -52,7 +52,7 @@ export type OutputReordableItemType = ReordableItemType & {
 interface ReordableModalProps {
     onClose(): void;
     items: ReordableItemType[];
-    onSubmit(_items: OutputReordableItemType[]): Promise<void>;
+    onSubmit(_items: OutputReordableItemType[]): void | Promise<void>;
     children: (_item: ReordableItemType, _index: number) => React.ReactElement;
 }
 

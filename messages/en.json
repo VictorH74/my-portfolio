@@ -50,11 +50,9 @@
         "error_message_message": "Message field is required"
     },
     "DownloadResumeBtn": {
-        "label": "Download Resume",
-        "resume_size": "Size"
+        "label": "Download Resume"
     },
     "ViewResumeBtn": {
-        "label": "View Resume",
-        "resume_size": "Size"
+        "label": "View Resume"
     }
 }

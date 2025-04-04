@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,6 +6,8 @@ import { anchorLinkHref, useHeader } from './useHeader';
 import { twMerge } from 'tailwind-merge';
 import { Hamburger } from './Hamburger';
 import { ViewResumeBtn } from '@/components/ViewResumeBtn';
+import { isMobilePortrait } from '@/utils/functions';
+import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 
 export const Header = () => {
     const t = useTranslations('Header');
@@ -49,7 +52,11 @@ export const Header = () => {
                             </li>
                         ))}
                         <li>
-                            <ViewResumeBtn />
+                            {isMobilePortrait() ? (
+                                <DownloadResumeBtn />
+                            ) : (
+                                <ViewResumeBtn />
+                            )}
                         </li>
                     </ul>
                 </nav>

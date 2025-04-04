@@ -8,6 +8,8 @@ import { anchorLinkHref } from '../useHeader';
 import Link from 'next/link';
 import './style.css';
 import { ViewResumeBtn } from '@/components/ViewResumeBtn';
+import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
+import { isMobilePortrait } from '@/utils/functions';
 
 export const Hamburger = () => {
     const t = useTranslations('Header');
@@ -86,7 +88,11 @@ export const Hamburger = () => {
                                         </li>
                                     ))}
                                     <li className="my-5">
-                                        <ViewResumeBtn className="w-full text-2xl rounded-none truncate" />
+                                        {isMobilePortrait() ? (
+                                            <DownloadResumeBtn className="w-full text-2xl rounded-none truncate" />
+                                        ) : (
+                                            <ViewResumeBtn className="w-full text-2xl rounded-none truncate" />
+                                        )}
                                     </li>
                                 </ul>
                             </nav>
