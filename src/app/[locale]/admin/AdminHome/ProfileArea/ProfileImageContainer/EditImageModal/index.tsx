@@ -41,8 +41,7 @@ export const EditImageModal = (props: EditImageModalProps) => {
                     <Image
                         ref={hook.imgRef}
                         src={props.imageSrc}
-                        width={0}
-                        height={0}
+                        fill
                         alt=""
                         style={
                             hook.imgSizeProp && {
@@ -97,8 +96,7 @@ export const EditImageModal = (props: EditImageModalProps) => {
                     <Image
                         alt="preview image"
                         src={hook.previewImgSrc}
-                        width={200}
-                        height={200}
+                        fill
                         className="select-none max-w-[200px] max-h-[200px] size-fit pointer-events-none fixed bottom-3 left-3 rounded-md shadow-md bg-[var(--theme-color)]"
                         loading="lazy"
                     />

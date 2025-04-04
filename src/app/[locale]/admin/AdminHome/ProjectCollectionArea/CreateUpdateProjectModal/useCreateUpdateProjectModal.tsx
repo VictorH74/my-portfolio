@@ -49,6 +49,7 @@ export const useCreateUpdateProjectModal = (
     const [projectScreenshots, setProjectScreenshots] = React.useState<
         Array<ScreenshotType | File>
     >([]);
+    const [onReorderTechList, setOnReorderTechList] = React.useState(false);
 
     const projectScreenshotUrls = React.useMemo<string[]>(
         () =>
@@ -75,6 +76,10 @@ export const useCreateUpdateProjectModal = (
             });
         }
     }, [technologyList]);
+
+    const updateTechList = (list: ProjectType['technologies']) => {
+        setProject((prev) => ({ ...prev, technologies: list }));
+    };
 
     const updateProjectProps = (prop: keyof ProjectType, value: string) =>
         setProject((prev) => ({ ...prev, [prop]: value }));
@@ -136,7 +141,7 @@ export const useCreateUpdateProjectModal = (
                                 projectRest.technologies.join('') !==
                                 propProject.technologies.join('')
                             )
-                                validatedData[currentKey] = currentValue;
+                                validatedData['technologies'] = currentValue;
                         },
                     }) as Record<string, () => void>
                 )[currentKey]();
@@ -371,7 +376,10 @@ export const useCreateUpdateProjectModal = (
         makeRemoveScreenshot,
         updateProjectProps,
         updateDescription,
+        onReorderTechList,
+        setOnReorderTechList,
         project,
+        updateTechList,
         setProject,
         isSubmitting,
         projectScreenshotUrls,

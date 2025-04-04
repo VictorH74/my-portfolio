@@ -15,11 +15,16 @@ import {
     CreateUpdateProjectModalProps,
 } from './useCreateUpdateProjectModal';
 import { CloseButton } from '../../components/CloseButton';
+import { ReorderListBtn } from '../../components/ReorderListBtn';
+import { ReordableModal } from '../../components/ReordableModal';
+import { useTechnologyIconMap } from '@/hooks/useTechnologyIconMap';
+import Image from 'next/image';
 
 export const CreateUpdateProjectModal = (
     props: CreateUpdateProjectModalProps
 ) => {
     const hook = useCreateUpdateProjectModal(props);
+    const iconMap = useTechnologyIconMap();
 
     return (
         <>
@@ -111,21 +116,24 @@ export const CreateUpdateProjectModal = (
                                     Technologies:
                                 </label>
 
-                                <ProjectTechList
-                                    techArray={hook.project.technologies}
-                                    onRemoveTechItem={hook.removeTechByName}
-                                />
+                                <div className="flex justify-between">
+                                    <ProjectTechList
+                                        techArray={hook.project.technologies}
+                                        onRemoveTechItem={hook.removeTechByName}
+                                    />
+                                    <ReorderListBtn
+                                        onClick={() =>
+                                            hook.setOnReorderTechList(true)
+                                        }
+                                        className="bg-transparent text-gray-500 hover:text-gray-600 cursor-pointer px-3"
+                                    />
+                                </div>
 
                                 <ProjectTechValueField
                                     projectTechnologies={
                                         hook.project.technologies
                                     }
-                                    onFoundValue={(technologies) =>
-                                        hook.setProject((prev) => ({
-                                            ...prev,
-                                            technologies,
-                                        }))
-                                    }
+                                    onFoundValue={hook.updateTechList}
                                 />
                             </div>
 
@@ -144,6 +152,40 @@ export const CreateUpdateProjectModal = (
                             </button>
                         </div>
                     </form>
+
+                    {hook.onReorderTechList && (
+                        <ReordableModal
+                            items={hook.project.technologies.map((t) => ({
+                                value: t,
+                                id: t,
+                            }))}
+                            onSubmit={(items) => {
+                                hook.updateTechList(items.map((i) => i.value));
+                            }}
+                            onClose={() => hook.setOnReorderTechList(false)}
+                        >
+                            {(item) => {
+                                const techIcon = iconMap![item.id];
+                                return techIcon ? (
+                                    <div
+                                        className="p-2 flex justify-between"
+                                        key={item.id}
+                                    >
+                                        {' '}
+                                        <p>{item.id}</p>{' '}
+                                        <Image
+                                            alt="tech Icon"
+                                            width={30}
+                                            height={30}
+                                            src={techIcon.src}
+                                        />
+                                    </div>
+                                ) : (
+                                    <></>
+                                );
+                            }}
+                        </ReordableModal>
+                    )}
                 </div>
             </ModalContainer>
         </>

@@ -9,7 +9,7 @@
 
     --container-default: var(--maxScreenWidth);
 
-    --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+    --animate-fade-in-scale: fade-in-scale 0.3s forwards ease-out;
     @keyframes fade-in-scale {
         0% {
             opacity: 0;

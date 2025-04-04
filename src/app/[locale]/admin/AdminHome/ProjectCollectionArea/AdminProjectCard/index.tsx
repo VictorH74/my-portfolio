@@ -33,8 +33,8 @@ export const AdminProjectCard = (props: ProjectType) => {
             >
                 <div className="w-[300px] h-[310px] overflow-hidden flex flex-nowrap text-center relative">
                     <Image
-                        width={300}
-                        height={113}
+                        fill
+                        sizes="300px"
                         src={props.screenshots[0].url}
                         className="rounded-b-md w-full h-auto object-cover"
                         alt="project screenshot"
@@ -66,7 +66,7 @@ export const AdminProjectCard = (props: ProjectType) => {
                     <Divider className="my-2 primary-bg-color" />
 
                     <div className="grow flex flex-wrap gap-2">
-                        {hook.techSrcList.map((src, i) => (
+                        {/* {hook.techSrcList.map((src, i) => (
                             <Image
                                 height={20}
                                 width={20}
@@ -74,7 +74,7 @@ export const AdminProjectCard = (props: ProjectType) => {
                                 src={src}
                                 alt="technology icon"
                             />
-                        ))}
+                        ))} */}
                     </div>
 
                     <div>

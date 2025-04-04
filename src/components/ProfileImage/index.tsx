@@ -32,7 +32,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
     if (isLoading && !props.currentImgSrc)
         return (
-            <div className="size-full grid place-items-center">
+            <div className="w-full aspect-square grid place-items-center">
                 <Loading />
             </div>
         );
@@ -48,7 +48,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = (props) => {
 
     return (
         <Image
-            loading="lazy"
+            priority
             className={twMerge(
                 'rounded-md object-cover h-auto w-full duration-200'
             )}
