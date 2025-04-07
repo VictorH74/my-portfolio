@@ -54,3 +54,5 @@ export type ProfileContactsType = {
 export type LangType = (typeof LANGUAGES)[number];
 
 export type BtnAttrType = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;

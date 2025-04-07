@@ -1,5 +1,5 @@
 import { db } from '@/configs/firebaseConfig';
-import { BtnAttrType, TechnologyType } from '@/types';
+import { BtnAttrType, SetStateType, TechnologyType } from '@/types';
 import GradeIcon from '@mui/icons-material/Grade';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
@@ -13,7 +13,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 export interface AddTechFormModalProps {
     selectedTech: TechnologyType | null;
-    setTechnologyArray: React.Dispatch<React.SetStateAction<TechnologyType[]>>;
+    setTechnologyArray: SetStateType<TechnologyType[]>;
     resetFieldsCallback(): void;
     onClose(): void;
 }

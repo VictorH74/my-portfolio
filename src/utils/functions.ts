@@ -12,14 +12,9 @@ export const getProjectGradient = (projectIndex: number) => {
 };
 
 export const getContacts = async () => {
-    try {
-        const docRef = doc(db, 'profile', 'contacts');
-        const contacts = (await getDoc(docRef)).data() as ProfileContactsType;
-        return contacts;
-    } catch (err) {
-        alert('error trying fetching contacts!');
-        console.error(err);
-    }
+    const docRef = doc(db, 'profile', 'contacts');
+    const contacts = (await getDoc(docRef)).data() as ProfileContactsType;
+    return contacts;
 };
 
 export const formatContactNumber = (number: string) => {

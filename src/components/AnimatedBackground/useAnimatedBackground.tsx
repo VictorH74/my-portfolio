@@ -12,19 +12,19 @@ export const useAnimatedBackground = () => {
 
     React.useEffect(() => {
         if (!canvasRef.current || !isLoadImg) return;
+        const controller = new AbortController();
         canvasCtxRef.current = canvasRef.current.getContext('2d');
 
         updateCanvas();
 
-        window.addEventListener('mousemove', mouseMoveListener);
-        window.addEventListener('resize', updateCanvas);
+        window.addEventListener('mousemove', mouseMoveListener, {
+            signal: controller.signal,
+        });
+        window.addEventListener('resize', updateCanvas, {
+            signal: controller.signal,
+        });
 
         update();
-
-        return () => {
-            window.removeEventListener('mousemove', mouseMoveListener);
-            window.removeEventListener('resize', updateCanvas);
-        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLoadImg]);
 

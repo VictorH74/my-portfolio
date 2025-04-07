@@ -1,16 +1,23 @@
 'use client';
 import { db } from '@/configs/firebaseConfig';
-import { TechnologyType } from '@/types';
-import { useQuery } from '@tanstack/react-query';
+import { SetStateType, TechnologyType } from '@/types';
+import {
+    QueryObserverResult,
+    RefetchOptions,
+    useQuery,
+} from '@tanstack/react-query';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import React from 'react';
 
 type TechnologyListCtxType = {
     technologyList: TechnologyType[];
-    setTechnologyList: React.Dispatch<React.SetStateAction<TechnologyType[]>>;
+    setTechnologyList: SetStateType<TechnologyListCtxType['technologyList']>;
     isLoading: boolean;
     isEmpty: boolean;
     isError: boolean;
+    refetch: (
+        options?: RefetchOptions
+    ) => Promise<QueryObserverResult<null | undefined, Error>>;
 };
 
 export const TechnologyListCtx =
@@ -20,12 +27,11 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
     children,
 }) => {
     const [technologyList, setTechnologyList] = React.useState<
-        TechnologyType[]
+        TechnologyListCtxType['technologyList']
     >([]);
     const [isEmpty, setIsEmpty] = React.useState(false);
-    const [isError, setIsError] = React.useState(false);
 
-    const { isLoading } = useQuery({
+    const { isLoading, isError, refetch } = useQuery({
         queryKey: ['technology-list'],
         queryFn: () => getTechnologyList(),
         refetchOnWindowFocus: false,
@@ -49,7 +55,6 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
             return null;
         } catch (err) {
             console.error(err);
-            setIsError(true);
         }
     };
 
@@ -65,6 +70,7 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
                 isEmpty,
                 isError,
                 setTechnologyList,
+                refetch,
             }}
         >
             {children}

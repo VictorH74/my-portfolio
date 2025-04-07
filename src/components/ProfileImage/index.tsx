@@ -42,6 +42,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = (props) => {
             <div className="size-full grid place-items-center">
                 <p className="text-red-400 font-medium text-sm">
                     {t('profile_image_load_error')}
+                    {/* TODO: retry button */}
                 </p>
             </div>
         );

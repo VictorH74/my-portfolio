@@ -30,8 +30,13 @@ export const useViewResumeBtn = () => {
     const formatSizeToKB = (size: number) => Math.round(size / 1024);
 
     const downloadAndViewResume = async () => {
-        await refetch();
-        setShowPdfViewer(true);
+        try {
+            await refetch();
+            setShowPdfViewer(true);
+        } catch (e) {
+            console.error(e);
+            alert('error trying loading resume pdf file');
+        }
     };
 
     const handleClosePdfViewer = () => {

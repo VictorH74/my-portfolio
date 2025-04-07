@@ -34,8 +34,9 @@ export const ProjectItem: React.FC<
 
     return (
         <li
+            id={props.project.id}
             className={twMerge(
-                'max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0',
+                'project-item max-lg:static max-lg:px-4 min-lg:h-screen sticky top-0',
                 props.index != 0 && 'lg:shadow-[0_-10px_30px_#00000030]'
             )}
         >
