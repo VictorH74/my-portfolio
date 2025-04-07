@@ -11,6 +11,8 @@ import { twMerge } from 'tailwind-merge';
 import { useTechnologyIconMap } from '@/hooks/useTechnologyIconMap';
 
 import { ProjectTechList } from './ProjectTechListContent';
+import { isMobilePortrait } from '@/utils/functions';
+import { ScrolledProjectTitleList } from './ScrolledProjectTitleList';
 
 export const techItemImgWidth = 25;
 export const techListGap = 8;
@@ -28,55 +30,79 @@ export const ProjectList = () => {
             <h2 className="max-md:mb-10 text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
                 {t('section_title')}
             </h2>
-            <ul className="max-lg:divide-secondary-black max-lg:mb-5 max-lg:space-y-10 relative">
-                {(hook.showingMore
-                    ? hook.projectList
-                    : hook.projectList.slice(0, 4)
-                ).map((projectData, i) => (
-                    <ProjectItem
-                        key={projectData.id}
-                        index={i}
-                        project={projectData}
+
+            {hook.isError ? (
+                // TODO: individual component
+                <button
+                    className="text-red-400 font-medium py-2 px-6 w-full text-center pb-16 cursor-pointer"
+                    onClick={async () => await hook.refetch()}
+                >
+                    Error trying loading projects! Retry
+                </button>
+            ) : hook.isLoading ? (
+                <div>
+                    <Loading />
+                </div>
+            ) : (
+                <>
+                    <ul className="max-lg:divide-secondary-black max-lg:mb-5 max-lg:space-y-10 relative">
+                        {(hook.showingMore
+                            ? hook.projectList
+                            : hook.projectList.slice(0, 4)
+                        ).map((projectData, i) => (
+                            <ProjectItem
+                                key={projectData.id}
+                                index={i}
+                                project={projectData}
+                            >
+                                {!!iconMap && (
+                                    <div className="w-full max-w-[35rem] space-y-2">
+                                        <h3 className="text-2xl font-medium">
+                                            {t('technology_list_title')}:
+                                        </h3>
+                                        <ProjectTechList
+                                            iconMap={iconMap}
+                                            techList={projectData.technologies}
+                                        />
+                                    </div>
+                                )}
+                            </ProjectItem>
+                        ))}
+                    </ul>
+                    <button
+                        className="max-md:shadow-[0_4px_8px_#686868] max-lg:px-16 max-lg:rounded-md max-lg:ml-[50%] max-lg:-translate-x-1/2 max-md:w-full min-lg:h-28 min-lg:w-full h-20 uppercase bg-secondary-black text-background hover:brightness-125 duration-300 hover:cursor-pointer overflow-hidden relative"
+                        onClick={
+                            hook.showingMore
+                                ? () => hook.setShowingMore(false)
+                                : hook.getMoreProjects
+                        }
+                        disabled={hook.isLoadingMoreProjects}
                     >
-                        {!!iconMap && (
-                            <div className="w-full max-w-[35rem] space-y-2">
-                                <h3 className="text-2xl font-medium">
-                                    {t('technology_list_title')}:
-                                </h3>
-                                <ProjectTechList
-                                    iconMap={iconMap}
-                                    techList={projectData.technologies}
-                                />
+                        <p
+                            className={twMerge(
+                                'font-semibold',
+                                hook.isLoadingMoreProjects && 'opacity-0'
+                            )}
+                        >
+                            {hook.showingMore
+                                ? t('show_less_btn')
+                                : t('show_more_btn')}
+                        </p>
+
+                        {hook.isLoadingMoreProjects && (
+                            <div className="size-fit absolute top-1/2 left-1/2 -translate-1/2">
+                                <Loading size={60} />
                             </div>
                         )}
-                    </ProjectItem>
-                ))}
-            </ul>
-            <button
-                className="max-md:shadow-[0_4px_8px_#686868] max-lg:px-16 max-lg:rounded-md max-lg:ml-[50%] max-lg:-translate-x-1/2 max-md:w-full min-lg:h-28 min-lg:w-full h-20 uppercase bg-secondary-black text-background hover:brightness-125 duration-300 hover:cursor-pointer overflow-hidden relative"
-                onClick={
-                    hook.showingMore
-                        ? () => hook.setShowingMore(false)
-                        : hook.getMoreProjects
-                }
-                disabled={hook.isLoadingMoreProjects || hook.isLoading}
-            >
-                <p
-                    className={twMerge(
-                        'font-semibold',
-                        (hook.isLoadingMoreProjects || hook.isLoading) &&
-                            'opacity-0'
-                    )}
-                >
-                    {hook.showingMore ? t('show_less_btn') : t('show_more_btn')}
-                </p>
+                    </button>
 
-                {(hook.isLoadingMoreProjects || hook.isLoading) && (
-                    <div className="size-fit absolute top-1/2 left-1/2 -translate-1/2">
-                        <Loading size={60} />
-                    </div>
-                )}
-            </button>
+                    {!isMobilePortrait() && hook.projectList.length > 0 && (
+                        <ScrolledProjectTitleList
+                            projectListRef={hook.projectListRef}
+                        />
+                    )}
+                </>
+            )}
         </section>
     );
 };

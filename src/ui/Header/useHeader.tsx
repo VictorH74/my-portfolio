@@ -1,3 +1,4 @@
+import { useFrozenFunction } from '@/hooks/useFrozenFunction';
 import { isMobilePortrait } from '@/utils/functions';
 import { useRef, useEffect, useState } from 'react';
 
@@ -10,20 +11,16 @@ export const anchorLinkHref = [
 ] as const;
 
 export const useHeader = () => {
-    const [showHeader, setShowHeader] = useState(true);
     const [isInHeroSection, setIsInHeroSection] = useState(true);
+    const [showHeader, setShowHeader] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
 
     const prevScrollTopRef = useRef(0);
-    const showHeaderRef = useRef(showHeader);
+    const showHeaderRef = useRef(true);
     const isMobile = useRef(isMobilePortrait());
 
-    useEffect(() => {
-        showHeaderRef.current = showHeader;
-    }, [showHeader]);
-
-    useEffect(() => {
-        const handleScroll = () => {
+    const { func: updateHeaderVisibility } = useFrozenFunction(
+        () => {
             const currentScrollTop = window.scrollY;
 
             if (
@@ -40,23 +37,21 @@ export const useHeader = () => {
                 setShowHeader(false);
             }
             prevScrollTopRef.current = currentScrollTop;
-        };
 
-        const computeHeaderBackground = () => {
-            if (!headerRef.current) return;
-            const currentScrollTop = window.scrollY;
-            const headerHeight =
-                headerRef.current.getBoundingClientRect().height;
-            if (currentScrollTop + headerHeight < window.innerHeight) {
-                setIsInHeroSection(true);
-            } else {
-                setIsInHeroSection(false);
-            }
-        };
+            return false;
+        },
+        200,
+        false
+    );
 
+    useEffect(() => {
+        showHeaderRef.current = showHeader;
+    }, [showHeader]);
+
+    useEffect(() => {
         const controller = new AbortController();
         if (!isMobile.current) {
-            document.addEventListener('scroll', handleScroll, {
+            document.addEventListener('scroll', updateHeaderVisibility, {
                 signal: controller.signal,
             });
         }
@@ -67,7 +62,19 @@ export const useHeader = () => {
         return () => {
             controller.abort();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const computeHeaderBackground = () => {
+        if (!headerRef.current) return;
+        const currentScrollTop = window.scrollY;
+        const headerHeight = headerRef.current.getBoundingClientRect().height;
+        if (currentScrollTop + headerHeight < window.innerHeight) {
+            setIsInHeroSection(true);
+        } else {
+            setIsInHeroSection(false);
+        }
+    };
 
     return {
         showHeader,

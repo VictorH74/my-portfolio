@@ -49,10 +49,25 @@ const contactItemDisplay: Record<
 };
 
 export const ContactList = () => {
-    const { data: contacts, isLoading } = useQuery({
+    const {
+        data: contacts,
+        isLoading,
+        isError,
+        refetch,
+    } = useQuery({
         queryKey: ['contact-list'],
         queryFn: getContacts,
     });
+
+    if (isError)
+        return (
+            <button
+                className="py-2 px-6 text-red-400 font-medium"
+                onClick={async () => await refetch()} // TODO; test refetch
+            >
+                Error Trying Loading contacts!. Retry
+            </button>
+        );
 
     if (isLoading)
         return (

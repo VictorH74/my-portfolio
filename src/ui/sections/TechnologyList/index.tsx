@@ -6,7 +6,7 @@ import { Loading } from '@/components/Loading';
 
 export const TechnologyList = () => {
     const t = useTranslations('TechnologyListSection');
-    const { technologyList, isLoading } = useTechnologyList();
+    const { technologyList, isLoading, isError, refetch } = useTechnologyList();
 
     return (
         <section
@@ -18,7 +18,14 @@ export const TechnologyList = () => {
                     {t('section_title')}
                 </h2>
 
-                {isLoading ? (
+                {isError ? (
+                    <button
+                        className="text-red-400 font-medium py-2 px-6 w-full text-center cursor-pointer"
+                        onClick={async () => await refetch()}
+                    >
+                        Error trying loading technologies! Retry
+                    </button>
+                ) : isLoading ? (
                     <div className="grid place-items-center">
                         <Loading />
                     </div>

@@ -16,13 +16,20 @@ export const useProjectList = () => {
     const [projectList, setProjectList] = React.useState<ProjectType[]>([]);
     const [isLoadingMoreProjects, setIsLoadingMoreProjects] =
         React.useState(false);
+    const [isError, setIsError] = React.useState(false);
     const [showingMore, setShowingMore] = React.useState(false);
 
-    const { isLoading } = useQuery({
+    const projectListRef = React.useRef<typeof projectList>(projectList);
+
+    const { isLoading, refetch } = useQuery({
         queryKey: ['project-list'],
         queryFn: () => getInitialProjects(),
         refetchOnWindowFocus: false,
     });
+
+    React.useEffect(() => {
+        projectListRef.current = projectList;
+    }, [projectList]);
 
     const getMoreProjects = async () => {
         if (projectList.length === 4) {
@@ -38,10 +45,17 @@ export const useProjectList = () => {
     };
 
     const getInitialProjects = async () => {
-        const initialProjectList = await getProjectSnapshotsByQuery(limit(4));
-        setProjectList(initialProjectList);
+        try {
+            const initialProjectList = await getProjectSnapshotsByQuery(
+                limit(4)
+            );
+            setProjectList(initialProjectList);
 
-        return null;
+            return null;
+        } catch (err) {
+            console.error(err);
+            setIsError(true);
+        }
     };
 
     const getProjectSnapshotsByQuery = async (
@@ -63,6 +77,9 @@ export const useProjectList = () => {
         isLoadingMoreProjects,
         showingMore,
         isLoading,
+        refetch,
+        projectListRef,
+        isError,
         getMoreProjects,
         setShowingMore,
     };

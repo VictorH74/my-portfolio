@@ -18,11 +18,16 @@ export const Header = () => {
             ref={hook.headerRef}
             className={twMerge(
                 'w-full fixed h-[6rem] py-6x min-md:py-10x min-[75rem]:py-4x min-[121rem]:py-10x text-center z-50 duration-300 grid place-items-center capitalize',
-                hook.showHeader ? 'top-0' : '-top-full',
                 hook.isInHeroSection
                     ? 'bg-primary-black/55 backdrop-blur-md'
                     : 'bg-primary-black shadow-lg'
             )}
+            style={{
+                top: hook.showHeader
+                    ? 0
+                    : (hook.headerRef.current?.getBoundingClientRect().height ||
+                          0) * -1,
+            }}
         >
             <div className="max-w-default w-full px-10 mx-auto justify-between flex items-center">
                 <Link href={'/admin'}>
@@ -64,6 +69,11 @@ export const Header = () => {
                 </nav>
                 <Hamburger />
             </div>
+
+            <ul
+                id="scrolled-project-name-list-container"
+                className="absolute left-7 top-[calc(100%+10px)] flex gap-3 flex-wrap p-1"
+            ></ul>
         </div>
     );
 };
