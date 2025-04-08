@@ -13,9 +13,9 @@ export const ScrolledProjectTitleList: React.FC<
     return createPortal(
         <>
             {hook.scrolledProjectTitleList.map(([id, title], index) => (
-                <li key={id} className="mb-3 animate-fade-in-scale">
+                <li key={id} className="animate-fade-in-scale">
                     <button
-                        className="bg-secondary-black py-2 px-4 text-white rounded-lg hover:scale-105 duration-200 hover:brightness-125"
+                        className="bg-secondary-black py-2 px-4 text-white rounded-tl-2xl rounded-tr-md rounded-br-2xl rounded-bl-md hover:scale-105 duration-200 hover:brightness-125 shadow-[2px_2px_8px_#00000042]"
                         onClick={() => {
                             const _projects =
                                 document.getElementsByClassName('project-item');

@@ -28,32 +28,32 @@
     transition-duration: 200ms;
 }
 
-/* rotate to right */
-.cube-side-rotation-1:hover .cube {
+.right-rotation:hover .cube,
+.rotate-to-right .cube {
     transform: rotateY(-90deg) translateZ(var(--cubefinalZPos));
     & .front {
         transform: translateX(-50%);
     }
 }
 
-/* rotate to left */
-.cube-side-rotation-2:hover .cube {
+.left-rotation:hover .cube,
+.rotate-to-left .cube {
     transform: rotateY(90deg) translateZ(var(--cubefinalZPos));
     & .front {
         transform: translateX(50%);
     }
 }
 
-/* rotate to top */
-.cube-side-rotation-3:hover .cube {
+.top-rotation:hover .cube,
+.rotate-to-top .cube {
     transform: rotateX(-90deg) translateZ(var(--cubefinalZPos));
     & .front {
         transform: translateY(50%);
     }
 }
 
-/* rotate to bottom */
-.cube-side-rotation-4:hover .cube {
+.bottom-rotation:hover .cube,
+.rotate-to-bottom .cube {
     transform: rotateX(90deg) translateZ(var(--cubefinalZPos));
     & .front {
         transform: translateY(-50%);

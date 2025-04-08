@@ -1,10 +1,10 @@
 import React from 'react';
 
 export function useFrozenFunction<T = unknown>(
-    callback: () => T,
+    callback: (abortController?: AbortController) => T,
     freezeTimer: number,
     initialValue: T,
-    signal?: AbortSignal
+    abortController?: AbortController
 ) {
     const freezeTimerRef = React.useRef(false);
 
@@ -14,8 +14,8 @@ export function useFrozenFunction<T = unknown>(
     const func = async () => {
         if (freezeTimerRef.current) return;
 
-        if (signal?.aborted) {
-            console.log('signal.aborted', signal.aborted);
+        if (abortController?.signal.aborted) {
+            console.log('signal.aborted', abortController?.signal.aborted);
             return Promise.reject(new DOMException('Aborted', 'AbortError'));
         }
 
@@ -23,10 +23,10 @@ export function useFrozenFunction<T = unknown>(
 
         const _newData = await new Promise<ReturnType<typeof callback>>(
             (resolve, reject) => {
-                const _data = callback();
+                const _data = callback(abortController);
                 resolve(_data);
 
-                signal?.addEventListener('abort', () => {
+                abortController?.signal.addEventListener('abort', () => {
                     reject(new DOMException('Aborted', 'AbortError'));
                 });
             }

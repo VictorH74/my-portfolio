@@ -3,13 +3,61 @@ import { useTechnologyList } from '@/hooks/useTechnologyList';
 import { useTranslations } from 'next-intl';
 import { TechnologyCard } from './TechnologyCard';
 import { Loading } from '@/components/Loading';
+import React from 'react';
+import { useFrozenFunction } from '@/hooks/useFrozenFunction';
+
+const rotationPauseTime = 320;
 
 export const TechnologyList = () => {
+    const techListRef = React.useRef<HTMLElement>(null);
     const t = useTranslations('TechnologyListSection');
     const { technologyList, isLoading, isError, refetch } = useTechnologyList();
 
+    const controllerRef = React.useRef(new AbortController());
+    const { func: scrollListener } = useFrozenFunction(
+        (controller) => {
+            if (!controller) return;
+
+            if (
+                techListRef.current!.getBoundingClientRect().top <
+                window.innerHeight / 2
+            ) {
+                initCubeListRotation();
+                controller.abort();
+            }
+        },
+        100,
+        null,
+        controllerRef.current
+    );
+
+    React.useEffect(() => {
+        if (!(technologyList.length > 0) || !techListRef.current) return;
+
+        window.addEventListener('scroll', scrollListener, {
+            signal: controllerRef.current.signal,
+        });
+    }, [scrollListener, technologyList]);
+
+    const initCubeListRotation = () => {
+        const techEls = document.getElementsByClassName('tech-item-card');
+
+        for (let i = 0; i < techEls.length; i++) {
+            const el = techEls[i];
+            const rotateClass =
+                'rotate-to-' + el.getAttribute('data-rotate-side');
+            setTimeout(() => {
+                el.classList.add(rotateClass);
+                setTimeout(() => {
+                    el.classList.remove(rotateClass);
+                }, rotationPauseTime);
+            }, i * rotationPauseTime);
+        }
+    };
+
     return (
         <section
+            ref={techListRef}
             id="technologies"
             className="max-md:py-[2.5rem] grid place-items-center py-[6.5rem] bg-background max-sm:text-sm px-3"
         >

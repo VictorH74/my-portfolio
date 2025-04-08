@@ -11,14 +11,15 @@ const cubeSide = {
 };
 
 export const TechnologyCard: React.FC<TechnologyType> = (techIcon) => {
-    const randomNumber = Math.ceil(Math.random() * 4);
+    const randomNumber = Math.ceil(Math.random() * 4) as keyof typeof cubeSide;
 
     return (
         <li
             className={twMerge(
-                'cube-container',
-                'cube-side-rotation-' + randomNumber
+                'cube-container tech-item-card',
+                cubeSide[randomNumber] + '-rotation'
             )}
+            data-rotate-side={cubeSide[randomNumber]}
         >
             <div className="cube">
                 <div className="bg-secondary-black shadow-lg shrink-0 text-white front">
@@ -35,10 +36,7 @@ export const TechnologyCard: React.FC<TechnologyType> = (techIcon) => {
 
                 {/* side */}
                 <div
-                    className={twMerge(
-                        'bg-[#6d6d6d]',
-                        cubeSide[randomNumber as keyof typeof cubeSide]
-                    )}
+                    className={twMerge('bg-[#6d6d6d]', cubeSide[randomNumber])}
                     style={
                         techIcon.color
                             ? {
