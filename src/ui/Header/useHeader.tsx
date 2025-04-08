@@ -12,7 +12,7 @@ export const anchorLinkHref = [
 
 export const useHeader = () => {
     const [isInHeroSection, setIsInHeroSection] = useState(true);
-    const [showHeader, setShowHeader] = useState(false);
+    const [showHeader, setShowHeader] = useState(true);
     const headerRef = useRef<HTMLDivElement>(null);
 
     const prevScrollTopRef = useRef(0);
