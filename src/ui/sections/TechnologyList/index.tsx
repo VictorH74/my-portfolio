@@ -9,7 +9,8 @@ import { useFrozenFunction } from '@/hooks/useFrozenFunction';
 const rotationPauseTime = 200;
 
 export const TechnologyList = () => {
-    const techListRef = React.useRef<HTMLElement>(null);
+    const techListSectionRef = React.useRef<HTMLElement>(null);
+    const techListRef = React.useRef<HTMLUListElement>(null);
     const t = useTranslations('TechnologyListSection');
     const { technologyList, isLoading, isError, refetch } = useTechnologyList();
 
@@ -19,7 +20,7 @@ export const TechnologyList = () => {
             if (!controller) return;
 
             if (
-                techListRef.current!.getBoundingClientRect().top <
+                techListSectionRef.current!.getBoundingClientRect().top <
                 window.innerHeight / 2
             ) {
                 initCubeListRotation();
@@ -32,7 +33,7 @@ export const TechnologyList = () => {
     );
 
     React.useEffect(() => {
-        if (!(technologyList.length > 0) || !techListRef.current) return;
+        if (!(technologyList.length > 0) || !techListSectionRef.current) return;
 
         window.addEventListener('scroll', scrollListener, {
             signal: controllerRef.current.signal,
@@ -40,8 +41,15 @@ export const TechnologyList = () => {
     }, [scrollListener, technologyList]);
 
     const initCubeListRotation = () => {
+        if (!techListRef.current) return;
         const techEls = document.getElementsByClassName('tech-item-card');
-        const rowMaxItemLength = 6; // TODO: get dinamically?
+        const techItemWidth = techEls[0].getBoundingClientRect().width;
+
+        const rowMaxItemLength =
+            Math.round(
+                techListRef.current.getBoundingClientRect().width /
+                    techItemWidth
+            ) - 1;
 
         const elIndexList = Array(techEls.length)
             .fill(null)
@@ -81,7 +89,7 @@ export const TechnologyList = () => {
 
     return (
         <section
-            ref={techListRef}
+            ref={techListSectionRef}
             id="technologies"
             className="max-md:py-[2.5rem] grid place-items-center py-[6.5rem] bg-background max-sm:text-sm px-3"
         >
@@ -102,7 +110,10 @@ export const TechnologyList = () => {
                         <Loading />
                     </div>
                 ) : (
-                    <ul className="max-sm:gap-2 flex justify-center gap-4 flex-wrap">
+                    <ul
+                        className="max-sm:gap-2 flex justify-center gap-4 flex-wrap"
+                        ref={techListRef}
+                    >
                         {technologyList
                             .filter((techIcon) => !techIcon.hidden)
                             .map((techIcon) => {
