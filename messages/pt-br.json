@@ -51,9 +51,11 @@
         "error_message_message": "Campo de mensagem obrigatório"
     },
     "DownloadResumeBtn": {
-        "label": "Baixar Currículo"
+        "label": "Baixar Currículo",
+        "downloadingLabel": "Baixando..."
     },
     "ViewResumeBtn": {
-        "label": "Visualizar Currículo"
+        "label": "Visualizar Currículo",
+        "loadingLabel": "Carregando..."
     }
 }

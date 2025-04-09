@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 import './style.css';
 import { useViewResumeBtn } from './useViewResumeBtn';
@@ -23,18 +24,19 @@ export const ViewResumeBtn: React.FC<Props> = (props) => {
                         : hook.downloadAndViewResume
                 }
                 className={twMerge(
-                    'view-resume-btn bg-secondary-black shrink-0 px-8 rounded-md text-white relative cursor-pointer w-[13rem]',
+                    'view-resume-button bg-secondary-black shrink-0 px-8 rounded-md text-white relative cursor-pointer w-[13rem]',
                     props.className
                 )}
             >
                 <div className="button-wrapper">
                     <div className="text top-0 flex items-center justify-center">
-                        {hook.isLoading ? 'Loading...' : t('label')}
+                        {hook.isLoading ? t('loadingLabel') : t('label')}
                     </div>
                     <span className="icon text-white top-full flex items-center justify-center">
                         <Image
                             width={30}
                             height={30}
+                            style={{ width: '31px', height: 'auto' }}
                             src="/icons/view-icon.svg"
                             alt="view icon"
                         />

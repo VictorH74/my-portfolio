@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 
 export const FooterLogo = () => {
@@ -25,6 +26,7 @@ export const FooterLogo = () => {
                 src="me-logo-v2.svg"
                 alt="logo"
                 className="select-none pointer-events-none"
+                style={{ width: '86px', height: 'auto' }}
             />
         </button>
     );

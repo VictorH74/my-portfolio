@@ -23,7 +23,6 @@ export const useViewResumeBtn = () => {
 
     const resumeUrl = React.useMemo(() => {
         if (!resumeBlob) return undefined;
-        console.log('has blob');
         return window.URL.createObjectURL(resumeBlob);
     }, [resumeBlob]);
 

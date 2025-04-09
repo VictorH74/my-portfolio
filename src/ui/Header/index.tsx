@@ -5,9 +5,8 @@ import Link from 'next/link';
 import { anchorLinkHref, useHeader } from './useHeader';
 import { twMerge } from 'tailwind-merge';
 import { Hamburger } from './Hamburger';
+import React from 'react';
 import { ViewResumeBtn } from '@/components/ViewResumeBtn';
-import { isMobilePortrait } from '@/utils/functions';
-import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
 
 export const Header = () => {
     const t = useTranslations('Header');
@@ -36,6 +35,7 @@ export const Header = () => {
                         alt="logo"
                         width={50}
                         height={50}
+                        style={{ width: '51px', height: 'auto' }}
                     />
                 </Link>
                 <nav className="max-lg:hidden">
@@ -59,11 +59,7 @@ export const Header = () => {
                             </li>
                         ))}
                         <li>
-                            {isMobilePortrait() ? (
-                                <DownloadResumeBtn />
-                            ) : (
-                                <ViewResumeBtn />
-                            )}
+                            <ViewResumeBtn />
                         </li>
                     </ul>
                 </nav>

@@ -7,9 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { anchorLinkHref } from '../useHeader';
 import Link from 'next/link';
 import './style.css';
-import { ViewResumeBtn } from '@/components/ViewResumeBtn';
 import { DownloadResumeBtn } from '@/components/DownloadResumeBtn';
-import { isMobilePortrait } from '@/utils/functions';
 
 export const Hamburger = () => {
     const t = useTranslations('Header');
@@ -88,11 +86,7 @@ export const Hamburger = () => {
                                         </li>
                                     ))}
                                     <li className="my-5">
-                                        {isMobilePortrait() ? (
-                                            <DownloadResumeBtn className="w-full text-2xl rounded-none truncate" />
-                                        ) : (
-                                            <ViewResumeBtn className="w-full text-2xl rounded-none truncate" />
-                                        )}
+                                        <DownloadResumeBtn className="w-full text-2xl rounded-none truncate py-4" />
                                     </li>
                                 </ul>
                             </nav>

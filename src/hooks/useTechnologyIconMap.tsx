@@ -1,11 +1,11 @@
 import React from 'react';
-import { useTechnologyList } from './useTechnologyList';
+import { useGlobalTechnologyList } from './useGlobalTechnologyList';
 import { TechnologyType } from '@/types';
 
 export type IconMapType = Record<TechnologyType['name'], TechnologyType>;
 
 export const useTechnologyIconMap = () => {
-    const { isEmpty, technologyList } = useTechnologyList();
+    const { isEmpty, technologyList } = useGlobalTechnologyList();
 
     const map = React.useMemo(() => {
         if (isEmpty) return undefined;

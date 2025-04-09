@@ -1,3 +1,4 @@
+'use client';
 import { Loading } from '@/components/Loading';
 import { db } from '@/configs/firebaseConfig';
 import { useQuery } from '@tanstack/react-query';

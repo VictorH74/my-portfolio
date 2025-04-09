@@ -2,7 +2,7 @@ import React from 'react';
 
 export const bgColors = ['bg-[#0aff70]', 'bg-[#46e2e2]', 'bg-[#1e74e4]'];
 
-export const delayFactor = 100;
+export const delayFactor = 80;
 
 export const useHamburger = () => {
     const [visibleHumburgerNav, setVisibleHumburgerNav] = React.useState(false);

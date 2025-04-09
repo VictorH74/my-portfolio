@@ -1,18 +1,13 @@
-'use client';
-import { useTechnologyList } from '@/hooks/useTechnologyList';
-import Skeleton from '@mui/material/Skeleton';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { Orbitron } from 'next/font/google';
 import { twMerge } from 'tailwind-merge';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
+import { MainTechList } from './MainTechList';
 
 const sectionFont = Orbitron({ weight: '400', subsets: ['latin'] });
-const iconSize = 50;
 
 export const Hero = () => {
     const t = useTranslations('HeroSection');
-    const { technologyList, isLoading } = useTechnologyList();
 
     return (
         <section
@@ -55,42 +50,8 @@ export const Hero = () => {
                 >
                     {t('a')}
                 </h2>
-                <div className="flex gap-7 ml-2 pt-3">
-                    {isLoading ? (
-                        <Fallback />
-                    ) : (
-                        technologyList
-                            .filter((icon) => icon.isMain)
-                            .map((icon, i) => (
-                                <Image
-                                    key={icon.id}
-                                    height={iconSize}
-                                    width={iconSize}
-                                    alt={icon.name + ' icon'}
-                                    src={icon.src}
-                                    className="motion-safe:animate-bounce max-md:size-10 size-12 min-[87.5rem]:size-14 max-sm:size-8"
-                                    style={{
-                                        animationDelay: i * 100 + 'ms',
-                                    }}
-                                />
-                            ))
-                    )}
-                </div>
+                <MainTechList />
             </div>
         </section>
     );
 };
-
-const Fallback = () =>
-    Array(5)
-        .fill(null)
-        .map((_, i) => (
-            <Skeleton
-                key={i}
-                height={iconSize}
-                width={iconSize}
-                className="max-md:size-10 size-12 min-[87.5rem]:size-14 max-sm:size-8"
-                variant="circular"
-                sx={{ backgroundColor: '#ececec24' }}
-            />
-        ));

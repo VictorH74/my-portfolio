@@ -1,4 +1,3 @@
-'use client';
 import { doc, getDoc } from 'firebase/firestore';
 import { BRAZIL_PHONE_PATTERN, PROJECT_GRADIENT_COLORS } from './constants';
 import { db } from '@/configs/firebaseConfig';
