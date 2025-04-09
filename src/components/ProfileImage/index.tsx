@@ -3,8 +3,8 @@ import { Loading } from '@/components/Loading';
 import { db } from '@/configs/firebaseConfig';
 import { useQuery } from '@tanstack/react-query';
 import { doc, getDoc } from 'firebase/firestore';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 

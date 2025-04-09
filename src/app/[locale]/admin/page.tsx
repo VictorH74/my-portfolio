@@ -1,11 +1,9 @@
-import React from 'react';
-
-import { Metadata } from 'next';
 import { AdminProjectListProvider } from '@/contexts/AdminProjectListCtx';
-
-import { ProfileArea } from './ui/ProfileArea';
-import { ProjectCollectionArea } from './ui/ProjectCollectionArea';
-import { TechCollectionArea } from './ui/TechCollectionArea';
+import { ProfileArea } from '@/ui/admin_page/ProfileArea';
+import { ProjectCollectionArea } from '@/ui/admin_page/ProjectCollectionArea';
+import { TechCollectionArea } from '@/ui/admin_page/TechCollectionArea';
+import { Metadata } from 'next';
+import React from 'react';
 
 export const metadata: Metadata = {
     title: 'Victor Leal - Admin',

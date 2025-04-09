@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import { useAnimatedBackground } from './useAnimatedBackground';
 import { twMerge } from 'tailwind-merge';
+
+import { useAnimatedBackground } from './useAnimatedBackground';
 
 export const AnimatedBackground = () => {
     const hook = useAnimatedBackground();

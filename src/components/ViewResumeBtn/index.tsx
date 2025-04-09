@@ -1,11 +1,12 @@
 'use client';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import './style.css';
-import { useViewResumeBtn } from './useViewResumeBtn';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { useViewResumeBtn } from './useViewResumeBtn';
 import { ModalContainer } from '../ModalContainer';
-import Image from 'next/image';
 
 interface Props {
     className?: string;

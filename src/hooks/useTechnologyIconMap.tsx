@@ -1,6 +1,7 @@
-import React from 'react';
-import { useGlobalTechnologyList } from './useGlobalTechnologyList';
 import { TechnologyType } from '@/types';
+import React from 'react';
+
+import { useGlobalTechnologyList } from './useGlobalTechnologyList';
 
 export type IconMapType = Record<TechnologyType['name'], TechnologyType>;
 

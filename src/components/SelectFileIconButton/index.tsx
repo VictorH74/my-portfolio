@@ -1,8 +1,9 @@
+import { MuiIconType } from '@/types';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
-import { iconButtonClassName } from '../IconButton';
-import { MuiIconType } from '@/types';
 import { twMerge } from 'tailwind-merge';
+
+import { iconButtonClassName } from '../IconButton';
 
 interface SelectFileIconButtonProps {
     multiple?: boolean;

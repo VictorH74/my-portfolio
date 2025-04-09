@@ -1,18 +1,18 @@
 'use client';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { auth } from '@/configs/firebaseConfig';
-// import { setServerCookie } from '@/lib/actions';
 import { FirebaseError } from 'firebase/app';
 import {
     browserLocalPersistence,
     setPersistence,
     signInWithEmailAndPassword,
 } from 'firebase/auth';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import nookies from 'nookies';
 import React from 'react';
+
 import SubmitButton from './SubmitBtn';
-import Image from 'next/image';
-import { AnimatedBackground } from '@/components/AnimatedBackground';
 
 export default function AdminLoginPage() {
     const router = useRouter();

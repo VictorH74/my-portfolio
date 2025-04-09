@@ -1,34 +1,27 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
-import { getMetadata, getStorage, ref } from 'firebase/storage';
+import { downloadResume } from '@/utils/resume';
+import React from 'react';
 
 export const resumeFileName = 'VICTOR HUGO LEAL.pdf';
 
-const loadPdfMetadata = async () => {
-    const storage = getStorage();
-    const pdfRef = ref(storage, 'my-cv/' + resumeFileName);
-
-    return await getMetadata(pdfRef);
-};
-
 export const useDownloadResumeBtn = () => {
-    const {
-        data: pdfMetadata,
-        isLoading,
-        isError,
-    } = useQuery({
-        queryKey: ['cv-pdf-metadata'],
-        queryFn: loadPdfMetadata,
-        retry: false,
-        refetchOnWindowFocus: false,
-    });
+    const [isLoading, setIsLoading] = React.useState(false);
 
-    const formatSizeToKB = (size: number) => Math.round(size / 1024);
+    const handleClick = async () => {
+        setIsLoading(true);
+
+        try {
+            await downloadResume();
+        } catch (err) {
+            console.error(err);
+            alert('Error trying download resume! Try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return {
-        isError,
-        formatSizeToKB,
-        pdfMetadata,
+        handleClick,
         isLoading,
     };
 };

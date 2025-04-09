@@ -1,6 +1,6 @@
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import './style.css';
-import React from 'react';
 
 const defaultContainerBaseWidth = 79;
 // const defaultParticleSize = (defaultContainerBaseWidth / 3) * 1.07;

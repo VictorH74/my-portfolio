@@ -1,6 +1,7 @@
-import React from 'react';
-import { generateLightballs, Lightball } from './Lightball';
 import { isMobilePortrait } from '@/utils/functions';
+import React from 'react';
+
+import { generateLightballs, Lightball } from './Lightball';
 
 export const useAnimatedBackground = () => {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);

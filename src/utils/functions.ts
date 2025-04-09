@@ -1,7 +1,8 @@
-import { doc, getDoc } from 'firebase/firestore';
-import { BRAZIL_PHONE_PATTERN, PROJECT_GRADIENT_COLORS } from './constants';
 import { db } from '@/configs/firebaseConfig';
 import { ProfileContactsType } from '@/types';
+import { doc, getDoc } from 'firebase/firestore';
+
+import { BRAZIL_PHONE_PATTERN, PROJECT_GRADIENT_COLORS } from './constants';
 
 export const getProjectGradient = (projectIndex: number) => {
     const gradientColorsLength = PROJECT_GRADIENT_COLORS.length;
@@ -42,5 +43,6 @@ export const isMobilePortrait = () => {
             navigator.userAgent.toLowerCase()
         );
     const isSmallScreen = window.matchMedia('(max-width: 767px)').matches;
+
     return isMobileDevice && isSmallScreen;
 };

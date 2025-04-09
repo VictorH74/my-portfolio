@@ -1,5 +1,4 @@
 import * as admin from 'firebase-admin';
-
 import { credential } from 'firebase-admin';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
