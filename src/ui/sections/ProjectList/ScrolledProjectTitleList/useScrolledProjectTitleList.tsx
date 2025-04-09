@@ -32,7 +32,7 @@ export const useScrolledProjectTitleList = (
 
                 return _list as ScrolledProjectTitleListItemType;
             },
-            300,
+            100,
             []
         );
 

@@ -6,7 +6,7 @@ import { Loading } from '@/components/Loading';
 import React from 'react';
 import { useFrozenFunction } from '@/hooks/useFrozenFunction';
 
-const rotationPauseTime = 320;
+const rotationPauseTime = 200;
 
 export const TechnologyList = () => {
     const techListRef = React.useRef<HTMLElement>(null);
@@ -41,18 +41,42 @@ export const TechnologyList = () => {
 
     const initCubeListRotation = () => {
         const techEls = document.getElementsByClassName('tech-item-card');
+        const rowMaxItemLength = 6; // TODO: get dinamically?
 
-        for (let i = 0; i < techEls.length; i++) {
-            const el = techEls[i];
+        const elIndexList = Array(techEls.length)
+            .fill(null)
+            .map((_, i) => i);
+        const newElIndexList = [];
+
+        let startIndex = 0;
+        let endIndex = rowMaxItemLength;
+        let reversed = false;
+        while (startIndex < elIndexList.length) {
+            if (reversed)
+                newElIndexList.push(
+                    ...elIndexList.slice(startIndex, endIndex).reverse()
+                );
+            else
+                newElIndexList.push(...elIndexList.slice(startIndex, endIndex));
+
+            reversed = !reversed;
+            startIndex += rowMaxItemLength;
+            endIndex += rowMaxItemLength;
+        }
+
+        if (newElIndexList.length == 0) newElIndexList.push(...elIndexList);
+
+        newElIndexList.forEach((elIndex, i) => {
+            const el = techEls[elIndex];
             const rotateClass =
                 'rotate-to-' + el.getAttribute('data-rotate-side');
             setTimeout(() => {
                 el.classList.add(rotateClass);
                 setTimeout(() => {
                     el.classList.remove(rotateClass);
-                }, rotationPauseTime);
+                }, rotationPauseTime + 300);
             }, i * rotationPauseTime);
-        }
+        });
     };
 
     return (
