@@ -56,8 +56,8 @@ export class Lightball {
         this.y_location = min_y + new_y;
     }
 
-    public draw(canvas_ctx: CanvasRenderingContext2D) {
-        canvas_ctx.filter = 'blur(30px)';
+    public draw(canvas_ctx: CanvasRenderingContext2D, blurValue: number) {
+        canvas_ctx.filter = `blur(${blurValue}px)`;
 
         canvas_ctx.fillStyle = this.color;
         // canvas_ctx.shadowColor = this.color;
@@ -81,14 +81,11 @@ export const generateLightballs = (
     cWidth: number,
     cHeight: number,
     screenWidth: number,
-    screenHeight: number
+    screenHeight: number,
+    computeValue: (v: number) => number
 ) => {
-    const values_factor = screenWidth / 2560;
-
-    const adaptedValue = (v: number) => v * values_factor;
-
-    const ballSize = adaptedValue(300);
-    const ballConstraintAreaRadio = adaptedValue(85);
+    const ballSize = computeValue(300);
+    const ballConstraintAreaRadio = computeValue(85);
 
     const x_factor = (screenWidth / 2 - cWidth / 2) / 2;
     const y_factor = (screenHeight / 2 - cHeight / 2) / 2;
@@ -141,7 +138,7 @@ export const generateLightballs = (
             '#4EFFFF',
         ],
         [
-            adaptedValue(350),
+            computeValue(350),
             cWidth * 0.45,
             cHeight * -0.01,
             ballConstraintAreaRadio,
@@ -170,7 +167,7 @@ export const generateLightballs = (
         ],
         [ballSize, cWidth * 0.92, cHeight * 0.673, 45, '#2382FF'],
         [
-            adaptedValue(400),
+            computeValue(400),
             cWidth * 0.799,
             cHeight * 0.96,
             ballConstraintAreaRadio,

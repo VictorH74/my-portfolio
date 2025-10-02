@@ -51,7 +51,8 @@ export const useAnimatedBackground = () => {
             canvas.width,
             canvas.height,
             window.outerWidth,
-            window.outerHeight
+            window.outerHeight,
+            computeValue
         );
     };
 
@@ -70,12 +71,19 @@ export const useAnimatedBackground = () => {
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
         lightballList.forEach((l) => {
             l.update(mousePosRef.current || { x: 0, y: 0 });
-            l.draw(canvasCtx);
+            l.draw(canvasCtx, computeValue(30));
         });
 
         if (isMobilePortrait()) return;
 
         requestAnimationFrame(update);
+    };
+
+    const computeValue = (v: number) => {
+        const bgImgWidth = 2560;
+        const values_factor = window.outerWidth / bgImgWidth;
+
+        return v * values_factor;
     };
 
     return {

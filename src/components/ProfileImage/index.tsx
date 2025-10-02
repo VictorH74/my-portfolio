@@ -54,8 +54,8 @@ export const ProfileImage: React.FC<ProfileImageProps> = (props) => {
             className={twMerge(
                 'rounded-md object-cover h-auto w-full duration-200'
             )}
-            height={300}
-            width={300}
+            height={400}
+            width={400}
             src={props.currentImgSrc || imgSrc || ''}
             alt="profile image"
         />

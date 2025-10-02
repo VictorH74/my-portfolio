@@ -25,7 +25,8 @@ export const AnimatedBackground = () => {
                 className="absolute w-screen h-screen object-cover inset-0"
                 alt="background image"
                 src="/images/hero/bg.png"
-                onLoad={() => {
+                onLoad={(e) => {
+                    console.log(e.currentTarget.naturalWidth);
                     hook.setIsLoadImg(true);
                 }}
             />
