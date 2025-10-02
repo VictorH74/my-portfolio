@@ -281,7 +281,6 @@ export const useCreateUpdateProjectModal = (
 
         const screenshots = await uploadScreenshots(futureProjectId);
 
-        // TODO: test if works
         await projectService.createProject({ ...project, screenshots, id: futureProjectId });
     };
 

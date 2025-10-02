@@ -8,6 +8,7 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { ProjectItem } from './ProjectItem';
+import { ProjectListError } from './ProjectListError';
 import { ProjectTechList } from './ProjectTechListContent';
 import { ScrolledProjectTitleList } from './ScrolledProjectTitleList';
 import { useProjectList } from './useProjectList';
@@ -29,18 +30,12 @@ export const ProjectList = () => {
                 {t('section_title')}
             </h2>
 
-            {hook.isError ? (
-                // TODO: individual component
-                <button
-                    className="text-red-400 font-medium py-2 px-6 w-full text-center pb-16 cursor-pointer"
-                    onClick={async () => await hook.refetch()}
-                >
-                    Error trying loading projects! Retry
-                </button>
-            ) : hook.isLoading ? (
-                <div>
+            {hook.isLoading ? (
+                <div className='py-2 px-6 pb-16'>
                     <Loading />
                 </div>
+            ) : hook.isError ? (
+                < ProjectListError retry={hook.refetch} />
             ) : (
                 <>
                     <ul className="max-lg:divide-secondary-black max-lg:mb-5 max-lg:space-y-10 relative">

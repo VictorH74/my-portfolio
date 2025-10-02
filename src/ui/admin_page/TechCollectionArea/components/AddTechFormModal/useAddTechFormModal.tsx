@@ -94,7 +94,6 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         setIconFileValue(files[0]);
     };
 
-    // TODO: implement a way to update tech icon img if a new file is selected removing the current one from storage
     const updateExistingTech = async (techData: Partial<TechnologyType>) => {
         await technologieService.updateTechnology(props.selectedTech!.id, techData)
 
@@ -114,7 +113,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
 
         let urlMandatory;
 
-        if (urlValue) urlMandatory = urlValue;
+        if (!iconFileValue && urlValue) urlMandatory = urlValue;
         else if (iconFileValue && (props.selectedTech || idValue)) {
             try {
                 const createdImgUrl = await technologieService.uploadTechIcon(iconFileValue, props.selectedTech?.id || idValue)

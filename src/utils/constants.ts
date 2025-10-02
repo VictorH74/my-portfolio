@@ -42,3 +42,7 @@ export const contactIcon: Record<keyof ProfileContactsType, MuiIconType> = {
     linkedin_url: LinkedInIcon,
     phone: WhatsAppIcon,
 };
+
+export const PROFILE_BUCKET_NAME = 'profile';
+export const PROFILE_IMG_NAME = 'me';
+export const PROFILE_RESUME_NAME = 'resume.pdf';

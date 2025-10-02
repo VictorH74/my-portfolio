@@ -1,7 +1,7 @@
+import { TechnologyType } from '@/types/technology';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import './style.css';
-import { TechnologyType } from '@/types/technology';
 
 const cubeSide = {
     1: 'right',

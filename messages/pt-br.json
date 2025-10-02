@@ -13,6 +13,7 @@
     },
     "AboutMeSection": {
         "profile_image_load_error": "erro ao tentar carregar imagem!",
+        "profile_image_load_error_retry": "Tentar Novamente",
         "career": "Desenvolvedor Web Junior",
         "paragraph_1": "Dev. Web com experiência comprovada utilizando as tecnologias: *React.js, Next.js, TypeScript / JavaScript* para frontend e *Java, Spring Boot, Node.js, TypeScript* para backend. Além disso, sou bem familiarizado com conceitos fundamentais para o desenvolvimento de software, como: _clean code, design patterns, arquitetura hexagonal, estrutura de dados, microserviços e testes unitário._",
         "paragraph_2": "A programação se tornou um verdadeiro hobby. Boa parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
@@ -48,7 +49,9 @@
         "error_snackbar_text": "Houve algum erro ao enviar a mensagem",
         "error_message_name": "Campo de nome obrigatório",
         "error_message_email": "Campo de e-mail obrigatório",
-        "error_message_message": "Campo de mensagem obrigatório"
+        "error_message_message": "Campo de mensagem obrigatório",
+        "retry_fetch_contacts_btn_text": "Erro ao tentar carregar contatos! Tentar Novamente",
+        "empty_contacts": "Sem contatos"
     },
     "DownloadResumeBtn": {
         "label": "Baixar Currículo",

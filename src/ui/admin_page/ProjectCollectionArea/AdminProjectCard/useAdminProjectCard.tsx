@@ -24,7 +24,6 @@ export const useAdminProjectCard = (props: ProjectType) => {
             )
         )
             try {
-                // TODO: test if this works
                 await Promise.all([
                     projectService.deleteProject(props.id, props.index, projects),
                     projectService.deleteScreenshots(props.screenshots.map(s => `${props.id}/${s.name}`))

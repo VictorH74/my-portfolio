@@ -6,10 +6,24 @@ export function useFrozenFunction<T = unknown>(
     initialValue: T,
     abortController?: AbortController
 ) {
+    const setFreeseTimerTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
     const freezeTimerRef = React.useRef(false);
 
     const [data, setData] =
         React.useState<ReturnType<typeof callback>>(initialValue);
+
+    React.useEffect(() => {
+        abortController?.signal.addEventListener('abort', () => {
+            if (setFreeseTimerTimeoutRef.current) {
+                clearTimeout(setFreeseTimerTimeoutRef.current);
+            }
+        })
+
+        return () => {
+            abortController?.abort();
+        };
+    }, [abortController]);
+
 
     const func = async () => {
         if (freezeTimerRef.current) return;
@@ -36,8 +50,7 @@ export function useFrozenFunction<T = unknown>(
             setData(_newData);
         }
 
-        // TODO: will cancel when abort??
-        setTimeout(() => {
+        setFreeseTimerTimeoutRef.current = setTimeout(() => {
             freezeTimerRef.current = false;
         }, freezeTimer);
     };

@@ -3,6 +3,11 @@ import { createClient } from '@/configs/supabase';
 import { ProjectType } from '@/types/project';
 import { TechnologyType } from '@/types/technology';
 import {
+    PROFILE_BUCKET_NAME,
+    PROFILE_IMG_NAME,
+    PROFILE_RESUME_NAME,
+} from '@/utils/constants';
+import {
     collection,
     doc,
     getDocs,
@@ -252,10 +257,10 @@ export class FirebaseSupabaseApi implements IApi {
             if (!collectionCount.exists()) {
                 throw 'Document does not exist!';
             }
-            const total = (collectionCount.data().total as number) - 1; // 31
+            const total = (collectionCount.data().total as number) - 1;
             for (
-                let currentIndex = tech.index; // 0
-                currentIndex < total; // 0 < 31
+                let currentIndex = tech.index;
+                currentIndex < total;
                 currentIndex++
             ) {
                 const { id, index } = currentTechList[currentIndex + 1];
@@ -286,14 +291,16 @@ export class FirebaseSupabaseApi implements IApi {
         await batch.commit();
     }
 
-    // TODO: declare 'profile' and 'me' as constant to maintain consistency
     async updateProfileImg(img: Blob): Promise<string> {
-        await this.#supabase.storage.from('profile').upload('me', img, {
-            upsert: true,
-        });
+        await this.#supabase.storage
+            .from(PROFILE_BUCKET_NAME)
+            .upload(PROFILE_IMG_NAME, img, {
+                upsert: true,
+            });
 
-        const url = this.#supabase.storage.from('profile').getPublicUrl('me')
-            .data.publicUrl;
+        const url = this.#supabase.storage
+            .from(PROFILE_BUCKET_NAME)
+            .getPublicUrl(PROFILE_IMG_NAME).data.publicUrl;
 
         const docRef = doc(db, 'profile', 'image');
         await updateDoc(docRef, { url });
@@ -302,8 +309,9 @@ export class FirebaseSupabaseApi implements IApi {
     }
 
     getProfileImg(): string {
-        return this.#supabase.storage.from('profile').getPublicUrl('me').data
-            .publicUrl;
+        return this.#supabase.storage
+            .from(PROFILE_BUCKET_NAME)
+            .getPublicUrl(PROFILE_IMG_NAME).data.publicUrl;
     }
 
     async updateResume(file: File): Promise<void> {
@@ -311,16 +319,16 @@ export class FirebaseSupabaseApi implements IApi {
             throw new Error('Only PDF files are allowed');
 
         await this.#supabase.storage
-            .from('profile')
-            .upload('resume.pdf', file, {
+            .from(PROFILE_BUCKET_NAME)
+            .upload(PROFILE_RESUME_NAME, file, {
                 upsert: true,
             });
     }
 
     async getResume(): Promise<Blob | null> {
         const { data, error } = await this.#supabase.storage
-            .from('profile')
-            .download('resume.pdf');
+            .from(PROFILE_BUCKET_NAME)
+            .download(PROFILE_RESUME_NAME);
 
         if (error) throw error;
 

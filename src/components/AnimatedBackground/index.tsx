@@ -9,7 +9,6 @@ export const AnimatedBackground = () => {
     const hook = useAnimatedBackground();
 
     // TODO: perform bg image
-
     return (
         <div className="absolute inset-0 grid place-items-center bg-[#141414]">
             <canvas
@@ -25,8 +24,7 @@ export const AnimatedBackground = () => {
                 className="absolute w-screen h-screen object-cover inset-0"
                 alt="background image"
                 src="/images/hero/bg.png"
-                onLoad={(e) => {
-                    console.log(e.currentTarget.naturalWidth);
+                onLoad={() => {
                     hook.setIsLoadImg(true);
                 }}
             />

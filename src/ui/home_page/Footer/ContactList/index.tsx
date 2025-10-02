@@ -10,6 +10,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Skeleton from '@mui/material/Skeleton';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -48,6 +49,8 @@ const contactItemDisplay: Record<
 };
 
 export const ContactList = () => {
+    const t = useTranslations('Footer');
+
     const {
         data: contacts,
         isLoading,
@@ -56,15 +59,16 @@ export const ContactList = () => {
     } = useQuery({
         queryKey: ['contact-list'],
         queryFn: getContacts,
+        retry: false,
     });
 
     if (isError)
         return (
             <button
-                className="py-2 px-6 text-red-400 font-medium"
-                onClick={async () => await refetch()} // TODO; test refetch
+                className="py-2 px-6 text-red-400 font-medium cursor-pointer"
+                onClick={async () => await refetch()}
             >
-                Error Trying Loading contacts!. Retry
+                {t('retry_fetch_contacts_btn_text')}
             </button>
         );
 
@@ -85,7 +89,7 @@ export const ContactList = () => {
             </ul>
         );
 
-    if (!contacts) return <p>No contacts</p>;
+    if (!contacts) return <p>{t('empty_contacts')}</p>;
 
     return (
         <ul className={twMerge('flex flex-row gap-9')}>

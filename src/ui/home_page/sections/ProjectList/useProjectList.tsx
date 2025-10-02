@@ -12,10 +12,27 @@ export const useProjectList = () => {
 
     const projectListRef = React.useRef<typeof projectList>(projectList);
 
+    const getInitialProjects = async () => {
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate loading
+            throw 'error test';
+
+            const initialProjectList = await projectService.getProjectList(4);
+            setProjectList(initialProjectList);
+
+            return null;
+        } catch (err) {
+            console.error(err);
+            setIsError(true);
+        }
+    };
+
     const { isLoading, refetch } = useQuery({
         queryKey: ['project-list'],
         queryFn: () => getInitialProjects(),
         refetchOnWindowFocus: false,
+        retry: false,
+        enabled: projectList.length === 0,
     });
 
     React.useEffect(() => {
@@ -31,18 +48,6 @@ export const useProjectList = () => {
         }
 
         setShowingMore(true);
-    };
-
-    const getInitialProjects = async () => {
-        try {
-            const initialProjectList = await projectService.getProjectList(4);
-            setProjectList(initialProjectList);
-
-            return null;
-        } catch (err) {
-            console.error(err);
-            setIsError(true);
-        }
     };
 
     return {

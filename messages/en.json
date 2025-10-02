@@ -13,6 +13,7 @@
     },
     "AboutMeSection": {
         "profile_image_load_error": "erro trying loading profile image!",
+        "profile_image_load_error_retry": "Retry",
         "career": "Junior Web Developer",
         "paragraph_1": "Web developer with proven experience using technologies such as *React.js, TypeScript/JavaScript* for frontend, and *Java, Spring Boot, Node.js, and TypeScript* for backend. In addition, I'm well acquainted with fundamental concepts of software development, such as _clean code, design patterns, hexagonal architecture, data structures, microservices, and unit tests._",
         "paragraph_2": "Programming has become a real hobby. A good part of my free time is dedicated to reading articles and documentation about the latest technologies. I firmly believe that this constant dedication will propel me towards success in the future.",
@@ -48,7 +49,9 @@
         "error_snackbar_text": "There was an error sending email",
         "error_message_name": "Name field is required",
         "error_message_email": "Email field is required",
-        "error_message_message": "Message field is required"
+        "error_message_message": "Message field is required",
+        "retry_fetch_contacts_btn_text": "Error trying loading contacts! Retry",
+        "empty_contacts": "No contacts"
     },
     "DownloadResumeBtn": {
         "label": "Download Resume",
