@@ -1,4 +1,4 @@
-import { MuiIconType } from '@/types';
+import { MuiIconType } from '@/types/generic';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';

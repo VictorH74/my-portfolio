@@ -1,7 +1,6 @@
 'use client';
-import { db } from '@/configs/firebaseConfig';
-import { ProjectType } from '@/types';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { projectService } from '@/di/container';
+import { ProjectType } from '@/types/project';
 import React from 'react';
 
 interface AdminProjectsProps {
@@ -19,20 +18,7 @@ export const AdminProjectListProvider = ({
     const [projects, setProjects] = React.useState<ProjectType[]>([]);
 
     React.useEffect(() => {
-        const docsRef = collection(db, 'projects');
-        const q = query(docsRef, orderBy('index', 'asc'));
-
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const retrivedProjects: ProjectType[] = [];
-            snapshot.forEach((doc) => {
-                retrivedProjects.push({
-                    ...doc.data(),
-                    id: doc.id,
-                } as ProjectType);
-            });
-            setProjects(retrivedProjects);
-        });
-
+        const unsubscribe = projectService.getProjectListStream(setProjects);
         return () => {
             unsubscribe();
         };

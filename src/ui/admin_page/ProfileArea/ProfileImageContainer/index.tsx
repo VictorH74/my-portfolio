@@ -2,9 +2,7 @@
 import { Loading } from '@/components/Loading';
 import { ProfileImage } from '@/components/ProfileImage';
 import { SelectFileIconButton } from '@/components/SelectFileIconButton';
-import { db } from '@/configs/firebaseConfig';
-import { doc, updateDoc } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { profileService } from '@/di/container';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -35,26 +33,9 @@ export const ProfileImageContainer = () => {
     const saveImg = async (imgBlob: Blob) => {
         setSubmitting(true);
 
-        // save img file
-        const storage = getStorage();
-        const storageRef = ref(
-            storage,
-            `profile/me.${imgBlob.type.replace('image/', '')}`
-        );
-        const snap = await uploadBytes(storageRef, imgBlob, {
-            contentType: imgBlob.type,
-        });
-        const url = await getDownloadURL(snap.ref);
-
-        // saveProfileImgUrl(url)
-        const imgData = {
-            url: url,
-        };
-        const docRef = doc(db, 'profile', 'image');
-        await updateDoc(docRef, imgData);
+        const url = await profileService.updateProfileImg(imgBlob)
 
         setCurrentImgSrc(url);
-
         setSubmitting(false);
     };
     const cancelImgEditing = async () => {

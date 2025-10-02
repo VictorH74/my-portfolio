@@ -1,4 +1,4 @@
-import { BtnAttrType } from '@/types';
+import { BtnAttrType } from '@/types/generic';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 

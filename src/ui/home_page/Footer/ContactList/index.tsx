@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-import { MuiIconType, ProfileContactsType } from '@/types';
+import { MuiIconType, ProfileContactsType } from '@/types/generic';
 import { formatContactNumber, getContacts } from '@/utils/functions';
 import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';

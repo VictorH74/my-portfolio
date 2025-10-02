@@ -1,5 +1,5 @@
 import { useAi } from '@/hooks/useAi';
-import { LangType } from '@/types';
+import { LangType } from '@/types/generic';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -101,7 +101,7 @@ export default function ProjectDescriptionField(
                         onClick={() => {
                             generateContentStream(
                                 'Rephrase the text, improving clarity and fluidity. The answer should be between 2 and 6 lines, without formatting and exactly in the language of the text: ' +
-                                    props.value
+                                props.value
                             );
                         }}
                     />

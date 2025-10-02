@@ -1,27 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { db } from '@/configs/firebaseConfig';
+import { projectService } from '@/di/container';
 import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
-import {
-    CreateUpdateProjectType,
-    LangType,
-    ProjectType,
-    ScreenshotType,
-} from '@/types';
+import { LangType } from '@/types/generic';
+import { CreateUpdateProjectType, ProjectType, ScreenshotType } from '@/types/project';
 import { FirebaseError } from 'firebase/app';
-import {
-    addDoc,
-    collection,
-    doc,
-    runTransaction,
-    updateDoc,
-} from 'firebase/firestore';
-import {
-    deleteObject,
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytes,
-} from 'firebase/storage';
 import React from 'react';
 
 import { OutputReordableItemType } from '../../components/ReordableModal';
@@ -150,7 +132,7 @@ export const useCreateUpdateProjectModal = (
         return validatedData;
     };
 
-    const uploadScreenshots = async () => {
+    const uploadScreenshots = async (projectId: ProjectType['id']) => {
         const updatedScreenshots = [...projectScreenshots];
         const promises: Promise<void>[] = [];
 
@@ -158,25 +140,13 @@ export const useCreateUpdateProjectModal = (
             if (img instanceof File) {
                 promises.push(
                     new Promise(async (resolve, reject) => {
-                        const storage = getStorage();
-                        const finalFileName = img.name
-                            .split('.')
-                            .slice(0, -1)
-                            .join('.');
-                        const storageRef = ref(
-                            storage,
-                            `project-images/${finalFileName}`
-                        );
                         try {
-                            // await formatScreenshot(img)
+                            const url = await projectService.uploadScreenshot(img, projectId);
+                            if (!url) throw 'Error on upload image';
 
-                            const snap = await uploadBytes(storageRef, img, {
-                                contentType: 'image/webp',
-                            });
-                            const url = await getDownloadURL(snap.ref);
                             updatedScreenshots[i] = {
                                 url,
-                                name: snap.metadata.name,
+                                name: img.name,
                             };
                             resolve();
                         } catch (e) {
@@ -190,20 +160,22 @@ export const useCreateUpdateProjectModal = (
         await Promise.all(promises);
 
         // remove deleted screenshots from storage
-        if (onRemoveScreenshotNames.length > 0) {
+        if (onRemoveScreenshotNames.length > 0 && props.project?.id) {
             const updatedScreenshotNames = updatedScreenshots.map(
                 (s) => s.name
             );
-            const storage = getStorage();
-            onRemoveScreenshotNames.forEach((imgName) => {
-                if (!updatedScreenshotNames.includes(imgName)) {
-                    const desertRef = ref(storage, `project-images/${imgName}`);
-                    deleteObject(desertRef);
+
+            const deletableScreenshotPathnames = onRemoveScreenshotNames.reduce<string[]>((list, currName) => {
+                if (!updatedScreenshotNames.includes(currName)) {
+                    list.push(`${props.project!.id}/${currName}`)
                 }
-            });
+                return list
+            }, [])
+
+            projectService.deleteScreenshots(deletableScreenshotPathnames)
         }
         // console.log(updatedScreenshots)
-        return updatedScreenshots;
+        return updatedScreenshots as ScreenshotType[];
     };
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -249,35 +221,38 @@ export const useCreateUpdateProjectModal = (
 
         // if project screenshots has changed
         if (projectScreenshots.length === 0) return;
-        const prevScreenshots = prevProjectData.screenshots;
-        let projectScreenshotsHasChanged = false;
-        for (let i = 0; i < projectScreenshots.length; i++) {
-            const s = projectScreenshots[i];
-            if (
-                s instanceof File ||
-                i >= prevScreenshots.length ||
-                s.url !== prevScreenshots[i].url
-            ) {
-                projectScreenshotsHasChanged = true;
-                break;
+        const projectScreenshotsHasChanged = (() => {
+            const prevScreenshots = prevProjectData.screenshots;
+
+            if (prevScreenshots.length !== projectScreenshots.length) return true;
+
+            let _projectScreenshotsHasChanged
+            for (let i = 0; i < projectScreenshots.length; i++) {
+                const s = projectScreenshots[i];
+
+                const isRecentFile = s instanceof File
+                if (
+                    isRecentFile ||
+                    s.url !== prevScreenshots[i].url
+                ) {
+                    _projectScreenshotsHasChanged = true;
+                    break;
+                }
             }
-        }
+
+            return _projectScreenshotsHasChanged
+        })()
 
         if (projectScreenshotsHasChanged)
-            validatedProjectData.screenshots = await uploadScreenshots();
+            validatedProjectData.screenshots = await uploadScreenshots(prevProjectData.id);
 
         const notProjectDataChanged =
             Object.values(validatedProjectData).length === 0;
         if (notProjectDataChanged) return;
 
-        const docRef = doc(db, 'projects', prevProjectData.id);
-
         // console.log({ ...validatedProjectData, updatedAt: new Date().toISOString() })
 
-        await updateDoc(docRef, {
-            ...validatedProjectData,
-            updatedAt: new Date().toISOString(),
-        });
+        await projectService.updateProject(prevProjectData.id, validatedProjectData);
     };
 
     const createProject = async () => {
@@ -302,26 +277,12 @@ export const useCreateUpdateProjectModal = (
             return;
         }
 
-        const screenshots = await uploadScreenshots();
+        const futureProjectId = projectService.generateId();
 
-        const collectionSizeRef = doc(db, 'counts', 'projects');
-        await runTransaction(db, async (transaction) => {
-            const collectionCount = await transaction.get(collectionSizeRef);
-            if (!collectionCount.exists()) {
-                throw 'Document does not exist!';
-            }
+        const screenshots = await uploadScreenshots(futureProjectId);
 
-            const collectionSize = collectionCount.data().total as number;
-            await addDoc(collection(db, 'projects'), {
-                ...project,
-                index: collectionSize,
-                screenshots,
-                createdAt: new Date().toISOString(),
-            });
-            transaction.update(collectionSizeRef, {
-                total: collectionSize + 1,
-            });
-        });
+        // TODO: test if works
+        await projectService.createProject({ ...project, screenshots, id: futureProjectId });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {

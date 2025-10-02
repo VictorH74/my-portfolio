@@ -1,4 +1,4 @@
-import { TechnologyType } from '@/types';
+import { TechnologyType } from '@/types/technology';
 import React from 'react';
 
 import { useGlobalTechnologyList } from './useGlobalTechnologyList';

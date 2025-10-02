@@ -1,7 +1,7 @@
 import { Loading } from '@/components/Loading';
 import { ModalContainer } from '@/components/ModalContainer';
 import { useAdminProjectList } from '@/hooks/useAdminProjectList';
-import { TechnologyType } from '@/types';
+import { TechnologyType } from '@/types/technology';
 import React from 'react';
 
 interface RemoveTechConfirmModalProps {

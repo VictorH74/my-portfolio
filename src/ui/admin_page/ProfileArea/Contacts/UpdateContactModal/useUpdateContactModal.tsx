@@ -1,5 +1,5 @@
 import { db } from '@/configs/firebaseConfig';
-import { ProfileContactsType } from '@/types';
+import { ProfileContactsType } from '@/types/generic';
 import { contactIcon } from '@/utils/constants';
 import { doc, updateDoc } from 'firebase/firestore';
 import React from 'react';

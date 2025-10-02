@@ -1,6 +1,6 @@
 'use client';
 import { Divider } from '@/components/Divider';
-import { ProjectType } from '@/types';
+import { ProjectType } from '@/types/project';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';

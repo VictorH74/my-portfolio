@@ -1,15 +1,13 @@
-import { db } from '@/configs/firebaseConfig';
-import { BtnAttrType, SetStateType, TechnologyType } from '@/types';
+import { technologieService } from '@/di/container';
+import { BtnAttrType, SetStateType } from '@/types/generic';
+import { TechnologyType } from '@/types/technology';
 import GradeIcon from '@mui/icons-material/Grade';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { doc, runTransaction, setDoc, updateDoc } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import React from 'react';
 
 import { CustomCheckboxProps } from './CustomCheckbox';
-import { getTechDocRef } from '../../useTechCollectionArea';
 
 export interface AddTechFormModalProps {
     selectedTech: TechnologyType | null;
@@ -85,27 +83,8 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
     }, [idValue, indexValue, isHidden, isMain, nameValue, props, urlValue]);
 
     const saveNewTech = async (techData: Omit<TechnologyType, 'index'>) => {
-        const collectionSizeRef = doc(db, 'counts', 'technologies');
-        await runTransaction(db, async (transaction) => {
-            const collectionCount = await transaction.get(collectionSizeRef);
-
-            if (!collectionCount.exists()) {
-                throw 'Document does not exist!';
-            }
-
-            const collectionSize = collectionCount.data().total as number;
-
-            // save/update collection
-            const docRef = getTechDocRef(techData.id);
-            const newTech = { ...techData, index: collectionSize };
-            await setDoc(docRef, newTech);
-            props.setTechnologyArray((prev) => [...prev, newTech]);
-
-            // increment collection item total count
-            transaction.update(collectionSizeRef, {
-                total: collectionSize + 1,
-            });
-        });
+        const newTech = await technologieService.createTechnology(techData);
+        props.setTechnologyArray((prev) => [...prev, newTech]);
     };
 
     const selectIconFile = (files: FileList | null) => {
@@ -115,9 +94,9 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         setIconFileValue(files[0]);
     };
 
+    // TODO: implement a way to update tech icon img if a new file is selected removing the current one from storage
     const updateExistingTech = async (techData: Partial<TechnologyType>) => {
-        const docRef = getTechDocRef(props.selectedTech!.id);
-        await updateDoc(docRef, techData);
+        await technologieService.updateTechnology(props.selectedTech!.id, techData)
 
         props.setTechnologyArray((prev) =>
             prev.map((t) => (t.index == indexValue ? { ...t, ...techData } : t))
@@ -136,19 +115,11 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         let urlMandatory;
 
         if (urlValue) urlMandatory = urlValue;
-        else if (iconFileValue) {
+        else if (iconFileValue && (props.selectedTech || idValue)) {
             try {
-                const storage = getStorage();
-                const finalFileName = iconFileValue.name
-                    .split('.')
-                    .slice(0, -1)
-                    .join('.');
-                const storageRef = ref(storage, `tech-icons/${finalFileName}`);
+                const createdImgUrl = await technologieService.uploadTechIcon(iconFileValue, props.selectedTech?.id || idValue)
+                if (!createdImgUrl) throw new Error('Error uploading tech icon');
 
-                const snap = await uploadBytes(storageRef, iconFileValue, {
-                    contentType: iconFileValue.type,
-                });
-                const createdImgUrl = await getDownloadURL(snap.ref);
                 urlMandatory = createdImgUrl;
             } catch (err) {
                 alert('Error trying upload tech icon img');

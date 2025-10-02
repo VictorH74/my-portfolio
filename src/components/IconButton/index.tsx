@@ -1,4 +1,4 @@
-import { BtnAttrType, MuiIconType } from '@/types';
+import { BtnAttrType, MuiIconType } from '@/types/generic';
 import { twMerge } from 'tailwind-merge';
 
 interface IconButtonProps extends BtnAttrType {

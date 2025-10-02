@@ -14,7 +14,7 @@ export const useTechnologyList = () => {
 
     const { func: scrollListener } = useFrozenFunction(
         (controller) => {
-            if (!controller) return;
+            if (!controller || isLoading) return;
 
             if (
                 techListSectionRef.current!.getBoundingClientRect().top <

@@ -1,6 +1,6 @@
 import { IconMapType } from '@/hooks/useTechnologyIconMap';
 import { useWindowResize } from '@/hooks/useWindowResize';
-import { ProjectType } from '@/types';
+import { ProjectType } from '@/types/project';
 import React from 'react';
 
 import { techItemImgWidth, techListGap } from '..';

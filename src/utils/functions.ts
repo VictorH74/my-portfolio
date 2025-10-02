@@ -1,5 +1,5 @@
 import { db } from '@/configs/firebaseConfig';
-import { ProfileContactsType } from '@/types';
+import { ProfileContactsType } from '@/types/generic';
 import { doc, getDoc } from 'firebase/firestore';
 
 import { BRAZIL_PHONE_PATTERN, PROJECT_GRADIENT_COLORS } from './constants';

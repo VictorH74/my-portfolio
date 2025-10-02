@@ -1,4 +1,4 @@
-import { ScreenshotType } from '@/types';
+import { ScreenshotType } from '@/types/project';
 import React from 'react';
 
 export interface SliderProps {

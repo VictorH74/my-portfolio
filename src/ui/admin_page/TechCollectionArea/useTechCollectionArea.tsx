@@ -1,13 +1,9 @@
-import { db } from '@/configs/firebaseConfig';
+import { technologieService } from '@/di/container';
 import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
-import { TechnologyType } from '@/types';
-import { doc, runTransaction, writeBatch } from 'firebase/firestore';
-import { deleteObject, getStorage, ref } from 'firebase/storage';
+import { TechnologyType } from '@/types/technology';
 import React from 'react';
 
 import { OutputReordableItemType } from '../components/ReordableModal';
-
-export const getTechDocRef = (id: string) => doc(db, 'technologies', id);
 
 export const useTechCollectionArea = () => {
     const [selectedTech, setSelectedTech] =
@@ -36,45 +32,9 @@ export const useTechCollectionArea = () => {
         setRemovingTech(true);
 
         try {
-            const docRef = getTechDocRef(selectedOnRemoveTech.id);
-            const collectionCountRef = doc(db, 'counts', 'technologies');
-
             if (cb) await cb();
 
-            await runTransaction(db, async (transaction) => {
-                const collectionCount = await transaction.get(
-                    collectionCountRef
-                );
-                if (!collectionCount.exists()) {
-                    throw 'Document does not exist!';
-                }
-                const total = (collectionCount.data().total as number) - 1;
-                for (
-                    let currentIndex = selectedOnRemoveTech.index;
-                    currentIndex < total;
-                    currentIndex++
-                ) {
-                    const { id, index } = technologyList[currentIndex + 1];
-                    if (index !== currentIndex + 1)
-                        throw new Error(
-                            `Technology index is incorrect. index: ${index}, currentIndex: ${currentIndex}`
-                        );
-                    const currentTechRef = getTechDocRef(id);
-                    transaction.update(currentTechRef, { index: currentIndex });
-                }
-                transaction.delete(docRef);
-                transaction.update(collectionCountRef, { total });
-            });
-
-            if (
-                new URL(selectedOnRemoveTech.src).hostname ==
-                'firebasestorage.googleapis.com'
-            ) {
-                const storage = getStorage();
-                const screenshotRef = ref(storage, selectedOnRemoveTech.src);
-                await deleteObject(screenshotRef);
-            }
-
+            await technologieService.deleteTechnology(selectedOnRemoveTech, technologyList);
             setTechnologyList((prev) =>
                 prev.filter((t) => t.id !== selectedOnRemoveTech.id)
             );
@@ -98,22 +58,25 @@ export const useTechCollectionArea = () => {
         setShowReorderModal((prev) => !prev);
 
     const reorderTechs = async (items: OutputReordableItemType[]) => {
-        const batch = writeBatch(db);
+
         const prevTechnologyArray = technologyList;
-        const updatedTechnologyArray = Array(technologyList.length).fill(null);
+        const reordedTechnologyArray = Array(technologyList.length).fill(null);
+        const listOfUpdatedTech: Pick<TechnologyType, 'id' | 'index'>[] = [];
+
         items.forEach((item, currentIndex) => {
             const updatedIndexProp = { index: currentIndex };
-            updatedTechnologyArray[currentIndex] = {
+            reordedTechnologyArray[currentIndex] = {
                 ...prevTechnologyArray[item.prevIndex],
                 ...updatedIndexProp,
             };
             if (currentIndex !== item.prevIndex) {
-                const docRef = getTechDocRef(item.id);
-                batch.update(docRef, updatedIndexProp);
+                listOfUpdatedTech.push({ id: item.id, index: currentIndex })
             }
         });
-        await batch.commit();
-        setTechnologyList(updatedTechnologyArray);
+
+        await technologieService.reorderTechnologies(listOfUpdatedTech);
+
+        setTechnologyList(reordedTechnologyArray);
     };
 
     return {

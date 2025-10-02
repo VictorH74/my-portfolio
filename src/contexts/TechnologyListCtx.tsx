@@ -1,13 +1,14 @@
 'use client';
-import { db } from '@/configs/firebaseConfig';
-import { SetStateType, TechnologyType } from '@/types';
+import { technologieService } from '@/di/container';
+import { SetStateType } from '@/types/generic';
+import { TechnologyType } from '@/types/technology';
 import {
     QueryObserverResult,
     RefetchOptions,
     useQuery,
 } from '@tanstack/react-query';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import React from 'react';
+
 
 type TechnologyListCtxType = {
     technologyList: TechnologyType[];
@@ -39,18 +40,9 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
 
     const getTechnologyList = async () => {
         try {
-            const q = query(
-                collection(db, 'technologies'),
-                orderBy('index', 'asc')
-            );
-            const querySnapshot = await getDocs(q);
+            const list = await technologieService.getTechnologyList();
 
-            const tempArray: TechnologyType[] = [];
-            querySnapshot.docs.forEach((doc) => {
-                tempArray.push(doc.data() as TechnologyType);
-            });
-
-            setTechnologyList(tempArray);
+            setTechnologyList(list);
 
             return null;
         } catch (err) {

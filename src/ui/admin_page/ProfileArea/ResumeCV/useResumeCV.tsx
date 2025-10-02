@@ -1,5 +1,4 @@
-import { getResume, resumeFileName } from '@/utils/resume';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { profileService } from '@/di/container';
 import React from 'react';
 
 export const useResumeCV = () => {
@@ -15,7 +14,11 @@ export const useResumeCV = () => {
     React.useEffect(() => {
         (async () => {
             try {
-                const blob = await getResume();
+                const blob = await profileService.getResume();
+                if (!blob) {
+                    alert('No resume found');
+                    return;
+                }
                 setResumeBlob(blob);
             } catch (err) {
                 console.error(err);
@@ -43,16 +46,13 @@ export const useResumeCV = () => {
         if (!files) return;
 
         const file = files[0];
-
-        const storage = getStorage();
-        const storageRef = ref(storage, 'my-cv/' + resumeFileName);
-
         const blob = new Blob([file], { type: file.type });
 
-        uploadBytes(storageRef, blob).then(() => {
-            setResumeBlob(blob);
-            setLoadingResume(false);
-        });
+        await profileService.updateResume(file);
+
+        setResumeBlob(blob);
+        setLoadingResume(false);
+
     };
 
     return {

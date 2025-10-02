@@ -1,4 +1,4 @@
-import { ProjectType } from '@/types';
+import { ProjectType } from "@/types/project";
 
 type UrlKeys<T> = {
     [K in keyof T]: K extends `${string}Url` ? K : never;

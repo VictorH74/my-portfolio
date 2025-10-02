@@ -1,21 +1,10 @@
 'use client';
 
-import { getBlob, getStorage, ref } from 'firebase/storage';
+import { profileService } from '@/di/container';
 
 export const resumeFileName = 'VICTOR HUGO LEAL.pdf';
-
-export const getResume = async () => {
-    const storage = getStorage();
-    try {
-        return getBlob(ref(storage, 'my-cv/' + resumeFileName));
-    } catch (err) {
-        console.error(err);
-        return undefined;
-    }
-};
-
 export const downloadResume = async () => {
-    const blob = await getResume();
+    const blob = await profileService.getResume();
 
     if (!blob) return alert('Erro ao baixar currículo');
 

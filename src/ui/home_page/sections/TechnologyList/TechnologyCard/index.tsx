@@ -1,7 +1,7 @@
-import { TechnologyType } from '@/types';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import './style.css';
+import { TechnologyType } from '@/types/technology';
 
 const cubeSide = {
     1: 'right',
@@ -40,13 +40,13 @@ export const TechnologyCard: React.FC<TechnologyType> = (techIcon) => {
                 style={
                     techIcon.color
                         ? {
-                              backgroundColor: techIcon.color.background,
-                              color: techIcon.color.heading,
-                          }
+                            backgroundColor: techIcon.color.background,
+                            color: techIcon.color.heading,
+                        }
                         : {
-                              backgroundColor: '#6d6d6d',
-                              color: '#FFF',
-                          }
+                            backgroundColor: '#6d6d6d',
+                            color: '#FFF',
+                        }
                 }
             >
                 <p className="select-none text-center font-medium">

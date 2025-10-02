@@ -1,4 +1,4 @@
-import { BtnAttrType } from '@/types';
+import { BtnAttrType } from '@/types/generic';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';

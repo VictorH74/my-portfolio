@@ -1,5 +1,5 @@
 import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
-import { ProjectType } from '@/types';
+import { ProjectType } from '@/types/project';
 import { Trie } from '@/utils/trie';
 import React from 'react';
 

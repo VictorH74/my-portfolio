@@ -2,7 +2,7 @@ import {
     iconButtonClassName,
     iconButtonHoverClassName,
 } from '@/components/IconButton';
-import { ScreenshotType } from '@/types';
+import { ScreenshotType } from '@/types/project';
 import {
     OutputReordableItemType,
     ReordableModal,

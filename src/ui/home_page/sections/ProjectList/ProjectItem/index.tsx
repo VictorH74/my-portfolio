@@ -2,7 +2,7 @@ import { Loading } from '@/components/Loading';
 import { ModalContainer } from '@/components/ModalContainer';
 import { Slider } from '@/components/Slider';
 import { useWindowResize } from '@/hooks/useWindowResize';
-import { ProjectType } from '@/types';
+import { ProjectType } from '@/types/project';
 import { PROJECT_GRADIENT_COLORS } from '@/utils/constants';
 import { formatText, getProjectGradient } from '@/utils/functions';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -51,9 +51,9 @@ export const ProjectItem: React.FC<
                     className={twMerge(
                         'max-lg:rounded-xl max-lg:shadow-[0_0.5rem_1rem_#00000055] size-full grid place-items-center overflow-hidden z-20',
                         windowWidth > 1024 &&
-                            PROJECT_GRADIENT_COLORS[
-                                getProjectGradient(props.index)
-                            ]
+                        PROJECT_GRADIENT_COLORS[
+                        getProjectGradient(props.index)
+                        ]
                     )}
                 >
                     <div className="min-lg:w-4/5 min-lg:overflow-hidden min-lg:rounded-xl relative  aspect-video  shadow-xl slide-container">
@@ -78,9 +78,9 @@ export const ProjectItem: React.FC<
                             dangerouslySetInnerHTML={{
                                 __html: formatText(
                                     props.project.description[
-                                        t(
-                                            'project_description_lang'
-                                        ) as keyof typeof props.project.description
+                                    t(
+                                        'project_description_lang'
+                                    ) as keyof typeof props.project.description
                                     ] as string
                                 ),
                             }}

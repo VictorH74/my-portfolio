@@ -1,4 +1,4 @@
-import { ProjectType } from '@/types';
+import { ProjectType } from '@/types/project';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkIcon from '@mui/icons-material/Link';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
@@ -35,8 +35,8 @@ export const AdminProjectWarnings = (props: AdminProjectWarningsProps) => {
                             count === 0
                                 ? 'bg-green-500'
                                 : count === projectCount
-                                ? 'bg-red-500'
-                                : 'bg-yellow-500'
+                                    ? 'bg-red-500'
+                                    : 'bg-yellow-500'
                         )}
                     >
                         <h3 className="text-3xl">

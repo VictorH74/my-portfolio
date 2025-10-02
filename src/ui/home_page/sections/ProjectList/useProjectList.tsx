@@ -1,15 +1,6 @@
-import { db } from '@/configs/firebaseConfig';
-import { ProjectType } from '@/types';
+import { projectService } from '@/di/container';
+import { ProjectType } from '@/types/project';
 import { useQuery } from '@tanstack/react-query';
-import {
-    collection,
-    getDocs,
-    limit,
-    orderBy,
-    query,
-    QueryConstraint,
-    startAfter,
-} from 'firebase/firestore';
 import React from 'react';
 
 export const useProjectList = () => {
@@ -34,9 +25,7 @@ export const useProjectList = () => {
     const getMoreProjects = async () => {
         if (projectList.length === 4) {
             setIsLoadingMoreProjects(true);
-            const retrievedProjects = await getProjectSnapshotsByQuery(
-                startAfter(3)
-            );
+            const retrievedProjects = await projectService.getProjectList(null, 3);
             setProjectList((prev) => [...prev, ...retrievedProjects]);
             setIsLoadingMoreProjects(false);
         }
@@ -46,9 +35,7 @@ export const useProjectList = () => {
 
     const getInitialProjects = async () => {
         try {
-            const initialProjectList = await getProjectSnapshotsByQuery(
-                limit(4)
-            );
+            const initialProjectList = await projectService.getProjectList(4);
             setProjectList(initialProjectList);
 
             return null;
@@ -56,20 +43,6 @@ export const useProjectList = () => {
             console.error(err);
             setIsError(true);
         }
-    };
-
-    const getProjectSnapshotsByQuery = async (
-        ...queryConstraints: QueryConstraint[]
-    ) => {
-        const collectionRef = collection(db, 'projects');
-        const q = query(collectionRef, orderBy('index'), ...queryConstraints);
-        const snapshot = await getDocs(q);
-        const tempProjects: ProjectType[] = [];
-        snapshot.docs.forEach((doc) =>
-            tempProjects.push({ ...doc.data(), id: doc.id } as ProjectType)
-        );
-
-        return tempProjects;
     };
 
     return {

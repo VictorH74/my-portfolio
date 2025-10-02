@@ -7,7 +7,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Image from 'next/image';
 import React from 'react';
 
-// import { PdfViewer } from './PdfViewer';
 import { useResumeCV } from './useResumeCV';
 
 export const ResumeCV = () => {

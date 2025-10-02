@@ -1,5 +1,5 @@
 import { useFrozenFunction } from '@/hooks/useFrozenFunction';
-import { ProjectType } from '@/types';
+import { ProjectType } from '@/types/project';
 import React from 'react';
 
 type ScrolledProjectTitleListItemType = Array<

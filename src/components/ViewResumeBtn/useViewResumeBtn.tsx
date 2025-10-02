@@ -1,4 +1,4 @@
-import { getResume } from '@/utils/resume';
+import { profileService } from '@/di/container';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
@@ -14,7 +14,7 @@ export const useViewResumeBtn = () => {
     } = useQuery({
         queryKey: ['resume-pdf'],
         queryFn: async () => {
-            const blob = await getResume();
+            const blob = await profileService.getResume();
             return blob;
         },
         enabled: false,

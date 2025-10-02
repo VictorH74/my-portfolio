@@ -1,4 +1,5 @@
-import { LangType, ProjectType } from '@/types';
+import { LangType } from '@/types/generic';
+import { ProjectType } from '@/types/project';
 import { LANGUAGES } from '@/utils/server-constants';
 
 import ProjectDescriptionField from './ProjectDescriptionField';
