@@ -27,7 +27,7 @@ export const TechnologyList = () => {
                         className="text-red-400 font-medium py-2 px-6 w-full text-center cursor-pointer"
                         onClick={async () => await hook.refetch()}
                     >
-                        Error trying loading technologies! Retry
+                        {t('tech_list_query_error_btn_text')}
                     </button>
                 ) : hook.isLoading ? (
                     <div className="grid place-items-center">

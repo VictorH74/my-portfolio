@@ -20,7 +20,8 @@
         "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir o conhecimento e experiência necessária para meu crescimento profissional. Minha disposição para enfrentar desafios e abraçar oportunidades de aprendizado é uma característica que me impulsiona constantemente na minha jornada."
     },
     "TechnologyListSection": {
-        "section_title": "Minhas Tecnologias"
+        "section_title": "Minhas Tecnologias",
+        "tech_list_query_error_btn_text": "Erro ao tentar carregar tecnologias! Tentar Novamente"
     },
     "ProjectListSection": {
         "section_title": "Veja Meus Projetos!",

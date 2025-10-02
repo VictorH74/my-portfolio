@@ -36,14 +36,13 @@ export const TechnologyListProvider: React.FC<React.PropsWithChildren> = ({
         queryKey: ['technology-list'],
         queryFn: () => getTechnologyList(),
         refetchOnWindowFocus: false,
+        retry: false,
     });
 
     const getTechnologyList = async () => {
         try {
             const list = await technologieService.getTechnologyList();
-
             setTechnologyList(list);
-
             return null;
         } catch (err) {
             console.error(err);

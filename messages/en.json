@@ -20,7 +20,8 @@
         "paragraph_3": "I stay motivated and am always open to learning new technologies or acquiring new knowledge and experience for my professional growth. My willingness to face challenges and embrace learning opportunities is a trait that constantly drives me on my journey."
     },
     "TechnologyListSection": {
-        "section_title": "My Technologies"
+        "section_title": "My Technologies",
+        "tech_list_query_error_btn_text": "Error trying loading technologies! Retry"
     },
     "ProjectListSection": {
         "section_title": "See My Projects!",

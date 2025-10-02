@@ -14,9 +14,6 @@ export const useProjectList = () => {
 
     const getInitialProjects = async () => {
         try {
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate loading
-            throw 'error test';
-
             const initialProjectList = await projectService.getProjectList(4);
             setProjectList(initialProjectList);
 
