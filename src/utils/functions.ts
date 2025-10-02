@@ -1,4 +1,4 @@
-import { db } from '@/configs/firebaseConfig';
+import { db } from '@/lib/firebase/client';
 import { ProfileContactsType } from '@/types/generic';
 import { doc, getDoc } from 'firebase/firestore';
 

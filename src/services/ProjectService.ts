@@ -1,4 +1,4 @@
-import { IApi } from '@/api/IApi';
+import { IApi } from '@/types/api';
 import { ProjectType } from '@/types/project';
 
 export class ProjectService {

@@ -1,7 +1,7 @@
 'use client';
 import { Divider } from '@/components/Divider';
-import { db } from '@/configs/firebaseConfig';
 import { useAdminProjectList } from '@/hooks/useAdminProjectList';
+import { db } from '@/lib/firebase/client';
 import { doc, writeBatch } from 'firebase/firestore';
 import React from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';

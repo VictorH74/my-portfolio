@@ -1,6 +1,6 @@
 'use client';
 import { Loading } from '@/components/Loading';
-import { db } from '@/configs/firebaseConfig';
+import { db } from '@/lib/firebase/client';
 import { useQuery } from '@tanstack/react-query';
 import { doc, getDoc } from 'firebase/firestore';
 import Image from 'next/image';
@@ -22,6 +22,8 @@ export const ProfileImage: React.FC<ProfileImageProps> = (props) => {
         if (!docData) {
             throw new Error("Profile image not found!");
         }
+
+        console.log("Profile image loaded:", docData.url);
 
         return docData.url as string;
     };

@@ -1,5 +1,5 @@
-import { db } from '@/configs/firebaseConfig';
-import { createClient } from '@/configs/supabase';
+import { db } from '@/lib/firebase/client';
+import { createClient } from '@/lib/supabase/client';
 import { ProjectType } from '@/types/project';
 import { TechnologyType } from '@/types/technology';
 import {
@@ -23,7 +23,7 @@ import {
     writeBatch,
 } from 'firebase/firestore';
 
-import { IApi } from './IApi';
+import { IApi } from '../../types/api';
 
 export class FirebaseSupabaseApi implements IApi {
     #supabase = createClient();

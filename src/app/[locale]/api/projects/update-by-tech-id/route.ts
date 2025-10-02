@@ -1,4 +1,4 @@
-import { adminDb } from '@/configs/firebaseAdminConfig';
+import { adminDb } from '@/lib/firebase/admin';
 
 async function updateQueryBatch(
     db: FirebaseFirestore.Firestore,

@@ -1,6 +1,6 @@
 'use client';
-import { AnimatedBackground } from '@/components/AnimatedBackground';
-import { auth } from '@/configs/firebaseConfig';
+import { auth } from '@/lib/firebase/client';
+import { AnimatedBackground } from '@/ui/home_page/sections/Hero/AnimatedBackground';
 import { FirebaseError } from 'firebase/app';
 import {
     browserLocalPersistence,

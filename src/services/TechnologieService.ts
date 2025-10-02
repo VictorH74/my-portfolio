@@ -1,4 +1,4 @@
-import { IApi } from '@/api/IApi';
+import { IApi } from '@/types/api';
 import { TechnologyType } from '@/types/technology';
 
 export class TechnologieService {
