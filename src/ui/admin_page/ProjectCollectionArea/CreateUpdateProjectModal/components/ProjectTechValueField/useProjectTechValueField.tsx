@@ -43,8 +43,7 @@ export default function useProjectTechValueField(
         );
 
         updateWordSufixSpanPosition();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [technologieValue]);
+    }, [props.projectTechnologies, technologieValue]);
 
     const updateWordSufixSpanPosition = () => {
         if (!techInputRef.current || !wordSufixSpanRef.current) return;

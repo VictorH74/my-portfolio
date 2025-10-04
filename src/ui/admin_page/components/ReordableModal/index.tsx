@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { ModalContainer } from '@/components/ModalContainer';
 import {
     DragDropContext,
@@ -65,11 +64,11 @@ export function ReordableModal(props: ReordableModalProps) {
             props.items.map((i) => i.id).join('') ===
             items.map((i) => i.id).join('')
         );
-    }, [items]);
+    }, [items, props.items]);
 
     React.useEffect(() => {
         setItems(props.items);
-    }, []);
+    }, [props.items]);
 
     const onDragEnd = (result: DropResult) => {
         if (!result.destination) {
@@ -177,7 +176,7 @@ export function ReordableModal(props: ReordableModalProps) {
                     className={twMerge(
                         'w-full p-2 font-semibold mt-2 rounded-md hover:brightness-105 duration-200 bg-[#737373]',
                         itemsHasChanged &&
-                            'bg-[#2382FF] text-white cursor-pointer'
+                        'bg-[#2382FF] text-white cursor-pointer'
                     )}
                     disabled={isLoading || !itemsHasChanged}
                     onClick={handleSubmit}

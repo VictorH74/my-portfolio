@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { projectService } from '@/di/container';
 import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
 import { LangType } from '@/types/generic';
@@ -57,7 +56,7 @@ export const useCreateUpdateProjectModal = (
                 },
             });
         }
-    }, [technologyList]);
+    }, [props.project, technologyList]);
 
     const updateTechList = (list: ProjectType['technologies']) => {
         setProject((prev) => ({ ...prev, technologies: list }));

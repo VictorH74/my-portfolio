@@ -25,7 +25,7 @@ export function useFrozenFunction<T = unknown>(
     }, [abortController]);
 
 
-    const func = async () => {
+    const func = React.useCallback(async () => {
         if (freezeTimerRef.current) return;
 
         if (abortController?.signal.aborted) {
@@ -53,7 +53,7 @@ export function useFrozenFunction<T = unknown>(
         setFreeseTimerTimeoutRef.current = setTimeout(() => {
             freezeTimerRef.current = false;
         }, freezeTimer);
-    };
+    }, [abortController, callback, data, freezeTimer]);
 
     return {
         data,

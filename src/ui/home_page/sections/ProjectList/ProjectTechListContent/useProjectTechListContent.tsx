@@ -26,53 +26,52 @@ export const useProjectTechListContent = (props: ProjectTechListProps) => {
     }, [showAllTechList, maxItemCount, props]);
 
     React.useEffect(() => {
-        getDisplayTechItemMaxCount(props.techList.length);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [width]);
+        const getDisplayTechItemMaxCount = (listLength: number) => {
+            if (!TechListContainerRef.current) return;
 
-    const getDisplayTechItemMaxCount = (listLength: number) => {
-        if (!TechListContainerRef.current) return;
+            const containerWidth =
+                TechListContainerRef.current.getBoundingClientRect().width;
 
-        const containerWidth =
-            TechListContainerRef.current.getBoundingClientRect().width;
+            const itemWidth = techItemImgWidth + techListGap * 2;
 
-        const itemWidth = techItemImgWidth + techListGap * 2;
+            const listTotalWidth =
+                itemWidth * listLength + techListGap * (listLength - 1);
 
-        const listTotalWidth =
-            itemWidth * listLength + techListGap * (listLength - 1);
+            if (listTotalWidth > containerWidth) {
+                // massete para resolver erro de renderização dos icones na lista 🍷🗿
+                if (containerWidth < width * 0.7) {
+                    setTimeout(() => {
+                        getDisplayTechItemMaxCount(listLength);
+                    }, 50);
+                    return;
+                }
 
-        if (listTotalWidth > containerWidth) {
-            // massete para resolver erro de renderização dos icones na lista 🍷🗿
-            if (containerWidth < width * 0.7) {
-                setTimeout(() => {
-                    getDisplayTechItemMaxCount(listLength);
-                }, 50);
+                const techListRemaingWidth = listTotalWidth - containerWidth;
+
+                let currentXSize = 0;
+                let remaingItemCount = 1;
+                for (
+                    let currentRemaingItems = 1;
+                    currentXSize < techListRemaingWidth;
+                    currentRemaingItems++
+                ) {
+                    currentXSize =
+                        itemWidth * currentRemaingItems +
+                        (currentRemaingItems - 1) * techListGap;
+                    remaingItemCount = currentRemaingItems;
+                }
+
+                setMaxItemCount(listLength - (remaingItemCount + 1));
+                setRemaingItemCount(remaingItemCount + 1);
                 return;
             }
 
-            const techListRemaingWidth = listTotalWidth - containerWidth;
+            setMaxItemCount(listLength);
+            setRemaingItemCount(0);
+        };
 
-            let currentXSize = 0;
-            let remaingItemCount = 1;
-            for (
-                let currentRemaingItems = 1;
-                currentXSize < techListRemaingWidth;
-                currentRemaingItems++
-            ) {
-                currentXSize =
-                    itemWidth * currentRemaingItems +
-                    (currentRemaingItems - 1) * techListGap;
-                remaingItemCount = currentRemaingItems;
-            }
-
-            setMaxItemCount(listLength - (remaingItemCount + 1));
-            setRemaingItemCount(remaingItemCount + 1);
-            return;
-        }
-
-        setMaxItemCount(listLength);
-        setRemaingItemCount(0);
-    };
+        getDisplayTechItemMaxCount(props.techList.length);
+    }, [props.techList.length, width]);
 
     const toggleReamingListItemsDisplay = () => {
         setShowAllTechList((prev) => !prev);

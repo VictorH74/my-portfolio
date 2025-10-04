@@ -43,8 +43,11 @@ export const useScrolledProjectTitleList = (
             signal: controller.signal,
         });
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        return () => {
+            document.removeEventListener('scroll', updateScolledProjectList);
+        }
+
+    }, [updateScolledProjectList]);
 
     return { scrolledProjectTitleList };
 };

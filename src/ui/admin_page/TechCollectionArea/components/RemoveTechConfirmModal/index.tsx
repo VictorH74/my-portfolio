@@ -26,8 +26,7 @@ export const RemoveTechConfirmModal: React.FC<RemoveTechConfirmModalProps> = (
                 )
                 .map((p) => p.title)
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [projects, props.selectedOnRemoveTech.id]);
 
     const updateProjects = async () => {
         if (projectNameList.length > 0) {

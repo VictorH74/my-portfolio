@@ -32,6 +32,48 @@ export const useEditImageModal = (props: EditImageModalProps) => {
 
     const [previewImgSrc, setPreviewImgSrc] = useState<string | null>(null);
 
+    const changeImgPosition = React.useCallback((xPos: number = 0, yPos: number = 0) => {
+        const imgEl = imgRef.current;
+        const cropAreaEl = cropAreaRef.current;
+        const cropBoxEl = cropBoxRef.current;
+
+        if (!imgEl || !cropAreaEl || !cropBoxEl) return;
+
+        const imgRect = imgEl.getBoundingClientRect();
+        const cropAreaRect = cropAreaEl.getBoundingClientRect();
+        const cropBoxRect = cropBoxEl.getBoundingClientRect();
+
+        const imgTop = imgRect.top - cropAreaRect.top;
+        const imgLeft = imgRect.left - cropAreaRect.left;
+
+        const relativeCropBoxTop = cropBoxRect.top - cropAreaRect.top;
+        const relativeCropBoxLeft = cropBoxRect.left - cropAreaRect.left;
+
+        const newLeft = getMedian(
+            relativeCropBoxLeft,
+            imgLeft + xPos,
+            relativeCropBoxLeft - imgRect.width + cropBoxRect.width
+        );
+        const newTop = getMedian(
+            relativeCropBoxTop,
+            imgTop + yPos,
+            relativeCropBoxTop - imgRect.height + cropBoxRect.height
+        );
+
+        console.log('newLeft', newLeft);
+
+        imgEl.style.left = newLeft + 'px';
+        imgEl.style.top = newTop + 'px';
+    }, []);
+
+    const getImgSize = React.useCallback((cropBoxSize: number) =>
+        cropBoxSize + cropBoxSize * imgScaleIncrement, [imgScaleIncrement]);
+
+    const loadPreviewImg = React.useCallback(() => {
+        const mimeType = imgRef.current?.src.split(';')[0].split(':')[1];
+        setPreviewImgSrc(applyImageCrop()!.toDataURL(mimeType));
+    }, []);
+
     useEffect(() => {
         if (!!cropArea) {
             if (imgScaleIncrement > 0) {
@@ -48,8 +90,7 @@ export const useEditImageModal = (props: EditImageModalProps) => {
             prev ? { ...prev, value: getImgSize(cropBoxSize) } : undefined
         );
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cropArea, imgScaleIncrement]);
+    }, [changeImgPosition, cropArea, getImgSize, imgScaleIncrement, loadPreviewImg]);
 
     const setup = () => {
         const imgEl = imgRef.current;
@@ -138,46 +179,9 @@ export const useEditImageModal = (props: EditImageModalProps) => {
         });
     };
 
-    const changeImgPosition = (xPos: number = 0, yPos: number = 0) => {
-        const imgEl = imgRef.current;
-        const cropAreaEl = cropAreaRef.current;
-        const cropBoxEl = cropBoxRef.current;
-
-        if (!imgEl || !cropAreaEl || !cropBoxEl) return;
-
-        const imgRect = imgEl.getBoundingClientRect();
-        const cropAreaRect = cropAreaEl.getBoundingClientRect();
-        const cropBoxRect = cropBoxEl.getBoundingClientRect();
-
-        const imgTop = imgRect.top - cropAreaRect.top;
-        const imgLeft = imgRect.left - cropAreaRect.left;
-
-        const relativeCropBoxTop = cropBoxRect.top - cropAreaRect.top;
-        const relativeCropBoxLeft = cropBoxRect.left - cropAreaRect.left;
-
-        const newLeft = getMedian(
-            relativeCropBoxLeft,
-            imgLeft + xPos,
-            relativeCropBoxLeft - imgRect.width + cropBoxRect.width
-        );
-        const newTop = getMedian(
-            relativeCropBoxTop,
-            imgTop + yPos,
-            relativeCropBoxTop - imgRect.height + cropBoxRect.height
-        );
-
-        console.log('newLeft', newLeft);
-
-        imgEl.style.left = newLeft + 'px';
-        imgEl.style.top = newTop + 'px';
-    };
-
     const handleSliderChange = (_: Event, newValue: number | number[]) => {
         setImgScaleIncrement((newValue as number) / 100);
     };
-
-    const getImgSize = (cropBoxSize: number) =>
-        cropBoxSize + cropBoxSize * imgScaleIncrement;
 
     const getMedian: (_a: number, _b: number, _c: number) => number = (
         ...numbers
@@ -233,11 +237,6 @@ export const useEditImageModal = (props: EditImageModalProps) => {
         );
 
         return canvas;
-    };
-
-    const loadPreviewImg = () => {
-        const mimeType = imgRef.current?.src.split(';')[0].split(':')[1];
-        setPreviewImgSrc(applyImageCrop()!.toDataURL(mimeType));
     };
 
     const handleSave = () => {

@@ -32,8 +32,7 @@ export const useUpdateContactModal = (props: UpdateContactModalProps) => {
 
     React.useEffect(() => {
         setInputValue(props.contactValue);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [props.contactValue]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
