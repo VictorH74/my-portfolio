@@ -7,22 +7,20 @@ export class ProfileService {
         this.api = api;
     }
 
-    async updateProfileImg(img: Blob): Promise<string> {
-        console.log('updating profile img...');
+    async updateProfileImg(img: Blob) {
         const url = await this.api.updateProfileImg(img);
-        console.log(url);
         return url;
     }
 
-    async getProfileImg(): Promise<string> {
+    async getProfileImg() {
         return this.api.getProfileImg();
     }
 
-    async updateResume(file: File): Promise<void> {
+    async updateResume(file: File) {
         return this.api.updateResume(file);
     }
 
-    async getResume(): Promise<Blob | null> {
+    async getResume() {
         return this.api.getResume();
     }
 }

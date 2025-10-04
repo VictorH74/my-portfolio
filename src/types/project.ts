@@ -14,6 +14,16 @@ export type ProjectType = {
     updatedAt?: string; // ISO String Date
 };
 
+export type CreateProjectType = Omit<
+    ProjectType,
+    'id' | 'createdAt' | 'updatedAt' | 'index'
+> &
+    Partial<Pick<ProjectType, 'id'>>;
+
+export type UpdateProjectType = Partial<
+    Omit<ProjectType, 'id' | 'updatedAt' | 'createdAt'>
+>;
+
 export type ScreenshotType = {
     name: string;
     url: string;

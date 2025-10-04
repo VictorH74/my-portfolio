@@ -1,7 +1,16 @@
 import { db } from '@/lib/firebase/client';
 import { createClient } from '@/lib/supabase/client';
-import { ProjectType } from '@/types/project';
-import { TechnologyType } from '@/types/technology';
+import { IApi } from '@/types/api';
+import {
+    CreateProjectType,
+    ProjectType,
+    UpdateProjectType,
+} from '@/types/project';
+import {
+    CreateTechnologyType,
+    TechnologyType,
+    UpdateTechnologyType,
+} from '@/types/technology';
 import {
     PROFILE_BUCKET_NAME,
     PROFILE_IMG_NAME,
@@ -23,21 +32,16 @@ import {
     writeBatch,
 } from 'firebase/firestore';
 
-import { IApi } from '../../types/api';
-
 export class FirebaseSupabaseApi implements IApi {
     #supabase = createClient();
 
     #getTechDocRef = (id: string) => doc(db, 'technologies', id);
 
-    async deleteScreenshots(filePaths: string[]): Promise<void> {
+    async deleteScreenshots(filePaths: string[]) {
         this.#supabase.storage.from('project-screenshots').remove(filePaths);
     }
 
-    async uploadScreenshot(
-        file: File,
-        projectId: ProjectType['id']
-    ): Promise<string | null> {
+    async uploadScreenshot(file: File, projectId: ProjectType['id']) {
         const { data, error } = await this.#supabase.storage
             .from('project-screenshots')
             .upload(`${projectId}/${file.name}`, file, {
@@ -56,10 +60,7 @@ export class FirebaseSupabaseApi implements IApi {
         return doc(collection(db, 'projects')).id;
     }
 
-    async createProject(
-        data: Omit<ProjectType, 'id' | 'createdAt' | 'updatedAt' | 'index'> &
-            Partial<Pick<ProjectType, 'id'>>
-    ): Promise<void> {
+    async createProject(data: CreateProjectType) {
         const collectionSizeRef = doc(db, 'counts', 'projects');
         await runTransaction(db, async (transaction) => {
             const collectionCount = await transaction.get(collectionSizeRef);
@@ -84,9 +85,7 @@ export class FirebaseSupabaseApi implements IApi {
         });
     }
 
-    getProjectListStream(
-        onChange: (projectList: ProjectType[]) => void
-    ): () => void {
+    getProjectListStream(onChange: (projectList: ProjectType[]) => void) {
         const docsRef = collection(db, 'projects');
         const q = query(docsRef, orderBy('index', 'asc'));
 
@@ -104,10 +103,7 @@ export class FirebaseSupabaseApi implements IApi {
         return unsubscribe;
     }
 
-    async getProjectList(
-        countLimit: number | null,
-        jumpCount?: number
-    ): Promise<ProjectType[]> {
+    async getProjectList(countLimit: number | null, jumpCount?: number) {
         const collectionRef = collection(db, 'projects');
         const queryConstraints: QueryConstraint[] = [];
 
@@ -124,10 +120,7 @@ export class FirebaseSupabaseApi implements IApi {
         return list;
     }
 
-    async updateProject(
-        id: ProjectType['id'],
-        data: Partial<Omit<ProjectType, 'id' | 'updatedAt' | 'createdAt'>>
-    ): Promise<void> {
+    async updateProject(id: ProjectType['id'], data: UpdateProjectType) {
         const docRef = doc(db, 'projects', id);
 
         await updateDoc(docRef, {
@@ -140,7 +133,7 @@ export class FirebaseSupabaseApi implements IApi {
         id: ProjectType['id'],
         projectIndex: ProjectType['index'],
         currentProjectList: ProjectType[]
-    ): Promise<void> {
+    ) {
         const docRef = doc(db, 'projects', id);
         const collectionCountRef = doc(db, 'counts', 'projects');
         await runTransaction(db, async (transaction) => {
@@ -172,9 +165,7 @@ export class FirebaseSupabaseApi implements IApi {
         });
     }
 
-    async createTechnology(
-        data: Omit<TechnologyType, 'index'>
-    ): Promise<TechnologyType> {
+    async createTechnology(data: CreateTechnologyType) {
         let newTech: TechnologyType | null = null;
 
         const collectionSizeRef = doc(db, 'counts', 'technologies');
@@ -203,11 +194,11 @@ export class FirebaseSupabaseApi implements IApi {
         return newTech;
     }
 
-    // getTechnologyListStream(): Promise<TechnologyType[]> {
+    // getTechnologyListStream() {
     //     throw new Error('Method not implemented.');
     // }
 
-    async getTechnologyList(): Promise<TechnologyType[]> {
+    async getTechnologyList() {
         const q = query(
             collection(db, 'technologies'),
             orderBy('index', 'asc')
@@ -224,13 +215,13 @@ export class FirebaseSupabaseApi implements IApi {
 
     async updateTechnology(
         id: TechnologyType['id'],
-        data: Partial<Omit<TechnologyType, 'id'>>
-    ): Promise<void> {
+        data: UpdateTechnologyType
+    ) {
         const docRef = this.#getTechDocRef(id);
         await updateDoc(docRef, data);
     }
 
-    async uploadTechIcon(file: File, fileName: string): Promise<string | null> {
+    async uploadTechIcon(file: File, fileName: string) {
         const { data, error } = await this.#supabase.storage
             .from('technologies')
             .upload(fileName, file, {
@@ -248,7 +239,7 @@ export class FirebaseSupabaseApi implements IApi {
     async deleteTechnology(
         tech: Pick<TechnologyType, 'id' | 'index' | 'src' | 'name'>,
         currentTechList: TechnologyType[]
-    ): Promise<void> {
+    ) {
         const docRef = this.#getTechDocRef(tech.id);
 
         const collectionCountRef = doc(db, 'counts', 'technologies');
@@ -282,7 +273,7 @@ export class FirebaseSupabaseApi implements IApi {
 
     async reorderTechnologies(
         listOfUpdatedTech: Pick<TechnologyType, 'id' | 'index'>[]
-    ): Promise<void> {
+    ) {
         const batch = writeBatch(db);
         listOfUpdatedTech.forEach(({ id, index }) => {
             const docRef = this.#getTechDocRef(id);
@@ -291,7 +282,7 @@ export class FirebaseSupabaseApi implements IApi {
         await batch.commit();
     }
 
-    async updateProfileImg(img: Blob): Promise<string> {
+    async updateProfileImg(img: Blob) {
         await this.#supabase.storage
             .from(PROFILE_BUCKET_NAME)
             .upload(PROFILE_IMG_NAME, img, {
@@ -308,13 +299,13 @@ export class FirebaseSupabaseApi implements IApi {
         return url;
     }
 
-    getProfileImg(): string {
+    getProfileImg() {
         return this.#supabase.storage
             .from(PROFILE_BUCKET_NAME)
             .getPublicUrl(PROFILE_IMG_NAME).data.publicUrl;
     }
 
-    async updateResume(file: File): Promise<void> {
+    async updateResume(file: File) {
         if (file.type !== 'application/pdf')
             throw new Error('Only PDF files are allowed');
 
@@ -325,7 +316,7 @@ export class FirebaseSupabaseApi implements IApi {
             });
     }
 
-    async getResume(): Promise<Blob | null> {
+    async getResume() {
         const { data, error } = await this.#supabase.storage
             .from(PROFILE_BUCKET_NAME)
             .download(PROFILE_RESUME_NAME);

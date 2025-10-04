@@ -1,12 +1,17 @@
-import { ProjectType } from '@/types/project';
-import { TechnologyType } from '@/types/technology';
+import {
+    CreateProjectType,
+    ProjectType,
+    UpdateProjectType,
+} from '@/types/project';
+import {
+    CreateTechnologyType,
+    TechnologyType,
+    UpdateTechnologyType,
+} from '@/types/technology';
 
 export interface IApi {
     generateProjectId(): string;
-    createProject(
-        data: Omit<ProjectType, 'id' | 'createdAt' | 'updatedAt' | 'index'> &
-            Partial<Pick<ProjectType, 'id'>>
-    ): Promise<void>;
+    createProject(data: CreateProjectType): Promise<void>;
     getProjectList(
         countLimit: number | null,
         jumpCount?: number
@@ -16,7 +21,7 @@ export interface IApi {
     ): () => void;
     updateProject(
         id: ProjectType['id'],
-        data: Partial<Omit<ProjectType, 'id' | 'updatedAt' | 'createdAt'>>
+        data: UpdateProjectType
     ): Promise<void>;
     deleteProject(
         id: ProjectType['id'],
@@ -29,13 +34,11 @@ export interface IApi {
     ): Promise<string | null>;
     deleteScreenshots(filePaths: string[]): Promise<void>;
 
-    createTechnology(
-        data: Omit<TechnologyType, 'index'>
-    ): Promise<TechnologyType>;
+    createTechnology(data: CreateTechnologyType): Promise<TechnologyType>;
     getTechnologyList(): Promise<TechnologyType[]>;
     updateTechnology(
         id: TechnologyType['id'],
-        data: Partial<Omit<TechnologyType, 'id'>>
+        data: UpdateTechnologyType
     ): Promise<void>;
     uploadTechIcon(file: File, fileName: string): Promise<string | null>;
     deleteTechnology(

@@ -21,4 +21,7 @@ export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export type LangType = (typeof LANGUAGES)[number];
 
-export type StreamEvent = 'onChange'; /* | 'onDelete' | 'onAdd'; */
+export type PositionT = {
+    x: number;
+    y: number;
+};

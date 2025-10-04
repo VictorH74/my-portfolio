@@ -10,3 +10,7 @@ export type TechnologyType = {
         heading: string;
     };
 };
+
+export type CreateTechnologyType = Omit<TechnologyType, 'index'>;
+
+export type UpdateTechnologyType = Partial<Omit<TechnologyType, 'id'>>;

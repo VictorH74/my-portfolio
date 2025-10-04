@@ -1,12 +1,14 @@
+import { PositionT } from '@/types/generic';
 import { isMobilePortrait } from '@/utils/functions';
 import React from 'react';
 
 import { generateLightballs, Lightball } from './Lightball';
 
 export const useAnimatedBackground = () => {
+    const posProgressionTimeout = React.useRef<NodeJS.Timeout | null>(null);
+    const currentPosRef = React.useRef<PositionT>({ x: 0, y: 0 });
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const canvasCtxRef = React.useRef<CanvasRenderingContext2D>(null);
-    const mousePosRef = React.useRef<{ x: number; y: number }>(null);
     const lightballListRef = React.useRef<Lightball[]>(null);
 
     const [isLoadImg, setIsLoadImg] = React.useState(false);
@@ -16,68 +18,87 @@ export const useAnimatedBackground = () => {
         const controller = new AbortController();
         canvasCtxRef.current = canvasRef.current.getContext('2d');
 
-        updateCanvas();
+        const handleMouseMove = (e: MouseEvent) => {
+            if (posProgressionTimeout.current)
+                clearTimeout(posProgressionTimeout.current)
 
-        window.addEventListener('mousemove', mouseMoveListener, {
-            signal: controller.signal,
-        });
-        window.addEventListener('resize', updateCanvas, {
-            signal: controller.signal,
-        });
+            const canvas = canvasRef.current;
+            if (!canvas) return;
 
-        update();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isLoadImg]);
+            const { x: currXPercent, y: currYPercent }: PositionT = currentPosRef.current
+            const { x: finalXPercent, y: finalYPercent } = {
+                x: e.clientX / canvas.width,
+                y: e.clientY / canvas.height,
+            };
 
-    const mouseMoveListener = (e: MouseEvent) => {
-        if (!canvasRef.current) return;
-        const canvas = canvasRef.current;
+            const xDistance = finalXPercent < currXPercent ? currXPercent - finalXPercent : finalXPercent - currXPercent
+            const yDistance = finalYPercent < currYPercent ? currYPercent - finalYPercent : finalYPercent - currYPercent
+            const hypotenuse = Math.sqrt(xDistance ** 2 + yDistance ** 2)
+            const speed = 1 / hypotenuse
 
-        const mousePositionPercent = {
-            x: e.clientX / canvas.width,
-            y: e.clientY / canvas.height,
+            finalPosProgression({ x: finalXPercent, y: finalYPercent }, { x: currXPercent, y: currYPercent }, xDistance / 100 * (finalXPercent < currXPercent ? -1 : 1), yDistance / 100 * (finalYPercent < currYPercent ? -1 : 1), speed)
         };
 
-        mousePosRef.current = mousePositionPercent;
-    };
+        const buildLightballs = () => {
+            if (!canvasRef.current) return;
+            const canvas = canvasRef.current;
 
-    const updateCanvas = () => {
-        if (!canvasRef.current) return;
-        const canvas = canvasRef.current;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            lightballListRef.current = generateLightballs(
+                canvas.width,
+                canvas.height,
+                window.outerWidth,
+                window.outerHeight,
+                computeValue
+            );
+        };
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        lightballListRef.current = generateLightballs(
-            canvas.width,
-            canvas.height,
-            window.outerWidth,
-            window.outerHeight,
-            computeValue
-        );
-    };
+        const updateLightballsPos = (pos: PositionT) => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const canvasCtx = canvasCtxRef.current;
+            const lightballList = lightballListRef.current;
 
-    const update = () => {
-        if (
-            !canvasCtxRef.current ||
-            !canvasRef.current ||
-            !lightballListRef.current
-        )
-            return;
+            if (
+                !canvasCtx ||
+                !canvas ||
+                !lightballList
+            )
+                return;
 
-        const canvasCtx = canvasCtxRef.current;
-        const canvas = canvasRef.current;
-        const lightballList = lightballListRef.current;
+            canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+            lightballList.forEach((l) => {
+                l.update(pos);
+                l.draw(canvasCtx, computeValue(30));
+            });
 
-        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-        lightballList.forEach((l) => {
-            l.update(mousePosRef.current || { x: 0, y: 0 });
-            l.draw(canvasCtx, computeValue(30));
+            if (isMobilePortrait()) return;
+        };
+
+        const finalPosProgression = (finalpos: PositionT, currentPos: PositionT, xIncrement: number, yIncrement: number, speed: number) => {
+            if ((xIncrement < 0 && finalpos.x > currentPos.x) || (xIncrement > 0 && finalpos.x < currentPos.x))
+                return
+
+            updateLightballsPos(currentPos)
+            currentPosRef.current = currentPos
+
+            posProgressionTimeout.current = setTimeout(() => {
+                finalPosProgression(finalpos, { x: currentPos.x + xIncrement, y: currentPos.y + yIncrement }, xIncrement, yIncrement, speed)
+            }, speed);
+        }
+
+        buildLightballs();
+        updateLightballsPos(currentPosRef.current);
+
+        window.addEventListener('mousemove', handleMouseMove, {
+            signal: controller.signal,
+        });
+        window.addEventListener('resize', buildLightballs, {
+            signal: controller.signal,
         });
 
-        if (isMobilePortrait()) return;
-
-        requestAnimationFrame(update);
-    };
+    }, [isLoadImg]);
 
     const computeValue = (v: number) => {
         const bgImgWidth = 2560;

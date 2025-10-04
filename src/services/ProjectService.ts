@@ -1,5 +1,9 @@
 import { IApi } from '@/types/api';
-import { ProjectType } from '@/types/project';
+import {
+    CreateProjectType,
+    ProjectType,
+    UpdateProjectType,
+} from '@/types/project';
 
 export class ProjectService {
     private api: IApi;
@@ -8,34 +12,23 @@ export class ProjectService {
         this.api = api;
     }
 
-    generateId(): string {
+    generateId() {
         return this.api.generateProjectId();
     }
 
-    async createProject(
-        data: Omit<ProjectType, 'id' | 'createdAt' | 'updatedAt' | 'index'> &
-            Partial<Pick<ProjectType, 'id'>>
-    ): Promise<void> {
+    async createProject(data: CreateProjectType) {
         return this.api.createProject(data);
     }
 
-    getProjectListStream(
-        onChange: (projectList: ProjectType[]) => void
-    ): () => void {
+    getProjectListStream(onChange: (projectList: ProjectType[]) => void) {
         return this.api.getProjectListStream(onChange);
     }
 
-    async getProjectList(
-        countLimit: number | null = null,
-        jumpCount?: number
-    ): Promise<ProjectType[]> {
+    async getProjectList(countLimit: number | null = null, jumpCount?: number) {
         return this.api.getProjectList(countLimit, jumpCount);
     }
 
-    async updateProject(
-        id: string,
-        data: Partial<Omit<ProjectType, 'id' | 'updatedAt' | 'createdAt'>>
-    ): Promise<void> {
+    async updateProject(id: string, data: UpdateProjectType) {
         return this.api.updateProject(id, data);
     }
 
@@ -43,18 +36,15 @@ export class ProjectService {
         id: string,
         projectIndex: ProjectType['index'],
         currentProjectList: ProjectType[]
-    ): Promise<void> {
+    ) {
         return this.api.deleteProject(id, projectIndex, currentProjectList);
     }
 
-    async uploadScreenshot(
-        file: File,
-        projectId: ProjectType['id']
-    ): Promise<string | null> {
+    async uploadScreenshot(file: File, projectId: ProjectType['id']) {
         return this.api.uploadScreenshot(file, projectId);
     }
 
-    async deleteScreenshots(filePaths: string[]): Promise<void> {
+    async deleteScreenshots(filePaths: string[]) {
         return this.api.deleteScreenshots(filePaths);
     }
 }

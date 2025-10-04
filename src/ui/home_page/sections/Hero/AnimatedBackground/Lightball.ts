@@ -1,19 +1,16 @@
+import { PositionT } from '@/types/generic';
+
 export type LightballRequiredParams = [number, number, number, number, string];
 export type LightballParams = [number, number, number, number, string, boolean];
 
 export class Lightball {
-    private negative: boolean;
-
+    private inverted: boolean;
     private size: number;
-
     private x: number = 0;
     private y: number = 0;
-
     private x_location: number;
     private y_location: number;
-
     private constraint_area_radio: number;
-
     private color: string;
 
     constructor(
@@ -22,9 +19,9 @@ export class Lightball {
         y: number,
         constraint_area_radio: number,
         color: string,
-        negative?: boolean
+        inverted?: boolean
     ) {
-        this.negative = negative || false;
+        this.inverted = inverted || false;
         this.size = size;
         this.x = x;
         this.y = y;
@@ -34,23 +31,15 @@ export class Lightball {
         this.color = color;
     }
 
-    public update(mousePositionPercent: { x: number; y: number }) {
+    public update({ x: xPercent, y: yPercent }: PositionT) {
         const min_x = this.x - this.constraint_area_radio;
         const min_y = this.y - this.constraint_area_radio;
 
-        const x_position_area = this.x + this.constraint_area_radio - min_x;
-        const y_position_area = this.y + this.constraint_area_radio - min_y;
+        const x_pos_area = this.x + this.constraint_area_radio - min_x;
+        const y_pos_area = this.y + this.constraint_area_radio - min_y;
 
-        const new_x =
-            x_position_area *
-            (this.negative
-                ? 1 - mousePositionPercent.x
-                : mousePositionPercent.x);
-        const new_y =
-            y_position_area *
-            (this.negative
-                ? 1 - mousePositionPercent.y
-                : mousePositionPercent.y);
+        const new_x = x_pos_area * (this.inverted ? 1 - xPercent : xPercent);
+        const new_y = y_pos_area * (this.inverted ? 1 - yPercent : yPercent);
 
         this.x_location = min_x + new_x;
         this.y_location = min_y + new_y;
@@ -58,11 +47,9 @@ export class Lightball {
 
     public draw(canvas_ctx: CanvasRenderingContext2D, blurValue: number) {
         canvas_ctx.filter = `blur(${blurValue}px)`;
-
         canvas_ctx.fillStyle = this.color;
-        // canvas_ctx.shadowColor = this.color;
-        // canvas_ctx.shadowBlur = 300;
         canvas_ctx.beginPath();
+
         const a = (2 * Math.PI) / 6;
         for (let i = 0; i < 6; i++) {
             canvas_ctx.lineTo(
@@ -70,7 +57,6 @@ export class Lightball {
                 this.y_location + this.size * Math.sin(a * i)
             );
         }
-        // canvas_ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
 
         canvas_ctx.fill();
         canvas_ctx.closePath();
@@ -177,7 +163,6 @@ export const generateLightballs = (
     ];
 
     let toggleBool = true;
-
     return datas.map((data) => {
         const [size, x, y, constraint_area_radio, color] = data;
         toggleBool = !toggleBool;
