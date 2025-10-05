@@ -80,7 +80,7 @@ export const useAnimatedBackground = () => {
         buildLightballs();
         updateLightballsPos(currentPosRef.current);
 
-        if (!isMobilePortrait()) return
+        if (isMobilePortrait()) return
 
         if (window.Worker) {
             workerRef.current = new Worker(new URL("bgWorker.ts", import.meta.url), { type: "module" });
