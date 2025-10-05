@@ -1,4 +1,4 @@
-import { AnimatedBackground } from '@/ui/home_page/sections/Hero/AnimatedBackground';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Orbitron } from 'next/font/google';
 import { useTranslations } from 'next-intl';
 import { twMerge } from 'tailwind-merge';
