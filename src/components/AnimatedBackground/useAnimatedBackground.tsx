@@ -4,8 +4,10 @@ import React from 'react';
 
 import { generateLightballs, Lightball } from './Lightball';
 
+type ProgressToFinalPosDataT = { finalPosPercent: PositionT, xIncrement: number, yIncrement: number, speed: number }
+
 export const useAnimatedBackground = () => {
-    const posProgressionTimeout = React.useRef<NodeJS.Timeout | null>(null);
+    const progressToFinalPosDataRef = React.useRef<ProgressToFinalPosDataT | null>(null);
     const currentPosRef = React.useRef<PositionT>({ x: 0, y: 0 });
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const workerRef = React.useRef<Worker | null>(null);
@@ -14,9 +16,8 @@ export const useAnimatedBackground = () => {
 
     const [isLoadImg, setIsLoadImg] = React.useState(false);
 
-    // TODO: try use workers
     React.useEffect(() => {
-        if (!canvasRef.current || !isLoadImg || !isLoadImg) return;
+        if (!canvasRef.current || !isLoadImg) return;
         const controller = new AbortController();
         canvasCtxRef.current = canvasRef.current.getContext('2d');
 
@@ -65,18 +66,6 @@ export const useAnimatedBackground = () => {
             if (isMobilePortrait()) return;
         };
 
-        const progressToFinalPos = (finalPosPercent: PositionT, currentPos: PositionT, xIncrement: number, yIncrement: number, speed: number) => {
-            if ((xIncrement < 0 && finalPosPercent.x > currentPos.x) || (xIncrement > 0 && finalPosPercent.x < currentPos.x))
-                return
-
-            updateLightballsPos(currentPos)
-            currentPosRef.current = currentPos
-
-            posProgressionTimeout.current = setTimeout(() => {
-                progressToFinalPos(finalPosPercent, { x: currentPos.x + xIncrement, y: currentPos.y + yIncrement }, xIncrement, yIncrement, speed)
-            }, speed);
-        }
-
         buildLightballs();
         updateLightballsPos(currentPosRef.current);
 
@@ -86,19 +75,32 @@ export const useAnimatedBackground = () => {
             workerRef.current = new Worker(new URL("bgWorker.ts", import.meta.url), { type: "module" });
 
             workerRef.current.onmessage = (e) => {
-                if (posProgressionTimeout.current)
-                    clearTimeout(posProgressionTimeout.current)
-
-                const {
-                    finalPosPercent,
-                    xIncrement,
-                    yIncrement,
-                    speed
-                } = e.data as { finalPosPercent: PositionT, xIncrement: number, yIncrement: number, speed: number };
-
-                progressToFinalPos(finalPosPercent, currentPosRef.current, xIncrement, yIncrement, speed)
+                progressToFinalPosDataRef.current = e.data as ProgressToFinalPosDataT;
             };
         }
+
+        const loop = () => {
+            const progressToFinalPosData = progressToFinalPosDataRef.current
+            const { x: currentPosX, y: currentPosY } = currentPosRef.current
+
+            if (
+                !progressToFinalPosData
+            ) {
+                requestAnimationFrame(loop);
+                return
+            }
+
+            const { xIncrement, yIncrement, finalPosPercent } = progressToFinalPosData
+            currentPosRef.current = { x: currentPosX + xIncrement, y: currentPosY + yIncrement }
+
+            updateLightballsPos(currentPosRef.current);
+            if ((xIncrement < 0 && finalPosPercent.x > currentPosX) || (xIncrement > 0 && finalPosPercent.x < currentPosX))
+                progressToFinalPosDataRef.current = null
+
+            requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
 
         window.addEventListener('pointermove', handleMouseMove, {
             signal: controller.signal,
@@ -111,8 +113,6 @@ export const useAnimatedBackground = () => {
         return () => {
             workerRef.current?.terminate()
             controller.abort()
-            if (posProgressionTimeout.current)
-                clearTimeout(posProgressionTimeout.current)
         }
 
     }, [isLoadImg]);

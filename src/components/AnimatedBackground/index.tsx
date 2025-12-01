@@ -8,7 +8,6 @@ import { useAnimatedBackground } from './useAnimatedBackground';
 export const AnimatedBackground = () => {
     const hook = useAnimatedBackground();
 
-    // TODO: perform bg image
     return (
         <div className="absolute inset-0 grid place-items-center bg-[#141414]">
             <canvas
