@@ -1,5 +1,6 @@
 import { Providers } from '@/components/Providers';
 import '../globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -26,7 +27,10 @@ export default async function RootLayout({
         <html lang="en">
             <body className="scroll-smooth">
                 <NextIntlClientProvider messages={messages}>
-                    <Providers>{children}</Providers>
+                    <Providers>
+                        {children}
+                        <Analytics />
+                    </Providers>
                 </NextIntlClientProvider>
                 <div id="portal-destination"></div>
             </body>
