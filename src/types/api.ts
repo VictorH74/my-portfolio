@@ -20,7 +20,7 @@ export interface IApi {
         onChange: (projectList: ProjectType[]) => void
     ): () => void;
     updateProject(
-        id: ProjectType['id'],
+        id: ProjectType['id'], 
         data: UpdateProjectType
     ): Promise<void>;
     deleteProject(
@@ -30,7 +30,8 @@ export interface IApi {
     ): Promise<void>;
     uploadScreenshot(
         file: File,
-        projectId: ProjectType['id']
+        projectId: ProjectType['id'],
+        projectTitle: ProjectType['title']
     ): Promise<string | null>;
     deleteScreenshots(filePaths: string[]): Promise<void>;
 
@@ -50,7 +51,7 @@ export interface IApi {
     ): Promise<void>;
 
     updateProfileImg(img: Blob): Promise<string>;
-    getProfileImg(): string;
+    getProfileImg(): Promise<string>;
 
     updateResume(file: File): Promise<void>;
     getResume(): Promise<Blob | null>;

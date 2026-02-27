@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { ProjectType } from '@/types/project';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -17,7 +18,10 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
 
-export { db, auth };
+export const getProjectImgFolderName = (
+    projectId: ProjectType['id'],
+    projectTitle: ProjectType['title']
+) => `${projectTitle.toLowerCase().replaceAll(' ', '_')}-${projectId}`;

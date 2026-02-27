@@ -1,4 +1,4 @@
-import { db } from '@/lib/firebase/client';
+import { db, getProjectImgFolderName } from '@/lib/firebase/client';
 import { createClient } from '@/lib/supabase/client';
 import { IApi } from '@/types/api';
 import {
@@ -19,6 +19,7 @@ import {
 import {
     collection,
     doc,
+    getDoc,
     getDocs,
     limit,
     onSnapshot,
@@ -26,34 +27,64 @@ import {
     query,
     QueryConstraint,
     runTransaction,
-    setDoc,
     startAfter,
     updateDoc,
     writeBatch,
 } from 'firebase/firestore';
+import {
+    deleteObject,
+    getBlob,
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytes,
+} from 'firebase/storage';
 
 export class FirebaseSupabaseApi implements IApi {
     #supabase = createClient();
 
     #getTechDocRef = (id: string) => doc(db, 'technologies', id);
 
+    #uploadFile = async (
+        file: File,
+        root: 'project-images' | 'technologies' | 'profile' | 'my-cv',
+        path: string
+    ) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, `${root}/${path}`);
+
+        const snap = await uploadBytes(storageRef, file, {
+            contentType: file.type,
+        });
+        return getDownloadURL(snap.ref);
+    };
+
+    #removeFile = async (
+        root: 'project-images' | 'technologies' | 'profile' | 'my-cv',
+        path: string
+    ) => {
+        const storage = getStorage();
+        const storageRef = ref(storage, `${root}/${path}`);
+        return deleteObject(storageRef);
+    };
+
     async deleteScreenshots(filePaths: string[]) {
-        this.#supabase.storage.from('project-screenshots').remove(filePaths);
+        await Promise.all(
+            filePaths.map((p) => this.#removeFile('project-images', p))
+        );
     }
 
-    async uploadScreenshot(file: File, projectId: ProjectType['id']) {
-        const { data, error } = await this.#supabase.storage
-            .from('project-screenshots')
-            .upload(`${projectId}/${file.name}`, file, {
-                upsert: true,
-            });
-
-        if (error) throw error;
-        if (!data) return null;
-
-        return this.#supabase.storage
-            .from('project-screenshots')
-            .getPublicUrl(data.path).data.publicUrl;
+    async uploadScreenshot(
+        file: File,
+        projectId: ProjectType['id'],
+        projectTitle: ProjectType['title']
+    ) {
+        const finalFileName = file.name.split('.').slice(0, -1).join('.');
+        return this.#uploadFile(
+            file,
+            'project-images',
+            `${getProjectImgFolderName(projectId, projectTitle)}/${finalFileName}`
+        );
     }
 
     generateProjectId(): string {
@@ -73,7 +104,7 @@ export class FirebaseSupabaseApi implements IApi {
                 : doc(collection(db, 'projects'));
 
             const collectionSize = collectionCount.data().total as number;
-            await setDoc(newDocRef, {
+            transaction.set(newDocRef, {
                 ...data,
                 index: collectionSize,
                 createdAt: new Date().toISOString(),
@@ -181,7 +212,7 @@ export class FirebaseSupabaseApi implements IApi {
             // save/update collection
             const docRef = this.#getTechDocRef(data.id);
             newTech = { ...data, index: collectionSize };
-            await setDoc(docRef, newTech);
+            transaction.set(docRef, newTech);
 
             // increment collection item total count
             transaction.update(collectionSizeRef, {
@@ -222,18 +253,7 @@ export class FirebaseSupabaseApi implements IApi {
     }
 
     async uploadTechIcon(file: File, fileName: string) {
-        const { data, error } = await this.#supabase.storage
-            .from('technologies')
-            .upload(fileName, file, {
-                upsert: true,
-            });
-
-        if (error) throw error;
-        if (!data) return null;
-
-        return this.#supabase.storage
-            .from('technologies')
-            .getPublicUrl(data.path).data.publicUrl;
+        return this.#uploadFile(file, 'technologies', fileName);
     }
 
     async deleteTechnology(
@@ -266,9 +286,10 @@ export class FirebaseSupabaseApi implements IApi {
             transaction.update(collectionCountRef, { total });
         });
 
-        if (new URL(tech.src).hostname == 'tcvoanfmxprbainwcktt.supabase.co') {
+        if (new URL(tech.src).hostname == 'tcvoanfmxprbainwcktt.supabase.co')
             await this.#supabase.storage.from('technologies').remove([tech.id]);
-        }
+        else if (new URL(tech.src).hostname == 'firebasestorage.googleapis.com')
+            await this.#removeFile('technologies', tech.id);
     }
 
     async reorderTechnologies(
@@ -282,48 +303,46 @@ export class FirebaseSupabaseApi implements IApi {
         await batch.commit();
     }
 
-    async updateProfileImg(img: Blob) {
-        await this.#supabase.storage
-            .from(PROFILE_BUCKET_NAME)
-            .upload(PROFILE_IMG_NAME, img, {
-                upsert: true,
-            });
-
-        const url = this.#supabase.storage
-            .from(PROFILE_BUCKET_NAME)
-            .getPublicUrl(PROFILE_IMG_NAME).data.publicUrl;
+    async updateProfileImg(img: File) {
+        const url = await this.#uploadFile(
+            img,
+            PROFILE_BUCKET_NAME,
+            PROFILE_IMG_NAME
+        );
 
         const docRef = doc(db, 'profile', 'image');
         await updateDoc(docRef, { url });
-
         return url;
     }
 
-    getProfileImg() {
-        return this.#supabase.storage
-            .from(PROFILE_BUCKET_NAME)
-            .getPublicUrl(PROFILE_IMG_NAME).data.publicUrl;
+    async getProfileImg() {
+        const docRef = doc(db, PROFILE_BUCKET_NAME, PROFILE_IMG_NAME);
+        const docData = (await getDoc(docRef)).data();
+
+        if (!docData) {
+            throw new Error('Profile image not found!');
+        }
+
+        return docData.url as string;
     }
 
     async updateResume(file: File) {
         if (file.type !== 'application/pdf')
             throw new Error('Only PDF files are allowed');
 
-        await this.#supabase.storage
-            .from(PROFILE_BUCKET_NAME)
-            .upload(PROFILE_RESUME_NAME, file, {
-                upsert: true,
-            });
+        await this.#uploadFile(file, PROFILE_BUCKET_NAME, PROFILE_RESUME_NAME);
     }
 
     async getResume() {
-        const { data, error } = await this.#supabase.storage
-            .from(PROFILE_BUCKET_NAME)
-            .download(PROFILE_RESUME_NAME);
-
-        if (error) throw error;
-
-        if (!data) return null;
-        return data;
+        const storage = getStorage();
+        try {
+            console.log('get resume from firebase');
+            return getBlob(
+                ref(storage, `${PROFILE_BUCKET_NAME}/${PROFILE_RESUME_NAME}`)
+            );
+        } catch (err) {
+            console.error(err);
+            return null;
+        }
     }
 }

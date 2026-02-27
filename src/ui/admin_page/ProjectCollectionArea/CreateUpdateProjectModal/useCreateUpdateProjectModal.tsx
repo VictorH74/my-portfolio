@@ -1,11 +1,16 @@
 import { projectService } from '@/di/container';
 import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
 import { LangType } from '@/types/generic';
-import { CreateUpdateProjectType, ProjectType, ScreenshotType } from '@/types/project';
+import {
+    CreateUpdateProjectType,
+    ProjectType,
+    ScreenshotType,
+} from '@/types/project';
 import { FirebaseError } from 'firebase/app';
 import React from 'react';
 
 import { OutputReordableItemType } from '../../components/ReordableModal';
+import { getProjectImgFolderName } from '@/lib/firebase/client';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
 
@@ -131,7 +136,10 @@ export const useCreateUpdateProjectModal = (
         return validatedData;
     };
 
-    const uploadScreenshots = async (projectId: ProjectType['id']) => {
+    const uploadScreenshots = async (
+        projectId: ProjectType['id'],
+        projectTitle: ProjectType['title']
+    ) => {
         const updatedScreenshots = [...projectScreenshots];
         const promises: Promise<void>[] = [];
 
@@ -140,7 +148,11 @@ export const useCreateUpdateProjectModal = (
                 promises.push(
                     new Promise(async (resolve, reject) => {
                         try {
-                            const url = await projectService.uploadScreenshot(img, projectId);
+                            const url = await projectService.uploadScreenshot(
+                                img,
+                                projectId,
+                                projectTitle
+                            );
                             if (!url) throw 'Error on upload image';
 
                             updatedScreenshots[i] = {
@@ -164,14 +176,20 @@ export const useCreateUpdateProjectModal = (
                 (s) => s.name
             );
 
-            const deletableScreenshotPathnames = onRemoveScreenshotNames.reduce<string[]>((list, currName) => {
-                if (!updatedScreenshotNames.includes(currName)) {
-                    list.push(`${props.project!.id}/${currName}`)
-                }
-                return list
-            }, [])
+            const { id, title } = props.project;
 
-            projectService.deleteScreenshots(deletableScreenshotPathnames)
+            const deletableScreenshotPathnames = onRemoveScreenshotNames.reduce<
+                string[]
+            >((list, currName) => {
+                if (!updatedScreenshotNames.includes(currName)) {
+                    list.push(
+                        `${getProjectImgFolderName(id, title)}/${currName}`
+                    );
+                }
+                return list;
+            }, []);
+
+            projectService.deleteScreenshots(deletableScreenshotPathnames);
         }
         // console.log(updatedScreenshots)
         return updatedScreenshots as ScreenshotType[];
@@ -223,27 +241,28 @@ export const useCreateUpdateProjectModal = (
         const projectScreenshotsHasChanged = (() => {
             const prevScreenshots = prevProjectData.screenshots;
 
-            if (prevScreenshots.length !== projectScreenshots.length) return true;
+            if (prevScreenshots.length !== projectScreenshots.length)
+                return true;
 
-            let _projectScreenshotsHasChanged
+            let _projectScreenshotsHasChanged;
             for (let i = 0; i < projectScreenshots.length; i++) {
                 const s = projectScreenshots[i];
 
-                const isRecentFile = s instanceof File
-                if (
-                    isRecentFile ||
-                    s.url !== prevScreenshots[i].url
-                ) {
+                const isRecentFile = s instanceof File;
+                if (isRecentFile || s.url !== prevScreenshots[i].url) {
                     _projectScreenshotsHasChanged = true;
                     break;
                 }
             }
 
-            return _projectScreenshotsHasChanged
-        })()
+            return _projectScreenshotsHasChanged;
+        })();
 
         if (projectScreenshotsHasChanged)
-            validatedProjectData.screenshots = await uploadScreenshots(prevProjectData.id);
+            validatedProjectData.screenshots = await uploadScreenshots(
+                prevProjectData.id,
+                prevProjectData.title
+            );
 
         const notProjectDataChanged =
             Object.values(validatedProjectData).length === 0;
@@ -251,7 +270,10 @@ export const useCreateUpdateProjectModal = (
 
         // console.log({ ...validatedProjectData, updatedAt: new Date().toISOString() })
 
-        await projectService.updateProject(prevProjectData.id, validatedProjectData);
+        await projectService.updateProject(
+            prevProjectData.id,
+            validatedProjectData
+        );
     };
 
     const createProject = async () => {
@@ -278,9 +300,16 @@ export const useCreateUpdateProjectModal = (
 
         const futureProjectId = projectService.generateId();
 
-        const screenshots = await uploadScreenshots(futureProjectId);
+        const screenshots = await uploadScreenshots(
+            futureProjectId,
+            project.title
+        );
 
-        await projectService.createProject({ ...project, screenshots, id: futureProjectId });
+        await projectService.createProject({
+            ...project,
+            screenshots,
+            id: futureProjectId,
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {

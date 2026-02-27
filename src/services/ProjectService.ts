@@ -28,7 +28,7 @@ export class ProjectService {
         return this.api.getProjectList(countLimit, jumpCount);
     }
 
-    async updateProject(id: string, data: UpdateProjectType) {
+    async updateProject(id: ProjectType['id'], data: UpdateProjectType) {
         return this.api.updateProject(id, data);
     }
 
@@ -40,8 +40,12 @@ export class ProjectService {
         return this.api.deleteProject(id, projectIndex, currentProjectList);
     }
 
-    async uploadScreenshot(file: File, projectId: ProjectType['id']) {
-        return this.api.uploadScreenshot(file, projectId);
+    async uploadScreenshot(
+        file: File,
+        projectId: ProjectType['id'],
+        projectTitle: ProjectType['title']
+    ) {
+        return this.api.uploadScreenshot(file, projectId, projectTitle);
     }
 
     async deleteScreenshots(filePaths: string[]) {

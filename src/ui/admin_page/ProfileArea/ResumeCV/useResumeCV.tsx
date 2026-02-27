@@ -46,10 +46,10 @@ export const useResumeCV = () => {
         if (!files) return;
 
         const file = files[0];
-        const blob = new Blob([file], { type: file.type });
-
+        
         await profileService.updateResume(file);
-
+        
+        const blob = new Blob([file], { type: file.type });
         setResumeBlob(blob);
         setLoadingResume(false);
 
