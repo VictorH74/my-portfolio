@@ -85,7 +85,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                                 </div>
                             ) : (
                                 <div className="absolute top-1 right-1">
-                                    <button className='p-1 rounded-md bg-white/50 hover:bg-white/70 duration-300 cursor-pointer' onClick={hook.generateColorFieldsValue}>
+                                    <button className='p-1 rounded-md bg-white/50 hover:bg-white/70 duration-300 cursor-pointer' onClick={() => hook.generateColorFieldsValue()}>
                                         <Image
                                             alt="gemini ai icon"
                                             width={30}
