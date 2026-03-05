@@ -1,33 +1,42 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { ContentListUnion, GoogleGenAI } from '@google/genai';
 
-// Access your API key as an environment variable
-const genAI = new GoogleGenerativeAI(
-    process.env.GEMINI_API_KEY ??
+const ai = new GoogleGenAI({
+    apiKey:
+        process.env.GEMINI_API_KEY ??
         (() => {
             throw new Error('Undefined env variable: GEMINI_API_KEY');
-        })()
-);
+        })(),
+});
 
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-/**
- * Generates a text stream from a given prompt using the Gemini model.
- *
- * Usage Example:
- * --------------
- * @example
- *  const result = await generateTextWithPrompt('Write a story about a magic backpack.');
- *
- *  // Process each chunk of the result stream asynchronously
- *  for await (const chunk of result.stream) {
- *      const chunkText = await chunk.text(); // Convert the chunk to text
- *
- *      // Do something with 'chunkText'
- *      console.log(chunkText);
- *  }
- *
- * @returns {Promise<GenerateContentStreamResult>} - Returns a readable stream of generated content.
- */
 export const generateContentStream = async (promptText: string) => {
-    return await model.generateContentStream(promptText);
+    return await ai.models.generateContentStream({
+        model: 'gemini-3-flash-preview',
+        contents: promptText,
+    });
 };
+
+export const generateContent = async (promptText: string, imgFile?: File) => {
+    const contents: ContentListUnion = [{ text: promptText }];
+
+    if (imgFile) {
+        const base64Data = await imgFile
+            .arrayBuffer()
+            .then((buffer) => Buffer.from(buffer).toString('base64'));
+
+        contents.push({
+            inlineData: {
+                mimeType: imgFile.type,
+                data: base64Data,
+            },
+        });
+    }
+
+    return await ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents,
+    });
+};
+
+// export const generateContentStream = async (promptText: string) => {
+//     return await model.generateContentStream(promptText);
+// };
