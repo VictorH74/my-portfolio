@@ -19,7 +19,7 @@ export const useAi = () => {
         setDone(false);
         resetResponseText();
 
-        const response = await fetch('api/ai', {
+        const response = await fetch('api/ai/stream', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,11 +53,27 @@ export const useAi = () => {
         setReader(null); // Limpa o reader após o término da leitura
     };
 
+    const generateContent = async (promptText: string, imgFile?: File) => {
+        const formData = new FormData();
+        formData.append('promptText', promptText);
+
+        if (imgFile) formData.append('imgFile', imgFile);
+
+        const response = await fetch('api/ai', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const { resultText } = await response.json();
+        return resultText as string;
+    };
+
     return {
         done,
         responseText,
         stopResponse,
         generateContentStream,
+        generateContent,
         resetResponseText,
     };
 };

@@ -1,4 +1,5 @@
 import { technologieService } from '@/di/container';
+import { useAi } from '@/hooks/useAi';
 import { BtnAttrType, SetStateType } from '@/types/generic';
 import { TechnologyType } from '@/types/technology';
 import GradeIcon from '@mui/icons-material/Grade';
@@ -17,6 +18,8 @@ export interface AddTechFormModalProps {
 }
 
 export default function useAddTechFormModal(props: AddTechFormModalProps) {
+    const firstAutoGeneratingRef = React.useRef(true);
+
     const [submittingForm, setSubmittingForm] = React.useState(false);
 
     const [iconFileValue, setIconFileValue] = React.useState<
@@ -32,6 +35,11 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
     const [isMain, setIsMain] = React.useState(false);
     const [idFieldModified, setIdFieldModified] = React.useState(false);
     const [invalidUrl, setInvalidUrl] = React.useState(false);
+
+    const [generatingColorFieldsValue, setGeneretingColorFieldsValue] =
+        React.useState(false);
+
+    const { generateContent } = useAi();
 
     const iconUrl = React.useMemo(() => {
         if (urlValue) {
@@ -49,6 +57,127 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         }
 
         return null;
+    }, [urlValue, iconFileValue]);
+
+    const generateColorFieldsValue = React.useCallback(
+        async (cb?: () => void) => {
+            const prompt =
+                'Analise a imagem e me retorne a string `${color_1}-${color_2}`, sendo color_1, a cor principal presente na imagem e color_2 sendo uma cor de heading que o torne legível em um background da cor de color_1. as cores devem ser em hexadecimal';
+
+            setGeneretingColorFieldsValue(true);
+            try {
+                if (iconFileValue) {
+                    const textResult = await generateContent(
+                        prompt,
+                        iconFileValue
+                    );
+                    const [color_1, color_2] = textResult.split('-');
+                    setBgColorValue(color_1);
+                    setHeadingColorValue(color_2);
+                } else if (urlValue) {
+                    setGeneretingColorFieldsValue(true);
+                    const res = await fetch(urlValue);
+                    if (!res.ok)
+                        throw new Error('Error fetching image from url');
+
+                    const imageBlob = await res.blob();
+                    let parsedBlob = imageBlob;
+                    let fileName = urlValue.split('/').pop() || 'icon-from-url';
+                    let fileType =
+                        imageBlob.type.replace('+xml', '') || 'image/*';
+
+                    if (
+                        imageBlob.type === 'image/svg+xml' ||
+                        imageBlob.type === 'image/svg'
+                    ) {
+                        const svgUrl = URL.createObjectURL(imageBlob);
+
+                        try {
+                            const svgImage =
+                                await new Promise<HTMLImageElement>(
+                                    (resolve, reject) => {
+                                        const image = new Image();
+                                        image.onload = () => resolve(image);
+                                        image.onerror = () =>
+                                            reject(
+                                                new Error(
+                                                    'Error loading SVG for conversion'
+                                                )
+                                            );
+                                        image.src = svgUrl;
+                                    }
+                                );
+
+                            const canvas = document.createElement('canvas');
+                            canvas.width = svgImage.naturalWidth || 512;
+                            canvas.height = svgImage.naturalHeight || 512;
+                            const context = canvas.getContext('2d');
+
+                            if (!context) {
+                                throw new Error(
+                                    'Error creating canvas context'
+                                );
+                            }
+
+                            context.fillStyle = '#FFFFFF';
+                            context.fillRect(0, 0, canvas.width, canvas.height);
+                            context.drawImage(
+                                svgImage,
+                                0,
+                                0,
+                                canvas.width,
+                                canvas.height
+                            );
+
+                            parsedBlob = await new Promise<Blob>(
+                                (resolve, reject) =>
+                                    canvas.toBlob(
+                                        (blob) =>
+                                            blob
+                                                ? resolve(blob)
+                                                : reject(
+                                                      new Error(
+                                                          'Error converting SVG to JPEG'
+                                                      )
+                                                  ),
+                                        'image/jpeg',
+                                        0.92
+                                    )
+                            );
+                            fileType = 'image/jpeg';
+                            fileName = fileName.replace(/\.svg$/i, '.jpg');
+                        } finally {
+                            URL.revokeObjectURL(svgUrl);
+                        }
+                    }
+
+                    const imageFile = new File([parsedBlob], fileName, {
+                        type: fileType,
+                    });
+
+                    const textResult = await generateContent(prompt, imageFile);
+                    const [color_1, color_2] = textResult.split('-');
+                    setBgColorValue(color_1);
+                    setHeadingColorValue(color_2);
+                }
+            } catch (err) {
+                alert(
+                    'Erro trying setting bg and heading colors with gemini ai'
+                );
+                console.log(err);
+            } finally {
+                if (cb) cb();
+                setGeneretingColorFieldsValue(false);
+            }
+        },
+        [iconFileValue, urlValue, generateContent]
+    );
+
+    React.useEffect(() => {
+        if (props.selectedTech && !firstAutoGeneratingRef.current) return;
+        generateColorFieldsValue(() => {
+            firstAutoGeneratingRef.current = false;
+        });
     }, [urlValue, iconFileValue]);
 
     React.useEffect(() => {
@@ -89,13 +218,14 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
 
     const selectIconFile = (files: FileList | null) => {
         if (!files) return;
-
-        console.log(files[0].type);
         setIconFileValue(files[0]);
     };
 
     const updateExistingTech = async (techData: Partial<TechnologyType>) => {
-        await technologieService.updateTechnology(props.selectedTech!.id, techData)
+        await technologieService.updateTechnology(
+            props.selectedTech!.id,
+            techData
+        );
 
         props.setTechnologyArray((prev) =>
             prev.map((t) => (t.index == indexValue ? { ...t, ...techData } : t))
@@ -116,8 +246,12 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         if (!iconFileValue && urlValue) urlMandatory = urlValue;
         else if (iconFileValue && (props.selectedTech || idValue)) {
             try {
-                const createdImgUrl = await technologieService.uploadTechIcon(iconFileValue, props.selectedTech?.id || idValue)
-                if (!createdImgUrl) throw new Error('Error uploading tech icon');
+                const createdImgUrl = await technologieService.uploadTechIcon(
+                    iconFileValue,
+                    props.selectedTech?.id || idValue
+                );
+                if (!createdImgUrl)
+                    throw new Error('Error uploading tech icon');
 
                 urlMandatory = createdImgUrl;
             } catch (err) {
@@ -221,6 +355,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
             {
                 name: 'backgroundColor',
+                disabled: generatingColorFieldsValue,
                 required: true,
                 className: 'grid w-full h-[30px]',
                 value: bgColorValue,
@@ -232,6 +367,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             },
             {
                 name: 'headingColor',
+                disabled: generatingColorFieldsValue,
                 required: true,
                 className: 'grid w-full h-[30px]',
                 value: headingColorValue,
@@ -251,6 +387,7 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
             bgColorValue,
             headingColorValue,
             idFieldModified,
+            generatingColorFieldsValue,
         ]
     );
 
@@ -324,7 +461,9 @@ export default function useAddTechFormModal(props: AddTechFormModalProps) {
         setIsHidden,
         isMain,
         setIsMain,
+        generatingColorFieldsValue,
         resetFields,
         submittingForm,
+        generateColorFieldsValue,
     };
 }

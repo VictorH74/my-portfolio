@@ -1,25 +1,14 @@
-import { generateContentStream } from '@/lib/gemini-ai';
+import { generateContent } from '@/lib/gemini-ai';
 
 export async function POST(req: Request) {
-    const { promptText } = await req.json();
+    const formData = await req.formData();
+    const promptText = String(formData.get('promptText') ?? '');
+    const imgFile = formData.get('imgFile');
 
-    const result = await generateContentStream(promptText);
+    const result = await generateContent(
+        promptText,
+        imgFile instanceof File ? imgFile : undefined,
+    );
 
-    const readableStream = new ReadableStream({
-        async pull(controller) {
-            const { value, done } = await result.stream.next();
-
-            if (done) {
-                controller.close();
-            } else {
-                controller.enqueue(
-                    new TextEncoder().encode(
-                        value.candidates?.[0].content.parts[0].text ?? ''
-                    )
-                );
-            }
-        },
-    });
-
-    return new Response(readableStream);
+    return Response.json({resultText: result.text});
 }

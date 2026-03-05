@@ -62,7 +62,7 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                         </div>
 
                         <div
-                            className="p-2"
+                            className="p-2 relative"
                             style={{
                                 backgroundColor:
                                     hook.bgColorValue ||
@@ -73,6 +73,28 @@ export default function AddTechFormModal(props: AddTechFormModalProps) {
                             <div className="h-[8.1rem] aspect-square grid place-items-center">
                                 {hook.nameValue || 'Tech name'}
                             </div>
+                            {hook.generatingColorFieldsValue ? (
+                                <div className="absolute grid place-items-center inset-0 bg-black/50 backdrop-blur-xs">
+                                    <Image
+                                        alt="gemini ai icon"
+                                        width={40}
+                                        height={40}
+                                        src="/gemini-img.png"
+                                        className="animate-spin"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="absolute top-1 right-1">
+                                    <button className='p-1 rounded-md bg-white/50 hover:bg-white/70 duration-300 cursor-pointer' onClick={hook.generateColorFieldsValue}>
+                                        <Image
+                                            alt="gemini ai icon"
+                                            width={30}
+                                            height={30}
+                                            src="/gemini-img.png"
+                                        />
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
