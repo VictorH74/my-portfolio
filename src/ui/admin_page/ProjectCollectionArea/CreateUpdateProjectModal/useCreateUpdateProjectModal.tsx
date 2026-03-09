@@ -14,6 +14,8 @@ import { getProjectImgFolderName } from '@/lib/firebase/client';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
 
+type ImageDeviceT = 'desktop' | 'mobile';
+
 export interface CreateUpdateProjectModalProps {
     project?: ProjectType;
     projectIndex?: number;
@@ -25,31 +27,43 @@ export const useCreateUpdateProjectModal = (
 ) => {
     const [project, setProject] = React.useState<CreateUpdateProjectType>({
         description: { en: '', 'pt-br': '' },
-        screenshots: [],
+        desktopImages: [],
+        mobileImages: [],
         technologies: [],
         title: '',
     });
-    const [onRemoveScreenshotNames, setOnRemoveScreenshotNames] =
-        React.useState<string[]>([]);
+    const [onRemoveImageNames, setOnRemoveImageNames] = React.useState<
+        Record<ImageDeviceT, string[]>
+    >({
+        desktop: [],
+        mobile: [],
+    });
     const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [projectScreenshots, setProjectScreenshots] = React.useState<
+    // const [projectScreenshots, setProjectScreenshots] = React.useState<
+    //     Array<ScreenshotType | File>
+    // >([]);
+    const [projectDesktopImages, setProjectDesktopImages] = React.useState<
+        Array<ScreenshotType | File>
+    >([]);
+    const [projectMobileImages, setProjectMobileImages] = React.useState<
         Array<ScreenshotType | File>
     >([]);
     const [onReorderTechList, setOnReorderTechList] = React.useState(false);
 
     const projectScreenshotUrls = React.useMemo<string[]>(
         () =>
-            projectScreenshots.map((img) =>
+            projectDesktopImages.map((img) =>
                 img instanceof File ? URL.createObjectURL(img) : img.url
             ),
-        [projectScreenshots]
+        [projectDesktopImages]
     );
 
     const { technologyList } = useGlobalTechnologyList();
 
     React.useEffect(() => {
         if (props.project) {
-            setProjectScreenshots([...props.project.screenshots]);
+            setProjectDesktopImages([...props.project.desktopImages]);
+            setProjectMobileImages([...props.project.mobileImages]);
             setProject({
                 ...props.project,
                 description: {
@@ -88,7 +102,10 @@ export const useCreateUpdateProjectModal = (
 
     // TODO: validate field data with react-form
     const validateProjectFieldData = (
-        projectRest: Omit<typeof project, 'screenshots'>
+        projectRest: Omit<
+            typeof project,
+            'desktopImages' | 'mobileImages' | 'screenshots'
+        >
     ) => {
         const propProject = props.project!;
 
@@ -136,52 +153,52 @@ export const useCreateUpdateProjectModal = (
         return validatedData;
     };
 
-    const uploadScreenshots = async (
+    const updateImages = async (
+        images: (ScreenshotType | File)[],
         projectId: ProjectType['id'],
-        projectTitle: ProjectType['title']
+        projectTitle: ProjectType['title'],
+        imageDevice: ImageDeviceT
     ) => {
-        const updatedScreenshots = [...projectScreenshots];
+        const updatedImages = [...images];
         const promises: Promise<void>[] = [];
 
-        projectScreenshots.forEach((img, i) => {
+        images.forEach((img, i) => {
             if (img instanceof File) {
                 promises.push(
-                    new Promise(async (resolve, reject) => {
-                        try {
-                            const url = await projectService.uploadScreenshot(
-                                img,
-                                projectId,
-                                projectTitle
-                            );
-                            if (!url) throw 'Error on upload image';
+                    (async () => {
+                        const imageName = imageDevice.concat(
+                            `_${projectTitle.replaceAll(' ', '_')}-${i}`
+                        );
 
-                            updatedScreenshots[i] = {
-                                url,
-                                name: img.name,
-                            };
-                            resolve();
-                        } catch (e) {
-                            reject(e);
-                        }
-                    })
+                        const url = await projectService.uploadImage(
+                            img,
+                            projectId,
+                            projectTitle,
+                            imageName
+                        );
+                        if (!url) throw 'Error on upload image';
+
+                        updatedImages[i] = {
+                            url,
+                            name: imageName,
+                        };
+                    })()
                 );
             }
         });
 
         await Promise.all(promises);
 
-        // remove deleted screenshots from storage
-        if (onRemoveScreenshotNames.length > 0 && props.project?.id) {
-            const updatedScreenshotNames = updatedScreenshots.map(
-                (s) => s.name
-            );
+        // remove deleted desktopImages or mobileImages from storage
+        if (onRemoveImageNames[imageDevice].length > 0 && props.project?.id) {
+            const updatedImageNames = updatedImages.map((s) => s.name);
 
             const { id, title } = props.project;
 
-            const deletableScreenshotPathnames = onRemoveScreenshotNames.reduce<
-                string[]
-            >((list, currName) => {
-                if (!updatedScreenshotNames.includes(currName)) {
+            const deletableImagePathnames = onRemoveImageNames[
+                imageDevice
+            ].reduce<string[]>((list, currName) => {
+                if (!updatedImageNames.includes(currName)) {
                     list.push(
                         `${getProjectImgFolderName(id, title)}/${currName}`
                     );
@@ -189,25 +206,48 @@ export const useCreateUpdateProjectModal = (
                 return list;
             }, []);
 
-            projectService.deleteScreenshots(deletableScreenshotPathnames);
+            projectService.deleteImage(deletableImagePathnames);
         }
         // console.log(updatedScreenshots)
-        return updatedScreenshots as ScreenshotType[];
+        return updatedImages as ScreenshotType[];
     };
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelectDesktopImages = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const fileInput = e.target;
         const files = fileInput.files;
         if (files)
-            setProjectScreenshots((prev) => [...prev, ...Array.from(files)]);
+            setProjectDesktopImages((prev) => [...prev, ...Array.from(files)]);
     };
 
-    const makeReplaceScreenshot =
-        (screenshotIndex: number) => (files: FileList | null) => {
+    const handleSelectMobileImages = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const fileInput = e.target;
+        const files = fileInput.files;
+        if (files)
+            setProjectMobileImages((prev) => [...prev, ...Array.from(files)]);
+    };
+
+    const makeReplaceDesktopImage =
+        (imageIndex: number) => (files: FileList | null) => {
             if (files)
-                setProjectScreenshots((prev) =>
+                setProjectDesktopImages((prev) =>
                     prev.map((s, i) => {
-                        if (i == screenshotIndex) {
+                        if (i == imageIndex) {
+                            return files[0];
+                        }
+                        return s;
+                    })
+                );
+        };
+    const makeReplaceMobileImage =
+        (imageIndex: number) => (files: FileList | null) => {
+            if (files)
+                setProjectMobileImages((prev) =>
+                    prev.map((s, i) => {
+                        if (i == imageIndex) {
                             return files[0];
                         }
                         return s;
@@ -215,54 +255,109 @@ export const useCreateUpdateProjectModal = (
                 );
         };
 
-    const makeRemoveScreenshot = (screenshotIndex: number) => () => {
-        const onRemoveScreenshot = projectScreenshots[screenshotIndex];
-        if (!(onRemoveScreenshot instanceof File)) {
-            setOnRemoveScreenshotNames((prev) => [
+    const makeRemoveDesktopImage = (imageIndex: number) => () => {
+        const onRemoveScreenshot = projectDesktopImages[imageIndex];
+        if (!(onRemoveScreenshot instanceof File))
+            setOnRemoveImageNames((prev) => ({
                 ...prev,
-                onRemoveScreenshot.name,
-            ]);
-        }
-        setProjectScreenshots((prev) =>
-            prev.filter((_, i) => i != screenshotIndex)
+                desktop: [...prev.desktop, onRemoveScreenshot.name],
+            }));
+
+        setProjectDesktopImages((prev) =>
+            prev.filter((_, i) => i != imageIndex)
+        );
+    };
+
+    const makeRemoveMobileImage = (imageIndex: number) => () => {
+        const onRemoveScreenshot = projectDesktopImages[imageIndex];
+        if (!(onRemoveScreenshot instanceof File))
+            setOnRemoveImageNames((prev) => ({
+                ...prev,
+                mobile: [...prev.mobile, onRemoveScreenshot.name],
+            }));
+
+        setProjectMobileImages((prev) =>
+            prev.filter((_, i) => i != imageIndex)
         );
     };
 
     const updateProject = async (
         prevProjectData: ProjectType,
-        rest: Omit<ProjectType, 'id' | 'index' | 'screenshots'> & {
+        rest: Omit<
+            ProjectType,
+            'id' | 'index' | 'desktopImages' | 'mobileImages'
+        > & {
             id?: string;
         }
     ) => {
         const validatedProjectData = validateProjectFieldData(rest);
 
-        // if project screenshots has changed
-        if (projectScreenshots.length === 0) return;
-        const projectScreenshotsHasChanged = (() => {
-            const prevScreenshots = prevProjectData.screenshots;
+        // if project desktopImages has changed
+        let projectDesktopImagesHasChanged: boolean | undefined = false;
+        if (projectDesktopImages.length > 0)
+            projectDesktopImagesHasChanged = (() => {
+                const prevImages = prevProjectData.desktopImages;
 
-            if (prevScreenshots.length !== projectScreenshots.length)
-                return true;
+                if (prevImages.length !== projectDesktopImages.length)
+                    return true;
 
-            let _projectScreenshotsHasChanged;
-            for (let i = 0; i < projectScreenshots.length; i++) {
-                const s = projectScreenshots[i];
+                let changed;
+                for (let i = 0; i < projectDesktopImages.length; i++) {
+                    const s = projectDesktopImages[i];
 
-                const isRecentFile = s instanceof File;
-                if (isRecentFile || s.url !== prevScreenshots[i].url) {
-                    _projectScreenshotsHasChanged = true;
-                    break;
+                    const isRecentFile = s instanceof File;
+                    if (isRecentFile || s.url !== prevImages[i].url) {
+                        changed = true;
+                        break;
+                    }
                 }
-            }
 
-            return _projectScreenshotsHasChanged;
-        })();
+                return changed;
+            })();
 
-        if (projectScreenshotsHasChanged)
-            validatedProjectData.screenshots = await uploadScreenshots(
-                prevProjectData.id,
-                prevProjectData.title
-            );
+        // if project mobileImages has changed
+        let projectMobileImagesHasChanged: boolean | undefined = false;
+        if (projectMobileImages.length > 0)
+            projectMobileImagesHasChanged = (() => {
+                const prevImages = prevProjectData.mobileImages;
+
+                if (prevImages.length !== projectMobileImages.length)
+                    return true;
+
+                let changed;
+                for (let i = 0; i < projectMobileImages.length; i++) {
+                    const s = projectMobileImages[i];
+
+                    const isRecentFile = s instanceof File;
+                    if (isRecentFile || s.url !== prevImages[i].url) {
+                        changed = true;
+                        break;
+                    }
+                }
+
+                return changed;
+            })();
+
+        await Promise.all([
+            (async () => {
+                if (projectDesktopImagesHasChanged)
+                    validatedProjectData.desktopImages = await updateImages(
+                        projectDesktopImages,
+                        prevProjectData.id,
+                        prevProjectData.title,
+                        'desktop'
+                    );
+            })(),
+            (async () => {
+                if (projectMobileImagesHasChanged)
+                    validatedProjectData.mobileImages = await updateImages(
+                        projectMobileImages,
+                        prevProjectData.id,
+                        prevProjectData.title,
+                        'mobile'
+                    );
+            })(),
+        ]);
 
         const notProjectDataChanged =
             Object.values(validatedProjectData).length === 0;
@@ -290,7 +385,7 @@ export const useCreateUpdateProjectModal = (
             !title ||
             !en ||
             technologies.length === 0 ||
-            projectScreenshots.length === 0
+            projectDesktopImages.length === 0
         ) {
             alert(
                 'Required: A new project must contain at least one screenshot and technologie'
@@ -300,22 +395,38 @@ export const useCreateUpdateProjectModal = (
 
         const futureProjectId = projectService.generateId();
 
-        const screenshots = await uploadScreenshots(
-            futureProjectId,
-            project.title
-        );
+        const [desktopImages, mobileImages] = await Promise.all([
+            updateImages(
+                projectDesktopImages,
+                futureProjectId,
+                project.title,
+                'desktop'
+            ),
+            updateImages(
+                projectDesktopImages,
+                futureProjectId,
+                project.title,
+                'mobile'
+            ),
+        ]);
 
         await projectService.createProject({
             ...project,
-            screenshots,
             id: futureProjectId,
+            desktopImages,
+            mobileImages,
         });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        const { screenshots: _, ...rest } = project;
+        const {
+            desktopImages: _,
+            mobileImages: __,
+            screenshots: ___,
+            ...rest
+        } = project;
         const propProject = props.project;
 
         try {
@@ -337,8 +448,14 @@ export const useCreateUpdateProjectModal = (
         }
     };
 
-    const reorderScreenshots = async (items: OutputReordableItemType[]) => {
-        setProjectScreenshots((prev) =>
+    const reorderDesktopImages = async (items: OutputReordableItemType[]) => {
+        setProjectDesktopImages((prev) =>
+            items.map((item) => prev[item.prevIndex])
+        );
+    };
+
+    const reorderMobileImages = async (items: OutputReordableItemType[]) => {
+        setProjectMobileImages((prev) =>
             items.map((item) => prev[item.prevIndex])
         );
     };
@@ -358,10 +475,13 @@ export const useCreateUpdateProjectModal = (
 
     return {
         handleSubmit,
-        projectScreenshots,
-        handleSelectChange,
-        makeReplaceScreenshot,
-        makeRemoveScreenshot,
+        projectScreenshots: projectDesktopImages,
+        handleSelectDesktopImages,
+        handleSelectMobileImages,
+        makeReplaceDesktopImage,
+        makeReplaceMobileImage,
+        makeRemoveDesktopImage,
+        makeRemoveMobileImage,
         updateProjectProps,
         updateDescription,
         onReorderTechList,
@@ -371,7 +491,8 @@ export const useCreateUpdateProjectModal = (
         setProject,
         isSubmitting,
         projectScreenshotUrls,
-        reorderScreenshots,
+        reorderDesktopImages,
+        reorderMobileImages,
         removeTechByName,
     };
 };

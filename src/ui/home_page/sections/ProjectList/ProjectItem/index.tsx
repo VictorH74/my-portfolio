@@ -57,7 +57,7 @@ export const ProjectItem: React.FC<
                     )}
                 >
                     <div className="min-lg:w-4/5 min-lg:overflow-hidden min-lg:rounded-xl relative  aspect-video  shadow-xl slide-container">
-                        <Slider images={props.project.screenshots} />
+                        <Slider images={props.project.desktopImages} />
                     </div>
                 </div>
                 <div className="w-full relative overflow-hiddens grid place-items-center">

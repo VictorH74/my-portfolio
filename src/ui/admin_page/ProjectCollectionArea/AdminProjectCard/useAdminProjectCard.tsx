@@ -26,7 +26,7 @@ export const useAdminProjectCard = (props: ProjectType) => {
             try {
                 await Promise.all([
                     projectService.deleteProject(props.id, props.index, projects),
-                    projectService.deleteScreenshots(props.screenshots.map(s => `${props.id}/${s.name}`))
+                    projectService.deleteImage(props.desktopImages.map(s => `${props.id}/${s.name}`))
                 ])
             } catch (e) {
                 console.error(e);

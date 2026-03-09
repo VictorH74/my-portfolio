@@ -28,12 +28,13 @@ export interface IApi {
         projectIndex: ProjectType['index'],
         currentProjectList: ProjectType[]
     ): Promise<void>;
-    uploadScreenshot(
+    uploadImage(
         file: File,
         projectId: ProjectType['id'],
-        projectTitle: ProjectType['title']
+        projectTitle: ProjectType['title'],
+        fileName: string
     ): Promise<string | null>;
-    deleteScreenshots(filePaths: string[]): Promise<void>;
+    deleteImage(filePaths: string[]): Promise<void>;
 
     createTechnology(data: CreateTechnologyType): Promise<TechnologyType>;
     getTechnologyList(): Promise<TechnologyType[]>;

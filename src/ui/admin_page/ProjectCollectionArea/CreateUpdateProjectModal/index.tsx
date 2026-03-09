@@ -52,8 +52,8 @@ export const CreateUpdateProjectModal = (
                             )}
                         >
                             <ProjectScreenshotListActions
-                                onReorderScreenshots={hook.reorderScreenshots}
-                                onSelectChange={hook.handleSelectChange}
+                                onReorderScreenshots={hook.reorderDesktopImages}
+                                onSelectChange={hook.handleSelectDesktopImages}
                                 projectScreenshotUrls={
                                     hook.projectScreenshotUrls
                                 }
@@ -65,9 +65,9 @@ export const CreateUpdateProjectModal = (
                                     hook.projectScreenshotUrls
                                 }
                                 makeReplaceScreenshot={
-                                    hook.makeReplaceScreenshot
+                                    hook.makeReplaceDesktopImage
                                 }
-                                makeRemoveScreenshot={hook.makeRemoveScreenshot}
+                                makeRemoveScreenshot={hook.makeRemoveDesktopImage}
                             />
                         </div>
 

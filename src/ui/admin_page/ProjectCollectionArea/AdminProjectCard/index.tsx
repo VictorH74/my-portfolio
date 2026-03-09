@@ -35,13 +35,13 @@ export const AdminProjectCard = (props: ProjectType) => {
                     <Image
                         fill
                         sizes="300px"
-                        src={props.screenshots[0].url}
+                        src={props.desktopImages[0].url}
                         className="rounded-b-md w-full h-auto object-cover"
                         alt="project screenshot"
                     />
-                    {props.screenshots.length > 1 && (
+                    {props.desktopImages.length > 1 && (
                         <p className="absolute right-3 bottom-3 rounded-full size-7 text-sm font-semibold grid place-items-center bg-gray-500 text-white">
-                            +{props.screenshots.length - 1}
+                            +{props.desktopImages.length - 1}
                         </p>
                     )}
                 </div>

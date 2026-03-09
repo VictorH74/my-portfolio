@@ -40,15 +40,21 @@ export class ProjectService {
         return this.api.deleteProject(id, projectIndex, currentProjectList);
     }
 
-    async uploadScreenshot(
+    async uploadImage(
         file: File,
         projectId: ProjectType['id'],
-        projectTitle: ProjectType['title']
+        projectTitle: ProjectType['title'],
+        fileName: string
     ) {
-        return this.api.uploadScreenshot(file, projectId, projectTitle);
+        return this.api.uploadImage(
+            file,
+            projectId,
+            projectTitle,
+            fileName
+        );
     }
 
-    async deleteScreenshots(filePaths: string[]) {
-        return this.api.deleteScreenshots(filePaths);
+    async deleteImage(filePaths: string[]) {
+        return this.api.deleteImage(filePaths);
     }
 }

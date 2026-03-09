@@ -68,22 +68,24 @@ export class FirebaseSupabaseApi implements IApi {
         return deleteObject(storageRef);
     };
 
-    async deleteScreenshots(filePaths: string[]) {
+    async deleteImage(filePaths: string[]) {
+        console.log('CALLED deleteImage', filePaths)
         await Promise.all(
             filePaths.map((p) => this.#removeFile('project-images', p))
         );
     }
 
-    async uploadScreenshot(
+    async uploadImage(
         file: File,
         projectId: ProjectType['id'],
-        projectTitle: ProjectType['title']
+        projectTitle: ProjectType['title'],
+        fileName: string
     ) {
-        const finalFileName = file.name.split('.').slice(0, -1).join('.');
+        console.log('CALLED uploadImage', `${getProjectImgFolderName(projectId, projectTitle)}/${fileName}`)
         return this.#uploadFile(
             file,
             'project-images',
-            `${getProjectImgFolderName(projectId, projectTitle)}/${finalFileName}`
+            `${getProjectImgFolderName(projectId, projectTitle)}/${fileName}`
         );
     }
 

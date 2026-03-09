@@ -4,7 +4,9 @@ export type ProjectType = {
     index: number;
     id: string;
     title: string;
-    screenshots: ScreenshotType[];
+    screenshots?: ScreenshotType[];
+    desktopImages: ScreenshotType[];
+    mobileImages: ScreenshotType[];
     description: Record<LangType, string | undefined>;
     technologies: string[];
     deployUrl?: string;
