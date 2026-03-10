@@ -13,7 +13,7 @@ export const DesktopViewer = (props: DesktopViewerProps) => {
             className={twMerge('min-lg:w-4/5 h-auto relative', props.className)}
         >
             <div className="w-[88%] mx-auto min-lg:rounded-t-xl relative  aspect-[16/9.5]  shadow-xl slide-container bg-secondary-black p-[0.7%]">
-                <div className="bg-[#E8E8E8] size-full aspect-video w-full h-auto rounded-t-md relative">
+                <div className="size-full aspect-video w-full h-auto rounded-t-md relative overflow-hidden">
                     <div className="absolute inset-x-0 z-20">
                         <div className="aspect-[11/1] w-[12%] rounded-b-2xl bg-secondary-black mx-auto"></div>
                     </div>
