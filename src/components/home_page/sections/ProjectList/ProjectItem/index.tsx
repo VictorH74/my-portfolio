@@ -1,4 +1,5 @@
 import { Loading } from '@/components/shared/Loading';
+import { Slider } from '@/components/shared/Slider';
 import { ModalContainer } from '@/components/ui/ModalContainer';
 import { useWindowResize } from '@/hooks/useWindowResize';
 import { ProjectType } from '@/types/project';
@@ -16,7 +17,6 @@ import { DeviceViewer } from './DeviceViewer';
 import { MobileViewer } from './MobileViewer';
 import { ProjectItemLink, urlActionClassName } from './ProjectItemLink';
 import { useProjectItem } from './useProjectItem';
-import { Slider } from '@/components/shared/Slider';
 
 const aosPackProps: Record<string, string> = {
     'data-aos': 'zoom-in',

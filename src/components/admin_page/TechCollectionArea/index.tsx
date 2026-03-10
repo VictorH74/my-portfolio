@@ -8,11 +8,12 @@ import Skeleton from '@mui/material/Skeleton';
 import Image from 'next/image';
 import React from 'react';
 
+import { CollectionActions } from '../CollectionActions';
+import { ReordableModal } from '../ReordableModal';
 import { AdminTechnologyCard } from './components/AdminTechnologyCard';
 import { RemoveTechConfirmModal } from './components/RemoveTechConfirmModal';
 import { useTechCollectionArea } from './useTechCollectionArea';
-import { CollectionActions } from '../components/CollectionActions';
-import { ReordableModal } from '../components/ReordableModal';
+
 
 const AddTechFormModal = React.lazy(
     () => import('./components/AddTechFormModal')

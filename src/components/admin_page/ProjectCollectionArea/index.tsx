@@ -10,11 +10,9 @@ import { AdminProjectCard } from './AdminProjectCard';
 import { CardSkeletonCollection } from './CardSkeletonCollection';
 import { CreateUpdateProjectModal } from './CreateUpdateProjectModal';
 import { AdminProjectWarnings } from './ProjectWarnings';
-import { CollectionActions } from '../components/CollectionActions';
-import {
-    OutputReordableItemType,
-    ReordableModal,
-} from '../components/ReordableModal';
+import { CollectionActions } from '../CollectionActions';
+import { OutputReordableItemType, ReordableModal } from '../ReordableModal';
+
 
 export const ProjectCollectionArea = () => {
     const [onCreateProject, setOnCreateProject] = React.useState(false);

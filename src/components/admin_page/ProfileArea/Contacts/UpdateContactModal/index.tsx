@@ -1,5 +1,5 @@
+import { CloseButton } from '@/components/admin_page/CloseButton';
 import { ModalContainer } from '@/components/ui/ModalContainer';
-import { CloseButton } from '@/components/ui/admin_page/components/CloseButton';
 import { BRAZIL_PHONE_PATTERN } from '@/utils/constants';
 
 import {
@@ -7,6 +7,7 @@ import {
     inputType,
     UpdateContactModalProps,
 } from './useUpdateContactModal';
+
 
 export const UpdateContactModal = (props: UpdateContactModalProps) => {
     const hook = useUpdateContactModal(props);

@@ -3,7 +3,8 @@ import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
 import { TechnologyType } from '@/types/technology';
 import React from 'react';
 
-import { OutputReordableItemType } from '../components/ReordableModal';
+import { OutputReordableItemType } from '../ReordableModal';
+
 
 export const useTechCollectionArea = () => {
     const [selectedTech, setSelectedTech] =

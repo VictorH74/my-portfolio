@@ -1,13 +1,10 @@
+import { OutputReordableItemType, ReordableModal } from '@/components/admin_page/ReordableModal';
+import { ReorderListBtn } from '@/components/admin_page/ReorderListBtn';
 import {
     iconButtonClassName,
     iconButtonHoverClassName,
 } from '@/components/shared/IconButton';
 import { ScreenshotType } from '@/types/project';
-import {
-    OutputReordableItemType,
-    ReordableModal,
-} from '@/components/ui/admin_page/components/ReordableModal';
-import { ReorderListBtn } from '@/components/ui/admin_page/components/ReorderListBtn';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Image from 'next/image';
 import React from 'react';

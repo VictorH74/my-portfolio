@@ -1,5 +1,6 @@
 import { projectService } from '@/di/container';
 import { useGlobalTechnologyList } from '@/hooks/useGlobalTechnologyList';
+import { getProjectImgFolderName } from '@/lib/firebase/client';
 import { LangType } from '@/types/generic';
 import {
     CreateUpdateProjectType,
@@ -9,8 +10,7 @@ import {
 import { FirebaseError } from 'firebase/app';
 import React from 'react';
 
-import { OutputReordableItemType } from '../../components/ReordableModal';
-import { getProjectImgFolderName } from '@/lib/firebase/client';
+import { OutputReordableItemType } from '../../ReordableModal';
 
 const UrlProps = ['deployUrl', 'repositoryUrl', 'videoUrl'] as const;
 

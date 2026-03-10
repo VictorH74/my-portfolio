@@ -1,7 +1,7 @@
+import { ProfileArea } from '@/components/admin_page/ProfileArea';
+import { ProjectCollectionArea } from '@/components/admin_page/ProjectCollectionArea';
+import { TechCollectionArea } from '@/components/admin_page/TechCollectionArea';
 import { AdminProjectListProvider } from '@/contexts/AdminProjectListCtx';
-import { ProfileArea } from '@/components/ui/admin_page/ProfileArea';
-import { ProjectCollectionArea } from '@/components/ui/admin_page/ProjectCollectionArea';
-import { TechCollectionArea } from '@/components/ui/admin_page/TechCollectionArea';
 import { Metadata } from 'next';
 import React from 'react';
 

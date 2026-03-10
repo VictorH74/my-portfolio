@@ -3,7 +3,7 @@ import React from 'react';
 import { Contacts } from './Contacts';
 import { ProfileImageContainer } from './ProfileImageContainer';
 import { ResumeCV } from './ResumeCV';
-import { headingClassName } from '../components/CollectionActions';
+import { headingClassName } from '../CollectionActions';
 
 export const ProfileArea = () => {
     return (

@@ -1,6 +1,6 @@
+import { CloseButton } from '@/components/admin_page/CloseButton';
+import { SelectFileIconButton } from '@/components/admin_page/SelectFileIconButton';
 import { ModalContainer } from '@/components/ui/ModalContainer';
-import { SelectFileIconButton } from '@/components/SelectFileIconButton';
-import { CloseButton } from '@/components/ui/admin_page/components/CloseButton';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Image from 'next/image';

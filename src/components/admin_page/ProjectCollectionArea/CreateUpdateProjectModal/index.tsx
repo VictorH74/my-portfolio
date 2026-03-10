@@ -16,9 +16,10 @@ import {
     useCreateUpdateProjectModal,
     CreateUpdateProjectModalProps,
 } from './useCreateUpdateProjectModal';
-import { CloseButton } from '../../components/CloseButton';
-import { ReordableModal } from '../../components/ReordableModal';
-import { ReorderListBtn } from '../../components/ReorderListBtn';
+import { CloseButton } from '../../CloseButton';
+import { ReordableModal } from '../../ReordableModal';
+import { ReorderListBtn } from '../../ReorderListBtn';
+
 
 export const CreateUpdateProjectModal = (
     props: CreateUpdateProjectModalProps

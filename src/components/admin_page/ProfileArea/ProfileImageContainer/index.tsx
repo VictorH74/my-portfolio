@@ -1,12 +1,12 @@
 'use client';
 import { Loading } from '@/components/shared/Loading';
 import { ProfileImage } from '@/components/shared/ProfileImage';
-import { SelectFileIconButton } from '@/components/SelectFileIconButton';
 import { profileService } from '@/di/container';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { EditImageModal } from './EditImageModal';
+import { SelectFileIconButton } from '../../SelectFileIconButton';
 
 export const ProfileImageContainer = () => {
     const [submitting, setSubmitting] = React.useState(false);
