@@ -1,6 +1,5 @@
 import { Loading } from '@/components/shared/Loading';
 import { ModalContainer } from '@/components/ui/ModalContainer';
-import { Slider } from '@/components/shared/Slider';
 import { useWindowResize } from '@/hooks/useWindowResize';
 import { ProjectType } from '@/types/project';
 import { PROJECT_GRADIENT_COLORS } from '@/utils/constants';
@@ -12,8 +11,12 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import { DesktopViewer } from './DesktopViewer';
+import { DeviceViewer } from './DeviceViewer';
+import { MobileViewer } from './MobileViewer';
 import { ProjectItemLink, urlActionClassName } from './ProjectItemLink';
 import { useProjectItem } from './useProjectItem';
+import { Slider } from '@/components/shared/Slider';
 
 const aosPackProps: Record<string, string> = {
     'data-aos': 'zoom-in',
@@ -33,6 +36,8 @@ export const ProjectItem: React.FC<
     const [windowWidth] = useWindowResize();
     const hook = useProjectItem();
 
+    // box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+
     return (
         <li
             id={props.project.id}
@@ -51,12 +56,25 @@ export const ProjectItem: React.FC<
                     className={twMerge(
                         'max-lg:rounded-xl max-lg:shadow-[0_0.5rem_1rem_#00000055] size-full grid place-items-center overflow-hidden z-20',
                         windowWidth > 1024 &&
-                        PROJECT_GRADIENT_COLORS[
-                        getProjectGradient(props.index)
-                        ]
+                            PROJECT_GRADIENT_COLORS[
+                                getProjectGradient(props.index)
+                            ]
                     )}
                 >
-                    <div className="min-lg:w-4/5 min-lg:overflow-hidden min-lg:rounded-xl relative  aspect-video  shadow-xl slide-container">
+                    <div className='contents max-lg:hidden'>
+                        {props.project.desktopImages.length > 0 &&
+                    props.project.mobileImages.length > 0 ? (
+                        <DeviceViewer
+                            desktopImages={props.project.desktopImages}
+                            mobileImages={props.project.mobileImages}
+                        />
+                    ) : props.project.desktopImages.length > 0 ? (
+                        <DesktopViewer images={props.project.desktopImages} />
+                    ) : props.project.mobileImages.length > 0 ? (
+                        <MobileViewer images={props.project.mobileImages} />
+                    ) : null}
+                    </div>
+                     <div className="min-lg:hidden min-lg:w-4/5 min-lg:overflow-hidden min-lg:rounded-xl relative  aspect-video  shadow-xl slide-container">
                         <Slider images={props.project.desktopImages} />
                     </div>
                 </div>
@@ -78,9 +96,9 @@ export const ProjectItem: React.FC<
                             dangerouslySetInnerHTML={{
                                 __html: formatText(
                                     props.project.description[
-                                    t(
-                                        'project_description_lang'
-                                    ) as keyof typeof props.project.description
+                                        t(
+                                            'project_description_lang'
+                                        ) as keyof typeof props.project.description
                                     ] as string
                                 ),
                             }}
