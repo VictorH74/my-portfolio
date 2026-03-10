@@ -47,28 +47,55 @@ export const CreateUpdateProjectModal = (
                         <div
                             className={twMerge(
                                 'py-2 min-h-[200px]',
-                                hook.projectScreenshots.length > 0
+                                hook.projectDesktopImages.length > 0
                                     ? ''
                                     : 'justify-center'
                             )}
                         >
                             <ProjectScreenshotListActions
-                                onReorderScreenshots={hook.reorderDesktopImages}
+                                onReorderImages={hook.reorderDesktopImages}
                                 onSelectChange={hook.handleSelectDesktopImages}
-                                projectScreenshotUrls={
-                                    hook.projectScreenshotUrls
+                                imageUrls={
+                                    hook.projectDesktopImageUrls
                                 }
-                                projectScreenshots={hook.projectScreenshots}
+                                images={hook.projectDesktopImages}
                             />
 
                             <ProjectScreenshotList
-                                projectScreenshotUrls={
-                                    hook.projectScreenshotUrls
+                                imageUrls={
+                                    hook.projectDesktopImageUrls
                                 }
-                                makeReplaceScreenshot={
+                                makeReplaceImage={
                                     hook.makeReplaceDesktopImage
                                 }
-                                makeRemoveScreenshot={hook.makeRemoveDesktopImage}
+                                makeRemoveImage={hook.makeRemoveDesktopImage}
+                            />
+                        </div>
+                        <div
+                            className={twMerge(
+                                'py-2 min-h-[200px]',
+                                hook.projectMobileImages.length > 0
+                                    ? ''
+                                    : 'justify-center'
+                            )}
+                        >
+                            <ProjectScreenshotListActions
+                                onReorderImages={hook.reorderMobileImages}
+                                onSelectChange={hook.handleSelectMobileImages}
+                                imageUrls={
+                                    hook.projectMobileImageUrls
+                                }
+                                images={hook.projectMobileImages}
+                            />
+
+                            <ProjectScreenshotList
+                                imageUrls={
+                                    hook.projectMobileImageUrls
+                                }
+                                makeReplaceImage={
+                                    hook.makeReplaceMobileImage
+                                }
+                                makeRemoveImage={hook.makeRemoveMobileImage}
                             />
                         </div>
 

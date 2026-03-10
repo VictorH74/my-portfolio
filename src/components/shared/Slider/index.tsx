@@ -50,7 +50,7 @@ export const Slider = (props: SliderProps) => {
                             >
                                 <div
                                     className={twMerge(
-                                        'size-3 rounded-full duration-200 group-hover/btn:scale-150 bg-[#d6d6d6]',
+                                        'size-[0.625rem] rounded-full duration-200 opacity-35 group-hover/container:opacity-100 group-hover/btn:scale-150 bg-[#d6d6d6]',
                                         hook.currentFileIndex == i &&
                                             'bg-[#2382FF]'
                                     )}

@@ -11,10 +11,10 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ProjectScreenshotListActionsProps {
-    projectScreenshotUrls: string[];
+    imageUrls: string[];
     onSelectChange(_: React.ChangeEvent<HTMLInputElement>): void;
-    onReorderScreenshots(_items: OutputReordableItemType[]): Promise<void>;
-    projectScreenshots: (File | ScreenshotType)[];
+    onReorderImages(_items: OutputReordableItemType[]): Promise<void>;
+    images: (File | ScreenshotType)[];
 }
 
 export const ProjectScreenshotListActions = (
@@ -44,7 +44,7 @@ export const ProjectScreenshotListActions = (
                     name=""
                 />
             </label>
-            {props.projectScreenshotUrls.length > 1 && (
+            {props.imageUrls.length > 1 && (
                 <ReorderListBtn
                     onClick={() => setOnReorderScreenshots(true)}
                     className={twMerge('rounded-md', iconButtonHoverClassName)}
@@ -53,8 +53,8 @@ export const ProjectScreenshotListActions = (
 
             {onReorderScreenshots && (
                 <ReordableModal
-                    onSubmit={props.onReorderScreenshots}
-                    items={props.projectScreenshots.map(({ name }, index) => ({
+                    onSubmit={props.onReorderImages}
+                    items={props.images.map(({ name }, index) => ({
                         id: String(index),
                         value: name,
                     }))}
@@ -72,7 +72,7 @@ export const ProjectScreenshotListActions = (
                                 className="rounded-md w-auto h-[70px]"
                                 alt="screeshot"
                                 src={
-                                    props.projectScreenshotUrls[Number(item.id)]
+                                    props.imageUrls[Number(item.id)]
                                 }
                             />
                         </div>

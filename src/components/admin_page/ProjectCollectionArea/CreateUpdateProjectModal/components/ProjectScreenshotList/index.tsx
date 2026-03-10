@@ -5,18 +5,18 @@ import Image from 'next/image';
 import React from 'react';
 
 interface ProjectScreenshotListProps {
-    projectScreenshotUrls: string[];
-    makeReplaceScreenshot(
+    imageUrls: string[];
+    makeReplaceImage(
         _screenshotIndex: number
     ): (_: FileList | null) => void;
-    makeRemoveScreenshot(_screenshotIndex: number): () => void;
+    makeRemoveImage(_screenshotIndex: number): () => void;
 }
 
 export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
     return (
-        props.projectScreenshotUrls.length > 0 && (
+        props.imageUrls.length > 0 && (
             <div className="flex gap-2 overflow-x-scroll scrollbar pb-3">
-                {props.projectScreenshotUrls.map((url, index) => (
+                {props.imageUrls.map((url, index) => (
                     <div
                         key={index}
                         className="relative shrink-0 group/img-container"
@@ -31,7 +31,7 @@ export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
                         <div className="absolute inset-0 grid place-items-center opacity-0 group-hover/img-container:opacity-100 duration-200 ">
                             <div className="flex gap-2 items-center justify-center">
                                 <SelectFileIconButton
-                                    onChange={props.makeReplaceScreenshot(
+                                    onChange={props.makeReplaceImage(
                                         index
                                     )}
                                     accept=".webp,.png,.jpg,.jpeg"
@@ -39,7 +39,7 @@ export const ProjectScreenshotList = (props: ProjectScreenshotListProps) => {
 
                                 <IconButton
                                     Icon={RemoveIcon}
-                                    onClick={props.makeRemoveScreenshot(index)}
+                                    onClick={props.makeRemoveImage(index)}
                                     type="button"
                                 />
                             </div>
