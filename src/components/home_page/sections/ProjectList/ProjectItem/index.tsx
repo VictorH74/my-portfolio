@@ -71,7 +71,7 @@ export const ProjectItem: React.FC<
                     ) : props.project.desktopImages.length > 0 ? (
                         <DesktopViewer images={props.project.desktopImages} />
                     ) : props.project.mobileImages.length > 0 ? (
-                        <MobileViewer images={props.project.mobileImages} />
+                        <MobileViewer images={props.project.mobileImages} className='max-xl:p-1 max-2xl:p-2 2xl:p-3 p-4' />
                     ) : null}
                     </div>
                      <div className="min-lg:hidden min-lg:w-4/5 min-lg:overflow-hidden min-lg:rounded-xl relative  aspect-video  shadow-xl slide-container">

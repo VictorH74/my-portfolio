@@ -24,6 +24,11 @@ const DateParagraph: React.FC<{ label: string; isoDate: string }> = ({
 export const AdminProjectCard = (props: ProjectType) => {
     const hook = useAdminProjectCard(props);
 
+    const images =
+        props.desktopImages.length > 0
+            ? props.desktopImages
+            : props.mobileImages;
+
     return (
         <>
             <li
@@ -32,10 +37,35 @@ export const AdminProjectCard = (props: ProjectType) => {
                 onMouseLeave={() => hook.setCardHover(false)}
             >
                 <div className="w-[300px] h-[310px] overflow-hidden flex flex-nowrap text-center relative">
+                    {images.length > 0 ? (
+                        <>
+                            <Image
+                                fill
+                                sizes="300px"
+                                src={images[0]?.url}
+                                className="rounded-b-md w-full h-auto object-cover"
+                                alt="project screenshot"
+                            />
+                            {images.length > 1 && (
+                                <p className="absolute right-3 bottom-3 rounded-full size-7 text-sm font-semibold grid place-items-center bg-gray-500 text-white">
+                                    +{images.length - 1}
+                                </p>
+                            )}
+                        </>
+                    ) : (
+                        <div className="absolute inset-0 grid place-items-center">
+                            <p className="text-yellow-200 text-lg font-bold">
+                                Empty
+                            </p>
+                        </div>
+                    )}
                     <Image
                         fill
                         sizes="300px"
-                        src={props.desktopImages[0].url}
+                        src={
+                            props.desktopImages[0]?.url ||
+                            props.mobileImages[0].url
+                        }
                         className="rounded-b-md w-full h-auto object-cover"
                         alt="project screenshot"
                     />
