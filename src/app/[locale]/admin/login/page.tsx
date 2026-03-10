@@ -1,5 +1,5 @@
 'use client';
-import { AnimatedBackground } from '@/components/AnimatedBackground';
+import { AnimatedBackground } from '@/components/shared/AnimatedBackground';
 import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
 import {
