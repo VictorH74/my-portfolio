@@ -17,6 +17,7 @@ export const MobileViewer = (props: MobileViewerProps) => {
         </div>
         <Slider images={props.images} />
      </div>
+     <div className='absolute bottom-2 inset-x-0 h-2 bg-transparent -z-50 shadow-[0px_15px_12px_#0000009c] rounded-full'></div>
    </div>
   )
 }
