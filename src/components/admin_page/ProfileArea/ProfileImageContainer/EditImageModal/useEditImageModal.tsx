@@ -32,42 +32,47 @@ export const useEditImageModal = (props: EditImageModalProps) => {
 
     const [previewImgSrc, setPreviewImgSrc] = useState<string | null>(null);
 
-    const changeImgPosition = React.useCallback((xPos: number = 0, yPos: number = 0) => {
-        const imgEl = imgRef.current;
-        const cropAreaEl = cropAreaRef.current;
-        const cropBoxEl = cropBoxRef.current;
+    const changeImgPosition = React.useCallback(
+        (xPos: number = 0, yPos: number = 0) => {
+            const imgEl = imgRef.current;
+            const cropAreaEl = cropAreaRef.current;
+            const cropBoxEl = cropBoxRef.current;
 
-        if (!imgEl || !cropAreaEl || !cropBoxEl) return;
+            if (!imgEl || !cropAreaEl || !cropBoxEl) return;
 
-        const imgRect = imgEl.getBoundingClientRect();
-        const cropAreaRect = cropAreaEl.getBoundingClientRect();
-        const cropBoxRect = cropBoxEl.getBoundingClientRect();
+            const imgRect = imgEl.getBoundingClientRect();
+            const cropAreaRect = cropAreaEl.getBoundingClientRect();
+            const cropBoxRect = cropBoxEl.getBoundingClientRect();
 
-        const imgTop = imgRect.top - cropAreaRect.top;
-        const imgLeft = imgRect.left - cropAreaRect.left;
+            const imgTop = imgRect.top - cropAreaRect.top;
+            const imgLeft = imgRect.left - cropAreaRect.left;
 
-        const relativeCropBoxTop = cropBoxRect.top - cropAreaRect.top;
-        const relativeCropBoxLeft = cropBoxRect.left - cropAreaRect.left;
+            const relativeCropBoxTop = cropBoxRect.top - cropAreaRect.top;
+            const relativeCropBoxLeft = cropBoxRect.left - cropAreaRect.left;
 
-        const newLeft = getMedian(
-            relativeCropBoxLeft,
-            imgLeft + xPos,
-            relativeCropBoxLeft - imgRect.width + cropBoxRect.width
-        );
-        const newTop = getMedian(
-            relativeCropBoxTop,
-            imgTop + yPos,
-            relativeCropBoxTop - imgRect.height + cropBoxRect.height
-        );
+            const newLeft = getMedian(
+                relativeCropBoxLeft,
+                imgLeft + xPos,
+                relativeCropBoxLeft - imgRect.width + cropBoxRect.width
+            );
+            const newTop = getMedian(
+                relativeCropBoxTop,
+                imgTop + yPos,
+                relativeCropBoxTop - imgRect.height + cropBoxRect.height
+            );
 
-        console.log('newLeft', newLeft);
+            console.log('newLeft', newLeft);
 
-        imgEl.style.left = newLeft + 'px';
-        imgEl.style.top = newTop + 'px';
-    }, []);
+            imgEl.style.left = newLeft + 'px';
+            imgEl.style.top = newTop + 'px';
+        },
+        []
+    );
 
-    const getImgSize = React.useCallback((cropBoxSize: number) =>
-        cropBoxSize + cropBoxSize * imgScaleIncrement, [imgScaleIncrement]);
+    const getImgSize = React.useCallback(
+        (cropBoxSize: number) => cropBoxSize + cropBoxSize * imgScaleIncrement,
+        [imgScaleIncrement]
+    );
 
     const loadPreviewImg = React.useCallback(() => {
         const mimeType = imgRef.current?.src.split(';')[0].split(':')[1];
@@ -89,8 +94,13 @@ export const useEditImageModal = (props: EditImageModalProps) => {
         setImgSizeProp((prev) =>
             prev ? { ...prev, value: getImgSize(cropBoxSize) } : undefined
         );
-
-    }, [changeImgPosition, cropArea, getImgSize, imgScaleIncrement, loadPreviewImg]);
+    }, [
+        changeImgPosition,
+        cropArea,
+        getImgSize,
+        imgScaleIncrement,
+        loadPreviewImg,
+    ]);
 
     const setup = () => {
         const imgEl = imgRef.current;
@@ -101,20 +111,16 @@ export const useEditImageModal = (props: EditImageModalProps) => {
 
         const cropAreaRect = cropAreaEl.getBoundingClientRect();
 
-        const cropBoxSize = cropBoxEl.getBoundingClientRect().width;
-
-        console.log(cropAreaRect.width, cropBoxSize);
-        const cropBoxLeft = cropAreaRect.width / 2 - cropBoxSize / 2;
+        const cropBoxWidth = cropBoxEl.getBoundingClientRect().width;
+        const cropBoxLeft = cropAreaRect.width / 2 - cropBoxWidth / 2;
 
         cropBoxEl.style.left = cropBoxLeft + 'px';
-
-        const maskXPos = cropBoxSize + (cropAreaRect.width - cropBoxSize) / 2;
-        maskWestRef.current!.style.right = maskXPos + 'px';
-        maskEastRef.current!.style.left = maskXPos + 'px';
+        maskWestRef.current!.style.width = cropBoxLeft + 'px';
+        maskEastRef.current!.style.width = cropBoxLeft + 'px';
 
         if (imgEl.naturalHeight >= imgEl.naturalWidth) {
             imgEl.style.height = 'auto';
-            imgEl.style.width = getImgSize(cropBoxSize) + 'px';
+            imgEl.style.width = getImgSize(cropBoxWidth) + 'px';
             imgEl.style.maxHeight = 'none';
             imgEl.style.left = cropBoxLeft + 'px';
             const imgElHeight = imgEl.getBoundingClientRect().height;
@@ -122,18 +128,18 @@ export const useEditImageModal = (props: EditImageModalProps) => {
 
             setImgSizeProp({
                 styleProp: 'width',
-                value: getImgSize(cropBoxSize) + 'px',
+                value: getImgSize(cropBoxWidth) + 'px',
             });
         } else {
             imgEl.style.width = 'auto';
-            imgEl.style.height = getImgSize(cropBoxSize) + 'px';
+            imgEl.style.height = getImgSize(cropBoxWidth) + 'px';
             imgEl.style.maxWidth = 'none';
             const imgElWidth = imgEl.getBoundingClientRect().width;
             imgEl.style.left = cropAreaRect.width / 2 - imgElWidth / 2 + 'px';
 
             setImgSizeProp({
                 styleProp: 'height',
-                value: getImgSize(cropBoxSize) + 'px',
+                value: getImgSize(cropBoxWidth) + 'px',
             });
         }
 

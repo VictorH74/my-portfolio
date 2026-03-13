@@ -29,10 +29,11 @@ export const EditImageModal = (props: EditImageModalProps) => {
                 </div>
                 <Divider className="m-0 mb-6 h-[1px] bg-zinc-600" />
 
+
                 {/* CROP AREA */}
                 <div
                     ref={hook.cropAreaRef}
-                    className="bg-zinc-600 w-[750px] h-[400px] overflow-hidden relative"
+                    className="bg-zinc-600 w-[800px] h-[700px] overflow-hidden relative"
                     onMouseUp={hook.handleDragEnd}
                     onMouseLeave={hook.handleDragEnd}
                     onMouseDown={hook.handleDragStart}
@@ -67,10 +68,12 @@ export const EditImageModal = (props: EditImageModalProps) => {
 
                     {/* CROP BOX */}
                     <div
-                        className="h-full rounded-fulld aspect-square mx-auto absolute top-0 border pointer-events-none"
+                        className="h-full rounded-fulld aspect-[2/3] mx-auto absolute top-0 border border-red-400 pointer-events-none"
                         ref={hook.cropBoxRef}
                     ></div>
                 </div>
+
+
                 <div className="p-3">
                     <p className="font-semibold tracking-wider">Zoom</p>
                     <div className="flex items-center gap-2">

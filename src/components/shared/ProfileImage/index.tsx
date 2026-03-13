@@ -67,16 +67,18 @@ export const ProfileImage: React.FC<ProfileImageProps> = (props) => {
     };
 
     return (
-        <Image
+        <div className="max-lg:w-full max-w-[31.25rem] max-lg:m-auto min-lg:w-[23.75rem] aspect-[2/3] rounded-2xl overflow-hidden bg-secondary-black ">
+            <Image
             priority
             className={twMerge(
-                "rounded-md object-cover h-auto w-full duration-200"
+                "object-cover h-auto w-full duration-200"
             )}
-            height={400}
+            height={700}
             width={400}
             src={finalSrc}
             alt="profile image"
         />
+        </div>
     );
 
 }
