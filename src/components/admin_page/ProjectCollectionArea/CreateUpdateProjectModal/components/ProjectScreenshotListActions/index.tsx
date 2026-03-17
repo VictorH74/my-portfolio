@@ -15,6 +15,7 @@ interface ProjectScreenshotListActionsProps {
     onSelectChange(_: React.ChangeEvent<HTMLInputElement>): void;
     onReorderImages(_items: OutputReordableItemType[]): Promise<void>;
     images: (File | ScreenshotType)[];
+    children: string
 }
 
 export const ProjectScreenshotListActions = (
@@ -25,7 +26,7 @@ export const ProjectScreenshotListActions = (
 
     return (
         <div className="flex px-2 w-fit items-center justify-center gap-3 mb-4">
-            <h2 className="text-gray-600 text-xl">Screenshot list</h2>
+            <h2 className="text-gray-600 text-xl">{props.children}</h2>
             <label
                 className={twMerge(
                     'relative',

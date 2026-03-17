@@ -14,7 +14,7 @@ export const AboutMe = () => {
             className="max-md:p-[5rem_0_2.5rem_0] grid place-items-center p-[13rem_0_6.5rem_0] relative bg-background"
         >
             <div className="max-lg:px-4 max-w-default">
-                <div className="flex max-lg:flex-col gap-5 justify-center items-center min-lg:mx-6">
+                <div className="flex max-lg:flex-col gap-7 justify-center items-center min-lg:mx-6">
                     <div className="max-lg:w-full min-lg:pb-3 min-lg:pr-3 size-fit relative">
                         <div className="max-lg:hidden w-[23.75rem] aspect-[2/3] rounded-2xl z-0 translate-3 bg-linear-[115deg,#00FC69_17%,#4EFFFF_70%,#2382FF_100%] brightness-90"></div>
 

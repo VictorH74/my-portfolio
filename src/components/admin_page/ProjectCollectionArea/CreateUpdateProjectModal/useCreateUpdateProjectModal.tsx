@@ -418,7 +418,7 @@ export const useCreateUpdateProjectModal = (
                 'desktop'
             ),
             _updateImages(
-                projectDesktopImages,
+                projectMobileImages,
                 null,
                 futureProjectId,
                 project.title,

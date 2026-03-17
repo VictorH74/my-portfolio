@@ -59,7 +59,9 @@ export const CreateUpdateProjectModal = (
                                     hook.projectDesktopImageUrls
                                 }
                                 images={hook.projectDesktopImages}
-                            />
+                            >
+                                Desktop Images
+                            </ProjectScreenshotListActions>
 
                             <ProjectScreenshotList
                                 imageUrls={
@@ -86,7 +88,9 @@ export const CreateUpdateProjectModal = (
                                     hook.projectMobileImageUrls
                                 }
                                 images={hook.projectMobileImages}
-                            />
+                            >
+                                Mobile Images
+                            </ProjectScreenshotListActions>
 
                             <ProjectScreenshotList
                                 imageUrls={
