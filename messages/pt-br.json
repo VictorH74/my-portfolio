@@ -32,6 +32,7 @@
         "project_video_url": "Reproduzir Vídeo",
         "project_demo_url": "Acessar Demo",
         "project_repo_url": "Acessar Repositório",
+        "private_repo_text": "Repositório privado",
         "project_video_container_tip": "Clique fora do vídeo para fechar"
     },
     "Footer": {

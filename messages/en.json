@@ -32,6 +32,7 @@
         "project_video_url": "Play Video",
         "project_demo_url": "Go To Demo",
         "project_repo_url": "Go To Repository",
+        "private_repo_text": "Private repository",
         "project_video_container_tip": "Click outside the video to close"
     },
     "Footer": {

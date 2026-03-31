@@ -123,14 +123,14 @@ export const ProjectItem: React.FC<
                                     <LinkIcon />
                                 </ProjectItemLink>
                             )}
-                            {props.project.repositoryUrl && (
+                            {props.project.repositoryUrl ? (
                                 <ProjectItemLink
                                     href={props.project.repositoryUrl}
                                 >
                                     {t('project_repo_url')}
                                     <GitHubIcon />
                                 </ProjectItemLink>
-                            )}
+                            ) : <p className='font-medium p-2 opacity-65'>{t('private_repo_text')}</p>}
                         </div>
 
                         {props.children}
