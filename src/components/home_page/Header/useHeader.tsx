@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 export const anchorLinkHref = [
     '#welcome',
     '#about-me',
+    '#services',
     '#technologies',
     '#projects',
     '#contact-me',

@@ -54,7 +54,7 @@ export const Services = () => {
 
     return (
         <section
-            id="about-me"
+            id="services"
             className="max-md:p-[5rem_0_2.5rem_0] grid place-items-center p-[6rem_0_6.5rem_0] relative bg-background"
         >
             <div className="max-w-default w-full">
