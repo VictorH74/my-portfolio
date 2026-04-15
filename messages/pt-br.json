@@ -2,6 +2,7 @@
     "Header": {
         "nav_link_label_#welcome": "Boas-vindas",
         "nav_link_label_#about-me": "Sobre mim",
+        "nav_link_label_#services": "Serviços",
         "nav_link_label_#technologies": "Tecnologias",
         "nav_link_label_#projects": "Projetos",
         "nav_link_label_#contact-me": "Fale Comigo"
