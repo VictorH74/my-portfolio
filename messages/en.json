@@ -9,7 +9,7 @@
     "HeroSection": {
         "hello": "Hello!",
         "i_am": "I'm ",
-        "a": "A Jr Web Developer with"
+        "a": "A Web & Mobile Developer with"
     },
     "AboutMeSection": {
         "profile_image_load_error": "erro trying loading profile image!",
@@ -18,6 +18,11 @@
         "paragraph_1": "Web developer with proven experience using technologies such as *React.js, TypeScript/JavaScript* for frontend, and *Java, Spring Boot, Node.js, and TypeScript* for backend. In addition, I'm well acquainted with fundamental concepts of software development, such as _clean code, design patterns, hexagonal architecture, data structures, microservices, and unit tests._",
         "paragraph_2": "Programming has become a real hobby. A good part of my free time is dedicated to reading articles and documentation about the latest technologies. I firmly believe that this constant dedication will propel me towards success in the future.",
         "paragraph_3": "I stay motivated and am always open to learning new technologies or acquiring new knowledge and experience for my professional growth. My willingness to face challenges and embrace learning opportunities is a trait that constantly drives me on my journey."
+    },
+    "ServicesSection": {
+        "section_title": "Services",
+        "subtitle": "What i can build for you!",
+        "listItemLang": "en"
     },
     "TechnologyListSection": {
         "section_title": "My Technologies",

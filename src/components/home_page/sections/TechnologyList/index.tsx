@@ -15,10 +15,10 @@ export const TechnologyList = () => {
         <section
             ref={hook.techListSectionRef}
             id="technologies"
-            className="max-md:py-[2.5rem] grid place-items-center py-[6.5rem] bg-background max-sm:text-sm px-3"
+            className="max-md:py-[2.5rem] grid place-items-center py-[6rem] bg-background max-sm:text-sm px-3"
         >
             <div className="max-w-default">
-                <h2 className="max-md:mb-10 text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
+                <h2 data-aos="fade-up" data-aos-delay={100} data-aos-once="true" className="max-md:mb-10 text-dark-font text-3xl font-semibold text-center mb-20 uppercase">
                     {t('section_title')}
                 </h2>
 

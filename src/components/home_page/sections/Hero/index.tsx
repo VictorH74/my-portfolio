@@ -19,12 +19,12 @@ export const Hero = () => {
         >
             <AnimatedBackground />
 
-            <div className="text-background grid gap-7 font-semibold">
+            <div className="text-background grid gap-7">
                 <h2
                     data-aos="fade-up"
                     data-aos-once="true"
                     data-aos-duration="1000"
-                    className="max-sm:text-xl max-md:text-3xl min-[87.5rem]:text-7xl text-5xl"
+                    className="max-sm:text-xl max-md:text-3xl min-[87.5rem]:text-7xl text-5xl font-semibold"
                 >
                     {' '}
                     {t('hello')}
@@ -34,7 +34,7 @@ export const Hero = () => {
                     data-aos-once="true"
                     data-aos-delay="200"
                     data-aos-duration="1000"
-                    className="max-[21.8rem]:text-2xl max-sm:text-3xl max-md:text-4xl min-[87.5rem]:text-8xl text-6xl"
+                    className="max-[21.8rem]:text-2xl max-sm:text-3xl max-md:text-4xl min-[87.5rem]:text-8xl text-6xl font-semibold"
                 >
                     {' '}
                     {t('i_am')}
@@ -47,7 +47,7 @@ export const Hero = () => {
                     data-aos-once="true"
                     data-aos-delay="400"
                     data-aos-duration="1000"
-                    className="max-sm:text-xl max-md:text-3xl min-[87.5rem]:text-7xl text-5xl"
+                    className="max-sm:text-base max-md:text-xl min-[87.5rem]:text-5xl text-3xl text-zinc-300"
                 >
                     {t('a')}
                 </h2>

@@ -12,12 +12,11 @@ import { FormValues, useContactMe } from './useContactMe';
 const formFieldClassName =
     'bg-secondary-black p-3 outline-none focus:brightness-110 duration-300 rounded-md w-full';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props,
-    ref
-) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+    function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    }
+);
 
 export const ContactMe = () => {
     const hook = useContactMe();
@@ -28,11 +27,13 @@ export const ContactMe = () => {
             type: 'text',
             name: 'name',
             placeholder: t('contact_me_name_field_placeholder'),
+            aosDelay: 100,
         },
         {
             type: 'email',
             name: 'email',
             placeholder: t('contact_me_email_field_placeholder'),
+            aosDelay: 200,
         },
     ];
 
@@ -73,7 +74,12 @@ export const ContactMe = () => {
                         <Loading />
                     </div>
                     {inputData.map((obj) => (
-                        <div key={obj.placeholder} className="space-y-1">
+                        <div
+                            key={obj.placeholder}
+                            className="space-y-1"
+                            data-aos="flip-left"
+                            data-aos-delay={obj.aosDelay}
+                        >
                             <input
                                 placeholder={obj.placeholder}
                                 className={twMerge('', formFieldClassName)}
@@ -98,7 +104,11 @@ export const ContactMe = () => {
                         </div>
                     ))}
 
-                    <div className="space-y-1">
+                    <div
+                        className="space-y-1"
+                        data-aos="flip-left"
+                        data-aos-delay={300}
+                    >
                         <textarea
                             placeholder={t('contact_me_msg_field_placeholder')}
                             className={twMerge(
@@ -117,6 +127,8 @@ export const ContactMe = () => {
                     </div>
 
                     <button
+                        data-aos="flip-left"
+                        data-aos-delay={400}
                         className="focus:brightness-110 duration-300 rounded-md w-full py-3 bg-background text-dark-font font-semibold cursor-pointer"
                         type="submit"
                         disabled={hook.submitting}

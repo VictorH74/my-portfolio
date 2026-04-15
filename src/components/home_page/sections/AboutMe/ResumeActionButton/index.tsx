@@ -7,7 +7,7 @@ import { isMobilePortrait } from '@/utils/functions';
 export const ResumeActionButton = () => {
 
     return (
-        <div className="flex flex-row gap-10 items-center mt-7">
+        <div className="flex flex-row gap-10 items-center mt-7" data-aos="flip-up" data-aos-delay={300} data-aos-duration="500" data-aos-once="true">
             <hr className="w-full h-[0.188rem] bg-secondary-black" />
             {isMobilePortrait() ? (
                 <DownloadResumeBtn className="uppercase" />

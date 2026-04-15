@@ -9,7 +9,7 @@
     "HeroSection": {
         "hello": "Olá!",
         "i_am": "Eu sou ",
-        "a": "Um Desenvolvedor Web Jr. com"
+        "a": "Um Desenvolvedor Web & Mobile com"
     },
     "AboutMeSection": {
         "profile_image_load_error": "erro ao tentar carregar imagem!",
@@ -18,6 +18,11 @@
         "paragraph_1": "Dev. Web com experiência comprovada utilizando as tecnologias: *React.js, Next.js, TypeScript / JavaScript* para frontend e *Java, Spring Boot, Node.js, TypeScript* para backend. Além disso, sou bem familiarizado com conceitos fundamentais para o desenvolvimento de software, como: _clean code, design patterns, arquitetura hexagonal, estrutura de dados, microserviços e testes unitário._",
         "paragraph_2": "A programação se tornou um verdadeiro hobby. Boa parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
         "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir o conhecimento e experiência necessária para meu crescimento profissional. Minha disposição para enfrentar desafios e abraçar oportunidades de aprendizado é uma característica que me impulsiona constantemente na minha jornada."
+    },
+    "ServicesSection": {
+        "section_title": "Serviços",
+        "subtitle": "O que eu posso construir para você!",
+        "listItemLang": "pt"
     },
     "TechnologyListSection": {
         "section_title": "Minhas Tecnologias",
