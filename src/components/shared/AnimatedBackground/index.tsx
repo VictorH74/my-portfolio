@@ -9,7 +9,7 @@ export const AnimatedBackground = () => {
     const hook = useAnimatedBackground();
 
     return (
-        <div className="absolute inset-0 grid place-items-center bg-[#141414]">
+        <div className="absolute inset-0 grid place-items-center bg-[#141414] select-none pointer-events-none">
             <canvas
                 ref={hook.canvasRef}
                 className={twMerge(
