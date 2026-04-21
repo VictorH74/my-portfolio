@@ -16,9 +16,12 @@
         "profile_image_load_error": "erro ao tentar carregar imagem!",
         "profile_image_load_error_retry": "Tentar Novamente",
         "career": "Desenvolvedor Web Junior",
-        "paragraph_1": "Dev. Web com experiência comprovada utilizando as tecnologias: *React.js, Next.js, TypeScript / JavaScript* para frontend e *Java, Spring Boot, Node.js, TypeScript* para backend. Além disso, sou bem familiarizado com conceitos fundamentais para o desenvolvimento de software, como: _clean code, design patterns, arquitetura hexagonal, estrutura de dados, microserviços e testes unitário._",
-        "paragraph_2": "A programação se tornou um verdadeiro hobby. Boa parte do meu tempo livre é dedicada à leitura de artigos e documentações sobre as mais recentes tecnologias. Acredito firmemente que essa dedicação constante me impulsionará para o sucesso no futuro.",
-        "paragraph_3": "Me mantenho motivado e estou sempre aberto a aprender novas tecnologias ou adquirir o conhecimento e experiência necessária para meu crescimento profissional. Minha disposição para enfrentar desafios e abraçar oportunidades de aprendizado é uma característica que me impulsiona constantemente na minha jornada."
+        "first_paragraph": "Sou Desenvolvedor FullStack com mais de 3 anos de experiência construindo aplicações web e mobile completas — do rascunho ao produto final. Trabalho com *React.js*, *Next.js* e *Node.js* no dia a dia, com foco em código limpo, arquitetura escalável e experiência do usuário.",
+        "last_paragraph": "Mais do que escrever código, meu trabalho é entender o problema e transformar sua ideia em uma solução digital que funciona de verdade.",
+        "soluction_example_list_Heading": "Posso te ajudar se você precisa de:",
+        "soluction_example_list": "[\"Sistema Web do zero\",\"Lojas Online e E-commerce\",\"SaaS e Dashboards Administrativos\",\"Landing Page\",\"Aplicativos Mobile\",\"Integrações com APIs (pagamentos, WhatsApp, IA, governo e mais)\"]",
+        "differentials_heading": "Diferenciais",
+        "differentials": "[\"Entrego rápido\",\"Código limpo e escalável\",\"Comunicação direta\",\"Foco em resultado\"]"
     },
     "ServicesSection": {
         "section_title": "Serviços",
