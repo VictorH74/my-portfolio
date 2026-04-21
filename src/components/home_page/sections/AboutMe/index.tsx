@@ -5,17 +5,6 @@ import { twMerge } from 'tailwind-merge';
 
 import { ResumeActionButton } from './ResumeActionButton';
 
-const list = [
-    'Sistema Web do zero',
-    'Lojas Online',
-    'SaaS',
-    'Landing Page',
-    'Dashboard Administrativo',
-    'Integrações com APIs (pagamentos, WhatsApp, SMS, Email, IA, governo)',
-    'Aplicativos Mobile',
-    'Tirar sua ideia do papel',
-];
-
 export const AboutMe = () => {
     const t = useTranslations('AboutMeSection');
 
